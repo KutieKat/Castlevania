@@ -123,16 +123,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationFrame.h" />
+    <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Mario.h" />
-    <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="Textures.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationFrame.cpp" />
+    <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -140,7 +147,8 @@
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
-    <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="Textures.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -13,24 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Framework">
+      <UniqueIdentifier>{2b1e467b-f23a-41c4-baa3-a09dd0f20945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{51bc9a73-1079-43fb-814a-3e8d58214fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework\Animation">
+      <UniqueIdentifier>{4a4ac084-ef5d-4905-bc16-5597844c5378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework\Sprite">
+      <UniqueIdentifier>{9bcd9e59-c0d9-4694-a786-240a0ac2efc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework\Texture">
+      <UniqueIdentifier>{e92da53a-3f6c-43c0-80dc-44f5cc397ef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Animation">
+      <UniqueIdentifier>{537e2f43-ea00-4976-9a76-29d1768c4b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Sprite">
+      <UniqueIdentifier>{ba490ec9-801a-4f64-b2be-e5e70122d4c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Texture">
+      <UniqueIdentifier>{07ae461f-a506-44e3-acb1-b97cdfd4cbf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework\Debug">
+      <UniqueIdentifier>{be2c601b-62ef-40f1-b505-97739ad48040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Debug">
+      <UniqueIdentifier>{d86be719-0e04-405a-b47b-bdadd4d45270}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Mario.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprites.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Textures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
@@ -39,27 +54,39 @@
     <ClInclude Include="Goomba.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>Header Files\Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files\Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Header Files\Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteManager.h">
+      <Filter>Header Files\Framework\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\Framework\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Header Files\Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Header Files\Framework\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="debug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
@@ -67,6 +94,33 @@
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>Source Files\Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files\Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationFrame.cpp">
+      <Filter>Source Files\Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteManager.cpp">
+      <Filter>Source Files\Framework\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\Framework\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Source Files\Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Source Files\Framework\Debug</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

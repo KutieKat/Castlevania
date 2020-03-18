@@ -25,6 +25,9 @@
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
+#include "Animation.h"
+#include "SpriteManager.h"
+#include "AnimationManager.h"
 #include "Textures.h"
 
 #include "Mario.h"
@@ -121,12 +124,10 @@ void LoadResources()
 	textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
 	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
 
-
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
-
-	CSprites * sprites = CSprites::GetInstance();
-	CAnimations * animations = CAnimations::GetInstance();
+	CSpriteManager* sprites = CSpriteManager::GetInstance();
+	CAnimationManager* animations = CAnimationManager::GetInstance();
 	
 	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
 
@@ -162,7 +163,7 @@ void LoadResources()
 
 	sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
 
-	LPANIMATION ani;
+	CAnimation* ani;
 
 	ani = new CAnimation(100);	// idle big right
 	ani->Add(10001);
@@ -204,12 +205,9 @@ void LoadResources()
 	ani->Add(10033);
 	animations->Add(503, ani);
 
-
 	ani = new CAnimation(100);		// Mario die
 	ani->Add(10099);
 	animations->Add(599, ani);
-
-	
 
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
@@ -258,7 +256,6 @@ void LoadResources()
 		objects.push_back(brick);
 	}
 
-
 	for (int i = 0; i < 30; i++)
 	{
 		CBrick *brick = new CBrick();
@@ -277,7 +274,6 @@ void LoadResources()
 		goomba->SetState(GOOMBA_STATE_WALKING);
 		objects.push_back(goomba);
 	}
-
 }
 
 /*

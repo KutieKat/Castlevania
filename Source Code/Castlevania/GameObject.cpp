@@ -1,12 +1,12 @@
 #include <d3dx9.h>
 #include <algorithm>
 
-
 #include "debug.h"
 #include "Textures.h"
 #include "Game.h"
 #include "GameObject.h"
-#include "Sprites.h"
+#include "SpriteManager.h"
+#include "AnimationManager.h"
 
 CGameObject::CGameObject()
 {
@@ -133,7 +133,7 @@ void CGameObject::RenderBoundingBox()
 
 void CGameObject::AddAnimation(int aniId)
 {
-	LPANIMATION ani = CAnimations::GetInstance()->Get(aniId);
+	CAnimation* ani = CAnimationManager::GetInstance()->Get(aniId);
 	animations.push_back(ani);
 }
 

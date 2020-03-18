@@ -1,12 +1,10 @@
 #pragma once
-
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
 
-#include "Sprites.h"
-
-
+#include "SpriteManager.h"
+#include "Animation.h"
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
@@ -28,12 +26,9 @@ struct CCollisionEvent
 	}
 };
 
-
-
 class CGameObject
 {
 public:
-
 	float x; 
 	float y;
 
@@ -49,7 +44,7 @@ public:
 
 	DWORD dt; 
 
-	vector<LPANIMATION> animations;
+	vector<CAnimation*> animations;
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -79,7 +74,6 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
-
 
 	~CGameObject();
 };
