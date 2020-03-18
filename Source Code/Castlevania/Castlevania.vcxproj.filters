@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Framework\Debug">
       <UniqueIdentifier>{d86be719-0e04-405a-b47b-bdadd4d45270}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Framework\Utilities">
+      <UniqueIdentifier>{d6d2a5b5-21e1-4b29-bb30-f1923c802ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Utilities">
+      <UniqueIdentifier>{c905f5ff-79a7-4130-b5a2-b0e25861a701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mario.h">
@@ -80,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Header Files\Framework\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Header Files\Framework\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Source Files\Framework\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Source Files\Framework\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
