@@ -2,18 +2,18 @@
 
 CSpriteManager* CSpriteManager::instance = nullptr;
 
-void CSpriteManager::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
+void CSpriteManager::Add(string id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
 {
 	CSprite* s = new CSprite(id, left, top, right, bottom, texture);
 	sprites[id] = s;
 }
 
-CSprite* CSpriteManager::Get(int id)
+CSprite* CSpriteManager::Get(string id)
 {
 	return sprites[id];
 }
 
-CSprite* &CSpriteManager::operator[](int id)
+CSprite* &CSpriteManager::operator[](string id)
 {
 	return sprites[id];
 }

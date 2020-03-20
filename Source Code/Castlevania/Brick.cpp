@@ -1,8 +1,9 @@
 #include "Brick.h"
+#include "AnimationManager.h"
 
 void CBrick::Render()
 {
-	animations[0]->Render(x, y);
+	animations->Get("brick")->Render(x, y);
 	//RenderBoundingBox();
 }
 

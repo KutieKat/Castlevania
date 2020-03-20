@@ -1,9 +1,8 @@
 #include <algorithm>
-#include "debug.h"
 
+#include "debug.h"
 #include "Mario.h"
 #include "Game.h"
-
 #include "Goomba.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -93,36 +92,60 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CMario::Render()
 {
-	int ani;
+	string ani;
+
 	if (state == MARIO_STATE_DIE)
-		ani = MARIO_ANI_DIE;
-	else
-	if (level == MARIO_LEVEL_BIG)
+	{
+		ani = "mario_die";
+	}
+	else if (level == MARIO_LEVEL_BIG)
 	{
 		if (vx == 0)
 		{
-			if (nx>0) ani = MARIO_ANI_BIG_IDLE_RIGHT;
-			else ani = MARIO_ANI_BIG_IDLE_LEFT;
+			if (nx > 0)
+			{
+				ani = "mario_big_idle_right";
+			}
+			else
+			{
+				ani = "mario_big_idle_left";
+			}
 		}
-		else if (vx > 0) 
-			ani = MARIO_ANI_BIG_WALKING_RIGHT; 
-		else ani = MARIO_ANI_BIG_WALKING_LEFT;
+		else if (vx > 0)
+		{
+			ani = "mario_big_walk_right";
+		}
+		else
+		{
+			ani = "mario_big_walk_left";
+		}
 	}
 	else if (level == MARIO_LEVEL_SMALL)
 	{
 		if (vx == 0)
 		{
-			if (nx>0) ani = MARIO_ANI_SMALL_IDLE_RIGHT;
-			else ani = MARIO_ANI_SMALL_IDLE_LEFT;
+			if (nx > 0)
+			{
+				ani = "mario_small_idle_right";
+			}
+			else
+			{
+				ani = "mario_small_idle_left";
+			}
 		}
 		else if (vx > 0)
-			ani = MARIO_ANI_SMALL_WALKING_RIGHT;
-		else ani = MARIO_ANI_SMALL_WALKING_LEFT;
+		{
+			ani = "mario_small_walk_right";
+		}
+		else
+		{
+			ani = "mario_small_walk_left";
+		}
 	}
 
 	int alpha = 255;
 	if (untouchable) alpha = 128;
-	animations[ani]->Render(x, y, alpha);
+	animations->Get(ani)->Render(x, y, alpha);
 
 	RenderBoundingBox();
 }
@@ -137,15 +160,19 @@ void CMario::SetState(int state)
 		vx = MARIO_WALKING_SPEED;
 		nx = 1;
 		break;
+
 	case MARIO_STATE_WALKING_LEFT: 
 		vx = -MARIO_WALKING_SPEED;
 		nx = -1;
 		break;
+
 	case MARIO_STATE_JUMP: 
 		vy = -MARIO_JUMP_SPEED_Y;
+
 	case MARIO_STATE_IDLE: 
 		vx = 0;
 		break;
+
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
 		break;
@@ -157,7 +184,7 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	left = x;
 	top = y; 
 
-	if (level==MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG)
 	{
 		right = x + MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;

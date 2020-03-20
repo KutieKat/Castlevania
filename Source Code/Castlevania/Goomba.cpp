@@ -34,12 +34,14 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CGoomba::Render()
 {
-	int ani = GOOMBA_ANI_WALKING;
-	if (state == GOOMBA_STATE_DIE) {
-		ani = GOOMBA_ANI_DIE;
+	string ani = "goomba_walk";
+
+	if (state == GOOMBA_STATE_DIE)
+	{
+		ani = "goomba_die";
 	}
 
-	animations[ani]->Render(x,y);
+	animations->Get(ani)->Render(x,y);
 	//RenderBoundingBox();
 }
 

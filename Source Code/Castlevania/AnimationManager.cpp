@@ -2,12 +2,12 @@
 
 CAnimationManager* CAnimationManager::instance = nullptr;
 
-void CAnimationManager::Add(int id, CAnimation* animation)
+void CAnimationManager::Add(string id, CAnimation* animation)
 {
 	animations[id] = animation;
 }
 
-CAnimation* CAnimationManager::Get(int id)
+CAnimation* CAnimationManager::Get(string id)
 {
 	return animations[id];
 }

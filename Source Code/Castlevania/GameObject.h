@@ -5,6 +5,7 @@
 
 #include "SpriteManager.h"
 #include "Animation.h"
+#include "AnimationManager.h"
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
@@ -44,7 +45,8 @@ public:
 
 	DWORD dt; 
 
-	vector<CAnimation*> animations;
+	//vector<CAnimation*> animations;
+	CAnimationManager* animations = CAnimationManager::GetInstance();
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -66,7 +68,7 @@ public:
 		float &nx, 
 		float &ny);
 
-	void AddAnimation(int aniId);
+	//void AddAnimation(int aniId);
 
 	CGameObject();
 

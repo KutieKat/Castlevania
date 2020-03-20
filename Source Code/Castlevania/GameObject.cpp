@@ -2,11 +2,10 @@
 #include <algorithm>
 
 #include "debug.h"
-#include "Textures.h"
+#include "TextureManager.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "SpriteManager.h"
-#include "AnimationManager.h"
 
 CGameObject::CGameObject()
 {
@@ -118,7 +117,7 @@ void CGameObject::RenderBoundingBox()
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
-	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
+	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get("bounding_box");
 
 	float l,t,r,b; 
 
@@ -131,12 +130,11 @@ void CGameObject::RenderBoundingBox()
 	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
 
-void CGameObject::AddAnimation(int aniId)
-{
-	CAnimation* ani = CAnimationManager::GetInstance()->Get(aniId);
-	animations.push_back(ani);
-}
-
+//void CGameObject::AddAnimation(int aniId)
+//{
+//	CAnimation* ani = CAnimationManager::GetInstance()->Get(aniId);
+//	animations.push_back(ani);
+//}
 
 CGameObject::~CGameObject()
 {

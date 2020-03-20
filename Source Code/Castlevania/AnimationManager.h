@@ -1,19 +1,20 @@
 #pragma once
 #include <unordered_map>
+#include <string>
 #include "Animation.h"
 using namespace std;
 
 class CAnimationManager
 {
 public:
-	void Add(int id, CAnimation* animation);
-	CAnimation* Get(int id);
+	void Add(string id, CAnimation* animation);
+	CAnimation* Get(string id);
 
 	static CAnimationManager* GetInstance();
 
 private:
 	static CAnimationManager* instance;
 
-	unordered_map<int, CAnimation*> animations;
+	unordered_map<string, CAnimation*> animations;
 };
 

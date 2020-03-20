@@ -49,17 +49,32 @@
     <Filter Include="Source Files\Framework\Utilities">
       <UniqueIdentifier>{c905f5ff-79a7-4130-b5a2-b0e25861a701}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Characters">
+      <UniqueIdentifier>{bdb9b1e2-7b6f-4eed-9160-49b5ffa26383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Players">
+      <UniqueIdentifier>{2216bede-ac5c-4b9e-a7ec-279d9246efd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Enemies">
+      <UniqueIdentifier>{1715ef1d-77b9-4495-9756-a7cdd241a041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc">
+      <UniqueIdentifier>{8702dc32-9565-4240-9da5-ddefd2ec53ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters">
+      <UniqueIdentifier>{c7145ffa-1faa-46f6-90c0-65a0508e27ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{11aa595f-af29-4dbf-84ea-a03d1befbc49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Players">
+      <UniqueIdentifier>{f5f3ee61-b856-4b55-b84b-0e364cdf4636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Enemies">
+      <UniqueIdentifier>{c2c913ef-c2d6-4932-a784-022104a8facb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mario.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Framework</Filter>
     </ClInclude>
@@ -81,27 +96,27 @@
     <ClInclude Include="Sprite.h">
       <Filter>Header Files\Framework\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Textures.h">
-      <Filter>Header Files\Framework\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Header Files\Framework\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>Header Files\Framework\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files\Framework\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Header Files\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>Header Files\Characters\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
@@ -125,14 +140,23 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Framework\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Source Files\Framework\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Source Files\Framework\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Source Files\Framework\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Source Files\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Source Files\Characters\Players</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

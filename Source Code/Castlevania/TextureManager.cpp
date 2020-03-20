@@ -4,27 +4,27 @@
 
 #include "debug.h"
 #include "Game.h"
-#include "textures.h"
+#include "TextureManager.h"
 
-CTextures* CTextures::instance = nullptr;
+CTextureManager* CTextureManager::instance = nullptr;
 
-CTextures* CTextures::GetInstance()
+CTextureManager* CTextureManager::GetInstance()
 {
-	if (instance == NULL)
+	if (instance == nullptr)
 	{
-		instance = new CTextures();
+		instance = new CTextureManager();
 	}
 
 	return instance;
 }
 
-void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
+void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor)
 {
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
 	if (result != D3D_OK)
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
+		//DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
 		return;
 	}
 
@@ -49,16 +49,16 @@ void CTextures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 
 	if (result != D3D_OK)
 	{
-		OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
+		//OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
 		return;
 	}
 
 	textures[id] = texture;
 
-	DebugOut(L"[INFO] Texture loaded OK: id=%d, %s \n", id, filePath);
+	//DebugOut(L"[INFO] Texture loaded OK: id=%d, %s \n", id, filePath);
 }
 
-LPDIRECT3DTEXTURE9 CTextures::Get(int i) 
+LPDIRECT3DTEXTURE9 CTextureManager::Get(string id)
 {
-	return textures[i];
+	return textures[id];
 }
