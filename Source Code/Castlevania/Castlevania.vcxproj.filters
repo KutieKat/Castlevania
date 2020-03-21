@@ -73,6 +73,12 @@
     <Filter Include="Source Files\Characters\Enemies">
       <UniqueIdentifier>{c2c913ef-c2d6-4932-a784-022104a8facb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Framework\TinyXML">
+      <UniqueIdentifier>{0d260565-7660-48fd-849b-daac4c58ac0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\TinyXML">
+      <UniqueIdentifier>{ded56914-17c4-4749-94f6-ccb9f2eaa13b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -113,6 +119,12 @@
     </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>Header Files\Framework\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>Header Files\Framework\TinyXML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +169,18 @@
     </ClCompile>
     <ClCompile Include="Mario.cpp">
       <Filter>Source Files\Characters\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>Source Files\Framework\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>Source Files\Framework\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>Source Files\Framework\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>Source Files\Framework\TinyXML</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
