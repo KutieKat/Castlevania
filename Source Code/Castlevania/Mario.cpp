@@ -92,11 +92,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CMario::Render()
 {
-	string ani;
+	int ani;
 
 	if (state == MARIO_STATE_DIE)
 	{
-		ani = "mario_die";
+		ani = MARIO_ANI_DIE;
 	}
 	else if (level == MARIO_LEVEL_BIG)
 	{
@@ -104,20 +104,20 @@ void CMario::Render()
 		{
 			if (nx > 0)
 			{
-				ani = "mario_big_idle_right";
+				ani = MARIO_ANI_BIG_IDLE_RIGHT;
 			}
 			else
 			{
-				ani = "mario_big_idle_left";
+				ani = MARIO_ANI_BIG_IDLE_LEFT;
 			}
 		}
 		else if (vx > 0)
 		{
-			ani = "mario_big_walk_right";
+			ani = MARIO_ANI_BIG_WALKING_RIGHT;
 		}
 		else
 		{
-			ani = "mario_big_walk_left";
+			ani = MARIO_ANI_BIG_WALKING_LEFT;
 		}
 	}
 	else if (level == MARIO_LEVEL_SMALL)
@@ -126,26 +126,26 @@ void CMario::Render()
 		{
 			if (nx > 0)
 			{
-				ani = "mario_small_idle_right";
+				ani = MARIO_ANI_SMALL_IDLE_RIGHT;
 			}
 			else
 			{
-				ani = "mario_small_idle_left";
+				ani = MARIO_ANI_SMALL_IDLE_LEFT;
 			}
 		}
 		else if (vx > 0)
 		{
-			ani = "mario_small_walk_right";
+			ani = MARIO_ANI_SMALL_WALKING_RIGHT;
 		}
 		else
 		{
-			ani = "mario_small_walk_left";
+			ani = MARIO_ANI_SMALL_WALKING_LEFT;
 		}
 	}
 
 	int alpha = 255;
 	if (untouchable) alpha = 128;
-	animations->Get(ani)->Render(x, y, alpha);
+	animations[ani]->Render(x, y, alpha);
 
 	RenderBoundingBox();
 }

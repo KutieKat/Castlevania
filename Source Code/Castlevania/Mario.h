@@ -27,6 +27,18 @@ using namespace std;
 
 #define MARIO_UNTOUCHABLE_TIME 5000
 
+#define MARIO_ANI_BIG_IDLE_RIGHT		0
+#define MARIO_ANI_BIG_IDLE_LEFT			1
+#define MARIO_ANI_SMALL_IDLE_RIGHT		2
+#define MARIO_ANI_SMALL_IDLE_LEFT			3
+
+#define MARIO_ANI_BIG_WALKING_RIGHT			4
+#define MARIO_ANI_BIG_WALKING_LEFT			5
+#define MARIO_ANI_SMALL_WALKING_RIGHT		6
+#define MARIO_ANI_SMALL_WALKING_LEFT		7
+
+#define MARIO_ANI_DIE				8
+
 
 class CMario : public CGameObject
 {

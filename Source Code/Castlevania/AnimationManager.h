@@ -7,14 +7,14 @@ using namespace std;
 class CAnimationManager
 {
 public:
-	void Add(string id, CAnimation* animation);
-	CAnimation* Get(string id);
+	void Add(int id, CAnimation* animation);
+	CAnimation* Get(int id);
 
 	static CAnimationManager* GetInstance();
 
 private:
 	static CAnimationManager* instance;
 
-	unordered_map<string, CAnimation*> animations;
+	unordered_map<int, CAnimation*> animations;
 };
 

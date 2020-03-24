@@ -45,8 +45,8 @@ public:
 
 	DWORD dt; 
 
-	//vector<CAnimation*> animations;
-	CAnimationManager* animations = CAnimationManager::GetInstance();
+	vector<CAnimation*> animations;
+	//CAnimationManager* animations = CAnimationManager::GetInstance();
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -68,7 +68,7 @@ public:
 		float &nx, 
 		float &ny);
 
-	//void AddAnimation(int aniId);
+	void AddAnimation(int aniId);
 
 	CGameObject();
 

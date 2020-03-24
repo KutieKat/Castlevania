@@ -9,7 +9,7 @@ class CAnimation
 {
 public:
 	CAnimation(int defaultTime);
-	void Add(string spriteId, DWORD time = 0);
+	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int alpha = 255);
 
 private:

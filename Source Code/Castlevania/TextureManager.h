@@ -7,6 +7,7 @@ using namespace std;
 class CTextureManager
 {
 public: 
+	bool LoadFromFile(string filePath);
 	void Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor);
 	LPDIRECT3DTEXTURE9 Get(string id);
 

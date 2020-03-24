@@ -9,7 +9,7 @@ CAnimation::CAnimation(int defaultTime)
 	this->currentFrame = -1;
 }
 
-void CAnimation::Add(string spriteId, DWORD time)
+void CAnimation::Add(int spriteId, DWORD time)
 {
 	int t = time;
 

@@ -5,6 +5,8 @@
 #include "debug.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "tinyxml.h"
+#include "Color.h"
 
 CTextureManager* CTextureManager::instance = nullptr;
 
@@ -16,6 +18,38 @@ CTextureManager* CTextureManager::GetInstance()
 	}
 
 	return instance;
+}
+
+bool CTextureManager::LoadFromFile(string filePath)
+{
+	TiXmlDocument doc(filePath.c_str());
+
+	if (!doc.LoadFile())
+	{
+		DebugOut(L"%s", doc.ErrorDesc());
+		return false;
+	}
+
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* texture = nullptr;
+
+	for (texture = root->FirstChildElement(); texture != nullptr; texture = texture->NextSiblingElement())
+	{
+		int r, g, b;
+
+		string id = texture->Attribute("id");
+
+		string path = texture->Attribute("path");
+		wstring texturePath(path.begin(), path.end());
+
+		texture->QueryIntAttribute("r", &r);
+		texture->QueryIntAttribute("g", &g);
+		texture->QueryIntAttribute("b", &b);
+
+		Add(id, texturePath.c_str(), CColor::FromRgb(r, g, b));
+	}
+
+	return true;
 }
 
 void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor)

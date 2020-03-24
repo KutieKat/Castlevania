@@ -2,7 +2,7 @@
 
 CAnimationManager* CAnimationManager::instance = nullptr;
 
-void CAnimationManager::Add(string id, CAnimation* animation)
+void CAnimationManager::Add(int id, CAnimation* animation)
 {
 	if (this->animations.find(id) == this->animations.end())
 	{
@@ -10,7 +10,7 @@ void CAnimationManager::Add(string id, CAnimation* animation)
 	}
 }
 
-CAnimation* CAnimationManager::Get(string id)
+CAnimation* CAnimationManager::Get(int id)
 {
 	return this->animations[id];
 }
