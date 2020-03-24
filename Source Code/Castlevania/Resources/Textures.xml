@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <textures>
-	<texture id="mario" path="Resources\\Characters\\Players\\Mario.png" r="255" g="255" b="255" />
-	<texture id="enemies" path="Resources\\Characters\\Enemies\\Enemies.png" r="3" g="26" b="110" />
-	<texture id="misc" path="Resources\\Misc\\Misc.png" r="176" g="224" b="248" />
-	<texture id="bounding_box" path="Resources\\Misc\\BoundingBox.png" r="255" g="255" b="255" />
+	<texture id="mario_texture" path="Resources\\Characters\\Players\\Mario.png" r="255" g="255" b="255" />
+	<texture id="enemies_texture" path="Resources\\Characters\\Enemies\\Enemies.png" r="3" g="26" b="110" />
+	<texture id="misc_texture" path="Resources\\Misc\\Misc.png" r="176" g="224" b="248" />
+	<texture id="bounding_box_texture" path="Resources\\Misc\\BoundingBox.png" r="255" g="255" b="255" />
 </textures>

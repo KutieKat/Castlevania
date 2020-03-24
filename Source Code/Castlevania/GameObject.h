@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
+#include <string>
 
 #include "SpriteManager.h"
 #include "Animation.h"
@@ -68,7 +69,7 @@ public:
 		float &nx, 
 		float &ny);
 
-	void AddAnimation(int aniId);
+	void AddAnimation(string aniId);
 
 	CGameObject();
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriteSheet id="mario_sprite_sheet" textureId="mario_texture">
+  <sprite id="10001" left="246" top="154" right="260" bottom="181" />
+  <sprite id="10002" left="275" top="154" right="290" bottom="181" />
+  <sprite id="10003" left="304" top="154" right="321" bottom="181" />
+  
+  <sprite id="10011" left="186" top="154" right="200" bottom="181" />
+  <sprite id="10012" left="155" top="154" right="170" bottom="181" />
+  <sprite id="10013" left="125" top="154" right="140" bottom="181" />
+
+  <sprite id="10021" left="247" top="0" right="259" bottom="15" />
+  <sprite id="10022" left="275" top="0" right="291" bottom="15" />
+  <sprite id="10023" left="306" top="0" right="320" bottom="15" />
+  
+  <sprite id="10031" left="187" top="0" right="198" bottom="15" />
+  <sprite id="10032" left="155" top="0" right="170" bottom="15" />
+  <sprite id="10033" left="125" top="0" right="139" bottom="15" />
+  
+  <sprite id="10099" left="215" top="120" right="231" bottom="135" />
+</spriteSheet>

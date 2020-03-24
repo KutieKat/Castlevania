@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animations spriteSheetId="mario_sprite_sheet">
+  <animation id="400" duration="100">
+    <frame spriteId="10001" />
+  </animation>
+
+  <animation id="401" duration="100">
+    <frame spriteId="10011" />
+  </animation>
+
+  <animation id="402" duration="100">
+    <frame spriteId="10021" />
+  </animation>
+
+  <animation id="403" duration="100">
+    <frame spriteId="10031" />
+  </animation>
+
+  <animation id="500" duration="100">
+    <frame spriteId="10001" />
+    <frame spriteId="10002" />
+    <frame spriteId="10003" />
+  </animation>
+
+  <animation id="501" duration="100">
+    <frame spriteId="10011" />
+    <frame spriteId="10012" />
+    <frame spriteId="10013" />
+  </animation>
+
+  <animation id="502" duration="100">
+    <frame spriteId="10021" />
+    <frame spriteId="10022" />
+    <frame spriteId="10023" />
+  </animation>
+
+  <animation id="503" duration="100">
+    <frame spriteId="10031" />
+    <frame spriteId="10032" />
+    <frame spriteId="10033" />
+  </animation>
+
+  <animation id="599" duration="100">
+    <frame spriteId="10099" />
+  </animation>
+</animations>

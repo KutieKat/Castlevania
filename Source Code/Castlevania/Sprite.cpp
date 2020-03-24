@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "Game.h"
 
-CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
+CSprite::CSprite(string id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
 {
 	this->id = id;
 	this->left = left;

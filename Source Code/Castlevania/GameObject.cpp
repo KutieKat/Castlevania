@@ -130,7 +130,7 @@ void CGameObject::RenderBoundingBox()
 	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
 
-void CGameObject::AddAnimation(int aniId)
+void CGameObject::AddAnimation(string aniId)
 {
 	CAnimation* ani = CAnimationManager::GetInstance()->Get(aniId);
 	animations.push_back(ani);

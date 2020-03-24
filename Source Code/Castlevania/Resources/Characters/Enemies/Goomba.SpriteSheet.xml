@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriteSheet id="goomba_sprite_sheet" textureId="enemies_texture">
+  <sprite id="30001" left="5" top="14" right="21" bottom="29" />
+  <sprite id="30002" left="25" top="14" right="41" bottom="29" />
+
+  <sprite id="30003" left="45" top="21" right="61" bottom="29" />
+</spriteSheet>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animations spriteSheetId="goomba_sprite_sheet">
+  <animation id="701" duration="300">
+    <frame spriteId="30001" />
+    <frame spriteId="30002" />
+  </animation>
+
+  <animation id="702" duration="1000">
+    <frame spriteId="30003" />
+  </animation>
+</animations>
