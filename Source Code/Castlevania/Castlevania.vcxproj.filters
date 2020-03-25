@@ -79,6 +79,12 @@
     <Filter Include="Source Files\Framework\TinyXML">
       <UniqueIdentifier>{ded56914-17c4-4749-94f6-ccb9f2eaa13b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Framework\Input">
+      <UniqueIdentifier>{daf0bf65-7f00-4f68-b66b-f4194a260e38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Input">
+      <UniqueIdentifier>{d55d96a7-a617-411d-868f-db442ab62481}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -125,6 +131,12 @@
     </ClInclude>
     <ClInclude Include="tinystr.h">
       <Filter>Header Files\Framework\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="IKeyEventHandler.h">
+      <Filter>Header Files\Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Framework\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="tinyxmlerror.cpp">
       <Filter>Source Files\Framework\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Framework\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

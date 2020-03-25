@@ -27,13 +27,12 @@
 #define ID_TEX_MISC 20
 
 CGame *game;
-
 CMario *mario;
 CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
 
-class CSampleKeyHander: public CKeyEventHandler
+class CSampleKeyHander: public IKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
 	virtual void OnKeyDown(int KeyCode);
@@ -44,13 +43,13 @@ CSampleKeyHander * keyHandler;
 
 void CSampleKeyHander::OnKeyDown(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
-	case DIK_A: // reset
+
+	case DIK_A:
 		mario->SetState(MARIO_STATE_IDLE);
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->SetPosition(50.0f,0.0f);
@@ -61,16 +60,15 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 }
 
 void CSampleKeyHander::KeyState(BYTE *states)
 {
-	// disable control key when Mario die 
-	if (mario->GetState() == MARIO_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
+	if (mario->GetState() == MARIO_STATE_DIE) 
+		return;
+	if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 		mario->SetState(MARIO_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
+	else if (game->GetInputManager()->IsKeyDown(DIK_LEFT))
 		mario->SetState(MARIO_STATE_WALKING_LEFT);
 	else
 		mario->SetState(MARIO_STATE_IDLE);
@@ -138,7 +136,6 @@ void LoadResources()
 		objects.push_back(brick);
 	}
 
-
 	for (int i = 0; i < 30; i++)
 	{
 		CBrick *brick = new CBrick();
@@ -147,7 +144,6 @@ void LoadResources()
 		objects.push_back(brick);
 	}
 
-	// and Goombas 
 	for (int i = 0; i < 4; i++)
 	{
 		goomba = new CGoomba();
@@ -291,7 +287,7 @@ int Run()
 		{
 			frameStart = now;
 
-			game->ProcessKeyboard();
+			game->GetInputManager()->ProcessKeyboard();
 			
 			Update(dt);
 			Render();
@@ -306,13 +302,10 @@ int Run()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	keyHandler = new CSampleKeyHander();
 
 	game = CGame::GetInstance();
-	game->Init(hWnd);
-
-	keyHandler = new CSampleKeyHander();
-	game->InitKeyboard(keyHandler);
-
+	game->Init(hWnd, keyHandler);
 
 	LoadResources();
 
