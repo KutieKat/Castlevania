@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "Utilities/debug.h"
+#include "Utilities/Debug.h"
 
 CGame* CGame::instance = nullptr;
 
@@ -40,7 +40,7 @@ void CGame::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 
 	if (d3ddv == NULL)
 	{
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
+		CDebug::Error("CreateDevice failed!", "Game.cpp");
 		return;
 	}
 
@@ -53,7 +53,7 @@ void CGame::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 	this->inputManager = CInputManager::GetInstance();
 	this->inputManager->Init(hWnd, keyHandler);
 
-	OutputDebugString(L"[INFO] InitGame done;\n");
+	CDebug::Info("Initialize game successfully!", "Game.cpp");
 }
 
 /*
@@ -184,7 +184,6 @@ void CGame::SweptAABB(
 		nx = 0.0f;
 		dy > 0?ny = -1.0f:ny = 1.0f;
 	}
-
 }
 
 CGame* CGame::GetInstance()

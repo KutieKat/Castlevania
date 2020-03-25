@@ -2,11 +2,12 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "../Utilities/debug.h"
+#include "../Utilities/Debug.h"
 #include "../Game.h"
 #include "../Textures/TextureManager.h"
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Utilities/Color.h"
+#include "../Utilities/Convert.h"
 
 CTextureManager* CTextureManager::instance = nullptr;
 
@@ -26,7 +27,7 @@ bool CTextureManager::LoadFromFile(string filePath)
 
 	if (!doc.LoadFile())
 	{
-		DebugOut(L"%s", doc.ErrorDesc());
+		CDebug::Error(doc.ErrorDesc());
 		return false;
 	}
 
@@ -58,9 +59,11 @@ void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor
 	{
 		D3DXIMAGE_INFO info;
 		HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
+		string path = CConvert::lpcwstrToString(filePath);
+
 		if (result != D3D_OK)
 		{
-			//DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
+			CDebug::Error("GetImageInfoFromFile failed: " + path, "TextureManager.cpp");
 			return;
 		}
 
@@ -85,13 +88,13 @@ void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor
 
 		if (result != D3D_OK)
 		{
-			//OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
+			CDebug::Error("CreateTextureFromFile failed!", "TextureManager.cpp");
 			return;
 		}
 
 		this->textures[id] = texture;
 
-		//DebugOut(L"[INFO] Texture loaded OK: id=%d, %s \n", id, filePath);
+		CDebug::Info("Texture loaded successfully: ID=" + id + ", Path=" + path, "TextureManager.cpp");
 	}
 
 }

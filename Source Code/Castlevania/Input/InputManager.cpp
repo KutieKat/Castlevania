@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "..\Utilities\debug.h"
+#include "..\Utilities\Debug.h"
 
 CInputManager* CInputManager::instance = nullptr;
 
@@ -25,7 +25,8 @@ void CInputManager::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] DirectInput8Create failed!\n");
+		int value = 1;
+		CDebug::Error("DirectInput8Create failed!", "InputManager.cpp");
 		return;
 	}
 
@@ -33,7 +34,7 @@ void CInputManager::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] CreateDevice failed!\n");
+		CDebug::Error("CreateDevice failed!", "InputManager.cpp");
 		return;
 	}
 
@@ -53,13 +54,13 @@ void CInputManager::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 	hr = didv->Acquire();
 	if (hr != DI_OK)
 	{
-		DebugOut(L"[ERROR] DINPUT8::Acquire failed!\n");
+		CDebug::Error("DINPUT8::Acquire failed!", "InputManager.cpp");
 		return;
 	}
 
 	this->keyHandler = keyHandler;
 
-	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
+	CDebug::Info("Keyboard has been initialized successfully!", "InputManager.cpp");
 }
 
 void CInputManager::ProcessKeyboard()
@@ -74,7 +75,7 @@ void CInputManager::ProcessKeyboard()
 			HRESULT h = didv->Acquire();
 			if (h == DI_OK)
 			{
-				DebugOut(L"[INFO] Keyboard re-acquired!\n");
+				CDebug::Info("Keyboard re-acquired!", "InputManager.cpp");
 			}
 			else return;
 		}

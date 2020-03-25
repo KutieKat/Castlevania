@@ -1,6 +1,6 @@
 #include "SpriteManager.h"
 #include "../Libraries/TinyXML/tinyxml.h"
-#include "../Utilities/debug.h"
+#include "../Utilities/Debug.h"
 #include "../Textures/TextureManager.h"
 
 CSpriteManager* CSpriteManager::instance = nullptr;
@@ -11,7 +11,7 @@ bool CSpriteManager::LoadFromFile(string filePath)
 
 	if (!doc.LoadFile())
 	{
-		DebugOut(L"%s", doc.ErrorDesc());
+		CDebug::Error(doc.ErrorDesc());
 		return false;
 	}
 

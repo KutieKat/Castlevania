@@ -1,6 +1,6 @@
 ﻿#include "AnimationManager.h"
 #include "../Libraries/TinyXML/tinyxml.h"
-#include "../Utilities/debug.h"
+#include "../Utilities/Debug.h"
 #include "../Sprites/SpriteManager.h"
 
 CAnimationManager* CAnimationManager::instance = nullptr;
@@ -11,7 +11,7 @@ bool CAnimationManager::LoadFromFile(string filePath)
 
 	if (!doc.LoadFile())
 	{
-		DebugOut(L"%s", doc.ErrorDesc());
+		CDebug::Info(doc.ErrorDesc(), "AnimationManager.cpp");
 		return false;
 	}
 

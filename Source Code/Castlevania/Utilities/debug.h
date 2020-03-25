@@ -1,10 +1,16 @@
 #pragma once
 
-#include <signal.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <time.h>
-#include <stdlib.h>
+#include <string>
+#include <Windows.h>
+using namespace std;
 
-void DebugOut(wchar_t *fmt, ...);
+class CDebug
+{
+public:
+	static void Info(string message, string fileName = "");
+	static void Error(string message, string fileName = "");
+
+private:
+	static void OutputMessage(string tag, string message, string fileName = "");
+};
+

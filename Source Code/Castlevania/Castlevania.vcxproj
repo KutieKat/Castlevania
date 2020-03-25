@@ -37,7 +37,8 @@
     <ClCompile Include="Sprites\SpriteManager.cpp" />
     <ClCompile Include="Textures\TextureManager.cpp" />
     <ClCompile Include="Utilities\Color.cpp" />
-    <ClCompile Include="Utilities\debug.cpp" />
+    <ClCompile Include="Utilities\Convert.cpp" />
+    <ClCompile Include="Utilities\Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animation.h" />
@@ -56,7 +57,8 @@
     <ClInclude Include="Sprites\SpriteManager.h" />
     <ClInclude Include="Textures\TextureManager.h" />
     <ClInclude Include="Utilities\Color.h" />
-    <ClInclude Include="Utilities\debug.h" />
+    <ClInclude Include="Utilities\Convert.h" />
+    <ClInclude Include="Utilities\Debug.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

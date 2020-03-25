@@ -1,12 +1,32 @@
-#include <Windows.h>
-#include "debug.h"
+#include "Debug.h"
+#include "Convert.h"
 
-void DebugOut(wchar_t *fmt, ...)
+void CDebug::Info(string message, string fileName)
 {
-	va_list argp;
-	va_start(argp, fmt);
-	wchar_t dbg_out[4096];
-	vswprintf_s(dbg_out, fmt, argp);
-	va_end(argp);
-	OutputDebugString(dbg_out);
+	OutputMessage("INFO", message, fileName);
+}
+
+void CDebug::Error(string message, string fileName)
+{
+	OutputMessage("ERROR", message, fileName);
+}
+
+void CDebug::OutputMessage(string tag, string message, string fileName)
+{
+	string outputMessage = "[" + tag + "]";
+
+	if (fileName.empty())
+	{
+		outputMessage += " " + message;
+	}
+	else
+	{
+		outputMessage += "[" + fileName + "] " + message;
+	}
+
+	outputMessage += "\n";
+
+	wstring wstr = wstring(outputMessage.begin(), outputMessage.end());
+
+	OutputDebugString(wstr.c_str());
 }

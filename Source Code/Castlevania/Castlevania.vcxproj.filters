@@ -111,9 +111,6 @@
     <ClCompile Include="Input\InputManager.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\debug.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\Color.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
@@ -144,6 +141,12 @@
     <ClCompile Include="Models\Characters\Players\Mario.cpp">
       <Filter>Source Files\Models\Characters\Players</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\Debug.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Convert.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -173,9 +176,6 @@
     <ClInclude Include="Utilities\Color.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\debug.h">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Textures\TextureManager.h">
       <Filter>Header Files\Textures</Filter>
     </ClInclude>
@@ -196,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="Models\Characters\Enemies\Goomba.h">
       <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Debug.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Convert.h">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
