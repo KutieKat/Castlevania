@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "debug.h"
+#include "..\Utilities\debug.h"
 
 CInputManager* CInputManager::instance = nullptr;
 

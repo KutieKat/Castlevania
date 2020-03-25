@@ -1,7 +1,7 @@
 ﻿#include "AnimationManager.h"
-#include "tinyxml.h"
-#include "debug.h"
-#include "SpriteManager.h"
+#include "../Libraries/TinyXML/tinyxml.h"
+#include "../Utilities/debug.h"
+#include "../Sprites/SpriteManager.h"
 
 CAnimationManager* CAnimationManager::instance = nullptr;
 

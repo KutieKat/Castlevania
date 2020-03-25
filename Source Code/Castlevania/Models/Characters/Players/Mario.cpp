@@ -1,9 +1,9 @@
 #include <algorithm>
 
-#include "debug.h"
+#include "../../../Utilities/debug.h"
 #include "Mario.h"
-#include "Game.h"
-#include "Goomba.h"
+#include "../../../Game.h"
+#include "../Enemies/Goomba.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {

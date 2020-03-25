@@ -18,6 +18,46 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Animations\Animation.cpp" />
+    <ClCompile Include="Animations\AnimationFrame.cpp" />
+    <ClCompile Include="Animations\AnimationManager.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="Libraries\TinyXML\tinystr.cpp" />
+    <ClCompile Include="Libraries\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="Libraries\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="Libraries\TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Models\Characters\Enemies\Goomba.cpp" />
+    <ClCompile Include="Models\Characters\Players\Mario.cpp" />
+    <ClCompile Include="Models\GameObject.cpp" />
+    <ClCompile Include="Models\Misc\Brick.cpp" />
+    <ClCompile Include="Sprites\Sprite.cpp" />
+    <ClCompile Include="Sprites\SpriteManager.cpp" />
+    <ClCompile Include="Textures\TextureManager.cpp" />
+    <ClCompile Include="Utilities\Color.cpp" />
+    <ClCompile Include="Utilities\debug.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Animations\Animation.h" />
+    <ClInclude Include="Animations\AnimationFrame.h" />
+    <ClInclude Include="Animations\AnimationManager.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Input\IKeyEventHandler.h" />
+    <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Libraries\TinyXML\tinystr.h" />
+    <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
+    <ClInclude Include="Models\Characters\Enemies\Goomba.h" />
+    <ClInclude Include="Models\Characters\Players\Mario.h" />
+    <ClInclude Include="Models\GameObject.h" />
+    <ClInclude Include="Models\Misc\Brick.h" />
+    <ClInclude Include="Sprites\Sprite.h" />
+    <ClInclude Include="Sprites\SpriteManager.h" />
+    <ClInclude Include="Textures\TextureManager.h" />
+    <ClInclude Include="Utilities\Color.h" />
+    <ClInclude Include="Utilities\debug.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}</ProjectGuid>
@@ -122,46 +162,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="AnimationFrame.h" />
-    <ClInclude Include="AnimationManager.h" />
-    <ClInclude Include="Brick.h" />
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="debug.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Goomba.h" />
-    <ClInclude Include="IKeyEventHandler.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Mario.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SpriteManager.h" />
-    <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="tinystr.h" />
-    <ClInclude Include="tinyxml.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="AnimationFrame.cpp" />
-    <ClCompile Include="AnimationManager.cpp" />
-    <ClCompile Include="Brick.cpp" />
-    <ClCompile Include="Color.cpp" />
-    <ClCompile Include="debug.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Goomba.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mario.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteManager.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
-    <ClCompile Include="tinystr.cpp" />
-    <ClCompile Include="tinyxml.cpp" />
-    <ClCompile Include="tinyxmlerror.cpp" />
-    <ClCompile Include="tinyxmlparser.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,7 +1,7 @@
 #include "SpriteManager.h"
-#include "tinyxml.h"
-#include "debug.h"
-#include "TextureManager.h"
+#include "../Libraries/TinyXML/tinyxml.h"
+#include "../Utilities/debug.h"
+#include "../Textures/TextureManager.h"
 
 CSpriteManager* CSpriteManager::instance = nullptr;
 

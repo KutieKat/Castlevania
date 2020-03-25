@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "../../GameObject.h"
 
 #define GOOMBA_WALKING_SPEED 0.05f;
 

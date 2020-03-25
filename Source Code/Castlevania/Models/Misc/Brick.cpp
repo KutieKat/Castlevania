@@ -1,5 +1,4 @@
 #include "Brick.h"
-#include "AnimationManager.h"
 
 void CBrick::Render()
 {

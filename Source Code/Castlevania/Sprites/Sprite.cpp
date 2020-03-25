@@ -1,5 +1,5 @@
 #include "Sprite.h"
-#include "Game.h"
+#include "../Game.h"
 
 CSprite::CSprite(string id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
 {

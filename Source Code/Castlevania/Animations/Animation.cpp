@@ -1,6 +1,6 @@
 #include "Animation.h"
-#include "SpriteManager.h"
-#include "Sprite.h"
+#include "../Sprites/SpriteManager.h"
+#include "../Sprites/Sprite.h"
 
 CAnimation::CAnimation(int defaultTime)
 {

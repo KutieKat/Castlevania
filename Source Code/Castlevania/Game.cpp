@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "debug.h"
+#include "Utilities/debug.h"
 
 CGame* CGame::instance = nullptr;
 

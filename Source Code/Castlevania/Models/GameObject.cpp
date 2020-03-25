@@ -1,11 +1,11 @@
 #include <d3dx9.h>
 #include <algorithm>
 
-#include "debug.h"
-#include "TextureManager.h"
-#include "Game.h"
+#include "../Utilities/debug.h"
+#include "../Textures/TextureManager.h"
+#include "../Game.h"
 #include "GameObject.h"
-#include "SpriteManager.h"
+#include "../Sprites/SpriteManager.h"
 
 CGameObject::CGameObject()
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <string>
-#include "Animation.h"
+#include "../Animations/Animation.h"
 using namespace std;
 
 class CAnimationManager

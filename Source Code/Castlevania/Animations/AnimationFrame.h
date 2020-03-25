@@ -1,6 +1,6 @@
 #pragma once
 #include <d3dx9.h>
-#include "Sprite.h"
+#include "../Sprites/Sprite.h"
 
 class CAnimationFrame
 {

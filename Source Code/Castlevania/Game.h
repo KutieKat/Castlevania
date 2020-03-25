@@ -3,7 +3,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "InputManager.h"
+#include "Input/InputManager.h"
 
 class CGame
 {

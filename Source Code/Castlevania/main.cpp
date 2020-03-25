@@ -2,18 +2,18 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "debug.h"
+#include "Utilities/debug.h"
 #include "Game.h"
-#include "GameObject.h"
-#include "Animation.h"
-#include "SpriteManager.h"
-#include "AnimationManager.h"
-#include "TextureManager.h"
-#include "Color.h"
+#include "Models/GameObject.h"
+#include "Animations/Animation.h"
+#include "Sprites/SpriteManager.h"
+#include "Animations/AnimationManager.h"
+#include "Textures/TextureManager.h"
+#include "Utilities/Color.h"
 
-#include "Mario.h"
-#include "Brick.h"
-#include "Goomba.h"
+#include "Models/Characters/Players/Mario.h"
+#include "Models/Misc/Brick.h"
+#include "Models/Characters/Enemies/Goomba.h"
 
 #define WINDOW_CLASS_NAME L"Castlevania"
 #define MAIN_WINDOW_TITLE L"Castlevania"

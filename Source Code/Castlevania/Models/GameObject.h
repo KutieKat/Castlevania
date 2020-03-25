@@ -4,9 +4,9 @@
 #include <vector>
 #include <string>
 
-#include "SpriteManager.h"
-#include "Animation.h"
-#include "AnimationManager.h"
+#include "../Sprites/SpriteManager.h"
+#include "../Animations/Animation.h"
+#include "../Animations/AnimationManager.h"
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box

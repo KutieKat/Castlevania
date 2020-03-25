@@ -2,11 +2,11 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "debug.h"
-#include "Game.h"
-#include "TextureManager.h"
-#include "tinyxml.h"
-#include "Color.h"
+#include "../Utilities/debug.h"
+#include "../Game.h"
+#include "../Textures/TextureManager.h"
+#include "../Libraries/TinyXML/tinyxml.h"
+#include "../Utilities/Color.h"
 
 CTextureManager* CTextureManager::instance = nullptr;
 
