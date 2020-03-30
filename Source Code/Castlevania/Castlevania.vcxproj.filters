@@ -135,9 +135,6 @@
     <ClCompile Include="Models\Misc\Brick.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Characters\Enemies\Goomba.cpp">
-      <Filter>Source Files\Models\Characters\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\Debug.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
@@ -146,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="Models\Characters\Players\Simon.cpp">
       <Filter>Source Files\Models\Characters\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\BigCandle.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +191,6 @@
     <ClInclude Include="Models\Misc\Brick.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Characters\Enemies\Goomba.h">
-      <Filter>Header Files\Models\Characters\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Debug.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
@@ -205,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Models\Characters\Players\Simon.h">
       <Filter>Header Files\Models\Characters\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\BigCandle.h">
+      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

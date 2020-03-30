@@ -1,4 +1,5 @@
 #include "Simon.h"
+#include "../../Misc/BigCandle.h"
 #include "../../Misc/Brick.h"
 #include "../../../Utilities/Debug.h"
 
@@ -44,6 +45,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				jumping = false;
+			}
+			else if (dynamic_cast<CBigCandle*>(e->obj))
+			{
+				x -= nx * 0.4f;
 			}
 		}
 	}

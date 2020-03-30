@@ -29,9 +29,9 @@
     <ClCompile Include="Libraries\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="Libraries\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Models\Characters\Enemies\Goomba.cpp" />
     <ClCompile Include="Models\Characters\Players\Simon.cpp" />
     <ClCompile Include="Models\GameObject.cpp" />
+    <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
     <ClCompile Include="Sprites\SpriteManager.cpp" />
@@ -49,9 +49,9 @@
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Libraries\TinyXML\tinystr.h" />
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
-    <ClInclude Include="Models\Characters\Enemies\Goomba.h" />
     <ClInclude Include="Models\Characters\Players\Simon.h" />
     <ClInclude Include="Models\GameObject.h" />
+    <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
     <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Sprites\SpriteManager.h" />

@@ -7,8 +7,8 @@
 #include "Game.h"
 #include "Models/GameObject.h"
 #include "Models/Characters/Players/Simon.h"
+#include "Models/Misc/BigCandle.h"
 #include "Models/Misc/Brick.h"
-#include "Models/Characters/Enemies/Goomba.h"
 #include "Sprites/SpriteManager.h"
 #include "Textures/TextureManager.h"
 #include "Utilities/Color.h"
@@ -17,7 +17,6 @@
 
 CGame* game;
 CSimon* simon;
-CGoomba* goomba;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -158,13 +157,29 @@ void LoadResources()
 
 	CSpriteManager* sprites = CSpriteManager::GetInstance();
 	sprites->LoadFromFile("Resources\\Characters\\Players\\Simon.SpriteSheet.xml");
-	sprites->LoadFromFile("Resources\\Characters\\Enemies\\Goomba.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Ground\\Brick.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Ground\\BigCandle.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
-	animations->LoadFromFile("Resources\\Characters\\Enemies\\Goomba.Animations.xml");
 	animations->LoadFromFile("Resources\\Ground\\Brick.Animations.xml");
+	animations->LoadFromFile("Resources\\Ground\\BigCandle.Animations.xml");
+
+	for (int i = 0; i < 48; i++)
+	{
+		CBrick* brick = new CBrick();
+		brick->AddAnimation("brick");
+		brick->SetPosition(i * 32.0f, 170);
+		objects.push_back(brick);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		CBigCandle* bigCandle = new CBigCandle();
+		bigCandle->AddAnimation("big_candle");
+		bigCandle->SetPosition(i == 0 ? 300 : (i + 1) * 300, 108);
+		objects.push_back(bigCandle);
+	}
 
 	simon = new CSimon();
 	simon->AddAnimation("simon_idle_left");
@@ -183,14 +198,6 @@ void LoadResources()
 
 	simon->SetPosition(50.0f, 0);
 	objects.push_back(simon);
-
-	for (int i = 0; i < 48; i++)
-	{
-		CBrick* brick = new CBrick();
-		brick->AddAnimation("brick");
-		brick->SetPosition(i * 32.0f, 170);
-		objects.push_back(brick);
-	}
 }
 
 /*
@@ -199,18 +206,22 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-
 	vector<LPGAMEOBJECT> coObjects;
-	for (int i = 1; i < objects.size(); i++)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		coObjects.push_back(objects[i]);
+		if (dynamic_cast<CSimon*>(objects[i]))
+		{
+			continue;
+		}
+		else
+		{
+			coObjects.push_back(objects[i]);
+		}
 	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt,&coObjects);
+		objects[i]->Update(dt, &coObjects);
 	}
 
 	// Update camera to follow the player
