@@ -45,6 +45,15 @@ void CGoomba::Render()
 	//RenderBoundingBox();
 }
 
+CBoundingBox CGoomba::GetBoundingBox()
+{
+	CBoundingBox boundingBox;
+
+	GetBoundingBox(boundingBox.left, boundingBox.top, boundingBox.right, boundingBox.bottom);
+
+	return boundingBox;
+}
+
 void CGoomba::SetState(int state)
 {
 	CGameObject::SetState(state);

@@ -196,3 +196,12 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	}
 }
 
+CBoundingBox CMario::GetBoundingBox()
+{
+	CBoundingBox boundingBox;
+
+	GetBoundingBox(boundingBox.left, boundingBox.top, boundingBox.right, boundingBox.bottom);
+
+	return boundingBox;
+}
+

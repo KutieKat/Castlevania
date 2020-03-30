@@ -25,6 +25,7 @@
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
+#define BACKGROUND_WIDTH 1536
 
 CGame *game;
 CMario *mario;
@@ -176,11 +177,36 @@ void Update(DWORD dt)
 	}
 
 
-	// Update camera to follow mario
+	// Update camera to follow the player
 	float cx, cy;
 	mario->GetPosition(cx, cy);
 
-	cx -= SCREEN_WIDTH / 2;
+	float currentPlayerX;
+	float currentPlayerY;
+
+	mario->GetPosition(currentPlayerX, currentPlayerY);
+
+	if (currentPlayerX < SCREEN_WIDTH / 2) {
+		cx = 0.0f;
+
+		if (currentPlayerX <= 0) {
+			currentPlayerX = 0.0f;
+			mario->SetPosition(currentPlayerX, currentPlayerY);
+		}
+	}
+	else if (currentPlayerX + SCREEN_WIDTH / 2 >= BACKGROUND_WIDTH) {
+		cx = BACKGROUND_WIDTH - SCREEN_WIDTH;
+		float playerBoundingBoxWidth = mario->GetBoundingBox().right - mario->GetBoundingBox().left;
+
+		if (currentPlayerX >= BACKGROUND_WIDTH - playerBoundingBoxWidth) {
+			currentPlayerX = BACKGROUND_WIDTH - playerBoundingBoxWidth;
+			mario->SetPosition(currentPlayerX, currentPlayerY);
+		}
+	}
+	else {
+		cx -= SCREEN_WIDTH / 2;
+	}
+
 	cy -= SCREEN_HEIGHT / 2;
 
 	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);

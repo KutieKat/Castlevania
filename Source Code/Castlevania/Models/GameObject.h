@@ -28,6 +28,14 @@ struct CCollisionEvent
 	}
 };
 
+struct CBoundingBox
+{
+	float left;
+	float top;
+	float right;
+	float bottom;
+};
+
 class CGameObject
 {
 public:
@@ -74,6 +82,7 @@ public:
 	CGameObject();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
+	virtual CBoundingBox GetBoundingBox() = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
