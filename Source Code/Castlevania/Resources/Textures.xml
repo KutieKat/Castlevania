@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <textures>
-	<texture id="mario_texture" path="Resources\\Characters\\Players\\Mario.png" r="255" g="255" b="255" />
+	<texture id="simon_texture" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
 	<texture id="enemies_texture" path="Resources\\Characters\\Enemies\\Enemies.png" r="3" g="26" b="110" />
 	<texture id="brick_texture" path="Resources\\Ground\\Brick.png" r="255" g="0" b="255" />
 	<texture id="bounding_box_texture" path="Resources\\Misc\\BoundingBox.png" r="255" g="255" b="255" />

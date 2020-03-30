@@ -6,7 +6,7 @@
 #include "Animations/Animation.h"
 #include "Game.h"
 #include "Models/GameObject.h"
-#include "Models/Characters/Players/Mario.h"
+#include "Models/Characters/Players/Simon.h"
 #include "Models/Misc/Brick.h"
 #include "Models/Characters/Enemies/Goomba.h"
 #include "Sprites/SpriteManager.h"
@@ -15,9 +15,9 @@
 #include "Utilities/Constants.h"
 #include "Utilities/Debug.h"
 
-CGame *game;
-CMario *mario;
-CGoomba *goomba;
+CGame* game;
+CSimon* simon;
+CGoomba* goomba;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -28,39 +28,114 @@ class CSampleKeyHander: public IKeyEventHandler
 	virtual void OnKeyUp(int KeyCode);
 };
 
-CSampleKeyHander * keyHandler; 
+CSampleKeyHander* keyHandler; 
 
-void CSampleKeyHander::OnKeyDown(int KeyCode)
+void CSampleKeyHander::OnKeyDown(int keyCode)
 {
-	switch (KeyCode)
+	switch (keyCode)
 	{
-	case DIK_SPACE:
-		mario->SetState(MARIO_STATE_JUMP);
+	case DIK_DOWN:
+		simon->SetState(SIMON_STATE_SITTING);
 		break;
 
-	case DIK_A:
-		mario->SetState(MARIO_STATE_IDLE);
-		mario->SetLevel(MARIO_LEVEL_BIG);
-		mario->SetPosition(50.0f,0.0f);
-		mario->SetSpeed(0, 0);
+	case DIK_Z:
+		if (simon->sitting)
+		{
+			simon->SetState(SIMON_STATE_SITTING_AND_ATTACKING);
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_STANDING_AND_ATTACKING);
+		}
+		break;
+
+	case DIK_X:
+		if (!simon->sitting && !simon->jumping)
+		{
+			simon->SetState(SIMON_STATE_JUMPING);
+		}
+
 		break;
 	}
 }
 
-void CSampleKeyHander::OnKeyUp(int KeyCode)
+
+void CSampleKeyHander::OnKeyUp(int keyCode)
 {
+	switch (keyCode)
+	{
+	case DIK_DOWN:
+		if (simon->attacking)
+		{
+			simon->SetState(SIMON_STATE_STANDING_AND_ATTACKING);
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_IDLE);
+		}
+
+		break;
+
+	case DIK_Z:
+		simon->SetState(SIMON_STATE_IDLE);
+		break;
+	}
 }
 
 void CSampleKeyHander::KeyState(BYTE *states)
 {
-	if (mario->GetState() == MARIO_STATE_DIE) 
-		return;
 	if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
-		mario->SetState(MARIO_STATE_WALKING_RIGHT);
+	{
+		if (simon->jumping || simon->attacking)
+		{
+			return;
+		}
+		else if (simon->sitting)
+		{
+			simon->nx = 1;
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_WALKING_RIGHT);
+		}
+	}
 	else if (game->GetInputManager()->IsKeyDown(DIK_LEFT))
-		mario->SetState(MARIO_STATE_WALKING_LEFT);
+	{
+		if (simon->jumping || simon->attacking)
+		{
+			return;
+		}
+		else if (simon->sitting)
+		{
+			simon->nx = -1;
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_WALKING_LEFT);
+		}
+	}
+	else if (game->GetInputManager()->IsKeyDown(DIK_DOWN))
+	{
+		if (simon->jumping)
+		{
+			return;
+		}
+		else if (simon->attacking)
+		{
+			simon->SetState(SIMON_STATE_SITTING_AND_ATTACKING);
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_SITTING);
+		}
+	}
 	else
-		mario->SetState(MARIO_STATE_IDLE);
+	{
+		if (!simon->jumping && !simon->attacking)
+		{
+			simon->SetState(SIMON_STATE_IDLE);
+		}
+	}
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -82,30 +157,32 @@ void LoadResources()
 	textures->LoadFromFile("Resources\\Textures.xml");
 
 	CSpriteManager* sprites = CSpriteManager::GetInstance();
-	sprites->LoadFromFile("Resources\\Characters\\Players\\Mario.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Characters\\Players\\Simon.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Characters\\Enemies\\Goomba.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Ground\\Brick.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
-	animations->LoadFromFile("Resources\\Characters\\Players\\Mario.Animations.xml");
+	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
 	animations->LoadFromFile("Resources\\Characters\\Enemies\\Goomba.Animations.xml");
 	animations->LoadFromFile("Resources\\Ground\\Brick.Animations.xml");
 
-	mario = new CMario();
-	mario->AddAnimation("400");		// idle right big
-	mario->AddAnimation("401");		// idle left big
-	mario->AddAnimation("402");		// idle right small
-	mario->AddAnimation("403");		// idle left small
+	simon = new CSimon();
+	simon->AddAnimation("simon_idle_left");
+	simon->AddAnimation("simon_walk_left");
+	simon->AddAnimation("simon_sit_left");
+	simon->AddAnimation("simon_jump_left");
+	simon->AddAnimation("simon_sit_left_and_hit");
+	simon->AddAnimation("simon_stand_left_and_hit");
 
-	mario->AddAnimation("500");		// walk right big
-	mario->AddAnimation("501");		// walk left big
-	mario->AddAnimation("502");		// walk right small
-	mario->AddAnimation("503");		// walk left big
+	simon->AddAnimation("simon_idle_right");
+	simon->AddAnimation("simon_walk_right");
+	simon->AddAnimation("simon_sit_right");
+	simon->AddAnimation("simon_jump_right");
+	simon->AddAnimation("simon_sit_right_and_hit");
+	simon->AddAnimation("simon_stand_right_and_hit");
 
-	mario->AddAnimation("599");		// die
-
-	mario->SetPosition(50.0f, 0);
-	objects.push_back(mario);
+	simon->SetPosition(50.0f, 0);
+	objects.push_back(simon);
 
 	for (int i = 0; i < 48; i++)
 	{
@@ -114,16 +191,6 @@ void LoadResources()
 		brick->SetPosition(i * 32.0f, 170);
 		objects.push_back(brick);
 	}
-
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	goomba = new CGoomba();
-	//	goomba->AddAnimation("701");
-	//	goomba->AddAnimation("702");
-	//	goomba->SetPosition(200 + i * 60, 135);
-	//	goomba->SetState(GOOMBA_STATE_WALKING);
-	//	objects.push_back(goomba);
-	//}
 }
 
 /*
@@ -146,31 +213,30 @@ void Update(DWORD dt)
 		objects[i]->Update(dt,&coObjects);
 	}
 
-
 	// Update camera to follow the player
 	float cx, cy;
-	mario->GetPosition(cx, cy);
+	simon->GetPosition(cx, cy);
 
 	float currentPlayerX;
 	float currentPlayerY;
 
-	mario->GetPosition(currentPlayerX, currentPlayerY);
+	simon->GetPosition(currentPlayerX, currentPlayerY);
 
 	if (currentPlayerX < SCREEN_WIDTH / 2) {
 		cx = 0.0f;
 
 		if (currentPlayerX <= 0) {
 			currentPlayerX = 0.0f;
-			mario->SetPosition(currentPlayerX, currentPlayerY);
+			simon->SetPosition(currentPlayerX, currentPlayerY);
 		}
 	}
 	else if (currentPlayerX + SCREEN_WIDTH / 2 >= BACKGROUND_WIDTH) {
 		cx = BACKGROUND_WIDTH - SCREEN_WIDTH;
-		float playerBoundingBoxWidth = (mario->GetBoundingBox().right - mario->GetBoundingBox().left) * 2;
+		float playerBoundingBoxWidth = simon->GetBoundingBox().right - simon->GetBoundingBox().left;
 
 		if (currentPlayerX >= BACKGROUND_WIDTH - playerBoundingBoxWidth) {
 			currentPlayerX = BACKGROUND_WIDTH - playerBoundingBoxWidth;
-			mario->SetPosition(currentPlayerX, currentPlayerY);
+			simon->SetPosition(currentPlayerX, currentPlayerY);
 		}
 	}
 	else {

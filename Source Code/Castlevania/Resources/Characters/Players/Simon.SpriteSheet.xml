@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriteSheet id="simon_sprite_sheet" textureId="simon_texture">
+  <sprite id="simon_idle_left" left="0" top="0" right="60" bottom="66" />
+
+  <sprite id="simon_walk_left_1" left="60" top="0" right="120" bottom="66" />
+  <sprite id="simon_walk_left_2" left="120" top="0" right="180" bottom="66" />
+  <sprite id="simon_walk_left_3" left="180" top="0" right="240" bottom="66" />
+
+  <sprite id="simon_sit_left" left="300" top="198" right="360" bottom="264" />
+
+  <sprite id="simon_jump_left" left="240" top="0" right="300" bottom="66" />
+
+  <sprite id="simon_sit_left_and_hit_1" left="420" top="66" right="480" bottom="132" />
+  <sprite id="simon_sit_left_and_hit_2" left="0" top="132" right="60" bottom="198" />
+  <sprite id="simon_sit_left_and_hit_3" left="60" top="132" right="120" bottom="198" />
+
+  <sprite id="simon_stand_left_and_hit_1" left="300" top="0" right="360" bottom="66" />
+  <sprite id="simon_stand_left_and_hit_2" left="360" top="0" right="420" bottom="66" />
+  <sprite id="simon_stand_left_and_hit_3" left="420" top="0" right="480" bottom="66" />
+
+  <sprite id="simon_idle_right" left="420" top="265" right="480" bottom="331" />
+
+  <sprite id="simon_walk_right_1" left="360" top="265" right="420" bottom="331" />
+  <sprite id="simon_walk_right_2" left="300" top="265" right="360" bottom="331" />
+  <sprite id="simon_walk_right_3" left="240" top="265" right="300" bottom="331" />
+
+  <sprite id="simon_sit_right" left="120" top="463" right="180" bottom="529" />
+
+  <sprite id="simon_jump_right" left="180" top="265" right="240" bottom="331" />
+
+  <sprite id="simon_sit_right_and_hit_1" left="0" top="331" right="60" bottom="397" />
+  <sprite id="simon_sit_right_and_hit_2" left="420" top="397" right="480" bottom="463" />
+  <sprite id="simon_sit_right_and_hit_3" left="360" top="397" right="420" bottom="463" />
+
+  <sprite id="simon_stand_right_and_hit_1" left="120" top="265" right="180" bottom="331" />
+  <sprite id="simon_stand_right_and_hit_2" left="60" top="265" right="120" bottom="331" />
+  <sprite id="simon_stand_right_and_hit_3" left="0" top="265" right="60" bottom="331" />
+</spriteSheet>

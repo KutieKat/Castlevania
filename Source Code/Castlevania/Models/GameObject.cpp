@@ -117,7 +117,7 @@ void CGameObject::RenderBoundingBox()
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
-	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get("bounding_box");
+	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get("bounding_box_texture");
 
 	float l,t,r,b; 
 

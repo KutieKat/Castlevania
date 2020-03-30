@@ -30,7 +30,7 @@
     <ClCompile Include="Libraries\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Models\Characters\Enemies\Goomba.cpp" />
-    <ClCompile Include="Models\Characters\Players\Mario.cpp" />
+    <ClCompile Include="Models\Characters\Players\Simon.cpp" />
     <ClCompile Include="Models\GameObject.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
@@ -50,7 +50,7 @@
     <ClInclude Include="Libraries\TinyXML\tinystr.h" />
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
     <ClInclude Include="Models\Characters\Enemies\Goomba.h" />
-    <ClInclude Include="Models\Characters\Players\Mario.h" />
+    <ClInclude Include="Models\Characters\Players\Simon.h" />
     <ClInclude Include="Models\GameObject.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
     <ClInclude Include="Sprites\Sprite.h" />
