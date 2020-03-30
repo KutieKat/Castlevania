@@ -96,12 +96,12 @@ void LoadResources()
 	CSpriteManager* sprites = CSpriteManager::GetInstance();
 	sprites->LoadFromFile("Resources\\Characters\\Players\\Mario.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Characters\\Enemies\\Goomba.SpriteSheet.xml");
-	sprites->LoadFromFile("Resources\\Misc\\Brick.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Ground\\Brick.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Mario.Animations.xml");
 	animations->LoadFromFile("Resources\\Characters\\Enemies\\Goomba.Animations.xml");
-	animations->LoadFromFile("Resources\\Misc\\Brick.Animations.xml");
+	animations->LoadFromFile("Resources\\Ground\\Brick.Animations.xml");
 
 	mario = new CMario();
 	mario->AddAnimation("400");		// idle right big
@@ -119,41 +119,23 @@ void LoadResources()
 	mario->SetPosition(50.0f, 0);
 	objects.push_back(mario);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 48; i++)
 	{
-		CBrick *brick = new CBrick();
-		brick->AddAnimation("601");
-		brick->SetPosition(100.0f + i * 60.0f, 74.0f);
-		objects.push_back(brick);
-
-		brick = new CBrick();
-		brick->AddAnimation("601");
-		brick->SetPosition(100.0f + i * 60.0f, 90.0f);
-		objects.push_back(brick);
-
-		brick = new CBrick();
-		brick->AddAnimation("601");
-		brick->SetPosition(84.0f + i * 60.0f, 90.0f);
+		CBrick* brick = new CBrick();
+		brick->AddAnimation("brick");
+		brick->SetPosition(i * 32.0f, 170);
 		objects.push_back(brick);
 	}
 
-	for (int i = 0; i < 30; i++)
-	{
-		CBrick *brick = new CBrick();
-		brick->AddAnimation("601");
-		brick->SetPosition(0 + i * 16.0f, 150);
-		objects.push_back(brick);
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		goomba = new CGoomba();
-		goomba->AddAnimation("701");
-		goomba->AddAnimation("702");
-		goomba->SetPosition(200 + i * 60, 135);
-		goomba->SetState(GOOMBA_STATE_WALKING);
-		objects.push_back(goomba);
-	}
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	goomba = new CGoomba();
+	//	goomba->AddAnimation("701");
+	//	goomba->AddAnimation("702");
+	//	goomba->SetPosition(200 + i * 60, 135);
+	//	goomba->SetState(GOOMBA_STATE_WALKING);
+	//	objects.push_back(goomba);
+	//}
 }
 
 /*
@@ -196,7 +178,7 @@ void Update(DWORD dt)
 	}
 	else if (currentPlayerX + SCREEN_WIDTH / 2 >= BACKGROUND_WIDTH) {
 		cx = BACKGROUND_WIDTH - SCREEN_WIDTH;
-		float playerBoundingBoxWidth = mario->GetBoundingBox().right - mario->GetBoundingBox().left;
+		float playerBoundingBoxWidth = (mario->GetBoundingBox().right - mario->GetBoundingBox().left) * 2;
 
 		if (currentPlayerX >= BACKGROUND_WIDTH - playerBoundingBoxWidth) {
 			currentPlayerX = BACKGROUND_WIDTH - playerBoundingBoxWidth;

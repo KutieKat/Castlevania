@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="brick_sprite_sheet" textureId="brick_texture">
+  <sprite id="brick" left="0" top="0" right="32" bottom="32" />
+</spriteSheet>
