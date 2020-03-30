@@ -360,7 +360,10 @@ int Run()
 		{
 			frameStart = now;
 
-			game->GetInputManager()->ProcessKeyboard();
+			if ((simon->GetState() != SIMON_STATE_AUTO_WALKING_RIGHT) && (simon->GetState() != SIMON_STATE_AUTO_WALKING_LEFT))
+			{
+				game->GetInputManager()->ProcessKeyboard();
+			}
 			
 			Update(dt);
 			Render();

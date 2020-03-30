@@ -14,6 +14,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y = 50;
 	}
 
+	//if (x > 1000)
+	//{
+	//	SetState(SIMON_STATE_AUTO_WALKING_RIGHT);
+	//}
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -146,6 +151,16 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_WALKING_LEFT:
+		vx = -SIMON_WALKING_SPEED;
+		nx = -1;
+		break;
+
+	case SIMON_STATE_AUTO_WALKING_RIGHT:
+		vx = SIMON_WALKING_SPEED;
+		nx = 1;
+		break;
+
+	case SIMON_STATE_AUTO_WALKING_LEFT:
 		vx = -SIMON_WALKING_SPEED;
 		nx = -1;
 		break;
