@@ -2,30 +2,18 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "Utilities/debug.h"
+#include "Animations/AnimationManager.h"
+#include "Animations/Animation.h"
 #include "Game.h"
 #include "Models/GameObject.h"
-#include "Animations/Animation.h"
-#include "Sprites/SpriteManager.h"
-#include "Animations/AnimationManager.h"
-#include "Textures/TextureManager.h"
-#include "Utilities/Color.h"
-
 #include "Models/Characters/Players/Mario.h"
 #include "Models/Misc/Brick.h"
 #include "Models/Characters/Enemies/Goomba.h"
-
-#define WINDOW_CLASS_NAME L"Castlevania"
-#define MAIN_WINDOW_TITLE L"Castlevania"
-
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
-#define MAX_FRAME_RATE 120
-
-#define ID_TEX_MARIO 0
-#define ID_TEX_ENEMY 10
-#define ID_TEX_MISC 20
-#define BACKGROUND_WIDTH 1536
+#include "Sprites/SpriteManager.h"
+#include "Textures/TextureManager.h"
+#include "Utilities/Color.h"
+#include "Utilities/Constants.h"
+#include "Utilities/Debug.h"
 
 CGame *game;
 CMario *mario;

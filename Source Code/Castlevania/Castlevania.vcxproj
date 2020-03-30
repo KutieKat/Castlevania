@@ -57,6 +57,7 @@
     <ClInclude Include="Sprites\SpriteManager.h" />
     <ClInclude Include="Textures\TextureManager.h" />
     <ClInclude Include="Utilities\Color.h" />
+    <ClInclude Include="Utilities\Constants.h" />
     <ClInclude Include="Utilities\Convert.h" />
     <ClInclude Include="Utilities\Debug.h" />
   </ItemGroup>

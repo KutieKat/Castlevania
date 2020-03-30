@@ -1,12 +1,9 @@
 #pragma once
 #include <d3d9.h>
-
-#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
-#define KEYBOARD_BUFFER_SIZE 1024
-
 #include "IKeyEventHandler.h"
+#include "../Utilities/Constants.h"
 
 class CInputManager
 {

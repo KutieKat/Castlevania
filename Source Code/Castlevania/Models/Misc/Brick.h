@@ -1,8 +1,6 @@
 #pragma once
 #include "../GameObject.h"
-
-#define BRICK_BBOX_WIDTH  32
-#define BRICK_BBOX_HEIGHT 32
+#include "../../Utilities/Constants.h"
 
 class CBrick : public CGameObject
 {
