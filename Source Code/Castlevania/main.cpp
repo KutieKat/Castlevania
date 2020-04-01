@@ -20,120 +20,121 @@ CSimon* simon;
 
 vector<LPGAMEOBJECT> objects;
 
-class CSampleKeyHander: public IKeyEventHandler
+class CSampleKeyHander : public IKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
 };
 
-CSampleKeyHander* keyHandler; 
+CSampleKeyHander* keyHandler;
 
 void CSampleKeyHander::OnKeyDown(int keyCode)
 {
 	switch (keyCode)
 	{
-	case DIK_DOWN:
-		simon->SetState(SIMON_STATE_SITTING);
-		break;
-
 	case DIK_Z:
-		if (simon->sitting)
+		if (simon->Standing() == false && simon->GetState() == SIMON_STATE_STAND_AND_ATTACK)
 		{
-			simon->SetState(SIMON_STATE_SITTING_AND_ATTACKING);
+			return;
 		}
-		else
+
+		if (simon->Sitting() == true && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK)
 		{
-			simon->SetState(SIMON_STATE_STANDING_AND_ATTACKING);
+			return;
 		}
+
+		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK || simon->GetState() == SIMON_STATE_SIT_AND_ATTACK)
+		{
+			return;
+		}
+
+		if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_JUMP)
+		{
+			simon->SetState(SIMON_STATE_STAND_AND_ATTACK);
+		}
+		else if (simon->GetState() == SIMON_STATE_SIT)
+		{
+			simon->SetState(SIMON_STATE_SIT_AND_ATTACK);
+		}
+
 		break;
 
 	case DIK_X:
-		if (!simon->sitting && !simon->jumping)
+		if (simon->Sitting())
 		{
-			simon->SetState(SIMON_STATE_JUMPING);
+			return;
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_JUMP);
 		}
 
 		break;
+
+	default:
+		break;
 	}
 }
-
 
 void CSampleKeyHander::OnKeyUp(int keyCode)
 {
 	switch (keyCode)
 	{
 	case DIK_DOWN:
-		if (simon->attacking)
-		{
-			simon->SetState(SIMON_STATE_STANDING_AND_ATTACKING);
-		}
-		else
-		{
-			simon->SetState(SIMON_STATE_IDLE);
-		}
-
-		break;
-
-	case DIK_Z:
 		simon->SetState(SIMON_STATE_IDLE);
 		break;
 	}
 }
 
-void CSampleKeyHander::KeyState(BYTE *states)
+void CSampleKeyHander::KeyState(BYTE* states)
 {
+	if (simon->GetState() == SIMON_STATE_JUMP && simon->Standing() == false)
+	{
+		return;
+	}
+
+	if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->AnimationFinished() == false)
+	{
+		return;
+	}
+
+	if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK && simon->AnimationFinished() == false)
+	{
+		return;
+	}
+
+	if (game->GetInputManager()->IsKeyDown(DIK_DOWN))
+	{
+		simon->SetState(SIMON_STATE_SIT);
+	}
+
 	if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 	{
-		if (simon->jumping || simon->attacking)
+		simon->SetDirection(Direction::Right);
+
+		if (!simon->Sitting())
 		{
-			return;
+			simon->SetState(SIMON_STATE_WALK);
 		}
-		else if (simon->sitting)
-		{
-			simon->nx = 1;
-		}
-		else
-		{
-			simon->SetState(SIMON_STATE_WALKING_RIGHT);
-		}
+
 	}
 	else if (game->GetInputManager()->IsKeyDown(DIK_LEFT))
 	{
-		if (simon->jumping || simon->attacking)
+		simon->SetDirection(Direction::Left);
+
+		if (!simon->Sitting())
 		{
-			return;
-		}
-		else if (simon->sitting)
-		{
-			simon->nx = -1;
-		}
-		else
-		{
-			simon->SetState(SIMON_STATE_WALKING_LEFT);
+			simon->SetState(SIMON_STATE_WALK);
 		}
 	}
 	else if (game->GetInputManager()->IsKeyDown(DIK_DOWN))
 	{
-		if (simon->jumping)
-		{
-			return;
-		}
-		else if (simon->attacking)
-		{
-			simon->SetState(SIMON_STATE_SITTING_AND_ATTACKING);
-		}
-		else
-		{
-			simon->SetState(SIMON_STATE_SITTING);
-		}
+		simon->SetState(SIMON_STATE_SIT);
 	}
 	else
 	{
-		if (!simon->jumping && !simon->attacking)
-		{
-			simon->SetState(SIMON_STATE_IDLE);
-		}
+		simon->SetState(SIMON_STATE_IDLE);
 	}
 }
 
@@ -159,11 +160,13 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Characters\\Players\\Simon.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Ground\\Brick.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Ground\\BigCandle.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Weapons\\Whip.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
 	animations->LoadFromFile("Resources\\Ground\\Brick.Animations.xml");
 	animations->LoadFromFile("Resources\\Ground\\BigCandle.Animations.xml");
+	animations->LoadFromFile("Resources\\Weapons\\Whip.Animations.xml");
 
 	for (int i = 0; i < 48; i++)
 	{
@@ -186,15 +189,15 @@ void LoadResources()
 	simon->AddAnimation("simon_walk_left");
 	simon->AddAnimation("simon_sit_left");
 	simon->AddAnimation("simon_jump_left");
-	simon->AddAnimation("simon_sit_left_and_hit");
-	simon->AddAnimation("simon_stand_left_and_hit");
+	simon->AddAnimation("simon_sit_left_and_attack");
+	simon->AddAnimation("simon_stand_left_and_attack");
 
 	simon->AddAnimation("simon_idle_right");
 	simon->AddAnimation("simon_walk_right");
 	simon->AddAnimation("simon_sit_right");
 	simon->AddAnimation("simon_jump_right");
-	simon->AddAnimation("simon_sit_right_and_hit");
-	simon->AddAnimation("simon_stand_right_and_hit");
+	simon->AddAnimation("simon_sit_right_and_attack");
+	simon->AddAnimation("simon_stand_right_and_attack");
 
 	simon->SetPosition(50.0f, 0);
 	objects.push_back(simon);
@@ -260,7 +263,7 @@ void Update(DWORD dt)
 }
 
 /*
-	Render a frame 
+	Render a frame
 */
 void Render()
 {
@@ -276,7 +279,9 @@ void Render()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		for (int i = 0; i < objects.size(); i++)
+		{
 			objects[i]->Render();
+		}
 
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -320,7 +325,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 			hInstance,
 			NULL);
 
-	if (!hWnd) 
+	if (!hWnd)
 	{
 		OutputDebugString(L"[ERROR] CreateWindow failed");
 		DWORD ErrCode = GetLastError();
@@ -360,16 +365,16 @@ int Run()
 		{
 			frameStart = now;
 
-			if ((simon->GetState() != SIMON_STATE_AUTO_WALKING_RIGHT) && (simon->GetState() != SIMON_STATE_AUTO_WALKING_LEFT))
+			if (simon->GetState() != SIMON_STATE_AUTO_WALK)
 			{
 				game->GetInputManager()->ProcessKeyboard();
 			}
-			
+
 			Update(dt);
 			Render();
 		}
 		else
-			Sleep(tickPerFrame - dt);	
+			Sleep(tickPerFrame - dt);
 	}
 
 	return 1;
@@ -385,7 +390,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	LoadResources();
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

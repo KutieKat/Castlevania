@@ -33,6 +33,7 @@
     <ClCompile Include="Models\GameObject.cpp" />
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
+    <ClCompile Include="Models\Weapons\Whip.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
     <ClCompile Include="Sprites\SpriteManager.cpp" />
     <ClCompile Include="Textures\TextureManager.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Models\GameObject.h" />
     <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
+    <ClInclude Include="Models\Weapons\Whip.h" />
     <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Sprites\SpriteManager.h" />
     <ClInclude Include="Textures\TextureManager.h" />

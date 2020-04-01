@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="whip_sprite_sheet" textureId="whip_texture">
+  <sprite id="whip_level_1_left_1" left="0" top="0" right="240" bottom="66" />
+  <sprite id="whip_level_1_left_2" left="240" top="0" right="480" bottom="66" />
+  <sprite id="whip_level_1_left_3" left="480" top="0" right="720" bottom="66" />
+
+  <sprite id="whip_level_1_right_1" left="480" top="397" right="960" bottom="463" />
+  <sprite id="whip_level_1_right_2" left="240" top="397" right="480" bottom="463" />
+  <sprite id="whip_level_1_right_3" left="0" top="397" right="240" bottom="463" />
+</spriteSheet>

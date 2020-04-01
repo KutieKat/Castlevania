@@ -36,6 +36,8 @@ struct CBoundingBox
 	float bottom;
 };
 
+enum Direction { None, Left, Right };
+
 class CGameObject
 {
 public:
@@ -47,21 +49,22 @@ public:
 
 	float vx;
 	float vy;
-
-	int nx;	 
+ 
+	Direction direction;
 
 	int state;
 
 	DWORD dt; 
 
 	vector<CAnimation*> animations;
-	//CAnimationManager* animations = CAnimationManager::GetInstance();
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
+	void SetDirection(Direction direction) { this->direction = direction; }
+	Direction GetDirection() { return this->direction; }
 
 	int GetState() { return this->state; }
 

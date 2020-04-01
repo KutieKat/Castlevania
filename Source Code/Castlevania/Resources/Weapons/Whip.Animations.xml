@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animations spriteSheetId="whip_sprite_sheet">
+  <animation id="whip_level_1_left" duration="150">
+    <frame spriteId="whip_level_1_left_1" />
+    <frame spriteId="whip_level_1_left_2" />
+    <frame spriteId="whip_level_1_left_3" />
+  </animation>
+
+  <animation id="whip_level_1_right" duration="150">
+    <frame spriteId="whip_level_1_right_1" />
+    <frame spriteId="whip_level_1_right_2" />
+    <frame spriteId="whip_level_1_right_3" />
+  </animation>
+</animations>

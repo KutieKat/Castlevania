@@ -19,16 +19,16 @@
     <frame spriteId="simon_jump_left" />
   </animation>
 
-  <animation id="simon_sit_left_and_hit" duration="100">
-    <frame spriteId="simon_sit_left_and_hit_1" />
-    <frame spriteId="simon_sit_left_and_hit_2" />
-    <frame spriteId="simon_sit_left_and_hit_3" />
+  <animation id="simon_sit_left_and_attack" duration="150">
+    <frame spriteId="simon_sit_left_and_attack_1" />
+    <frame spriteId="simon_sit_left_and_attack_2" />
+    <frame spriteId="simon_sit_left_and_attack_3" />
   </animation>
 
-  <animation id="simon_stand_left_and_hit" duration="100">
-    <frame spriteId="simon_stand_left_and_hit_1" />
-    <frame spriteId="simon_stand_left_and_hit_2" />
-    <frame spriteId="simon_stand_left_and_hit_3" />
+  <animation id="simon_stand_left_and_attack" duration="150">
+    <frame spriteId="simon_stand_left_and_attack_1" />
+    <frame spriteId="simon_stand_left_and_attack_2" />
+    <frame spriteId="simon_stand_left_and_attack_3" />
   </animation>
 
   <animation id="simon_idle_right" duration="100">
@@ -50,15 +50,15 @@
     <frame spriteId="simon_jump_right" />
   </animation>
 
-  <animation id="simon_sit_right_and_hit" duration="100">
-    <frame spriteId="simon_sit_right_and_hit_1" />
-    <frame spriteId="simon_sit_right_and_hit_2" />
-    <frame spriteId="simon_sit_right_and_hit_3" />
+  <animation id="simon_sit_right_and_attack" duration="150">
+    <frame spriteId="simon_sit_right_and_attack_1" />
+    <frame spriteId="simon_sit_right_and_attack_2" />
+    <frame spriteId="simon_sit_right_and_attack_3" />
   </animation>
 
-  <animation id="simon_stand_right_and_hit" duration="100">
-    <frame spriteId="simon_stand_right_and_hit_1" />
-    <frame spriteId="simon_stand_right_and_hit_2" />
-    <frame spriteId="simon_stand_right_and_hit_3" />
+  <animation id="simon_stand_right_and_attack" duration="150">
+    <frame spriteId="simon_stand_right_and_attack_1" />
+    <frame spriteId="simon_stand_right_and_attack_2" />
+    <frame spriteId="simon_stand_right_and_attack_3" />
   </animation>
 </animations>

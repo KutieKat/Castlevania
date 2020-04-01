@@ -10,7 +10,9 @@ class CAnimation
 public:
 	CAnimation(int defaultTime);
 	void Add(string spriteId, DWORD time = 0);
+	void Render(bool& finished, float x, float y, int alpha = 255);
 	void Render(float x, float y, int alpha = 255);
+	void Reset();
 
 private:
 	DWORD lastFrameTime;

@@ -85,6 +85,12 @@
     <Filter Include="Source Files\Models\Characters\Enemies">
       <UniqueIdentifier>{abdc5852-2433-4572-a667-1c8d1b3b99b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Models\Weapons">
+      <UniqueIdentifier>{e29a22c6-23f5-4075-af79-301e2df084f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Weapons">
+      <UniqueIdentifier>{2b5ebc30-ab60-4958-a4dc-f29cb6577d67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprites\SpriteManager.cpp">
@@ -147,6 +153,9 @@
     <ClCompile Include="Models\Misc\BigCandle.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Weapons\Whip.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -205,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Models\Misc\BigCandle.h">
       <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\Whip.h">
+      <Filter>Header Files\Models\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
