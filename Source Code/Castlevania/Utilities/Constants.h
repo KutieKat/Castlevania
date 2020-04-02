@@ -1,5 +1,51 @@
 #pragma once
 
+// Structs
+class CGameObject;
+typedef CGameObject* LPGAMEOBJECT;
+
+struct CCollisionEvent;
+typedef CCollisionEvent* LPCOLLISIONEVENT;
+
+struct CCollisionEvent
+{
+	LPGAMEOBJECT obj;
+	float t, nx, ny;
+
+	CCollisionEvent(float t, float nx, float ny, LPGAMEOBJECT obj = NULL)
+	{ 
+		this->t = t;
+		this->nx = nx;
+		this->ny = ny;
+		this->obj = obj; 
+	}
+
+	static bool compare(const LPCOLLISIONEVENT &a, LPCOLLISIONEVENT &b)
+	{
+		return a->t < b->t;
+	}
+};
+
+struct CBoundingBox
+{
+	float left;
+	float top;
+	float right;
+	float bottom;
+};
+
+// Enumerations
+enum Direction {
+	None,
+	Left,
+	Right
+};
+
+enum Visibility {
+	Visible,
+	Hidden
+};
+
 // Window
 #define WINDOW_CLASS_NAME L"Castlevania"
 #define MAIN_WINDOW_TITLE L"Castlevania"
@@ -61,3 +107,12 @@
 
 #define WHIP_BBOX_WIDTH 240
 #define WHIP_BBOX_HEIGHT 66
+
+// MoneyBag
+#define MONEY_BAG_MOVE_UP_SPEED 0.05f
+
+#define MONEY_BAG_BBOX_WIDTH 29
+#define MONEY_BAG_BBOX_HEIGHT 29
+
+#define MONEY_BAG_STATE_IDLE 1
+#define MONEY_BAG_STATE_MOVE_UP 2

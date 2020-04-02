@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animations spriteSheetId="money_bag_sprite_sheet">
+  <animation id="money_bag" duration="100">
+    <frame spriteId="money_bag_1" />
+    <frame spriteId="money_bag_2" />
+    <frame spriteId="money_bag_3" />
+  </animation>
+</animations>

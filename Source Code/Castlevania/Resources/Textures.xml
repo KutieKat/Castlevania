@@ -5,4 +5,5 @@
 	<texture id="brick_texture" path="Resources\\Ground\\Brick.png" r="255" g="0" b="255" />
 	<texture id="bounding_box_texture" path="Resources\\Misc\\BoundingBox.png" r="255" g="255" b="255" />
 	<texture id="whip_texture" path="Resources\\Weapons\\Whip.png" r="255" g="0" b="255" />
+  <texture id="money_bag_texture" path="Resources\\Items\\MoneyBag.png" r="255" g="0" b="255" />
 </textures>

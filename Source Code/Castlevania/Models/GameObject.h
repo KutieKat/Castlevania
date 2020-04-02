@@ -7,36 +7,8 @@
 #include "../Sprites/SpriteManager.h"
 #include "../Animations/Animation.h"
 #include "../Animations/AnimationManager.h"
+#include "../Utilities/Constants.h"
 using namespace std;
-
-#define ID_TEX_BBOX -100		// special texture to draw object bounding box
-
-class CGameObject; 
-typedef CGameObject * LPGAMEOBJECT;
-
-struct CCollisionEvent;
-typedef CCollisionEvent * LPCOLLISIONEVENT;
-struct CCollisionEvent
-{
-	LPGAMEOBJECT obj;
-	float t, nx, ny;
-	CCollisionEvent(float t, float nx, float ny, LPGAMEOBJECT obj = NULL) { this->t = t; this->nx = nx; this->ny = ny; this->obj = obj; }
-
-	static bool compare(const LPCOLLISIONEVENT &a, LPCOLLISIONEVENT &b)
-	{
-		return a->t < b->t;
-	}
-};
-
-struct CBoundingBox
-{
-	float left;
-	float top;
-	float right;
-	float bottom;
-};
-
-enum Direction { None, Left, Right };
 
 class CGameObject
 {
@@ -51,6 +23,7 @@ public:
 	float vy;
  
 	Direction direction;
+	Visibility visibility;
 
 	int state;
 
@@ -59,12 +32,17 @@ public:
 	vector<CAnimation*> animations;
 
 public: 
+	CGameObject();
+
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 	void SetDirection(Direction direction) { this->direction = direction; }
 	Direction GetDirection() { return this->direction; }
+
+	void SetVisibility(Visibility visibility);
+	Visibility GetVisibility();
 
 	int GetState() { return this->state; }
 
@@ -81,8 +59,6 @@ public:
 		float &ny);
 
 	void AddAnimation(string aniId);
-
-	CGameObject();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual CBoundingBox GetBoundingBox() = 0;

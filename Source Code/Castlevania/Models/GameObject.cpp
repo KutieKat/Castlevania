@@ -112,6 +112,16 @@ void CGameObject::FilterCollision(
 }
 
 
+void CGameObject::SetVisibility(Visibility visibility)
+{
+	this->visibility = visibility;
+}
+
+Visibility CGameObject::GetVisibility()
+{
+	return this->visibility;
+}
+
 void CGameObject::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);

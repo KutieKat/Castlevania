@@ -31,6 +31,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Models\Characters\Players\Simon.cpp" />
     <ClCompile Include="Models\GameObject.cpp" />
+    <ClCompile Include="Models\Items\Item.cpp" />
+    <ClCompile Include="Models\Items\MoneyBag.cpp" />
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
@@ -52,6 +54,8 @@
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
     <ClInclude Include="Models\Characters\Players\Simon.h" />
     <ClInclude Include="Models\GameObject.h" />
+    <ClInclude Include="Models\Items\Item.h" />
+    <ClInclude Include="Models\Items\MoneyBag.h" />
     <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
     <ClInclude Include="Models\Weapons\Whip.h" />

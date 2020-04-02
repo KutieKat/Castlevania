@@ -91,6 +91,12 @@
     <Filter Include="Source Files\Models\Weapons">
       <UniqueIdentifier>{2b5ebc30-ab60-4958-a4dc-f29cb6577d67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Models\Items">
+      <UniqueIdentifier>{796c2888-6628-496c-a733-415e42edab93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Items">
+      <UniqueIdentifier>{a9d0c2b3-a3c3-44fa-bead-8ba62af311e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprites\SpriteManager.cpp">
@@ -156,6 +162,12 @@
     <ClCompile Include="Models\Weapons\Whip.cpp">
       <Filter>Source Files\Models\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Items\Item.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\MoneyBag.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -217,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="Models\Weapons\Whip.h">
       <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Item.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\MoneyBag.h">
+      <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

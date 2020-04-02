@@ -18,13 +18,13 @@ public:
 	CBoundingBox GetBoundingBox();
 
 	bool Sitting();
-	bool Standing();
+	bool TouchingGround();
 	bool AnimationFinished();
 
 protected:
 	CWhip* whip;
 
 	bool sitting;
-	bool standing;
+	bool touchingGround;
 	bool animationFinished;
 };

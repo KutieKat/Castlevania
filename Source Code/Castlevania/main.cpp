@@ -9,6 +9,7 @@
 #include "Models/Characters/Players/Simon.h"
 #include "Models/Misc/BigCandle.h"
 #include "Models/Misc/Brick.h"
+#include "Models/Items/MoneyBag.h"
 #include "Sprites/SpriteManager.h"
 #include "Textures/TextureManager.h"
 #include "Utilities/Color.h"
@@ -34,7 +35,7 @@ void CSampleKeyHander::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case DIK_Z:
-		if (simon->Standing() == false && simon->GetState() == SIMON_STATE_STAND_AND_ATTACK)
+		if (simon->TouchingGround() == false && simon->GetState() == SIMON_STATE_STAND_AND_ATTACK)
 		{
 			return;
 		}
@@ -89,7 +90,7 @@ void CSampleKeyHander::OnKeyUp(int keyCode)
 
 void CSampleKeyHander::KeyState(BYTE* states)
 {
-	if (simon->GetState() == SIMON_STATE_JUMP && simon->Standing() == false)
+	if (simon->GetState() == SIMON_STATE_JUMP && simon->TouchingGround() == false)
 	{
 		return;
 	}
@@ -161,12 +162,20 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Ground\\Brick.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Ground\\BigCandle.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Weapons\\Whip.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Items\\MoneyBag.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
 	animations->LoadFromFile("Resources\\Ground\\Brick.Animations.xml");
 	animations->LoadFromFile("Resources\\Ground\\BigCandle.Animations.xml");
 	animations->LoadFromFile("Resources\\Weapons\\Whip.Animations.xml");
+	animations->LoadFromFile("Resources\\Items\\MoneyBag.Animations.xml");
+
+	CMoneyBag* moneyBag = new CMoneyBag();
+	moneyBag->AddAnimation("money_bag");
+	moneyBag->SetState(MONEY_BAG_STATE_MOVE_UP);
+	moneyBag->SetPosition(10, 171);
+	objects.push_back(moneyBag);
 
 	for (int i = 0; i < 48; i++)
 	{
@@ -280,7 +289,10 @@ void Render()
 
 		for (int i = 0; i < objects.size(); i++)
 		{
-			objects[i]->Render();
+			if (objects[i]->GetVisibility() == Visibility::Visible)
+			{
+				objects[i]->Render();
+			}
 		}
 
 		spriteHandler->End();

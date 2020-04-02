@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="money_bag_sprite_sheet" textureId="money_bag_texture">
+  <sprite id="money_bag_1" left="0" top="0" right="29" bottom="29" />
+  <sprite id="money_bag_2" left="30" top="0" right="59" bottom="29" />
+  <sprite id="money_bag_3" left="60" top="0" right="89" bottom="29" />
+</spriteSheet>

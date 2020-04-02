@@ -1,12 +1,14 @@
 #include "Simon.h"
 #include "../../Misc/BigCandle.h"
 #include "../../Misc/Brick.h"
+#include "../../Items/Item.h"
+#include "../../Items/MoneyBag.h"
 #include "../../../Utilities/Debug.h"
 
 CSimon::CSimon()
 {
 	sitting = false;
-	standing = false;
+	touchingGround = false;
 	animationFinished = false;
 
 	whip = new CWhip();
@@ -52,13 +54,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
-				standing = true;
+				touchingGround = true;
 
 				if (nx != 0) vx = 0;
 				if (ny != 0) vy = 0;
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
+				if (e->ny != 0) y += dy;
+				if (e->nx != 0) x += dx;
+			}
+			else if (dynamic_cast<CItem*>(e->obj))
+			{
+				CItem* item = dynamic_cast<CItem*>(e->obj);
+
+				item->SetVisibility(Visibility::Hidden);
+
 				if (e->ny != 0) y += dy;
 				if (e->nx != 0) x += dx;
 			}
@@ -88,10 +99,10 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_JUMP:
-		if (standing)
+		if (touchingGround)
 		{
 			vy = -SIMON_JUMP_SPEED;
-			standing = false;
+			touchingGround = false;
 		}
 
 		break;
@@ -112,7 +123,7 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_IDLE:
-		sitting = false;
+		touchingGround = false;
 		vx = 0;
 		break;
 	}
@@ -232,9 +243,9 @@ bool CSimon::Sitting()
 	return this->sitting;
 }
 
-bool CSimon::Standing()
+bool CSimon::TouchingGround()
 {
-	return this->standing;
+	return this->touchingGround;
 }
 
 bool CSimon::AnimationFinished()
