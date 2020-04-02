@@ -3,10 +3,10 @@
 void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	y -= vy * dt;
-
+ 
 	if (y < 142)
 	{
-		SetState(MONEY_BAG_STATE_IDLE);
+		vy = 0;
 	}
 }
 
@@ -16,12 +16,8 @@ void CMoneyBag::SetState(int state)
 
 	switch (state)
 	{
-	case MONEY_BAG_STATE_MOVE_UP:
+	case ITEM_STATE_APPEAR:
 		vy = MONEY_BAG_MOVE_UP_SPEED;
-		break;
-
-	case MONEY_BAG_STATE_IDLE:
-		vy = 0;
 		break;
 	}
 }

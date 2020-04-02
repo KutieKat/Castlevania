@@ -108,11 +108,15 @@ enum Visibility {
 #define WHIP_BBOX_WIDTH 240
 #define WHIP_BBOX_HEIGHT 66
 
+// Item
+#define ITEM_STATE_APPEAR 1
+
 // MoneyBag
 #define MONEY_BAG_MOVE_UP_SPEED 0.05f
 
 #define MONEY_BAG_BBOX_WIDTH 29
 #define MONEY_BAG_BBOX_HEIGHT 29
 
-#define MONEY_BAG_STATE_IDLE 1
-#define MONEY_BAG_STATE_MOVE_UP 2
+// EasterEgg
+#define EASTER_EGG_BBOX_WIDTH 32
+#define EASTER_EGG_BBOX_HEIGHT 32

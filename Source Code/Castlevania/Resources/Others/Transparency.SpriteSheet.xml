@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="transparency_sprite_sheet" textureId="transparency_texture">
+  <sprite id="transparency" left="0" top="0" right="32" bottom="32" />
+</spriteSheet>

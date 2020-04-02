@@ -168,6 +168,9 @@
     <ClCompile Include="Models\Items\MoneyBag.cpp">
       <Filter>Source Files\Models\Items</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Items\EasterEgg.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -234,6 +237,9 @@
       <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
     <ClInclude Include="Models\Items\MoneyBag.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\EasterEgg.h">
       <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include "../../Misc/Brick.h"
 #include "../../Items/Item.h"
 #include "../../Items/MoneyBag.h"
+#include "../../Items/EasterEgg.h"
 #include "../../../Utilities/Debug.h"
 
 CSimon::CSimon()
@@ -69,9 +70,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CItem* item = dynamic_cast<CItem*>(e->obj);
 
 				item->SetVisibility(Visibility::Hidden);
+			}
+			else if (dynamic_cast<CEasterEgg*>(e->obj))
+			{
+				CEasterEgg* easterEgg = dynamic_cast<CEasterEgg*>(e->obj);
 
-				if (e->ny != 0) y += dy;
-				if (e->nx != 0) x += dx;
+				easterEgg->ShowHiddenItem();
+				easterEgg->SetVisibility(Visibility::Hidden);
 			}
 		}
 	}
@@ -123,7 +128,8 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_IDLE:
-		touchingGround = false;
+		touchingGround = true;
+		sitting = false;
 		vx = 0;
 		break;
 	}

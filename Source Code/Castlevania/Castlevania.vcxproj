@@ -31,6 +31,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Models\Characters\Players\Simon.cpp" />
     <ClCompile Include="Models\GameObject.cpp" />
+    <ClCompile Include="Models\Items\EasterEgg.cpp" />
     <ClCompile Include="Models\Items\Item.cpp" />
     <ClCompile Include="Models\Items\MoneyBag.cpp" />
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
     <ClInclude Include="Models\Characters\Players\Simon.h" />
     <ClInclude Include="Models\GameObject.h" />
+    <ClInclude Include="Models\Items\EasterEgg.h" />
     <ClInclude Include="Models\Items\Item.h" />
     <ClInclude Include="Models\Items\MoneyBag.h" />
     <ClInclude Include="Models\Misc\BigCandle.h" />

@@ -10,6 +10,7 @@
 #include "Models/Misc/BigCandle.h"
 #include "Models/Misc/Brick.h"
 #include "Models/Items/MoneyBag.h"
+#include "Models/Items/EasterEgg.h"
 #include "Sprites/SpriteManager.h"
 #include "Textures/TextureManager.h"
 #include "Utilities/Color.h"
@@ -163,6 +164,7 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Ground\\BigCandle.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Weapons\\Whip.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Items\\MoneyBag.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Others\\Transparency.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
@@ -170,12 +172,17 @@ void LoadResources()
 	animations->LoadFromFile("Resources\\Ground\\BigCandle.Animations.xml");
 	animations->LoadFromFile("Resources\\Weapons\\Whip.Animations.xml");
 	animations->LoadFromFile("Resources\\Items\\MoneyBag.Animations.xml");
+	animations->LoadFromFile("Resources\\Others\\Transparency.Animations.xml");
 
 	CMoneyBag* moneyBag = new CMoneyBag();
 	moneyBag->AddAnimation("money_bag");
-	moneyBag->SetState(MONEY_BAG_STATE_MOVE_UP);
 	moneyBag->SetPosition(10, 171);
 	objects.push_back(moneyBag);
+
+	CEasterEgg* easterEgg = new CEasterEgg(moneyBag);
+	easterEgg->AddAnimation("transparency");
+	easterEgg->SetPosition(130, 140);
+	objects.push_back(easterEgg);
 
 	for (int i = 0; i < 48; i++)
 	{
@@ -221,19 +228,25 @@ void Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (dynamic_cast<CSimon*>(objects[i]))
+		if (objects[i]->GetVisibility() == Visibility::Visible)
 		{
-			continue;
-		}
-		else
-		{
-			coObjects.push_back(objects[i]);
+			if (dynamic_cast<CSimon*>(objects[i]))
+			{
+				continue;
+			}
+			else
+			{
+				coObjects.push_back(objects[i]);
+			}
 		}
 	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObjects);
+		if (objects[i]->GetVisibility() == Visibility::Visible)
+		{
+			objects[i]->Update(dt, &coObjects);
+		}
 	}
 
 	// Update camera to follow the player
