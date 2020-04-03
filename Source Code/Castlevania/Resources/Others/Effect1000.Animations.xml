@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animations spriteSheetId="effect_1000_sprite_sheet">
+  <animation id="effect_1000" duration="100">
+    <frame spriteId="effect_1000_1" />
+    <frame spriteId="effect_1000_2" />
+  </animation>
+</animations>

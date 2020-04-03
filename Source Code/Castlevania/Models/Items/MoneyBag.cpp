@@ -1,4 +1,5 @@
 #include "MoneyBag.h"
+#include "../../Utilities/Debug.h"
 
 void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -7,6 +8,16 @@ void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (y < 142)
 	{
 		vy = 0;
+	}
+
+	if (this->started && this->startEffect->Over())
+	{
+		this->started = false;
+	}
+
+	if (this->ended && this->endEffect->Over())
+	{
+		this->visibility = Visibility::Hidden;
 	}
 }
 
@@ -24,10 +35,13 @@ void CMoneyBag::SetState(int state)
 
 void CMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = left + MONEY_BAG_BBOX_WIDTH;
-	bottom = top + MONEY_BAG_BBOX_HEIGHT;
+	if (!this->started && !this->ended)
+	{
+		left = x;
+		top = y;
+		right = left + MONEY_BAG_BBOX_WIDTH;
+		bottom = top + MONEY_BAG_BBOX_HEIGHT;
+	}
 }
 
 CBoundingBox CMoneyBag::GetBoundingBox()
@@ -41,5 +55,37 @@ CBoundingBox CMoneyBag::GetBoundingBox()
 
 void CMoneyBag::Render()
 {
-	animations[0]->Render(x, y);
+	if (this->started)
+	{
+		this->startEffect->Start();
+		this->startEffect->SetPosition(x, y);
+		this->startEffect->Render();
+	}
+	else if (this->ended)
+	{
+		this->endEffect->Start();
+		this->endEffect->SetPosition(x, y);
+		this->endEffect->Render();
+	}
+	else
+	{
+		animations[0]->Render(x, y);
+	}
+}
+
+void CMoneyBag::Appear()
+{
+	CItem::Appear();
+
+	SetState(ITEM_STATE_APPEAR);
+}
+
+void CMoneyBag::SetAmount(int amount)
+{
+	this->amount = amount;
+}
+
+int CMoneyBag::GetAmount()
+{
+	return this->amount;
 }

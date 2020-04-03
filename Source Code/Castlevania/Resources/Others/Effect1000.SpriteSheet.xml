@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="effect_1000_sprite_sheet" textureId="effect_1000_texture">
+  <sprite id="effect_1000_1" left="0" top="0" right="38" bottom="18" />
+  <sprite id="effect_1000_2" left="39" top="0" right="76" bottom="18" />
+</spriteSheet>

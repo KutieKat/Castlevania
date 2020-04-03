@@ -69,7 +69,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				CItem* item = dynamic_cast<CItem*>(e->obj);
 
-				item->SetVisibility(Visibility::Hidden);
+				item->Disappear();
 			}
 			else if (dynamic_cast<CEasterEgg*>(e->obj))
 			{

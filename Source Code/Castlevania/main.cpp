@@ -4,13 +4,14 @@
 
 #include "Animations/AnimationManager.h"
 #include "Animations/Animation.h"
+#include "Effects/Effect.h"
 #include "Game.h"
-#include "Models/GameObject.h"
 #include "Models/Characters/Players/Simon.h"
-#include "Models/Misc/BigCandle.h"
-#include "Models/Misc/Brick.h"
+#include "Models/GameObject.h"
 #include "Models/Items/MoneyBag.h"
 #include "Models/Items/EasterEgg.h"
+#include "Models/Misc/BigCandle.h"
+#include "Models/Misc/Brick.h"
 #include "Sprites/SpriteManager.h"
 #include "Textures/TextureManager.h"
 #include "Utilities/Color.h"
@@ -165,6 +166,7 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Weapons\\Whip.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Items\\MoneyBag.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Others\\Transparency.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Others\\Effect1000.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
@@ -173,9 +175,16 @@ void LoadResources()
 	animations->LoadFromFile("Resources\\Weapons\\Whip.Animations.xml");
 	animations->LoadFromFile("Resources\\Items\\MoneyBag.Animations.xml");
 	animations->LoadFromFile("Resources\\Others\\Transparency.Animations.xml");
+	animations->LoadFromFile("Resources\\Others\\Effect1000.Animations.xml");
+
+	CEffect* moneyBagEndEffect = new CEffect();
+	moneyBagEndEffect->AddAnimation("effect_1000");
+	moneyBagEndEffect->SetTimeout(1000);
 
 	CMoneyBag* moneyBag = new CMoneyBag();
 	moneyBag->AddAnimation("money_bag");
+	moneyBag->SetEndingEffect(moneyBagEndEffect);
+	moneyBag->SetAmount(1000);
 	moneyBag->SetPosition(10, 171);
 	objects.push_back(moneyBag);
 

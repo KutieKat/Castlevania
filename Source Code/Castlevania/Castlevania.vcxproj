@@ -22,6 +22,7 @@
     <ClCompile Include="Animations\Animation.cpp" />
     <ClCompile Include="Animations\AnimationFrame.cpp" />
     <ClCompile Include="Animations\AnimationManager.cpp" />
+    <ClCompile Include="Effects\Effect.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Libraries\TinyXML\tinystr.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="Animations\Animation.h" />
     <ClInclude Include="Animations\AnimationFrame.h" />
     <ClInclude Include="Animations\AnimationManager.h" />
+    <ClInclude Include="Effects\Effect.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input\IKeyEventHandler.h" />
     <ClInclude Include="Input\InputManager.h" />

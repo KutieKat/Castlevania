@@ -97,6 +97,12 @@
     <Filter Include="Source Files\Models\Items">
       <UniqueIdentifier>{a9d0c2b3-a3c3-44fa-bead-8ba62af311e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Effects">
+      <UniqueIdentifier>{750b71f3-8da1-4560-8143-876b9230b5ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects">
+      <UniqueIdentifier>{813c7c05-f442-4a28-b474-c0e51ac690c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprites\SpriteManager.cpp">
@@ -171,6 +177,9 @@
     <ClCompile Include="Models\Items\EasterEgg.cpp">
       <Filter>Source Files\Models\Items</Filter>
     </ClCompile>
+    <ClCompile Include="Effects\Effect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -241,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Models\Items\EasterEgg.h">
       <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Effects\Effect.h">
+      <Filter>Header Files\Effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

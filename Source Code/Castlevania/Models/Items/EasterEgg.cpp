@@ -7,7 +7,7 @@ CEasterEgg::CEasterEgg(CItem* hiddenItem)
 
 void CEasterEgg::ShowHiddenItem()
 {
-	this->hiddenItem->SetState(ITEM_STATE_APPEAR);
+	this->hiddenItem->Appear();
 }
 
 void CEasterEgg::GetBoundingBox(float & left, float & top, float & right, float & bottom)
