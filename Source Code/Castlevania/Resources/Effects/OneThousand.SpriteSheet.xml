@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="one_thousand_sprite_sheet" textureId="one_thousand_texture">
+  <sprite id="one_thousand_1" left="0" top="0" right="38" bottom="18" />
+  <sprite id="one_thousand_2" left="39" top="0" right="76" bottom="18" />
+</spriteSheet>

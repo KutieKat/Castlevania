@@ -146,6 +146,32 @@ void CGameObject::AddAnimation(string aniId)
 	animations.push_back(ani);
 }
 
+void CGameObject::Appear()
+{
+	if (this->startingEffect != nullptr)
+	{
+		this->started = true;
+	}
+}
+
+void CGameObject::Disappear()
+{
+	if (this->endingEffect != nullptr)
+	{
+		this->ended = true;
+	}
+}
+
+void CGameObject::SetStartingEffect(CEffect* effect)
+{
+	this->startingEffect = effect;
+}
+
+void CGameObject::SetEndingEffect(CEffect* effect)
+{
+	this->endingEffect = effect;
+}
+
 CGameObject::~CGameObject()
 {
 

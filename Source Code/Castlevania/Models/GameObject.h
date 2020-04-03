@@ -4,9 +4,10 @@
 #include <vector>
 #include <string>
 
-#include "../Sprites/SpriteManager.h"
 #include "../Animations/Animation.h"
 #include "../Animations/AnimationManager.h"
+#include "../Effects/Effect.h"
+#include "../Sprites/SpriteManager.h"
 #include "../Utilities/Constants.h"
 using namespace std;
 
@@ -30,6 +31,12 @@ public:
 	DWORD dt; 
 
 	vector<CAnimation*> animations;
+
+	CEffect* startingEffect;
+	CEffect* endingEffect;
+
+	bool started = false;
+	bool ended = false;
 
 public: 
 	CGameObject();
@@ -65,6 +72,12 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
+
+	virtual void Appear();
+	virtual void Disappear();
+
+	void SetStartingEffect(CEffect* effect);
+	void SetEndingEffect(CEffect* effect);
 
 	~CGameObject();
 };

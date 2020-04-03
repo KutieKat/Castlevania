@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animations spriteSheetId="one_thousand_sprite_sheet">
+  <animation id="one_thousand" duration="100">
+    <frame spriteId="one_thousand_1" />
+    <frame spriteId="one_thousand_2" />
+  </animation>
+</animations>

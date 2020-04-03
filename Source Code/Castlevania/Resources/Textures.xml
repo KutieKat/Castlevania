@@ -7,5 +7,6 @@
 	<texture id="whip_texture" path="Resources\\Weapons\\Whip.png" r="255" g="0" b="255" />
   <texture id="money_bag_texture" path="Resources\\Items\\MoneyBag.png" r="255" g="0" b="255" />
   <texture id="transparency_texture" path="Resources\\Others\\Transparency.png" r="255" g="0" b="255" />
-  <texture id="effect_1000_texture" path="Resources\\Others\\Effect1000.png" r="255" g="0" b="255" />
+  <texture id="one_thousand_texture" path="Resources\\Effects\\OneThousand.png" r="255" g="0" b="255" />
+  <texture id="flash_texture" path="Resources\\Effects\\Flash.png" r="255" g="0" b="255" />
 </textures>

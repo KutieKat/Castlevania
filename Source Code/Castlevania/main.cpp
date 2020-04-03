@@ -166,7 +166,8 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Weapons\\Whip.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Items\\MoneyBag.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Others\\Transparency.SpriteSheet.xml");
-	sprites->LoadFromFile("Resources\\Others\\Effect1000.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Effects\\OneThousand.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Effects\\Flash.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
@@ -175,15 +176,20 @@ void LoadResources()
 	animations->LoadFromFile("Resources\\Weapons\\Whip.Animations.xml");
 	animations->LoadFromFile("Resources\\Items\\MoneyBag.Animations.xml");
 	animations->LoadFromFile("Resources\\Others\\Transparency.Animations.xml");
-	animations->LoadFromFile("Resources\\Others\\Effect1000.Animations.xml");
+	animations->LoadFromFile("Resources\\Effects\\OneThousand.Animations.xml");
+	animations->LoadFromFile("Resources\\Effects\\Flash.Animations.xml");
 
-	CEffect* moneyBagEndEffect = new CEffect();
-	moneyBagEndEffect->AddAnimation("effect_1000");
-	moneyBagEndEffect->SetTimeout(1000);
+	CEffect* oneThousand = new CEffect();
+	oneThousand->AddAnimation("one_thousand");
+	oneThousand->SetTimeout(1000);
+
+	CEffect* flash = new CEffect();
+	flash->AddAnimation("flash");
+	flash->SetTimeout(1000);
 
 	CMoneyBag* moneyBag = new CMoneyBag();
 	moneyBag->AddAnimation("money_bag");
-	moneyBag->SetEndingEffect(moneyBagEndEffect);
+	moneyBag->SetEndingEffect(oneThousand);
 	moneyBag->SetAmount(1000);
 	moneyBag->SetPosition(10, 171);
 	objects.push_back(moneyBag);
@@ -206,6 +212,7 @@ void LoadResources()
 		CBigCandle* bigCandle = new CBigCandle();
 		bigCandle->AddAnimation("big_candle");
 		bigCandle->SetPosition(i == 0 ? 300 : (i + 1) * 300, 108);
+		bigCandle->SetEndingEffect(flash);
 		objects.push_back(bigCandle);
 	}
 

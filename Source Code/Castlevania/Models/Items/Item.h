@@ -9,17 +9,17 @@ public:
 	virtual CBoundingBox GetBoundingBox() = 0;
 	virtual void Render() = 0;
 
-	virtual void Appear();
-	virtual void Disappear();
+	//virtual void Appear();
+	//virtual void Disappear();
 
-	void SetStartingEffect(CEffect* effect);
-	void SetEndingEffect(CEffect* effect);
+	//void SetStartingEffect(CEffect* effect);
+	//void SetEndingEffect(CEffect* effect);
 
-protected:
-	CEffect* startEffect;
-	CEffect* endEffect;
-
-	bool started = false;
-	bool ended = false;
+//protected:
+//	CEffect* startEffect;
+//	CEffect* endEffect;
+//
+//	bool started = false;
+//	bool ended = false;
 };
 

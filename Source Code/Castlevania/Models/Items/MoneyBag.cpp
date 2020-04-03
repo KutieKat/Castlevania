@@ -10,14 +10,16 @@ void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = 0;
 	}
 
-	if (this->started && this->startEffect->Over())
+	if (this->started && this->startingEffect->Over())
 	{
 		this->started = false;
+		this->startingEffect->Reset();
 	}
 
-	if (this->ended && this->endEffect->Over())
+	if (this->ended && this->endingEffect->Over())
 	{
 		this->visibility = Visibility::Hidden;
+		this->endingEffect->Reset();
 	}
 }
 
@@ -57,15 +59,15 @@ void CMoneyBag::Render()
 {
 	if (this->started)
 	{
-		this->startEffect->Start();
-		this->startEffect->SetPosition(x, y);
-		this->startEffect->Render();
+		this->startingEffect->Start();
+		this->startingEffect->SetPosition(x, y);
+		this->startingEffect->Render();
 	}
 	else if (this->ended)
 	{
-		this->endEffect->Start();
-		this->endEffect->SetPosition(x, y);
-		this->endEffect->Render();
+		this->endingEffect->Start();
+		this->endingEffect->SetPosition(x, y);
+		this->endingEffect->Render();
 	}
 	else
 	{

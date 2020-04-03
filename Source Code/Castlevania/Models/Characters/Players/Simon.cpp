@@ -62,18 +62,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
-				if (e->ny != 0) y += dy;
-				if (e->nx != 0) x += dx;
+				auto candle = dynamic_cast<CBigCandle*>(e->obj);
+
+				candle->Disappear();
+
+				//if (e->ny != 0) y += dy;
+				//if (e->nx != 0) x += dx;
 			}
 			else if (dynamic_cast<CItem*>(e->obj))
 			{
-				CItem* item = dynamic_cast<CItem*>(e->obj);
+				auto item = dynamic_cast<CItem*>(e->obj);
 
 				item->Disappear();
 			}
 			else if (dynamic_cast<CEasterEgg*>(e->obj))
 			{
-				CEasterEgg* easterEgg = dynamic_cast<CEasterEgg*>(e->obj);
+				auto easterEgg = dynamic_cast<CEasterEgg*>(e->obj);
 
 				easterEgg->ShowHiddenItem();
 				easterEgg->SetVisibility(Visibility::Hidden);

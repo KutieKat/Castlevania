@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="flash_sprite_sheet" textureId="flash_texture">
+  <sprite id="flash_1" left="0" top="0" right="15" bottom="19" />
+  <sprite id="flash_2" left="16" top="0" right="31" bottom="19" />
+</spriteSheet>

@@ -20,6 +20,7 @@ public:
 	bool Over();
 
 	void Render();
+	void Reset();
 
 protected:
 	vector<CAnimation*> animations;

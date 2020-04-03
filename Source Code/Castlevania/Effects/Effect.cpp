@@ -47,3 +47,8 @@ void CEffect::Render()
 {
 	this->animations[0]->Render(x, y);
 }
+
+void CEffect::Reset()
+{
+	this->startTime = -1;
+}
