@@ -9,26 +9,23 @@ class CEffect
 {
 public:
 	void AddAnimation(string aniId);
-
 	void SetPosition(float x, float y);
 	void GetPosition(float &x, float &y);
-
 	void SetTimeout(DWORD timeout);
-	DWORD GetTimeout();
+	void SetStartTime(DWORD startTime);
+	void Render();
 
-	void Start();
+	DWORD GetStartTime();
+
 	bool Over();
 
-	void Render();
-	void Reset();
-
 protected:
-	vector<CAnimation*> animations;
-
 	DWORD timeout;
 	DWORD startTime = -1;
 
 	float x;
 	float y;
+
+	vector<CAnimation*> animations;
 };
 

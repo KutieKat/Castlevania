@@ -1,33 +1,24 @@
 #include "EasterEgg.h"
 
-CEasterEgg::CEasterEgg(CItem* hiddenItem)
-{
-	this->hiddenItem = hiddenItem;
-}
-
 void CEasterEgg::ShowHiddenItem()
 {
-	this->hiddenItem->Appear();
+	this->hiddenItem->SetState(ITEM_STATE_APPEAR);
 }
 
-void CEasterEgg::GetBoundingBox(float & left, float & top, float & right, float & bottom)
+void CEasterEgg::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
-	left = x;
-	top = y;
-	right = left + EASTER_EGG_BBOX_WIDTH;
-	bottom = top + EASTER_EGG_BBOX_HEIGHT;
-}
-
-CBoundingBox CEasterEgg::GetBoundingBox()
-{
-	CBoundingBox boundingBox;
-
-	GetBoundingBox(boundingBox.left, boundingBox.top, boundingBox.right, boundingBox.bottom);
-
-	return boundingBox;
+	l = x;
+	t = y;
+	r = x + EASTER_EGG_BBOX_WIDTH;
+	b = y + EASTER_EGG_BBOX_HEIGHT;
 }
 
 void CEasterEgg::Render()
 {
 	animations[0]->Render(x, y);
+}
+
+void CEasterEgg::SetHiddenItem(CItem* item)
+{
+	this->hiddenItem = item;
 }

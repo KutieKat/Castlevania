@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="morning_star_sprite_sheet" textureId="morning_star_texture">
+  <sprite id="morning_star" left="0" top="0" right="32" bottom="32" />
+</spriteSheet>

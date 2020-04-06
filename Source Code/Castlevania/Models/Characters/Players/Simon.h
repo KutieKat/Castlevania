@@ -15,16 +15,13 @@ public:
 	void ResetAnimations();
 
 	int GetAnimationToRender();
-	CBoundingBox GetBoundingBox();
 
 	bool Sitting();
 	bool TouchingGround();
-	bool AnimationFinished();
 
 protected:
 	CWhip* whip;
 
 	bool sitting;
 	bool touchingGround;
-	bool animationFinished;
 };

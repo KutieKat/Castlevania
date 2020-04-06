@@ -1,35 +1,26 @@
 #include "BigCandle.h"
 
+CBigCandle::CBigCandle()
+{
+	showingEffect = false;
+}
+
 void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (this->started && this->startingEffect->Over())
+	if (this->endingEffect->Over())
 	{
-		this->started = false;
-		this->startingEffect->Reset();
-	}
+		if (this->hiddenItem)
+		{
+			this->hiddenItem->SetVisibility(Visibility::Visible);
+		}
 
-	if (this->ended && this->endingEffect->Over())
-	{
 		this->visibility = Visibility::Hidden;
-		this->endingEffect->Reset();
 	}
 }
 
 void CBigCandle::Render()
 {
-	if (this->started)
-	{
-		this->startingEffect->Start();
-		this->startingEffect->SetPosition(x, y);
-		this->startingEffect->Render();
-	}
-	else if (this->ended)
-	{
-		this->endingEffect->Start();
-		this->endingEffect->SetPosition(x, y);
-		this->endingEffect->Render();
-	}
-	else
+	if (!showingEffect)
 	{
 		animations[0]->Render(x, y);
 	}
@@ -37,7 +28,7 @@ void CBigCandle::Render()
 
 void CBigCandle::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
-	if (!this->started && !this->ended)
+	if (!showingEffect)
 	{
 		l = x;
 		t = y;
@@ -46,11 +37,20 @@ void CBigCandle::GetBoundingBox(float & l, float & t, float & r, float & b)
 	}
 }
 
-CBoundingBox CBigCandle::GetBoundingBox()
+void CBigCandle::Disappear()
 {
-	CBoundingBox boundingBox;
+	this->showingEffect = true;
+	this->endingEffect->SetPosition(x, y);
+	this->endingEffect->SetStartTime(GetTickCount());
+}
 
-	GetBoundingBox(boundingBox.left, boundingBox.top, boundingBox.right, boundingBox.bottom);
+void CBigCandle::SetEndingEffect(CEffect* effect)
+{
+	this->endingEffect = effect;
+}
 
-	return boundingBox;
+void CBigCandle::SetHiddenItem(CItem* item)
+{
+	this->hiddenItem = item;
+	this->hiddenItem->SetVisibility(Visibility::Hidden);
 }

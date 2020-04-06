@@ -26,14 +26,6 @@ struct CCollisionEvent
 	}
 };
 
-struct CBoundingBox
-{
-	float left;
-	float top;
-	float right;
-	float bottom;
-};
-
 // Enumerations
 enum Direction {
 	None,
@@ -105,11 +97,12 @@ enum Visibility {
 #define WHIP_ANI_LEVEL_1_LEFT 0
 #define WHIP_ANI_LEVEL_1_RIGHT 1
 
-#define WHIP_BBOX_WIDTH 240
+#define WHIP_BBOX_WIDTH 180
 #define WHIP_BBOX_HEIGHT 66
 
 // Item
 #define ITEM_STATE_APPEAR 1
+#define ITEM_GRAVITY 0.002f
 
 // MoneyBag
 #define MONEY_BAG_MOVE_UP_SPEED 0.05f
@@ -120,3 +113,15 @@ enum Visibility {
 // EasterEgg
 #define EASTER_EGG_BBOX_WIDTH 32
 #define EASTER_EGG_BBOX_HEIGHT 32
+
+// BigHeart
+#define BIG_HEART_BBOX_WIDTH 24
+#define BIG_HEART_BBOX_HEIGHT 20
+
+// Dagger
+#define DAGGER_BBOX_WIDTH 32
+#define DAGGER_BBOX_HEIGHT 18
+
+// MorningStar
+#define MORNING_STAR_BBOX_WIDTH 32
+#define MORNING_STAR_BBOX_HEIGHT 32

@@ -180,6 +180,15 @@
     <ClCompile Include="Effects\Effect.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Items\BigHeart.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\Dagger.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\MorningStar.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -253,6 +262,15 @@
     </ClInclude>
     <ClInclude Include="Effects\Effect.h">
       <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\BigHeart.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Dagger.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\MorningStar.h">
+      <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,8 +17,13 @@ CGameObject::CGameObject()
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	this->dt = dt;
-	dx = vx*dt;
-	dy = vy*dt;
+	dx = vx * dt;
+	dy = vy * dt;
+}
+
+void CGameObject::SetState(int state)
+{
+	this->state = state;
 }
 
 /*
@@ -36,8 +41,8 @@ LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	float svx, svy;
 	coO->GetSpeed(svx, svy);
 
-	float sdx = svx*dt;
-	float sdy = svy*dt;
+	float sdx = svx * dt;
+	float sdy = svy * dt;
 
 	float dx = this->dx - sdx;
 	float dy = this->dy - sdy;
@@ -56,13 +61,13 @@ LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 }
 
 /*
-	Calculate potential collisions with the list of colliable objects 
-	
+	Calculate potential collisions with the list of colliable objects
+
 	coObjects: the list of colliable objects
 	coEvents: list of potential collisions
 */
 void CGameObject::CalcPotentialCollisions(
-	vector<LPGAMEOBJECT> *coObjects, 
+	vector<LPGAMEOBJECT> *coObjects,
 	vector<LPCOLLISIONEVENT> &coEvents)
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
@@ -81,7 +86,7 @@ void CGameObject::CalcPotentialCollisions(
 void CGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT> &coEvents,
 	vector<LPCOLLISIONEVENT> &coEventsResult,
-	float &min_tx, float &min_ty, 
+	float &min_tx, float &min_ty,
 	float &nx, float &ny)
 {
 	min_tx = 1.0f;
@@ -107,8 +112,8 @@ void CGameObject::FilterCollision(
 		}
 	}
 
-	if (min_ix>=0) coEventsResult.push_back(coEvents[min_ix]);
-	if (min_iy>=0) coEventsResult.push_back(coEvents[min_iy]);
+	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);
+	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
 
@@ -129,7 +134,7 @@ void CGameObject::RenderBoundingBox()
 
 	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get("bounding_box_texture");
 
-	float l,t,r,b; 
+	float l, t, r, b;
 
 	GetBoundingBox(l, t, r, b);
 	rect.left = 0;
@@ -146,33 +151,6 @@ void CGameObject::AddAnimation(string aniId)
 	animations.push_back(ani);
 }
 
-void CGameObject::Appear()
-{
-	if (this->startingEffect != nullptr)
-	{
-		this->started = true;
-	}
-}
-
-void CGameObject::Disappear()
-{
-	if (this->endingEffect != nullptr)
-	{
-		this->ended = true;
-	}
-}
-
-void CGameObject::SetStartingEffect(CEffect* effect)
-{
-	this->startingEffect = effect;
-}
-
-void CGameObject::SetEndingEffect(CEffect* effect)
-{
-	this->endingEffect = effect;
-}
-
 CGameObject::~CGameObject()
 {
-
 }

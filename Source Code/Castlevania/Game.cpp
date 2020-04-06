@@ -73,6 +73,22 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
+bool CGame::HaveCollision(CGameObject* object1, CGameObject* object2)
+{
+	float l1, t1, r1, b1;
+	float l2, t2, r2, b2;
+
+	object1->GetBoundingBox(l1, t1, r1, b1);
+	object2->GetBoundingBox(l2, t2, r2, b2);
+
+	float left = l1 - r2;
+	float top = b1 - t2;
+	float right = r1 - l2;
+	float bottom = t1 - b2;
+
+	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
+}
+
 CInputManager* CGame::GetInputManager()
 {
 	return this->inputManager;
@@ -95,7 +111,6 @@ void CGame::SweptAABB(
 	float sl, float st, float sr, float sb,
 	float &t, float &nx, float &ny)
 {
-
 	float dx_entry, dx_exit, tx_entry, tx_exit;
 	float dy_entry, dy_exit, ty_entry, ty_exit;
 

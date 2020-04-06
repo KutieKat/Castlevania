@@ -14,7 +14,7 @@ using namespace std;
 class CGameObject
 {
 public:
-	float x; 
+	float x;
 	float y;
 
 	float dx;	// dx = vx*dt
@@ -22,23 +22,17 @@ public:
 
 	float vx;
 	float vy;
- 
+
 	Direction direction;
 	Visibility visibility;
 
 	int state;
 
-	DWORD dt; 
+	DWORD dt;
 
 	vector<CAnimation*> animations;
 
-	CEffect* startingEffect;
-	CEffect* endingEffect;
-
-	bool started = false;
-	bool ended = false;
-
-public: 
+public:
 	CGameObject();
 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -58,26 +52,19 @@ public:
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);
 	void FilterCollision(
-		vector<LPCOLLISIONEVENT> &coEvents, 
-		vector<LPCOLLISIONEVENT> &coEventsResult, 
-		float &min_tx, 
-		float &min_ty, 
-		float &nx, 
+		vector<LPCOLLISIONEVENT> &coEvents,
+		vector<LPCOLLISIONEVENT> &coEventsResult,
+		float &min_tx,
+		float &min_ty,
+		float &nx,
 		float &ny);
 
 	void AddAnimation(string aniId);
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
-	virtual CBoundingBox GetBoundingBox() = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
-	virtual void SetState(int state) { this->state = state; }
-
-	virtual void Appear();
-	virtual void Disappear();
-
-	void SetStartingEffect(CEffect* effect);
-	void SetEndingEffect(CEffect* effect);
+	virtual void SetState(int state);
 
 	~CGameObject();
 };

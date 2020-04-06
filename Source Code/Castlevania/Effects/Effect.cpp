@@ -25,30 +25,25 @@ void CEffect::SetTimeout(DWORD timeout)
 	this->timeout = timeout;
 }
 
-DWORD CEffect::GetTimeout()
+void CEffect::SetStartTime(DWORD startTime)
 {
-	return this->timeout;
+	this->startTime = GetTickCount();
+}
+
+void CEffect::Render()
+{
+	if (!Over())
+	{
+		this->animations[0]->Render(x, y);
+	}
+}
+
+DWORD CEffect::GetStartTime()
+{
+	return this->startTime;
 }
 
 bool CEffect::Over()
 {
 	return this->startTime != -1 && GetTickCount() - this->startTime > this->timeout;
-}
-
-void CEffect::Start()
-{
-	if (this->startTime == -1)
-	{
-		this->startTime = GetTickCount();
-	}
-}
-
-void CEffect::Render()
-{
-	this->animations[0]->Render(x, y);
-}
-
-void CEffect::Reset()
-{
-	this->startTime = -1;
 }

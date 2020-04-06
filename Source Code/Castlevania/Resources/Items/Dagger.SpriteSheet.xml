@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="dagger_sprite_sheet" textureId="dagger_texture">
+  <sprite id="dagger" left="0" top="0" right="32" bottom="18" />
+</spriteSheet>

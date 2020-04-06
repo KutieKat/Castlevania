@@ -4,13 +4,13 @@
 #include "../../Items/Item.h"
 #include "../../Items/MoneyBag.h"
 #include "../../Items/EasterEgg.h"
-#include "../../../Utilities/Debug.h"
+#include "../../Items/BigHeart.h"
+#include "../../../Game.h"
 
 CSimon::CSimon()
 {
 	sitting = false;
 	touchingGround = false;
-	animationFinished = false;
 
 	whip = new CWhip();
 	whip->AddAnimation("whip_level_1_left");
@@ -46,9 +46,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		//if (nx != 0) vx = 0;
-		//if (ny != 0) vy = 0;
-
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -62,18 +59,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
-				auto candle = dynamic_cast<CBigCandle*>(e->obj);
-
-				candle->Disappear();
-
-				//if (e->ny != 0) y += dy;
-				//if (e->nx != 0) x += dx;
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else if (dynamic_cast<CItem*>(e->obj))
 			{
-				auto item = dynamic_cast<CItem*>(e->obj);
-
-				item->Disappear();
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else if (dynamic_cast<CEasterEgg*>(e->obj))
 			{
@@ -89,12 +81,44 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		delete coEvents[i];
 	}
+
+	if (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK)
+	{
+		if (animations[GetAnimationToRender()]->GetCurrentFrame() == animations[GetAnimationToRender()]->GetTotalFrames() - 1)
+		{
+			for (int i = 0; i < coObjects->size(); i++)
+			{
+				if (dynamic_cast<CBigCandle*>(coObjects->at(i)))
+				{
+					auto bigCandle = dynamic_cast<CBigCandle*>(coObjects->at(i));
+
+					if (CGame::GetInstance()->HaveCollision(this->whip, bigCandle))
+					{
+						bigCandle->Disappear();
+					}
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < coObjects->size(); i++)
+	{
+		if (dynamic_cast<CItem*>(coObjects->at(i)))
+		{
+			auto item = dynamic_cast<CItem*>(coObjects->at(i));
+
+			if (CGame::GetInstance()->HaveCollision(this, item))
+			{
+				item->Disappear();
+			}
+		}
+	}
 }
 
 void CSimon::Render()
 {
 	int alpha = 255;
-	animations[GetAnimationToRender()]->Render(animationFinished, x, y, alpha);
+	animations[GetAnimationToRender()]->Render(x, y, alpha);
 }
 
 void CSimon::SetState(int state)
@@ -117,24 +141,27 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_SIT:
-		sitting = true;
 		vx = 0;
+		sitting = true;
 		break;
 
 	case SIMON_STATE_SIT_AND_ATTACK:
-		animationFinished = false;
 		vx = 0;
+		animations[GetAnimationToRender()]->SetStartTime(GetTickCount());
+		ResetAnimations();
 		break;
 
 	case SIMON_STATE_STAND_AND_ATTACK:
-		animationFinished = false;
 		vx = 0;
+		animations[GetAnimationToRender()]->SetStartTime(GetTickCount());
+		ResetAnimations();
 		break;
 
 	case SIMON_STATE_IDLE:
+		vx = 0;
 		touchingGround = true;
 		sitting = false;
-		vx = 0;
+		ResetAnimations();
 		break;
 	}
 }
@@ -229,15 +256,6 @@ int CSimon::GetAnimationToRender()
 	return ani;
 }
 
-CBoundingBox CSimon::GetBoundingBox()
-{
-	CBoundingBox boundingBox;
-
-	GetBoundingBox(boundingBox.left, boundingBox.top, boundingBox.right, boundingBox.bottom);
-
-	return boundingBox;
-}
-
 void CSimon::ResetAnimations()
 {
 	for (int i = 0; i < animations.size(); i++)
@@ -256,9 +274,4 @@ bool CSimon::Sitting()
 bool CSimon::TouchingGround()
 {
 	return this->touchingGround;
-}
-
-bool CSimon::AnimationFinished()
-{
-	return this->animationFinished;
 }

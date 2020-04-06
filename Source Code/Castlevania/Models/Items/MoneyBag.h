@@ -5,19 +5,22 @@
 class CMoneyBag : public CItem
 {
 public:
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
-	virtual void SetState(int state);
-	virtual void Render();
+	CMoneyBag();
 
-	virtual void Appear();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void SetState(int state);
+	void GetBoundingBox(float &l, float &t, float &r, float &b);
+	void Render();
+	void SetAmount(int amount);
+	void Disappear();
+	void SetEndingEffect(CEffect* effect);
 
-	virtual void GetBoundingBox(float & left, float & top, float & right, float & bottom);
-	virtual CBoundingBox GetBoundingBox();
-
-	virtual void SetAmount(int amount);
-	virtual int GetAmount();
+	int GetAmount();
 
 protected:
+	CEffect* endingEffect;
+
 	int amount;
+	bool showingEffect;
 };
 

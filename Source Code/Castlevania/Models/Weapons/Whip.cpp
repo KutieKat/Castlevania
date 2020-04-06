@@ -33,15 +33,6 @@ void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
 	b = y + WHIP_BBOX_HEIGHT;
 }
 
-CBoundingBox CWhip::GetBoundingBox()
-{
-	CBoundingBox boundingBox;
-
-	GetBoundingBox(boundingBox.left, boundingBox.top, boundingBox.right, boundingBox.bottom);
-
-	return boundingBox;
-}
-
 void CWhip::SetLevel(int level)
 {
 	this->level = level;

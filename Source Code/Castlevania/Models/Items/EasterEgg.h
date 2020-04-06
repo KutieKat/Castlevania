@@ -5,12 +5,10 @@
 class CEasterEgg : public CGameObject
 {
 public:
-	CEasterEgg(CItem* hiddenItem);
-
-	virtual void GetBoundingBox(float & left, float & top, float & right, float & bottom);
-	virtual CBoundingBox GetBoundingBox();
-	virtual void Render();
-	virtual void ShowHiddenItem();
+	void Render();
+	void SetHiddenItem(CItem* item);
+	void ShowHiddenItem();
+	void GetBoundingBox(float &l, float &t, float &r, float &b);
 
 protected:
 	CItem* hiddenItem;

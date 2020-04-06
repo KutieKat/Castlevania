@@ -8,8 +8,11 @@
 #include "Game.h"
 #include "Models/Characters/Players/Simon.h"
 #include "Models/GameObject.h"
-#include "Models/Items/MoneyBag.h"
+#include "Models/Items/BigHeart.h"
+#include "Models/Items/Dagger.h"
 #include "Models/Items/EasterEgg.h"
+#include "Models/Items/MoneyBag.h"
+#include "Models/Items/MorningStar.h"
 #include "Models/Misc/BigCandle.h"
 #include "Models/Misc/Brick.h"
 #include "Sprites/SpriteManager.h"
@@ -22,6 +25,7 @@ CGame* game;
 CSimon* simon;
 
 vector<LPGAMEOBJECT> objects;
+vector<CEffect*> effects;
 
 class CSampleKeyHander : public IKeyEventHandler
 {
@@ -37,22 +41,17 @@ void CSampleKeyHander::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case DIK_Z:
-		if (simon->TouchingGround() == false && simon->GetState() == SIMON_STATE_STAND_AND_ATTACK)
+		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK || (simon->TouchingGround() == false && simon->GetState() == SIMON_STATE_STAND_AND_ATTACK))
 		{
 			return;
 		}
 
-		if (simon->Sitting() == true && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK)
+		if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->Sitting() == true && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
 		{
 			return;
 		}
 
-		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK || simon->GetState() == SIMON_STATE_SIT_AND_ATTACK)
-		{
-			return;
-		}
-
-		if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_JUMP)
+		if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_WALK || simon->GetState() == SIMON_STATE_JUMP)
 		{
 			simon->SetState(SIMON_STATE_STAND_AND_ATTACK);
 		}
@@ -97,12 +96,12 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		return;
 	}
 
-	if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->AnimationFinished() == false)
+	if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->animations[simon->GetAnimationToRender()]->Over() == false)
 	{
 		return;
 	}
 
-	if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK && simon->AnimationFinished() == false)
+	if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK && simon->animations[simon->GetAnimationToRender()]->Over() == false)
 	{
 		return;
 	}
@@ -120,7 +119,6 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		{
 			simon->SetState(SIMON_STATE_WALK);
 		}
-
 	}
 	else if (game->GetInputManager()->IsKeyDown(DIK_LEFT))
 	{
@@ -165,6 +163,9 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Ground\\BigCandle.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Weapons\\Whip.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Items\\MoneyBag.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Items\\BigHeart.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Items\\Dagger.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Items\\MorningStar.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Others\\Transparency.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Effects\\OneThousand.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Effects\\Flash.SpriteSheet.xml");
@@ -175,17 +176,17 @@ void LoadResources()
 	animations->LoadFromFile("Resources\\Ground\\BigCandle.Animations.xml");
 	animations->LoadFromFile("Resources\\Weapons\\Whip.Animations.xml");
 	animations->LoadFromFile("Resources\\Items\\MoneyBag.Animations.xml");
+	animations->LoadFromFile("Resources\\Items\\BigHeart.Animations.xml");
+	animations->LoadFromFile("Resources\\Items\\Dagger.Animations.xml");
+	animations->LoadFromFile("Resources\\Items\\MorningStar.Animations.xml");
 	animations->LoadFromFile("Resources\\Others\\Transparency.Animations.xml");
 	animations->LoadFromFile("Resources\\Effects\\OneThousand.Animations.xml");
 	animations->LoadFromFile("Resources\\Effects\\Flash.Animations.xml");
 
 	CEffect* oneThousand = new CEffect();
 	oneThousand->AddAnimation("one_thousand");
-	oneThousand->SetTimeout(1000);
-
-	CEffect* flash = new CEffect();
-	flash->AddAnimation("flash");
-	flash->SetTimeout(1000);
+	oneThousand->SetTimeout(300);
+	effects.push_back(oneThousand);
 
 	CMoneyBag* moneyBag = new CMoneyBag();
 	moneyBag->AddAnimation("money_bag");
@@ -194,9 +195,10 @@ void LoadResources()
 	moneyBag->SetPosition(10, 171);
 	objects.push_back(moneyBag);
 
-	CEasterEgg* easterEgg = new CEasterEgg(moneyBag);
+	CEasterEgg* easterEgg = new CEasterEgg();
 	easterEgg->AddAnimation("transparency");
-	easterEgg->SetPosition(130, 140);
+	easterEgg->SetPosition(130, 108);
+	easterEgg->SetHiddenItem(moneyBag);
 	objects.push_back(easterEgg);
 
 	for (int i = 0; i < 48; i++)
@@ -209,10 +211,44 @@ void LoadResources()
 
 	for (int i = 0; i < 5; i++)
 	{
+		CEffect* flash = new CEffect();
+		flash->AddAnimation("flash");
+		flash->SetTimeout(200);
+		effects.push_back(flash);
+
 		CBigCandle* bigCandle = new CBigCandle();
 		bigCandle->AddAnimation("big_candle");
-		bigCandle->SetPosition(i == 0 ? 300 : (i + 1) * 300, 108);
+		bigCandle->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
 		bigCandle->SetEndingEffect(flash);
+
+		if (i == 0 || i == 3)
+		{
+			CBigHeart* bigHeart = new CBigHeart();
+			bigHeart->AddAnimation("big_heart");
+			bigHeart->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
+			objects.push_back(bigHeart);
+
+			bigCandle->SetHiddenItem(bigHeart);
+		}
+		else if (i == 1 || i == 2)
+		{
+			CMorningStar* morningStar = new CMorningStar();
+			morningStar->AddAnimation("morning_star");
+			morningStar->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
+			objects.push_back(morningStar);
+
+			bigCandle->SetHiddenItem(morningStar);
+		}
+		else
+		{
+			CDagger* dagger = new CDagger();
+			dagger->AddAnimation("dagger");
+			dagger->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
+			objects.push_back(dagger);
+
+			bigCandle->SetHiddenItem(dagger);
+		}
+
 		objects.push_back(bigCandle);
 	}
 
@@ -283,8 +319,12 @@ void Update(DWORD dt)
 		}
 	}
 	else if (currentPlayerX + SCREEN_WIDTH / 2 >= BACKGROUND_WIDTH) {
+		float left, top, right, bottom;
+
+		simon->GetBoundingBox(left, top, right, bottom);
 		cx = BACKGROUND_WIDTH - SCREEN_WIDTH;
-		float playerBoundingBoxWidth = simon->GetBoundingBox().right - simon->GetBoundingBox().left;
+
+		float playerBoundingBoxWidth = right - left;
 
 		if (currentPlayerX >= BACKGROUND_WIDTH - playerBoundingBoxWidth) {
 			currentPlayerX = BACKGROUND_WIDTH - playerBoundingBoxWidth;
@@ -297,7 +337,7 @@ void Update(DWORD dt)
 
 	cy -= SCREEN_HEIGHT / 2;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	CGame::GetInstance()->SetCamPos(cx, 0.0f);
 }
 
 /*
@@ -315,6 +355,14 @@ void Render()
 		d3ddv->ColorFill(bb, NULL, CColor::FromRgb(255, 255, 200));
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
+		for (int i = 0; i < effects.size(); i++)
+		{
+			if (effects[i]->GetStartTime() != -1)
+			{
+				effects[i]->Render();
+			}
+		}
 
 		for (int i = 0; i < objects.size(); i++)
 		{
