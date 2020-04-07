@@ -1,21 +1,26 @@
 #include "Simon.h"
 #include "../../Misc/BigCandle.h"
 #include "../../Misc/Brick.h"
+#include "../../Items/BigHeart.h"
+#include "../../Items/EasterEgg.h"
 #include "../../Items/Item.h"
 #include "../../Items/MoneyBag.h"
-#include "../../Items/EasterEgg.h"
-#include "../../Items/BigHeart.h"
+#include "../../Items/MorningStar.h"
 #include "../../../Game.h"
 
 CSimon::CSimon()
 {
 	sitting = false;
 	touchingGround = false;
+	delayEndTime = -1;
 
 	whip = new CWhip();
 	whip->AddAnimation("whip_level_1_left");
 	whip->AddAnimation("whip_level_1_right");
-	whip->SetLevel(WHIP_LEVEL_1);
+	whip->AddAnimation("whip_level_2_left");
+	whip->AddAnimation("whip_level_2_right");
+	whip->AddAnimation("whip_level_3_left");
+	whip->AddAnimation("whip_level_3_right");
 }
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -23,7 +28,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 
 	vy += SIMON_GRAVITY * dt;
-	whip->SetDirection(direction);
+
+	if (this->state == SIMON_STATE_DELAY && GetTickCount() >= this->delayEndTime)
+	{
+		SetState(SIMON_STATE_IDLE);
+	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -84,6 +93,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK)
 	{
+		whip->SetDirection(direction);
+
 		if (animations[GetAnimationToRender()]->GetCurrentFrame() == animations[GetAnimationToRender()]->GetTotalFrames() - 1)
 		{
 			for (int i = 0; i < coObjects->size(); i++)
@@ -109,6 +120,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (CGame::GetInstance()->HaveCollision(this, item))
 			{
+				if (dynamic_cast<CMorningStar*>(coObjects->at(i)))
+				{
+					SetState(SIMON_STATE_DELAY);
+					this->whip->Upgrade();
+				}
+
 				item->Disappear();
 			}
 		}
@@ -155,6 +172,11 @@ void CSimon::SetState(int state)
 		vx = 0;
 		animations[GetAnimationToRender()]->SetStartTime(GetTickCount());
 		ResetAnimations();
+		break;
+
+	case SIMON_STATE_DELAY:
+		vx = 0;
+		delayEndTime = GetTickCount() + SIMON_DELAY_TIMEOUT;
 		break;
 
 	case SIMON_STATE_IDLE:
@@ -240,6 +262,17 @@ int CSimon::GetAnimationToRender()
 		}
 
 		whip->Render();
+	}
+	else if (state == SIMON_STATE_DELAY)
+	{
+		if (direction == Direction::Right)
+		{
+			ani = SIMON_ANI_DELAY_RIGHT;
+		}
+		else
+		{
+			ani = SIMON_ANI_DELAY_LEFT;
+		}
 	}
 	else
 	{

@@ -19,16 +19,22 @@
     <frame spriteId="simon_jump_left" />
   </animation>
 
-  <animation id="simon_sit_left_and_attack" duration="150">
+  <animation id="simon_sit_left_and_attack" duration="100">
     <frame spriteId="simon_sit_left_and_attack_1" />
     <frame spriteId="simon_sit_left_and_attack_2" />
     <frame spriteId="simon_sit_left_and_attack_3" />
   </animation>
 
-  <animation id="simon_stand_left_and_attack" duration="150">
+  <animation id="simon_stand_left_and_attack" duration="100">
     <frame spriteId="simon_stand_left_and_attack_1" />
     <frame spriteId="simon_stand_left_and_attack_2" />
     <frame spriteId="simon_stand_left_and_attack_3" />
+  </animation>
+
+  <animation id="simon_delay_left" duration="100">
+    <frame spriteId="simon_delay_left_1" />
+    <frame spriteId="simon_delay_left_2" />
+    <frame spriteId="simon_delay_left_3" />
   </animation>
 
   <animation id="simon_idle_right" duration="100">
@@ -50,15 +56,21 @@
     <frame spriteId="simon_jump_right" />
   </animation>
 
-  <animation id="simon_sit_right_and_attack" duration="150">
+  <animation id="simon_sit_right_and_attack" duration="100">
     <frame spriteId="simon_sit_right_and_attack_1" />
     <frame spriteId="simon_sit_right_and_attack_2" />
     <frame spriteId="simon_sit_right_and_attack_3" />
   </animation>
 
-  <animation id="simon_stand_right_and_attack" duration="150">
+  <animation id="simon_stand_right_and_attack" duration="100">
     <frame spriteId="simon_stand_right_and_attack_1" />
     <frame spriteId="simon_stand_right_and_attack_2" />
     <frame spriteId="simon_stand_right_and_attack_3" />
+  </animation>
+
+  <animation id="simon_delay_right" duration="100">
+    <frame spriteId="simon_delay_right_1" />
+    <frame spriteId="simon_delay_right_2" />
+    <frame spriteId="simon_delay_right_3" />
   </animation>
 </animations>

@@ -7,4 +7,38 @@
   <sprite id="whip_level_1_right_1" left="480" top="397" right="960" bottom="463" />
   <sprite id="whip_level_1_right_2" left="240" top="397" right="480" bottom="463" />
   <sprite id="whip_level_1_right_3" left="0" top="397" right="240" bottom="463" />
+
+  <sprite id="whip_level_2_left_1" left="0" top="66" right="240" bottom="132" />
+  <sprite id="whip_level_2_left_2" left="240" top="66" right="480" bottom="132" />
+  <sprite id="whip_level_2_left_3" left="480" top="66" right="720" bottom="132" />
+
+  <sprite id="whip_level_2_right_1" left="480" top="463" right="720" bottom="529" />
+  <sprite id="whip_level_2_right_2" left="240" top="463" right="480" bottom="529" />
+  <sprite id="whip_level_2_right_3" left="0" top="463" right="240" bottom="529" />
+
+  <sprite id="whip_level_3_left_1" left="0" top="132" right="240" bottom="198" />
+  <sprite id="whip_level_3_left_2" left="240" top="132" right="480" bottom="198" />
+  <sprite id="whip_level_3_left_3" left="480" top="132" right="720" bottom="198" />
+  <sprite id="whip_level_3_left_4" left="0" top="198" right="240" bottom="264" />
+  <sprite id="whip_level_3_left_5" left="240" top="198" right="480" bottom="264" />
+  <sprite id="whip_level_3_left_6" left="480" top="198" right="720" bottom="264" />
+  <sprite id="whip_level_3_left_7" left="0" top="264" right="240" bottom="330" />
+  <sprite id="whip_level_3_left_8" left="240" top="264" right="480" bottom="330" />
+  <sprite id="whip_level_3_left_9" left="480" top="264" right="720" bottom="330" />
+  <sprite id="whip_level_3_left_10" left="0" top="330" right="240" bottom="396" />
+  <sprite id="whip_level_3_left_11" left="240" top="330" right="480" bottom="396" />
+  <sprite id="whip_level_3_left_12" left="480" top="330" right="720" bottom="396" />
+  
+  <sprite id="whip_level_3_right_1" left="480" top="529" right="720" bottom="595" />
+  <sprite id="whip_level_3_right_2" left="240" top="529" right="480" bottom="595" />
+  <sprite id="whip_level_3_right_3" left="0" top="529" right="240" bottom="595" />
+  <sprite id="whip_level_3_right_4" left="480" top="595" right="720" bottom="661" />
+  <sprite id="whip_level_3_right_5" left="240" top="595" right="480" bottom="661" />
+  <sprite id="whip_level_3_right_6" left="0" top="595" right="240" bottom="661" />
+  <sprite id="whip_level_3_right_7" left="480" top="661" right="720" bottom="727" />
+  <sprite id="whip_level_3_right_8" left="240" top="661" right="480" bottom="727" />
+  <sprite id="whip_level_3_right_9" left="0" top="661" right="240" bottom="727" />
+  <sprite id="whip_level_3_right_10" left="480" top="727" right="720" bottom="793" />
+  <sprite id="whip_level_3_right_11" left="240" top="727" right="480" bottom="793" />
+  <sprite id="whip_level_3_right_12" left="0" top="727" right="240" bottom="793" />
 </spriteSheet>

@@ -9,8 +9,8 @@ public:
 
 	virtual void Render();
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
-	void SetLevel(int level);
 	void ResetAnimations();
+	void Upgrade();
 
 protected:
 	int level;

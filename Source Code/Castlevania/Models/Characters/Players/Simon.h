@@ -24,4 +24,6 @@ protected:
 
 	bool sitting;
 	bool touchingGround;
+
+	DWORD delayEndTime;
 };

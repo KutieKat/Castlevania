@@ -259,6 +259,7 @@ void LoadResources()
 	simon->AddAnimation("simon_jump_left");
 	simon->AddAnimation("simon_sit_left_and_attack");
 	simon->AddAnimation("simon_stand_left_and_attack");
+	simon->AddAnimation("simon_delay_left");
 
 	simon->AddAnimation("simon_idle_right");
 	simon->AddAnimation("simon_walk_right");
@@ -266,6 +267,7 @@ void LoadResources()
 	simon->AddAnimation("simon_jump_right");
 	simon->AddAnimation("simon_sit_right_and_attack");
 	simon->AddAnimation("simon_stand_right_and_attack");
+	simon->AddAnimation("simon_delay_right");
 
 	simon->SetPosition(50.0f, 0);
 	objects.push_back(simon);
@@ -454,7 +456,7 @@ int Run()
 		{
 			frameStart = now;
 
-			if (simon->GetState() != SIMON_STATE_AUTO_WALK)
+			if (simon->GetState() != SIMON_STATE_AUTO_WALK && simon->GetState() != SIMON_STATE_DELAY)
 			{
 				game->GetInputManager()->ProcessKeyboard();
 			}
