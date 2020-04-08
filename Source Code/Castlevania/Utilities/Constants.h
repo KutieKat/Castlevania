@@ -42,8 +42,8 @@ enum Visibility {
 #define WINDOW_CLASS_NAME L"Castlevania"
 #define MAIN_WINDOW_TITLE L"Castlevania"
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 512 // 320
+#define SCREEN_HEIGHT 480 // 240
 
 #define MAX_FRAME_RATE 120
 

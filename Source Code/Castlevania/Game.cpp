@@ -64,7 +64,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 
 //D3DXVECTOR3 p(floor(x), floor(y), 0); // https://docs.microsoft.com/vi-vn/windows/desktop/direct3d9/directly-mapping-texels-to-pixels
 // Try removing floor() to see blurry Mario
-	D3DXVECTOR3 p(floor(x - cam_x), floor(y - cam_y), 0);
+	D3DXVECTOR3 p(floor(x - camX), floor(y - camY), 0);
 	RECT r; 
 	r.left = left;
 	r.top = top;
@@ -201,7 +201,19 @@ void CGame::SweptAABB(
 	}
 }
 
-CGame* CGame::GetInstance()
+	void CGame::SetCamPos(float x, float y)
+	{
+		this->camX = x;
+		this->camY = y;
+	}
+
+	void CGame::GetCamPos(float & x, float & y)
+	{
+		x = this->camX;
+		y = this->camY;
+	}
+
+	CGame* CGame::GetInstance()
 {
 	if (instance == nullptr)
 	{

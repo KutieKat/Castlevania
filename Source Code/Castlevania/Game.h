@@ -19,8 +19,8 @@ class CGame
 
 	CInputManager* inputManager;
 
-	float cam_x = 0.0f;
-	float cam_y = 0.0f;
+	float camX = 0.0f;
+	float camY = 0.0f;
 
 public:
 	void Init(HWND hWnd, IKeyEventHandler* keyHandler);
@@ -48,7 +48,8 @@ public:
 	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
 
-	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
+	void SetCamPos(float x, float y);
+	void GetCamPos(float &x, float &y);
 
 	static CGame* GetInstance();
 

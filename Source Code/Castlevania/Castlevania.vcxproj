@@ -44,6 +44,7 @@
     <ClCompile Include="Sprites\Sprite.cpp" />
     <ClCompile Include="Sprites\SpriteManager.cpp" />
     <ClCompile Include="Textures\TextureManager.cpp" />
+    <ClCompile Include="TileMap\TileMap.cpp" />
     <ClCompile Include="Utilities\Color.cpp" />
     <ClCompile Include="Utilities\Convert.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
@@ -72,6 +73,7 @@
     <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Sprites\SpriteManager.h" />
     <ClInclude Include="Textures\TextureManager.h" />
+    <ClInclude Include="TileMap\TileMap.h" />
     <ClInclude Include="Utilities\Color.h" />
     <ClInclude Include="Utilities\Constants.h" />
     <ClInclude Include="Utilities\Convert.h" />

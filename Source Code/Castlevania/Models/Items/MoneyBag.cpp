@@ -9,7 +9,7 @@ void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	y += vy * dt;
 
-	if (y < 142)
+	if (y < 338)
 	{
 		vy = 0;
 	}

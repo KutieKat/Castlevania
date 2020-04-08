@@ -103,6 +103,12 @@
     <Filter Include="Source Files\Effects">
       <UniqueIdentifier>{813c7c05-f442-4a28-b474-c0e51ac690c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TileMap">
+      <UniqueIdentifier>{0ac197d8-d457-4306-8ff9-5783b5d0f965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TileMap">
+      <UniqueIdentifier>{b57ce46f-0dfb-4f78-b420-58f8f1471982}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprites\SpriteManager.cpp">
@@ -189,6 +195,9 @@
     <ClCompile Include="Models\Items\MorningStar.cpp">
       <Filter>Source Files\Models\Items</Filter>
     </ClCompile>
+    <ClCompile Include="TileMap\TileMap.cpp">
+      <Filter>Source Files\TileMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -271,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="Models\Items\MorningStar.h">
       <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap\TileMap.h">
+      <Filter>Header Files\TileMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

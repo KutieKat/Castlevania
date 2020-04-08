@@ -17,6 +17,7 @@
 #include "Models/Misc/Brick.h"
 #include "Sprites/SpriteManager.h"
 #include "Textures/TextureManager.h"
+#include "TileMap/TileMap.h"
 #include "Utilities/Color.h"
 #include "Utilities/Constants.h"
 #include "Utilities/Debug.h"
@@ -26,6 +27,7 @@ CSimon* simon;
 
 vector<LPGAMEOBJECT> objects;
 vector<CEffect*> effects;
+CTileMap* tileMap;
 
 class CSampleKeyHander : public IKeyEventHandler
 {
@@ -183,6 +185,8 @@ void LoadResources()
 	animations->LoadFromFile("Resources\\Effects\\OneThousand.Animations.xml");
 	animations->LoadFromFile("Resources\\Effects\\Flash.Animations.xml");
 
+	tileMap = new CTileMap("Resources\\Maps\\Scene1.Map.xml", L"Resources\\Maps\\Scene1.png");
+
 	CEffect* oneThousand = new CEffect();
 	oneThousand->AddAnimation("one_thousand");
 	oneThousand->SetTimeout(300);
@@ -192,12 +196,12 @@ void LoadResources()
 	moneyBag->AddAnimation("money_bag");
 	moneyBag->SetEndingEffect(oneThousand);
 	moneyBag->SetAmount(1000);
-	moneyBag->SetPosition(10, 171);
+	moneyBag->SetPosition(1256, 367);
 	objects.push_back(moneyBag);
 
 	CEasterEgg* easterEgg = new CEasterEgg();
 	easterEgg->AddAnimation("transparency");
-	easterEgg->SetPosition(130, 108);
+	easterEgg->SetPosition(1420, 304);
 	easterEgg->SetHiddenItem(moneyBag);
 	objects.push_back(easterEgg);
 
@@ -205,7 +209,7 @@ void LoadResources()
 	{
 		CBrick* brick = new CBrick();
 		brick->AddAnimation("brick");
-		brick->SetPosition(i * 32.0f, 170);
+		brick->SetPosition(i * 32.0f, 366);
 		objects.push_back(brick);
 	}
 
@@ -218,14 +222,14 @@ void LoadResources()
 
 		CBigCandle* bigCandle = new CBigCandle();
 		bigCandle->AddAnimation("big_candle");
-		bigCandle->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
+		bigCandle->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
 		bigCandle->SetEndingEffect(flash);
 
 		if (i == 0 || i == 3)
 		{
 			CBigHeart* bigHeart = new CBigHeart();
 			bigHeart->AddAnimation("big_heart");
-			bigHeart->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
+			bigHeart->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
 			objects.push_back(bigHeart);
 
 			bigCandle->SetHiddenItem(bigHeart);
@@ -234,7 +238,7 @@ void LoadResources()
 		{
 			CMorningStar* morningStar = new CMorningStar();
 			morningStar->AddAnimation("morning_star");
-			morningStar->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
+			morningStar->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
 			objects.push_back(morningStar);
 
 			bigCandle->SetHiddenItem(morningStar);
@@ -243,7 +247,7 @@ void LoadResources()
 		{
 			CDagger* dagger = new CDagger();
 			dagger->AddAnimation("dagger");
-			dagger->SetPosition(i == 0 ? 200 : (i + 1) * 200, 108);
+			dagger->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
 			objects.push_back(dagger);
 
 			bigCandle->SetHiddenItem(dagger);
@@ -269,7 +273,7 @@ void LoadResources()
 	simon->AddAnimation("simon_stand_right_and_attack");
 	simon->AddAnimation("simon_delay_right");
 
-	simon->SetPosition(50.0f, 0);
+	simon->SetPosition(50.0f, 100.0f);
 	objects.push_back(simon);
 }
 
@@ -320,16 +324,16 @@ void Update(DWORD dt)
 			simon->SetPosition(currentPlayerX, currentPlayerY);
 		}
 	}
-	else if (currentPlayerX + SCREEN_WIDTH / 2 >= BACKGROUND_WIDTH) {
+	else if (currentPlayerX + SCREEN_WIDTH / 2 >= tileMap->GetWidth()) {
 		float left, top, right, bottom;
 
 		simon->GetBoundingBox(left, top, right, bottom);
-		cx = BACKGROUND_WIDTH - SCREEN_WIDTH;
+		cx = tileMap->GetWidth() - SCREEN_WIDTH;
 
 		float playerBoundingBoxWidth = right - left;
 
-		if (currentPlayerX >= BACKGROUND_WIDTH - playerBoundingBoxWidth) {
-			currentPlayerX = BACKGROUND_WIDTH - playerBoundingBoxWidth;
+		if (currentPlayerX >= tileMap->GetWidth() - playerBoundingBoxWidth) {
+			currentPlayerX = tileMap->GetWidth() - playerBoundingBoxWidth;
 			simon->SetPosition(currentPlayerX, currentPlayerY);
 		}
 	}
@@ -358,6 +362,13 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
+		// TileMap
+		float camX, camY;
+		game->GetCamPos(camX, camY);
+
+		tileMap->Render(camX, camY, camX + SCREEN_WIDTH, camY + SCREEN_HEIGHT);
+
+		// Effects
 		for (int i = 0; i < effects.size(); i++)
 		{
 			if (effects[i]->GetStartTime() != -1)
@@ -366,6 +377,7 @@ void Render()
 			}
 		}
 
+		// Objects
 		for (int i = 0; i < objects.size(); i++)
 		{
 			if (objects[i]->GetVisibility() == Visibility::Visible)
@@ -481,7 +493,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	LoadResources();
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 
