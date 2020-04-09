@@ -39,7 +39,11 @@
     <ClCompile Include="Models\Items\MoneyBag.cpp" />
     <ClCompile Include="Models\Items\MorningStar.cpp" />
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
+    <ClCompile Include="Models\Misc\Blackboard.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
+    <ClCompile Include="Models\Misc\HealthBar.cpp" />
+    <ClCompile Include="Models\Misc\HealthVolume.cpp" />
+    <ClCompile Include="Models\Weapons\Weapon.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
     <ClCompile Include="Sprites\SpriteManager.cpp" />
@@ -48,6 +52,7 @@
     <ClCompile Include="Utilities\Color.cpp" />
     <ClCompile Include="Utilities\Convert.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
+    <ClCompile Include="Utilities\Label.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animation.h" />
@@ -68,8 +73,13 @@
     <ClInclude Include="Models\Items\MoneyBag.h" />
     <ClInclude Include="Models\Items\MorningStar.h" />
     <ClInclude Include="Models\Misc\BigCandle.h" />
+    <ClInclude Include="Models\Misc\Blackboard.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
+    <ClInclude Include="Models\Misc\HealthBar.h" />
+    <ClInclude Include="Models\Misc\HealthVolume.h" />
+    <ClInclude Include="Models\Weapons\Weapon.h" />
     <ClInclude Include="Models\Weapons\Whip.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Sprites\SpriteManager.h" />
     <ClInclude Include="Textures\TextureManager.h" />
@@ -78,6 +88,13 @@
     <ClInclude Include="Utilities\Constants.h" />
     <ClInclude Include="Utilities\Convert.h" />
     <ClInclude Include="Utilities\Debug.h" />
+    <ClInclude Include="Utilities\Label.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Castlevania.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Icon.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

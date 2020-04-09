@@ -66,14 +66,6 @@ void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
 	}
 }
 
-void CWhip::ResetAnimations()
-{
-	for (int i = 0; i < animations.size(); i++)
-	{
-		animations[i]->Reset();
-	}
-}
-
 void CWhip::Upgrade()
 {
 	if (this->level < 3)

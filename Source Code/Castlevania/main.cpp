@@ -14,6 +14,7 @@
 #include "Models/Items/MoneyBag.h"
 #include "Models/Items/MorningStar.h"
 #include "Models/Misc/BigCandle.h"
+#include "Models/Misc/Blackboard.h"
 #include "Models/Misc/Brick.h"
 #include "Sprites/SpriteManager.h"
 #include "Textures/TextureManager.h"
@@ -21,9 +22,11 @@
 #include "Utilities/Color.h"
 #include "Utilities/Constants.h"
 #include "Utilities/Debug.h"
+#include "resource.h"
 
 CGame* game;
 CSimon* simon;
+CBlackboard* blackboard;
 
 vector<LPGAMEOBJECT> objects;
 vector<CEffect*> effects;
@@ -169,6 +172,8 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Items\\Dagger.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Items\\MorningStar.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Others\\Transparency.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Others\\Blackboard.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Others\\HealthVolume.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Effects\\OneThousand.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Effects\\Flash.SpriteSheet.xml");
 
@@ -182,6 +187,8 @@ void LoadResources()
 	animations->LoadFromFile("Resources\\Items\\Dagger.Animations.xml");
 	animations->LoadFromFile("Resources\\Items\\MorningStar.Animations.xml");
 	animations->LoadFromFile("Resources\\Others\\Transparency.Animations.xml");
+	animations->LoadFromFile("Resources\\Others\\Blackboard.Animations.xml");
+	animations->LoadFromFile("Resources\\Others\\HealthVolume.Animations.xml");
 	animations->LoadFromFile("Resources\\Effects\\OneThousand.Animations.xml");
 	animations->LoadFromFile("Resources\\Effects\\Flash.Animations.xml");
 
@@ -222,14 +229,25 @@ void LoadResources()
 
 		CBigCandle* bigCandle = new CBigCandle();
 		bigCandle->AddAnimation("big_candle");
-		bigCandle->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
+		//bigCandle->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
 		bigCandle->SetEndingEffect(flash);
 
 		if (i == 0 || i == 3)
 		{
 			CBigHeart* bigHeart = new CBigHeart();
 			bigHeart->AddAnimation("big_heart");
-			bigHeart->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
+
+			if (i == 0)
+			{
+				bigCandle->SetPosition(180, 304);
+				bigHeart->SetPosition(180, 304);
+			}
+			else
+			{
+				bigCandle->SetPosition(950, 304);
+				bigHeart->SetPosition(950, 304);
+			}
+
 			objects.push_back(bigHeart);
 
 			bigCandle->SetHiddenItem(bigHeart);
@@ -238,7 +256,18 @@ void LoadResources()
 		{
 			CMorningStar* morningStar = new CMorningStar();
 			morningStar->AddAnimation("morning_star");
-			morningStar->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
+
+			if (i == 1)
+			{
+				bigCandle->SetPosition(430, 304);
+				morningStar->SetPosition(430, 304);
+			}
+			else
+			{
+				bigCandle->SetPosition(690, 304);
+				morningStar->SetPosition(690, 304);
+			}
+
 			objects.push_back(morningStar);
 
 			bigCandle->SetHiddenItem(morningStar);
@@ -247,7 +276,8 @@ void LoadResources()
 		{
 			CDagger* dagger = new CDagger();
 			dagger->AddAnimation("dagger");
-			dagger->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
+			bigCandle->SetPosition(1200, 304);
+			dagger->SetPosition(1200, 304);
 			objects.push_back(dagger);
 
 			bigCandle->SetHiddenItem(dagger);
@@ -273,8 +303,11 @@ void LoadResources()
 	simon->AddAnimation("simon_stand_right_and_attack");
 	simon->AddAnimation("simon_delay_right");
 
-	simon->SetPosition(50.0f, 100.0f);
+	simon->SetPosition(65.0f, 100.0f);
 	objects.push_back(simon);
+
+	blackboard = new CBlackboard(simon);
+	blackboard->AddAnimation("blackboard");
 }
 
 /*
@@ -284,6 +317,7 @@ void LoadResources()
 void Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObjects;
+
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->GetVisibility() == Visibility::Visible)
@@ -343,6 +377,9 @@ void Update(DWORD dt)
 
 	cy -= SCREEN_HEIGHT / 2;
 
+	// Update blackboard position
+	blackboard->Update(tileMap);
+
 	CGame::GetInstance()->SetCamPos(cx, 0.0f);
 }
 
@@ -358,7 +395,7 @@ void Render()
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, NULL, CColor::FromRgb(255, 255, 200));
+		d3ddv->ColorFill(bb, NULL, CColor::FromRgb(0, 0, 0));
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -386,6 +423,9 @@ void Render()
 			}
 		}
 
+		// Blackboard
+		blackboard->Render();
+
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
@@ -405,7 +445,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	wc.lpfnWndProc = (WNDPROC)WinProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
-	wc.hIcon = NULL;
+	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = NULL;
@@ -414,13 +454,19 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 
 	RegisterClassEx(&wc);
 
+	RECT rc;
+	SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0);
+
+	float windowX = (rc.right / 2) - (SCREEN_WIDTH / 2);
+	float windowY = (rc.bottom / 2) - (SCREEN_HEIGHT / 2);
+
 	HWND hWnd =
 		CreateWindow(
 			WINDOW_CLASS_NAME,
 			MAIN_WINDOW_TITLE,
 			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
-			CW_USEDEFAULT,
-			CW_USEDEFAULT,
+			windowX,
+			windowY,
 			ScreenWidth,
 			ScreenHeight,
 			NULL,
@@ -490,6 +536,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd, keyHandler);
+	game->SetSceneTime(300);
 
 	LoadResources();
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="health_volume_sprite_sheet" textureId="health_volume_texture">
+  <sprite id="health_volume_player" left="0" top="0" right="10" bottom="17" />
+  <sprite id="health_volume_empty" left="11" top="0" right="21" bottom="17" />
+  <sprite id="health_volume_enemy" left="22" top="0" right="32" bottom="17" />
+</spriteSheet>

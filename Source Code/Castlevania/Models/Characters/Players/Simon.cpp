@@ -1,18 +1,25 @@
 #include "Simon.h"
+#include "../../../Game.h"
 #include "../../Misc/BigCandle.h"
 #include "../../Misc/Brick.h"
 #include "../../Items/BigHeart.h"
+#include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
 #include "../../Items/Item.h"
 #include "../../Items/MoneyBag.h"
 #include "../../Items/MorningStar.h"
-#include "../../../Game.h"
+#include "../../Weapons/Whip.h"
 
 CSimon::CSimon()
 {
 	sitting = false;
 	touchingGround = false;
 	delayEndTime = -1;
+
+	score = 0;
+	hearts = 5;
+	lives = 3;
+	healthVolumes = 16;
 
 	whip = new CWhip();
 	whip->AddAnimation("whip_level_1_left");
@@ -21,6 +28,8 @@ CSimon::CSimon()
 	whip->AddAnimation("whip_level_2_right");
 	whip->AddAnimation("whip_level_3_left");
 	whip->AddAnimation("whip_level_3_right");
+
+	subWeapon == nullptr;
 }
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -124,6 +133,20 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					SetState(SIMON_STATE_DELAY);
 					this->whip->Upgrade();
+				}
+				else if (dynamic_cast<CBigHeart*>(coObjects->at(i)))
+				{
+					auto heart = dynamic_cast<CBigHeart*>(coObjects->at(i));
+					AddHeart();
+				}
+				else if (dynamic_cast<CMoneyBag*>(coObjects->at(i)))
+				{
+					auto moneyBag = dynamic_cast<CMoneyBag*>(coObjects->at(i));
+					AddScore(moneyBag->GetAmount());
+				}
+				else if (dynamic_cast<CDagger*>(coObjects->at(i)))
+				{
+					SetSubWeaponType("dagger");
 				}
 
 				item->Disappear();
@@ -291,10 +314,7 @@ int CSimon::GetAnimationToRender()
 
 void CSimon::ResetAnimations()
 {
-	for (int i = 0; i < animations.size(); i++)
-	{
-		animations[i]->Reset();
-	}
+	CGameObject::ResetAnimations();
 
 	whip->ResetAnimations();
 }
@@ -307,4 +327,64 @@ bool CSimon::Sitting()
 bool CSimon::TouchingGround()
 {
 	return this->touchingGround;
+}
+
+void CSimon::AddScore(int addedScore)
+{
+	this->score += addedScore;
+}
+
+int CSimon::GetScore()
+{
+	return this->score;
+}
+
+void CSimon::AddHeart()
+{
+	this->hearts += 5;
+}
+
+int CSimon::GetHearts()
+{
+	return this->hearts;
+}
+
+void CSimon::AddLife()
+{
+	this->lives++;
+}
+
+int CSimon::GetLives()
+{
+	return this->lives;
+}
+
+void CSimon::SetSubWeapon(CWeapon* weapon)
+{
+	this->subWeapon = weapon;
+}
+
+CWeapon* CSimon::GetSubWeapon()
+{
+	return this->subWeapon;
+}
+
+void CSimon::TakeDamage(int volumes)
+{
+	this->healthVolumes -= volumes;
+}
+
+int CSimon::getHealthVolumes()
+{
+	return this->healthVolumes;
+}
+
+void CSimon::SetSubWeaponType(string type)
+{
+	this->subWeaponType = type;
+}
+
+string CSimon::GetSubWeaponType()
+{
+	return this->subWeaponType;
 }

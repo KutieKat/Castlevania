@@ -198,6 +198,21 @@
     <ClCompile Include="TileMap\TileMap.cpp">
       <Filter>Source Files\TileMap</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Misc\Blackboard.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Label.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Weapons\Weapon.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\HealthVolume.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\HealthBar.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -275,14 +290,42 @@
     <ClInclude Include="Models\Items\BigHeart.h">
       <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Items\Dagger.h">
-      <Filter>Header Files\Models\Items</Filter>
-    </ClInclude>
     <ClInclude Include="Models\Items\MorningStar.h">
       <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
     <ClInclude Include="TileMap\TileMap.h">
       <Filter>Header Files\TileMap</Filter>
     </ClInclude>
+    <ClInclude Include="Models\Misc\Blackboard.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Dagger.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Label.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\Weapon.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\HealthBar.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\HealthVolume.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Castlevania.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

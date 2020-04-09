@@ -22,6 +22,8 @@ class CGame
 	float camX = 0.0f;
 	float camY = 0.0f;
 
+	DWORD sceneTime;
+
 public:
 	void Init(HWND hWnd, IKeyEventHandler* keyHandler);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
@@ -50,6 +52,11 @@ public:
 
 	void SetCamPos(float x, float y);
 	void GetCamPos(float &x, float &y);
+
+	void SetSceneTime(DWORD time);
+	DWORD GetSceneTime();
+
+	DWORD GetRemainingSceneTime();
 
 	static CGame* GetInstance();
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animations spriteSheetId="blackboard_sprite_sheet">
+  <animation id="blackboard" duration="100">
+    <frame spriteId="blackboard" />
+  </animation>
+</animations>

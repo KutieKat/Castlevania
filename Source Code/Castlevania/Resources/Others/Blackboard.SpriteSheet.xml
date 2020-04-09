@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spriteSheet id="blackboard_sprite_sheet" textureId="blackboard_texture">
+  <sprite id="blackboard" left="0" top="0" right="512" bottom="80" />
+</spriteSheet>

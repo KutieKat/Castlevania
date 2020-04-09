@@ -38,12 +38,19 @@ enum Visibility {
 	Hidden
 };
 
+enum HealthType
+{
+	Empty,
+	Player,
+	Enemy
+};
+
 // Window
 #define WINDOW_CLASS_NAME L"Castlevania"
 #define MAIN_WINDOW_TITLE L"Castlevania"
 
 #define SCREEN_WIDTH 512 // 320
-#define SCREEN_HEIGHT 480 // 240
+#define SCREEN_HEIGHT 480 // 240 => 480
 
 #define MAX_FRAME_RATE 120
 
@@ -136,3 +143,11 @@ enum Visibility {
 // MorningStar
 #define MORNING_STAR_BBOX_WIDTH 32
 #define MORNING_STAR_BBOX_HEIGHT 32
+
+// HealthBar
+#define HEALTH_BAR_MAX_VOLUMES 16
+
+// HealthVolume
+#define HEALTH_VOLUME_ANI_EMPTY 0
+#define HEALTH_VOLUME_ANI_PLAYER 1
+#define HEALTH_VOLUME_ANI_ENEMY 2

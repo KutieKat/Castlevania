@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animations spriteSheetId="health_volume_sprite_sheet">
+  <animation id="health_volume_empty" duration="100">
+    <frame spriteId="health_volume_empty" />
+  </animation>
+  
+  <animation id="health_volume_player" duration="100">
+    <frame spriteId="health_volume_player" />
+  </animation>
+
+  <animation id="health_volume_enemy" duration="100">
+    <frame spriteId="health_volume_enemy" />
+  </animation>
+</animations>

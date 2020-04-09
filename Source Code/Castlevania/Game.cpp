@@ -213,6 +213,21 @@ void CGame::SweptAABB(
 		y = this->camY;
 	}
 
+	void CGame::SetSceneTime(DWORD time)
+	{
+		this->sceneTime = GetTickCount() / 1000 + time;
+	}
+
+	DWORD CGame::GetSceneTime()
+	{
+		return this->sceneTime;
+	}
+
+	DWORD CGame::GetRemainingSceneTime()
+	{
+		return this->sceneTime - GetTickCount() / 1000;
+	}
+
 	CGame* CGame::GetInstance()
 {
 	if (instance == nullptr)

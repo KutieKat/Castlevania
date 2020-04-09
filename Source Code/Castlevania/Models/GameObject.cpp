@@ -26,6 +26,14 @@ void CGameObject::SetState(int state)
 	this->state = state;
 }
 
+void CGameObject::ResetAnimations()
+{
+	for (int i = 0; i < animations.size(); i++)
+	{
+		animations[i]->Reset();
+	}
+}
+
 /*
 	Extension of original SweptAABB to deal with two moving objects
 */
