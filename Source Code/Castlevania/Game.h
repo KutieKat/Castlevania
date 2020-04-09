@@ -22,7 +22,8 @@ class CGame
 	float camX = 0.0f;
 	float camY = 0.0f;
 
-	DWORD sceneTime;
+	DWORD sceneTime = -1;
+	DWORD remainingTime = -1;
 
 public:
 	void Init(HWND hWnd, IKeyEventHandler* keyHandler);
@@ -56,6 +57,7 @@ public:
 	void SetSceneTime(DWORD time);
 	DWORD GetSceneTime();
 
+	void UpdateSceneTime();
 	DWORD GetRemainingSceneTime();
 
 	static CGame* GetInstance();

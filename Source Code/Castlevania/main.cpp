@@ -140,7 +140,14 @@ void CSampleKeyHander::KeyState(BYTE* states)
 	}
 	else
 	{
-		simon->SetState(SIMON_STATE_IDLE);
+		if (game->GetRemainingSceneTime() > 0)
+		{
+			simon->SetState(SIMON_STATE_IDLE);
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_DIE);
+		}
 	}
 }
 
@@ -229,7 +236,6 @@ void LoadResources()
 
 		CBigCandle* bigCandle = new CBigCandle();
 		bigCandle->AddAnimation("big_candle");
-		//bigCandle->SetPosition(i == 0 ? 200 : (i + 1) * 200, 304);
 		bigCandle->SetEndingEffect(flash);
 
 		if (i == 0 || i == 3)
@@ -294,6 +300,7 @@ void LoadResources()
 	simon->AddAnimation("simon_sit_left_and_attack");
 	simon->AddAnimation("simon_stand_left_and_attack");
 	simon->AddAnimation("simon_delay_left");
+	simon->AddAnimation("simon_die_left");
 
 	simon->AddAnimation("simon_idle_right");
 	simon->AddAnimation("simon_walk_right");
@@ -302,6 +309,7 @@ void LoadResources()
 	simon->AddAnimation("simon_sit_right_and_attack");
 	simon->AddAnimation("simon_stand_right_and_attack");
 	simon->AddAnimation("simon_delay_right");
+	simon->AddAnimation("simon_die_right");
 
 	simon->SetPosition(65.0f, 100.0f);
 	objects.push_back(simon);
@@ -339,6 +347,12 @@ void Update(DWORD dt)
 		{
 			objects[i]->Update(dt, &coObjects);
 		}
+	}
+
+	// Update scene time
+	if (game->GetRemainingSceneTime() != 0)
+	{	
+		game->UpdateSceneTime();
 	}
 
 	// Update camera to follow the player
@@ -514,7 +528,7 @@ int Run()
 		{
 			frameStart = now;
 
-			if (simon->GetState() != SIMON_STATE_AUTO_WALK && simon->GetState() != SIMON_STATE_DELAY)
+			if (simon->GetState() != SIMON_STATE_AUTO_WALK && simon->GetState() != SIMON_STATE_DELAY && simon->GetState() != SIMON_STATE_DIE)
 			{
 				game->GetInputManager()->ProcessKeyboard();
 			}

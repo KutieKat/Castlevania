@@ -201,34 +201,46 @@ void CGame::SweptAABB(
 	}
 }
 
-	void CGame::SetCamPos(float x, float y)
-	{
-		this->camX = x;
-		this->camY = y;
-	}
+void CGame::SetCamPos(float x, float y)
+{
+	this->camX = x;
+	this->camY = y;
+}
 
-	void CGame::GetCamPos(float & x, float & y)
-	{
-		x = this->camX;
-		y = this->camY;
-	}
+void CGame::GetCamPos(float & x, float & y)
+{
+	x = this->camX;
+	y = this->camY;
+}
 
-	void CGame::SetSceneTime(DWORD time)
-	{
-		this->sceneTime = GetTickCount() / 1000 + time;
-	}
+void CGame::SetSceneTime(DWORD time)
+{
+	this->sceneTime = GetTickCount() / 1000 + time;
+}
 
-	DWORD CGame::GetSceneTime()
-	{
-		return this->sceneTime;
-	}
+DWORD CGame::GetSceneTime()
+{
+	return this->sceneTime;
+}
 
-	DWORD CGame::GetRemainingSceneTime()
-	{
-		return this->sceneTime - GetTickCount() / 1000;
-	}
+void CGame::UpdateSceneTime()
+{
+	remainingTime = this->sceneTime - GetTickCount() / 1000;
+}
 
-	CGame* CGame::GetInstance()
+DWORD CGame::GetRemainingSceneTime()
+{
+	if (this->remainingTime == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return this->remainingTime;
+	}
+}
+
+CGame* CGame::GetInstance()
 {
 	if (instance == nullptr)
 	{

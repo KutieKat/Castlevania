@@ -21,6 +21,9 @@
   <sprite id="simon_delay_left_1" left="0" top="198" right="60" bottom="264" />
   <sprite id="simon_delay_left_2" left="60" top="198" right="120" bottom="264" />
   <sprite id="simon_delay_left_3" left="120" top="198" right="180" bottom="264" />
+  <sprite id="simon_delay_left_4" left="180" top="198" right="240" bottom="264" />
+
+  <sprite id="simon_die_left" left="240" top="198" right="300" bottom="264" />
 
   <sprite id="simon_idle_right" left="420" top="265" right="480" bottom="331" />
 
@@ -43,4 +46,7 @@
   <sprite id="simon_delay_right_1" left="420" top="463" right="480" bottom="529" />
   <sprite id="simon_delay_right_2" left="360" top="463" right="420" bottom="529" />
   <sprite id="simon_delay_right_3" left="300" top="463" right="360" bottom="529" />
+  <sprite id="simon_delay_right_4" left="240" top="463" right="300" bottom="529" />
+
+  <sprite id="simon_die_right" left="180" top="463" right="240" bottom="529" />
 </spriteSheet>

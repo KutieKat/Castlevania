@@ -208,6 +208,11 @@ void CSimon::SetState(int state)
 		sitting = false;
 		ResetAnimations();
 		break;
+
+	case SIMON_STATE_DIE:
+		vx = 0;
+		vy = 0;
+		break;
 	}
 }
 
@@ -295,6 +300,17 @@ int CSimon::GetAnimationToRender()
 		else
 		{
 			ani = SIMON_ANI_DELAY_LEFT;
+		}
+	}
+	else if (state == SIMON_STATE_DIE)
+	{
+		if (direction == Direction::Right)
+		{
+			ani = SIMON_ANI_DIE_RIGHT;
+		}
+		else
+		{
+			ani = SIMON_ANI_DIE_LEFT;
 		}
 	}
 	else
