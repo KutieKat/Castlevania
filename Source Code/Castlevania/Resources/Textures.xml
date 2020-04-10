@@ -14,4 +14,5 @@
   <texture id="bounding_box_texture" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
   <texture id="transparency_texture" path="Resources\\Others\\Transparency.png" r="255" g="0" b="255" />
   <texture id="health_volume_texture" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
+  <texture id="door_wall_texture" path="Resources\\Ground\\DoorWall.png" r="255" g="0" b="255" />
 </textures>

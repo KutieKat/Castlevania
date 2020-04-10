@@ -41,6 +41,8 @@
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\Blackboard.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
+    <ClCompile Include="Models\Misc\Door.cpp" />
+    <ClCompile Include="Models\Misc\DoorWall.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
     <ClCompile Include="Models\Weapons\Weapon.cpp" />
@@ -53,6 +55,7 @@
     <ClCompile Include="Utilities\Convert.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
     <ClCompile Include="Utilities\Label.cpp" />
+    <ClCompile Include="Utilities\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\Animation.h" />
@@ -75,6 +78,8 @@
     <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\Blackboard.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
+    <ClInclude Include="Models\Misc\Door.h" />
+    <ClInclude Include="Models\Misc\DoorWall.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />
     <ClInclude Include="Models\Misc\HealthVolume.h" />
     <ClInclude Include="Models\Weapons\Weapon.h" />
@@ -89,6 +94,7 @@
     <ClInclude Include="Utilities\Convert.h" />
     <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Utilities\Label.h" />
+    <ClInclude Include="Utilities\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Castlevania.rc" />

@@ -16,6 +16,8 @@
 #include "Models/Misc/BigCandle.h"
 #include "Models/Misc/Blackboard.h"
 #include "Models/Misc/Brick.h"
+#include "Models/Misc/Door.h"
+#include "Models/Misc/DoorWall.h"
 #include "Sprites/SpriteManager.h"
 #include "Textures/TextureManager.h"
 #include "TileMap/TileMap.h"
@@ -140,7 +142,7 @@ void CSampleKeyHander::KeyState(BYTE* states)
 	}
 	else
 	{
-		if (game->GetRemainingSceneTime() > 0)
+		if (game->GetTimer()->GetRemainingTime() > 0)
 		{
 			simon->SetState(SIMON_STATE_IDLE);
 		}
@@ -183,6 +185,7 @@ void LoadResources()
 	sprites->LoadFromFile("Resources\\Others\\HealthVolume.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Effects\\OneThousand.SpriteSheet.xml");
 	sprites->LoadFromFile("Resources\\Effects\\Flash.SpriteSheet.xml");
+	sprites->LoadFromFile("Resources\\Ground\\DoorWall.SpriteSheet.xml");
 
 	CAnimationManager* animations = CAnimationManager::GetInstance();
 	animations->LoadFromFile("Resources\\Characters\\Players\\Simon.Animations.xml");
@@ -198,6 +201,7 @@ void LoadResources()
 	animations->LoadFromFile("Resources\\Others\\HealthVolume.Animations.xml");
 	animations->LoadFromFile("Resources\\Effects\\OneThousand.Animations.xml");
 	animations->LoadFromFile("Resources\\Effects\\Flash.Animations.xml");
+	animations->LoadFromFile("Resources\\Ground\\DoorWall.Animations.xml");
 
 	tileMap = new CTileMap("Resources\\Maps\\Scene1.Map.xml", L"Resources\\Maps\\Scene1.png");
 
@@ -313,6 +317,18 @@ void LoadResources()
 
 	simon->SetPosition(65.0f, 100.0f);
 	objects.push_back(simon);
+	
+	CDoorWall* doorWall = new CDoorWall();
+	doorWall->AddAnimation("door_wall");
+	doorWall->SetPosition(1408, 233);
+	doorWall->SetVisibility(Visibility::Hidden);
+	objects.push_back(doorWall);
+
+	CDoor* door = new CDoor();
+	door->AddAnimation("transparency");
+	door->SetPosition(1376, 356);
+	door->SetDoorWall(doorWall);
+	objects.push_back(door);
 
 	blackboard = new CBlackboard(simon);
 	blackboard->AddAnimation("blackboard");
@@ -349,11 +365,8 @@ void Update(DWORD dt)
 		}
 	}
 
-	// Update scene time
-	if (game->GetRemainingSceneTime() != 0)
-	{	
-		game->UpdateSceneTime();
-	}
+	// Update timer
+	game->GetTimer()->Tick();
 
 	// Update camera to follow the player
 	float cx, cy;
@@ -550,7 +563,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd, keyHandler);
-	game->SetSceneTime(300);
+
+	game->GetTimer()->SetTime(300);
+	game->GetTimer()->Start();
 
 	LoadResources();
 

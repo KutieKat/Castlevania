@@ -100,7 +100,7 @@ enum HealthType
 
 // Brick
 #define BRICK_BBOX_WIDTH 32
-#define BRICK_BBOX_HEIGHT 32
+#define BRICK_BBOX_HEIGHT 36
 
 // BigCandle
 #define BIG_CANDLE_BBOX_WIDTH 31
@@ -154,3 +154,11 @@ enum HealthType
 #define HEALTH_VOLUME_ANI_EMPTY 0
 #define HEALTH_VOLUME_ANI_PLAYER 1
 #define HEALTH_VOLUME_ANI_ENEMY 2
+
+// Door
+#define DOOR_BBOX_WIDTH 10
+#define DOOR_BBOX_HEIGHT 10
+
+// DoorWall
+#define DOOR_WALL_BBOX_WIDTH 128
+#define DOOR_WALL_BBOX_HEIGHT 163

@@ -53,6 +53,9 @@ void CGame::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 	this->inputManager = CInputManager::GetInstance();
 	this->inputManager->Init(hWnd, keyHandler);
 
+	// Timer
+	this->timer = new CTimer();
+
 	CDebug::Info("Initialize game successfully!", "Game.cpp");
 }
 
@@ -213,31 +216,9 @@ void CGame::GetCamPos(float & x, float & y)
 	y = this->camY;
 }
 
-void CGame::SetSceneTime(DWORD time)
+CTimer* CGame::GetTimer()
 {
-	this->sceneTime = GetTickCount() / 1000 + time;
-}
-
-DWORD CGame::GetSceneTime()
-{
-	return this->sceneTime;
-}
-
-void CGame::UpdateSceneTime()
-{
-	remainingTime = this->sceneTime - GetTickCount() / 1000;
-}
-
-DWORD CGame::GetRemainingSceneTime()
-{
-	if (this->remainingTime == 0)
-	{
-		return 0;
-	}
-	else
-	{
-		return this->remainingTime;
-	}
+	return this->timer;
 }
 
 CGame* CGame::GetInstance()

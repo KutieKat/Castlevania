@@ -9,11 +9,12 @@ CBlackboard::CBlackboard(CSimon* simon)
 	this->simon = simon;
 
 	string score = padZero(this->simon->GetScore(), 6);
+	string remainingTime = padZero(CGame::GetInstance()->GetTimer()->GetRemainingTime(), 4);
 	string hearts = padZero(this->simon->GetHearts(), 2);
 	string lives = padZero(this->simon->GetLives(), 2);
 
 	this->scoreLabel = new CLabel(score, 103, 15);
-	this->timeLabel = new CLabel("0300", 288, 15);
+	this->timeLabel = new CLabel(remainingTime, 288, 15);
 	this->stageLabel = new CLabel("01", 460, 15);
 
 	this->heartsLabel = new CLabel(hearts, 394, 34, 18);
@@ -59,7 +60,7 @@ void CBlackboard::Update(CTileMap* tileMap)
 	}
 
 	string score = padZero(this->simon->GetScore(), 6);
-	string remainingTime = padZero(CGame::GetInstance()->GetRemainingSceneTime(), 4);
+	string remainingTime = padZero(CGame::GetInstance()->GetTimer()->GetRemainingTime(), 4);
 	string hearts = padZero(this->simon->GetHearts(), 2);
 
 	this->scoreLabel->SetText(score);

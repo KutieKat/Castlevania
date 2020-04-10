@@ -5,6 +5,7 @@
 
 #include "Input/InputManager.h"
 #include "Models/GameObject.h"
+#include "Utilities/Timer.h"
 
 class CGame
 {
@@ -22,8 +23,7 @@ class CGame
 	float camX = 0.0f;
 	float camY = 0.0f;
 
-	DWORD sceneTime = -1;
-	DWORD remainingTime = -1;
+	CTimer* timer;
 
 public:
 	void Init(HWND hWnd, IKeyEventHandler* keyHandler);
@@ -54,11 +54,7 @@ public:
 	void SetCamPos(float x, float y);
 	void GetCamPos(float &x, float &y);
 
-	void SetSceneTime(DWORD time);
-	DWORD GetSceneTime();
-
-	void UpdateSceneTime();
-	DWORD GetRemainingSceneTime();
+	CTimer* GetTimer();
 
 	static CGame* GetInstance();
 

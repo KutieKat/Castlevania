@@ -1,7 +1,9 @@
-#include "Simon.h"
+﻿#include "Simon.h"
 #include "../../../Game.h"
 #include "../../Misc/BigCandle.h"
 #include "../../Misc/Brick.h"
+#include "../../Misc/Door.h"
+#include "../../Misc/DoorWall.h"
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
@@ -55,6 +57,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 	}
+	else if (state == SIMON_STATE_AUTO_WALK)
+	{
+		x += dx;
+	}
 	else
 	{
 		float min_tx, min_ty, nx = 0, ny;
@@ -91,6 +97,30 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				easterEgg->ShowHiddenItem();
 				easterEgg->SetVisibility(Visibility::Hidden);
+			}
+			else if (dynamic_cast<CDoor*>(e->obj))
+			{
+				auto door = dynamic_cast<CDoor*>(e->obj);
+
+				if (e->nx < 0)
+				{
+					door->GetDoorWall()->SetVisibility(Visibility::Visible);
+					door->SetVisibility(Visibility::Hidden);
+
+					SetState(SIMON_STATE_AUTO_WALK);
+					CGame::GetInstance()->GetTimer()->Stop();
+				}
+				else
+				{
+					x += dx;
+				}
+
+				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CDoorWall*>(e->obj))
+			{
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 		}
 	}
@@ -171,6 +201,10 @@ void CSimon::SetState(int state)
 		vx = direction == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
 		break;
 
+	case SIMON_STATE_AUTO_WALK:
+		vx = SIMON_WALK_SPEED;
+		break;
+
 	case SIMON_STATE_JUMP:
 		if (touchingGround)
 		{
@@ -228,7 +262,7 @@ int CSimon::GetAnimationToRender()
 {
 	int ani;
 
-	if (state == SIMON_STATE_WALK)
+	if (state == SIMON_STATE_WALK || state == SIMON_STATE_AUTO_WALK)
 	{
 		if (direction == Direction::Right)
 		{
