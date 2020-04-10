@@ -22,19 +22,20 @@ bool CAnimationManager::LoadFromFile(string filePath)
 
 	for (animation = root->FirstChildElement(); animation != nullptr; animation = animation->NextSiblingElement())
 	{
-		int duration;
-
 		string id = animation->Attribute("id");
-		animation->QueryIntAttribute("duration", &duration);
 
-		ani = new CAnimation(duration);
+		ani = new CAnimation(100);
 
 		TiXmlElement* frame = nullptr;
 
 		for (frame = animation->FirstChildElement(); frame != nullptr; frame = frame->NextSiblingElement())
 		{
+			int duration;
+
 			string spriteId = frame->Attribute("spriteId");
-			ani->Add(spriteId);
+			frame->QueryIntAttribute("duration", &duration);
+
+			ani->Add(spriteId, duration);
 		}
 
 		Add(id, ani);

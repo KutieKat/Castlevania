@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animations spriteSheetId="dagger_sprite_sheet">
   <animation id="dagger">
-    <frame spriteId="dagger" />
+    <frame spriteId="dagger" duration="100" />
   </animation>
 </animations>

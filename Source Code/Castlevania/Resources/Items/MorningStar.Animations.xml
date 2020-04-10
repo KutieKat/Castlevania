@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animations spriteSheetId="morning_star_sprite_sheet">
   <animation id="morning_star">
-    <frame spriteId="morning_star" />
+    <frame spriteId="morning_star" duration="100" />
   </animation>
 </animations>

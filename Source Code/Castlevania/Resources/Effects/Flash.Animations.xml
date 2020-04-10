@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animations spriteSheetId="flash_sprite_sheet">
-  <animation id="flash" duration="100">
-    <frame spriteId="flash_1" />
-    <frame spriteId="flash_2" />
+  <animation id="flash">
+    <frame spriteId="flash_1" duration="100" />
+    <frame spriteId="flash_2" duration="100" />
   </animation>
 </animations>

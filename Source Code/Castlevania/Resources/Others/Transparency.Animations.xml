@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animations spriteSheetId="transparency_sprite_sheet">
-  <animation id="transparency" duration="100">
-    <frame spriteId="transparency" />
+  <animation id="transparency">
+    <frame spriteId="transparency" duration="100" />
   </animation>
 </animations>
