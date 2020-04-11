@@ -1,5 +1,6 @@
 #include "Whip.h"
 
+
 CWhip::CWhip()
 {
 	level = 1;

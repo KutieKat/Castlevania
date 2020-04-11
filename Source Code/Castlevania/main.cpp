@@ -213,13 +213,13 @@ void LoadResources()
 	CMoneyBag* moneyBag = new CMoneyBag();
 	moneyBag->AddAnimation("money_bag");
 	moneyBag->SetEndingEffect(oneThousand);
-	moneyBag->SetAmount(1000);
+	moneyBag->SetScore(1000);
 	moneyBag->SetPosition(1256, 367);
 	objects.push_back(moneyBag);
 
 	CEasterEgg* easterEgg = new CEasterEgg();
 	easterEgg->AddAnimation("transparency");
-	easterEgg->SetPosition(1420, 304);
+	easterEgg->SetPosition(1420, 334);
 	easterEgg->SetHiddenItem(moneyBag);
 	objects.push_back(easterEgg);
 

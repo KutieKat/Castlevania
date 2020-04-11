@@ -109,7 +109,16 @@ void CBlackboard::Render()
 
 string CBlackboard::padZero(int value, int numberOfZeros)
 {
-	return string(numberOfZeros - to_string(value).length(), '0') + to_string(value);
+	int numZeros = numberOfZeros;
+	int valueLength = to_string(value).length();
+	string strValue = to_string(value);
+
+	if (valueLength > numZeros)
+	{
+		return strValue;
+	}
+
+	return string(numZeros - valueLength, '0') + strValue;
 }
 
 void CBlackboard::RenderLabels()

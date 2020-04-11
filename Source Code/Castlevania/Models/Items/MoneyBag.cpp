@@ -1,4 +1,5 @@
 #include "MoneyBag.h"
+#include "../../Utilities/Debug.h"
 
 CMoneyBag::CMoneyBag()
 {
@@ -7,11 +8,18 @@ CMoneyBag::CMoneyBag()
 
 void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CGameObject::Update(dt);
+
 	y += vy * dt;
 
 	if (y < 338)
 	{
 		vy = 0;
+	}
+
+	if (GetTickCount() > this->disappearingTime)
+	{
+		this->SetVisibility(Visibility::Hidden);
 	}
 
 	if (this->endingEffect->Over())
@@ -51,9 +59,9 @@ void CMoneyBag::Render()
 	}
 }
 
-void CMoneyBag::SetAmount(int amount)
+void CMoneyBag::SetScore(int score)
 {
-	this->amount = amount;
+	this->score = score;
 }
 
 void CMoneyBag::SetEndingEffect(CEffect* effect)
@@ -61,9 +69,9 @@ void CMoneyBag::SetEndingEffect(CEffect* effect)
 	this->endingEffect = effect;
 }
 
-int CMoneyBag::GetAmount()
+int CMoneyBag::GetScore()
 {
-	return this->amount;
+	return this->score;
 }
 
 void CMoneyBag::Disappear()

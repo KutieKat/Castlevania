@@ -23,7 +23,7 @@ public:
 	void AddScore(int addedScore);
 	int GetScore();
 
-	void AddHeart();
+	void AddHeart(int hearts);
 	int GetHearts();
 
 	void AddLife();

@@ -6,5 +6,9 @@ class CItem : public CGameObject
 {
 public:
 	virtual void Disappear();
+	void SetDisplayTime(DWORD time);
+
+protected:
+	DWORD disappearingTime = -1;
 };
 

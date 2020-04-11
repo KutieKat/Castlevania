@@ -3,6 +3,7 @@
 void CEasterEgg::ShowHiddenItem()
 {
 	this->hiddenItem->SetState(ITEM_STATE_APPEAR);
+	this->hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
 }
 
 void CEasterEgg::GetBoundingBox(float & l, float & t, float & r, float & b)

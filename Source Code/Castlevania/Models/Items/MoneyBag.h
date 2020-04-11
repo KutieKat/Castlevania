@@ -11,16 +11,16 @@ public:
 	void SetState(int state);
 	void GetBoundingBox(float &l, float &t, float &r, float &b);
 	void Render();
-	void SetAmount(int amount);
+	void SetScore(int score);
 	void Disappear();
 	void SetEndingEffect(CEffect* effect);
 
-	int GetAmount();
+	int GetScore();
 
 protected:
 	CEffect* endingEffect;
 
-	int amount;
+	int score;
 	bool showingEffect;
 };
 

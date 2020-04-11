@@ -1,5 +1,4 @@
 #include "Timer.h"
-#include "Utilities/Debug.h"
 
 CTimer::CTimer()
 {

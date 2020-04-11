@@ -2,7 +2,7 @@
 
 CBigCandle::CBigCandle()
 {
-	showingEffect = false;
+	this->showingEffect = false;
 }
 
 void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -12,6 +12,7 @@ void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (this->hiddenItem)
 		{
 			this->hiddenItem->SetVisibility(Visibility::Visible);
+			this->hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
 		}
 
 		this->visibility = Visibility::Hidden;

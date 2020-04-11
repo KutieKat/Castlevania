@@ -142,9 +142,27 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					auto bigCandle = dynamic_cast<CBigCandle*>(coObjects->at(i));
 
+					float cCenterX, cLeft, cTop, cRight, cBottom;
+					float sCenterX, sLeft, sTop, sRight, sBottom;
+					float wLeft, wTop, wRight, wBottom;
+
+					GetBoundingBox(sLeft, sTop, sRight, sBottom);
+					bigCandle->GetBoundingBox(cLeft, cTop, cRight, cBottom);
+					this->whip->GetBoundingBox(wLeft, wTop, wRight, wBottom);
+
+					cCenterX = cLeft + (cRight - cLeft) / 2;
+					sCenterX = sLeft + (sRight - sLeft) / 2;
+
 					if (CGame::GetInstance()->HaveCollision(this->whip, bigCandle))
 					{
-						bigCandle->Disappear();
+						if (direction == Direction::Right && sCenterX < cCenterX && wRight >= cLeft)
+						{
+							bigCandle->Disappear();
+						}
+						else if (direction == Direction::Left && sCenterX > cCenterX && wLeft <= cRight)
+						{
+							bigCandle->Disappear();
+						}
 					}
 				}
 			}
@@ -167,12 +185,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else if (dynamic_cast<CBigHeart*>(coObjects->at(i)))
 				{
 					auto heart = dynamic_cast<CBigHeart*>(coObjects->at(i));
-					AddHeart();
+					AddHeart(5);
 				}
 				else if (dynamic_cast<CMoneyBag*>(coObjects->at(i)))
 				{
 					auto moneyBag = dynamic_cast<CMoneyBag*>(coObjects->at(i));
-					AddScore(moneyBag->GetAmount());
+					AddScore(moneyBag->GetScore());
 				}
 				else if (dynamic_cast<CDagger*>(coObjects->at(i)))
 				{
@@ -297,14 +315,14 @@ int CSimon::GetAnimationToRender()
 	}
 	else if (state == SIMON_STATE_SIT_AND_ATTACK)
 	{
-		whip->SetPosition(x - 90, y + 14);
-
 		if (direction == Direction::Right)
 		{
+			whip->SetPosition(x - 15, y + 14);
 			ani = SIMON_ANI_SIT_RIGHT_AND_ATTACK;
 		}
 		else
 		{
+			whip->SetPosition(x - 40, y + 14);
 			ani = SIMON_ANI_SIT_LEFT_AND_ATTACK;
 		}
 
@@ -312,14 +330,14 @@ int CSimon::GetAnimationToRender()
 	}
 	else if (state == SIMON_STATE_STAND_AND_ATTACK)
 	{
-		whip->SetPosition(x - 90, y);
-
 		if (direction == Direction::Right)
 		{
+			whip->SetPosition(x - 15, y);
 			ani = SIMON_ANI_STAND_RIGHT_AND_ATTACK;
 		}
 		else
 		{
+			whip->SetPosition(x - 40, y);
 			ani = SIMON_ANI_STAND_LEFT_AND_ATTACK;
 		}
 
@@ -389,9 +407,9 @@ int CSimon::GetScore()
 	return this->score;
 }
 
-void CSimon::AddHeart()
+void CSimon::AddHeart(int hearts)
 {
-	this->hearts += 5;
+	this->hearts += hearts;
 }
 
 int CSimon::GetHearts()
