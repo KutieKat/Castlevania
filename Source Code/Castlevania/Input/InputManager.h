@@ -15,6 +15,8 @@ public:
 
 	int IsKeyDown(int keyCode);
 
+	~CInputManager();
+
 private:
 	LPDIRECTINPUT8 di;
 	LPDIRECTINPUTDEVICE8 didv;

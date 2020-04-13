@@ -2,6 +2,7 @@
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Utilities/Debug.h"
 #include "../Sprites/SpriteManager.h"
+#include "../Utilities/SafeDelete.h"
 
 CAnimationManager* CAnimationManager::instance = nullptr;
 
@@ -17,6 +18,7 @@ bool CAnimationManager::LoadFromFile(string filePath)
 
 	TiXmlElement* root = doc.RootElement();
 	TiXmlElement* animation = nullptr;
+	TiXmlElement* frame = nullptr;
 
 	CAnimation* ani = nullptr;
 
@@ -25,8 +27,6 @@ bool CAnimationManager::LoadFromFile(string filePath)
 		string id = animation->Attribute("id");
 
 		ani = new CAnimation(100);
-
-		TiXmlElement* frame = nullptr;
 
 		for (frame = animation->FirstChildElement(); frame != nullptr; frame = frame->NextSiblingElement())
 		{
@@ -65,4 +65,9 @@ CAnimationManager* CAnimationManager::GetInstance()
 	}
 
 	return instance;
+}
+
+CAnimationManager::~CAnimationManager()
+{
+	SAFE_DELETE(instance);
 }

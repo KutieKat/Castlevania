@@ -42,12 +42,12 @@ void CMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 }
 
-void CMorningStar::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CMorningStar::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	l = x;
-	t = y;
-	r = x + MORNING_STAR_BBOX_WIDTH;
-	b = y + MORNING_STAR_BBOX_HEIGHT;
+	left = x;
+	top = y;
+	right = left + MORNING_STAR_BBOX_WIDTH;
+	bottom = top + MORNING_STAR_BBOX_HEIGHT;
 }
 
 void CMorningStar::Render()

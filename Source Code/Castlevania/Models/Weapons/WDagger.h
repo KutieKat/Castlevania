@@ -1,11 +1,11 @@
 #pragma once
-#include "Item.h"
-#include "../../Utilities/Constants.h"
+#include "Weapon.h"
 
-class CDagger : public CItem
+class WDagger : public CWeapon
 {
 public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 	void GetBoundingBox(float &l, float &t, float &r, float &b);
 	void Render();
 };
+

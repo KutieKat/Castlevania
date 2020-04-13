@@ -1,50 +1,13 @@
 #include "Whip.h"
 
-
 CWhip::CWhip()
 {
-	level = 1;
+	this->level = 1;
 }
 
 void CWhip::Render()
 {
-	int ani;
-
-	if (level == 1)
-	{
-		if (direction == Direction::Right)
-		{
-			ani = WHIP_ANI_LEVEL_1_RIGHT;
-		}
-		else
-		{
-			ani = WHIP_ANI_LEVEL_1_LEFT;
-		}
-	}
-	else if (level == 2)
-	{
-		if (direction == Direction::Right)
-		{
-			ani = WHIP_ANI_LEVEL_2_RIGHT;
-		}
-		else
-		{
-			ani = WHIP_ANI_LEVEL_2_LEFT;
-		}
-	}
-	else if (level == 3)
-	{
-		if (direction == Direction::Right)
-		{
-			ani = WHIP_ANI_LEVEL_3_RIGHT;
-		}
-		else
-		{
-			ani = WHIP_ANI_LEVEL_3_LEFT;
-		}
-	}
-
-	animations[ani]->Render(x, y);
+	animations[GetAnimationToRender()]->Render(x, y);
 }
 
 void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
@@ -53,17 +16,19 @@ void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
 	t = y;
 	b = y + WHIP_BBOX_HEIGHT;
 
-	if (this->level == 1)
+	switch (this->level)
 	{
+	case 1:
 		r = l + WHIP_LEVEL_1_BBOX_WIDTH;
-	}
-	else if (this->level == 2)
-	{
+		break;
+
+	case 2:
 		r = l + WHIP_LEVEL_2_BBOX_WIDTH;
-	}
-	else
-	{
+		break;
+
+	case 3:
 		r = l + WHIP_LEVEL_3_BBOX_WIDTH;
+		break;
 	}
 }
 
@@ -73,4 +38,26 @@ void CWhip::Upgrade()
 	{
 		this->level += 1;
 	}
+}
+
+int CWhip::GetAnimationToRender()
+{
+	int ani;
+
+	switch (this->level)
+	{
+	case 1:
+		ani = direction == Direction::Right ? WHIP_ANI_LEVEL_1_RIGHT : WHIP_ANI_LEVEL_1_LEFT;
+		break;
+
+	case 2:
+		ani = direction == Direction::Right ? WHIP_ANI_LEVEL_2_RIGHT : WHIP_ANI_LEVEL_2_LEFT;
+		break;
+
+	case 3:
+		ani = direction == Direction::Right ? WHIP_ANI_LEVEL_3_RIGHT : WHIP_ANI_LEVEL_3_LEFT;
+		break;
+	}
+
+	return ani;
 }

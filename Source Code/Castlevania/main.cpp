@@ -48,7 +48,7 @@ void CSampleKeyHander::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case DIK_Z:
-		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK || (simon->TouchingGround() == false && simon->GetState() == SIMON_STATE_STAND_AND_ATTACK))
+		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->animations[simon->GetAnimationToRender()]->Over() == false)
 		{
 			return;
 		}
@@ -56,6 +56,11 @@ void CSampleKeyHander::OnKeyDown(int keyCode)
 		if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->Sitting() == true && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
 		{
 			return;
+		}
+
+		if (simon->GetSubWeaponType() != "" && simon->GetHearts() > 0 && simon->Up())
+		{
+			simon->SetState(SIMON_STATE_STAND_AND_THROW);
 		}
 
 		if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_WALK || simon->GetState() == SIMON_STATE_JUMP)
@@ -70,15 +75,22 @@ void CSampleKeyHander::OnKeyDown(int keyCode)
 		break;
 
 	case DIK_X:
+		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->TouchingGround() == false && simon->animations[simon->GetAnimationToRender()]->Over() == false)
+		{
+			return;
+		}
+
 		if (simon->Sitting())
 		{
 			return;
 		}
-		else
-		{
-			simon->SetState(SIMON_STATE_JUMP);
-		}
+		
+		simon->SetState(SIMON_STATE_JUMP);
 
+		break;
+
+	case DIK_UP:
+		simon->SetUp(true);
 		break;
 
 	default:
@@ -90,6 +102,10 @@ void CSampleKeyHander::OnKeyUp(int keyCode)
 {
 	switch (keyCode)
 	{
+	case DIK_UP:
+		simon->SetUp(false);
+		break;
+
 	case DIK_DOWN:
 		simon->SetState(SIMON_STATE_IDLE);
 		break;
@@ -98,7 +114,17 @@ void CSampleKeyHander::OnKeyUp(int keyCode)
 
 void CSampleKeyHander::KeyState(BYTE* states)
 {
+	if (simon->Up() && simon->TouchingGround() == false && simon->animations[simon->GetAnimationToRender()]->Over() == false)
+	{
+		return;
+	}
+
 	if (simon->GetState() == SIMON_STATE_JUMP && simon->TouchingGround() == false)
+	{
+		return;
+	}
+
+	if (simon->GetState() == SIMON_STATE_STAND_AND_THROW && simon->animations[simon->GetAnimationToRender()]->Over() == false)
 	{
 		return;
 	}
@@ -118,7 +144,19 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		simon->SetState(SIMON_STATE_SIT);
 	}
 
-	if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
+	if (game->GetInputManager()->IsKeyDown(DIK_UP))
+	{
+		simon->SetUp(true);
+	}
+
+	if (game->GetInputManager()->IsKeyDown(DIK_UP))
+	{
+		if (simon->TouchingGround())
+		{
+			simon->SetState(SIMON_STATE_IDLE);
+		}
+	}
+	else if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 	{
 		simon->SetDirection(Direction::Right);
 
@@ -285,7 +323,7 @@ void LoadResources()
 		else
 		{
 			CDagger* dagger = new CDagger();
-			dagger->AddAnimation("dagger");
+			dagger->AddAnimation("dagger_right");
 			bigCandle->SetPosition(1200, 304);
 			dagger->SetPosition(1200, 304);
 			objects.push_back(dagger);
@@ -407,7 +445,8 @@ void Update(DWORD dt)
 	// Update blackboard position
 	blackboard->Update(tileMap);
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f);
+	// Update camera position
+	 CGame::GetInstance()->GetCamera()->SetPosition(cx, 0.0f);
 }
 
 /*
@@ -427,10 +466,7 @@ void Render()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		// TileMap
-		float camX, camY;
-		game->GetCamPos(camX, camY);
-
-		tileMap->Render(camX, camY, camX + SCREEN_WIDTH, camY + SCREEN_HEIGHT);
+		 tileMap->Render(game->GetCamera());
 
 		// Effects
 		for (int i = 0; i < effects.size(); i++)
@@ -566,6 +602,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game->GetTimer()->SetTime(300);
 	game->GetTimer()->Start();
+
+	 game->GetCamera()->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	LoadResources();
 

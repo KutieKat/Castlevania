@@ -20,6 +20,8 @@ public:
 	void Update(CTileMap* tileMap);
 	void Render();
 
+	~CBlackboard();
+
 protected:
 	CSimon* simon;
 

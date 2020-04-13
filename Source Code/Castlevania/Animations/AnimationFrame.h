@@ -9,6 +9,8 @@ public:
 	DWORD GetTime();
 	CSprite* GetSprite();
 
+	~CAnimationFrame();
+
 private:
 	CSprite* sprite;
 	DWORD time;

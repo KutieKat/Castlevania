@@ -26,6 +26,7 @@ void CTileMap::LoadMap()
 
 	TiXmlElement* root = doc.RootElement();
 	TiXmlElement* row = nullptr;
+	TiXmlElement* column = nullptr;
 
 	root->QueryIntAttribute("tileWidth", &this->tileWidth);
 	root->QueryIntAttribute("tileHeight", &this->tileHeight);
@@ -38,7 +39,6 @@ void CTileMap::LoadMap()
 	for (row = root->FirstChildElement(); row != nullptr; row = row->NextSiblingElement())
 	{
 		vector<int> columns;
-		TiXmlElement* column = nullptr;
 
 		for (column = row->FirstChildElement(); column != nullptr; column = column->NextSiblingElement())
 		{
@@ -92,10 +92,10 @@ void CTileMap::LoadTiles()
 	}
 }
 
-void CTileMap::Render(float cameraLeft, float cameraTop, float cameraRight, float cameraBottom)
+void CTileMap::Render(CCamera* camera)
 {
-	int startingColumn = cameraLeft / tileWidth;
-	int endingColumn = cameraRight / tileWidth;
+	int startingColumn = camera->GetLeft() / tileWidth;
+	int endingColumn = camera->GetRight() / tileWidth;
 
 	if (endingColumn >= this->mapColumns)
 	{

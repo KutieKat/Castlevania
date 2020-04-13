@@ -1,5 +1,6 @@
 #include "InputManager.h"
-#include "..\Utilities\Debug.h"
+#include "../Utilities/Debug.h"
+#include "../Utilities/SafeDelete.h"
 
 CInputManager* CInputManager::instance = nullptr;
 
@@ -112,4 +113,9 @@ void CInputManager::ProcessKeyboard()
 int CInputManager::IsKeyDown(int keyCode)
 {
 	return (keyStates[keyCode] & 0x80) > 0;
+}
+
+CInputManager::~CInputManager()
+{
+	SAFE_DELETE(instance);
 }

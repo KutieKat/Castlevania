@@ -13,6 +13,8 @@ public:
 
 	static CAnimationManager* GetInstance();
 
+	~CAnimationManager();
+
 private:
 	static CAnimationManager* instance;
 

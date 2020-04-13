@@ -42,12 +42,12 @@ void CBigHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 }
 
-void CBigHeart::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CBigHeart::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	l = x;
-	t = y;
-	r = x + BIG_HEART_BBOX_WIDTH;
-	b = y + BIG_HEART_BBOX_HEIGHT;
+	left = x;
+	top = y;
+	right = left + BIG_HEART_BBOX_WIDTH;
+	bottom = top +BIG_HEART_BBOX_HEIGHT;
 }
 
 void CBigHeart::Render()

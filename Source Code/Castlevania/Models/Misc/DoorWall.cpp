@@ -4,8 +4,8 @@ void CDoorWall::GetBoundingBox(float & left, float & top, float & right, float &
 {
 	left = x;
 	top = y;
-	right = x + DOOR_WALL_BBOX_WIDTH;
-	bottom = y + DOOR_WALL_BBOX_HEIGHT;
+	right = left + DOOR_WALL_BBOX_WIDTH;
+	bottom = top + DOOR_WALL_BBOX_HEIGHT;
 }
 
 void CDoorWall::Render()

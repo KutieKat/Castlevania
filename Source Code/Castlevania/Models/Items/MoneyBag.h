@@ -7,7 +7,7 @@ class CMoneyBag : public CItem
 public:
 	CMoneyBag();
 
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 	void SetState(int state);
 	void GetBoundingBox(float &l, float &t, float &r, float &b);
 	void Render();
@@ -16,6 +16,8 @@ public:
 	void SetEndingEffect(CEffect* effect);
 
 	int GetScore();
+
+	~CMoneyBag();
 
 protected:
 	CEffect* endingEffect;

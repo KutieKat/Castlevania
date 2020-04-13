@@ -109,6 +109,12 @@
     <Filter Include="Source Files\TileMap">
       <UniqueIdentifier>{b57ce46f-0dfb-4f78-b420-58f8f1471982}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{bf39c029-1324-4fe4-8048-0dd7dc38a8d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{bc652390-0f47-4acd-a43d-af2aa3f0a75b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprites\SpriteManager.cpp">
@@ -222,6 +228,12 @@
     <ClCompile Include="Utilities\Timer.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Weapons\WDagger.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\Camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -334,6 +346,15 @@
     </ClInclude>
     <ClInclude Include="Utilities\Timer.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\WDagger.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\SafeDelete.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera\Camera.h">
+      <Filter>Header Files\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #include "Blackboard.h"
 #include "../../Utilities/Debug.h"
 #include "../Items/Dagger.h"
-#include "../../Utilities/Constants.h"
+#include "../../../Utilities/SafeDelete.h"
 #include "../../Game.h"
 
 CBlackboard::CBlackboard(CSimon* simon)
@@ -75,11 +75,11 @@ void CBlackboard::Update(CTileMap* tileMap)
 	if (this->simon->GetSubWeaponType() == "dagger" && this->subWeapon == nullptr)
 	{
 		this->subWeapon = new CDagger();
-		this->subWeapon->AddAnimation("dagger");
+		this->subWeapon->AddAnimation("dagger_right");
 		this->subWeapon->SetVisibility(Visibility::Visible);
 	}
 
-	if (this->subWeapon != nullptr)
+	if (this->subWeapon)
 	{
 		float itemLeft, itemTop, itemRight, itemBottom;
 		this->subWeapon->GetBoundingBox(itemLeft, itemTop, itemRight, itemBottom);
@@ -101,7 +101,7 @@ void CBlackboard::Render()
 	RenderLabels();
 	RenderHealthBars();
 
-	if (this->subWeapon != nullptr)
+	if (this->subWeapon)
 	{
 		this->subWeapon->Render();
 	}
@@ -134,4 +134,16 @@ void CBlackboard::RenderHealthBars()
 {
 	this->simonHealthBar->Render();
 	this->enemyHealthBar->Render();
+}
+
+CBlackboard::~CBlackboard()
+{
+	SAFE_DELETE(this->simon);
+	SAFE_DELETE(this->scoreLabel);
+	SAFE_DELETE(this->timeLabel);
+	SAFE_DELETE(this->heartsLabel);
+	SAFE_DELETE(this->livesLabel);
+	SAFE_DELETE(this->simonHealthBar);
+	SAFE_DELETE(this->enemyHealthBar);
+	SAFE_DELETE(this->subWeapon);
 }

@@ -2,6 +2,7 @@
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Utilities/Debug.h"
 #include "../Textures/TextureManager.h"
+#include "../Utilities/SafeDelete.h"
 
 CSpriteManager* CSpriteManager::instance = nullptr;
 
@@ -65,4 +66,9 @@ CSpriteManager* CSpriteManager::GetInstance()
 	}
 
 	return instance;
+}
+
+CSpriteManager::~CSpriteManager()
+{
+	SAFE_DELETE(instance);
 }

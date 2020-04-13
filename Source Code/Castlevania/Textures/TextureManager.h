@@ -13,6 +13,8 @@ public:
 
 	static CTextureManager* GetInstance();
 
+	~CTextureManager();
+
 private:
 	static CTextureManager* instance;
 

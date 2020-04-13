@@ -22,6 +22,7 @@
     <ClCompile Include="Animations\Animation.cpp" />
     <ClCompile Include="Animations\AnimationFrame.cpp" />
     <ClCompile Include="Animations\AnimationManager.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Effects\Effect.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="Models\Misc\DoorWall.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
+    <ClCompile Include="Models\Weapons\WDagger.cpp" />
     <ClCompile Include="Models\Weapons\Weapon.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
@@ -61,6 +63,7 @@
     <ClInclude Include="Animations\Animation.h" />
     <ClInclude Include="Animations\AnimationFrame.h" />
     <ClInclude Include="Animations\AnimationManager.h" />
+    <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Effects\Effect.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input\IKeyEventHandler.h" />
@@ -82,6 +85,7 @@
     <ClInclude Include="Models\Misc\DoorWall.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />
     <ClInclude Include="Models\Misc\HealthVolume.h" />
+    <ClInclude Include="Models\Weapons\WDagger.h" />
     <ClInclude Include="Models\Weapons\Weapon.h" />
     <ClInclude Include="Models\Weapons\Whip.h" />
     <ClInclude Include="resource.h" />
@@ -94,6 +98,7 @@
     <ClInclude Include="Utilities\Convert.h" />
     <ClInclude Include="Utilities\Debug.h" />
     <ClInclude Include="Utilities\Label.h" />
+    <ClInclude Include="Utilities\SafeDelete.h" />
     <ClInclude Include="Utilities\Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +162,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(ProjectDir)\Libraries\DirectX\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\Libraries\DirectX\Lib\x86;$(LibraryPath)</LibraryPath>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>

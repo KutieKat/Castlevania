@@ -5,10 +5,10 @@ void CBrick::Render()
 	animations[0]->Render(x, y);
 }
 
-void CBrick::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	l = x;
-	t = y;
-	r = x + BRICK_BBOX_WIDTH;
-	b = y + BRICK_BBOX_HEIGHT;
+	left = x;
+	top = y;
+	right = left + BRICK_BBOX_WIDTH;
+	bottom = top + BRICK_BBOX_HEIGHT;
 }

@@ -3,6 +3,7 @@
 #include <string>
 
 #include "../Sprites/SpriteManager.h"
+#include "../Camera/Camera.h"
 using namespace std;
 
 class CTileMap
@@ -10,7 +11,7 @@ class CTileMap
 public:
 	CTileMap(string mapFile, LPWSTR tilesFile);
 
-	void Render(float cameraLeft, float cameraTop, float cameraRight, float cameraBottom);
+	void Render(CCamera* camera);
 
 	int GetWidth();
 	int GetHeight();

@@ -9,7 +9,7 @@ class CSimon : public CGameObject
 public:
 	CSimon();
 
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 	void Render();
 	void SetState(int state);
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
@@ -19,14 +19,16 @@ public:
 
 	bool Sitting();
 	bool TouchingGround();
+	bool Up();
 
 	void AddScore(int addedScore);
 	int GetScore();
 
 	void AddHeart(int hearts);
+	void DecreaseHeart(int hearts);
 	int GetHearts();
 
-	void AddLife();
+	void AddLife(int lives);
 	int GetLives();
 
 	void SetSubWeapon(CWeapon* weapon);
@@ -38,12 +40,17 @@ public:
 	void SetSubWeaponType(string type);
 	string GetSubWeaponType();
 
+	void SetUp(bool up);
+
+	~CSimon();
+
 protected:
 	CWeapon* whip;
 	CWeapon* subWeapon;
 
 	bool sitting;
 	bool touchingGround;
+	bool up;
 
 	DWORD delayEndTime;
 
@@ -53,4 +60,7 @@ protected:
 	int healthVolumes;
 
 	string subWeaponType;
+
+	void InitSubWeapon();
+	void UpdateWhip();
 };

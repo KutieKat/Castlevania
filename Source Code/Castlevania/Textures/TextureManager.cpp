@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 
 #include "../Utilities/Debug.h"
+#include "../Utilities/SafeDelete.h"
 #include "../Game.h"
 #include "../Textures/TextureManager.h"
 #include "../Libraries/TinyXML/tinyxml.h"
@@ -102,4 +103,9 @@ void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor
 LPDIRECT3DTEXTURE9 CTextureManager::Get(string id)
 {
 	return textures[id];
+}
+
+CTextureManager::~CTextureManager()
+{
+	SAFE_DELETE(instance);
 }

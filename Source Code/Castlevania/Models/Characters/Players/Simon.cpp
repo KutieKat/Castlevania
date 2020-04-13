@@ -11,6 +11,9 @@
 #include "../../Items/MoneyBag.h"
 #include "../../Items/MorningStar.h"
 #include "../../Weapons/Whip.h"
+#include "../../Weapons/WDagger.h"
+#include "../../../Utilities/Debug.h"
+#include "../../../Utilities/SafeDelete.h"
 
 CSimon::CSimon()
 {
@@ -38,6 +41,19 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
+	if (subWeapon)
+	{
+		float sX, sY;
+
+		subWeapon->Update(dt, coObjects);
+		subWeapon->GetPosition(sX, sY);
+
+		if (sX > CGame::GetInstance()->GetCamera()->GetRight())
+		{
+			SAFE_DELETE(subWeapon);
+		}
+	}
+
 	vy += SIMON_GRAVITY * dt;
 
 	if (this->state == SIMON_STATE_DELAY && GetTickCount() >= this->delayEndTime)
@@ -57,10 +73,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 	}
-	else if (state == SIMON_STATE_AUTO_WALK)
-	{
-		x += dx;
-	}
 	else
 	{
 		float min_tx, min_ty, nx = 0, ny;
@@ -78,15 +90,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				touchingGround = true;
 
-				if (nx != 0) vx = 0;
 				if (ny != 0) vy = 0;
 			}
-			else if (dynamic_cast<CBigCandle*>(e->obj))
-			{
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
-			}
-			else if (dynamic_cast<CItem*>(e->obj))
+			else if (dynamic_cast<CBigCandle*>(e->obj) || dynamic_cast<CItem*>(e->obj) || dynamic_cast<CDoorWall*>(e->obj))
 			{
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
@@ -95,8 +101,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto easterEgg = dynamic_cast<CEasterEgg*>(e->obj);
 
-				easterEgg->ShowHiddenItem();
-				easterEgg->SetVisibility(Visibility::Hidden);
+				if (state != SIMON_STATE_AUTO_WALK)
+				{
+					easterEgg->ShowHiddenItem();
+					easterEgg->SetVisibility(Visibility::Hidden);
+				}
+
+				x += dx;
 			}
 			else if (dynamic_cast<CDoor*>(e->obj))
 			{
@@ -110,17 +121,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					SetState(SIMON_STATE_AUTO_WALK);
 					CGame::GetInstance()->GetTimer()->Stop();
 				}
-				else
-				{
-					x += dx;
-				}
 
-				if (e->ny != 0) y += dy;
-			}
-			else if (dynamic_cast<CDoorWall*>(e->obj))
-			{
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
+				if (e->ny != 0)
+				{
+					y += dy;
+				}
 			}
 		}
 	}
@@ -132,7 +137,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK)
 	{
-		whip->SetDirection(direction);
+		UpdateWhip();
 
 		if (animations[GetAnimationToRender()]->GetCurrentFrame() == animations[GetAnimationToRender()]->GetTotalFrames() - 1)
 		{
@@ -144,7 +149,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 					float cCenterX, cLeft, cTop, cRight, cBottom;
 					float sCenterX, sLeft, sTop, sRight, sBottom;
-					float wLeft, wTop, wRight, wBottom;
+					float wCenterY, wLeft, wTop, wRight, wBottom;
 
 					GetBoundingBox(sLeft, sTop, sRight, sBottom);
 					bigCandle->GetBoundingBox(cLeft, cTop, cRight, cBottom);
@@ -152,20 +157,29 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 					cCenterX = cLeft + (cRight - cLeft) / 2;
 					sCenterX = sLeft + (sRight - sLeft) / 2;
+					wCenterY = wTop + (wBottom - wTop) / 2;
 
 					if (CGame::GetInstance()->HaveCollision(this->whip, bigCandle))
 					{
-						if (direction == Direction::Right && sCenterX < cCenterX && wRight >= cLeft)
+						if (direction == Direction::Right && wCenterY >= cTop && sCenterX < cCenterX && wRight >= cLeft)
 						{
 							bigCandle->Disappear();
 						}
-						else if (direction == Direction::Left && sCenterX > cCenterX && wLeft <= cRight)
+						else if (direction == Direction::Left && wCenterY >= cTop && sCenterX > cCenterX && wLeft <= cRight)
 						{
 							bigCandle->Disappear();
 						}
 					}
 				}
 			}
+		}
+	}
+
+	if (state == SIMON_STATE_STAND_AND_THROW)
+	{
+		if (animations[GetAnimationToRender()]->GetCurrentFrame() == animations[GetAnimationToRender()]->GetTotalFrames() - 1)
+		{
+			InitSubWeapon();
 		}
 	}
 
@@ -205,8 +219,17 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CSimon::Render()
 {
-	int alpha = 255;
-	animations[GetAnimationToRender()]->Render(x, y, alpha);
+	animations[GetAnimationToRender()]->Render(x, y);
+
+	if (whip && (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK))
+	{
+		whip->Render();
+	}
+
+	if (subWeapon)
+	{
+		subWeapon->Render();
+	}
 }
 
 void CSimon::SetState(int state)
@@ -220,7 +243,9 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_AUTO_WALK:
+		direction = Direction::Right;
 		vx = SIMON_WALK_SPEED;
+		vy = 0;
 		break;
 
 	case SIMON_STATE_JUMP:
@@ -237,12 +262,13 @@ void CSimon::SetState(int state)
 		sitting = true;
 		break;
 
-	case SIMON_STATE_SIT_AND_ATTACK:
-		vx = 0;
-		animations[GetAnimationToRender()]->SetStartTime(GetTickCount());
-		ResetAnimations();
-		break;
+	case SIMON_STATE_STAND_AND_THROW:
+		if (this->hearts > 0)
+		{
+			this->hearts -= 1;
+		}
 
+	case SIMON_STATE_SIT_AND_ATTACK:
 	case SIMON_STATE_STAND_AND_ATTACK:
 		vx = 0;
 		animations[GetAnimationToRender()]->SetStartTime(GetTickCount());
@@ -272,109 +298,51 @@ void CSimon::GetBoundingBox(float & left, float & top, float & right, float & bo
 {
 	left = x;
 	top = y;
-	right = x + SIMON_BBOX_WIDTH;
-	bottom = y + SIMON_BBOX_HEIGHT;
+	right = left + SIMON_BBOX_WIDTH;
+	bottom = top + SIMON_BBOX_HEIGHT;
 }
 
 int CSimon::GetAnimationToRender()
 {
 	int ani;
 
-	if (state == SIMON_STATE_WALK || state == SIMON_STATE_AUTO_WALK)
+	switch (state)
 	{
-		if (direction == Direction::Right)
-		{
-			ani = SIMON_ANI_WALK_RIGHT;
-		}
-		else
-		{
-			ani = SIMON_ANI_WALK_LEFT;
-		}
-	}
-	else if (state == SIMON_STATE_SIT)
-	{
-		if (direction == Direction::Right)
-		{
-			ani = SIMON_ANI_SIT_RIGHT;
-		}
-		else
-		{
-			ani = SIMON_ANI_SIT_LEFT;
-		}
-	}
-	else if (state == SIMON_STATE_JUMP)
-	{
-		if (direction == Direction::Right)
-		{
-			ani = SIMON_ANI_JUMP_RIGHT;
-		}
-		else
-		{
-			ani = SIMON_ANI_JUMP_LEFT;
-		}
-	}
-	else if (state == SIMON_STATE_SIT_AND_ATTACK)
-	{
-		if (direction == Direction::Right)
-		{
-			whip->SetPosition(x - 15, y + 14);
-			ani = SIMON_ANI_SIT_RIGHT_AND_ATTACK;
-		}
-		else
-		{
-			whip->SetPosition(x - 40, y + 14);
-			ani = SIMON_ANI_SIT_LEFT_AND_ATTACK;
-		}
+	case SIMON_STATE_WALK:
+	case SIMON_STATE_AUTO_WALK:
+		ani = direction == Direction::Right ? SIMON_ANI_WALK_RIGHT : SIMON_ANI_WALK_LEFT;
+		break;
 
-		whip->Render();
-	}
-	else if (state == SIMON_STATE_STAND_AND_ATTACK)
-	{
-		if (direction == Direction::Right)
-		{
-			whip->SetPosition(x - 15, y);
-			ani = SIMON_ANI_STAND_RIGHT_AND_ATTACK;
-		}
-		else
-		{
-			whip->SetPosition(x - 40, y);
-			ani = SIMON_ANI_STAND_LEFT_AND_ATTACK;
-		}
+	case SIMON_STATE_SIT:
+		ani = direction == Direction::Right ? SIMON_ANI_SIT_RIGHT : SIMON_ANI_SIT_LEFT;
+		break;
 
-		whip->Render();
-	}
-	else if (state == SIMON_STATE_DELAY)
-	{
-		if (direction == Direction::Right)
-		{
-			ani = SIMON_ANI_DELAY_RIGHT;
-		}
-		else
-		{
-			ani = SIMON_ANI_DELAY_LEFT;
-		}
-	}
-	else if (state == SIMON_STATE_DIE)
-	{
-		if (direction == Direction::Right)
-		{
-			ani = SIMON_ANI_DIE_RIGHT;
-		}
-		else
-		{
-			ani = SIMON_ANI_DIE_LEFT;
-		}
-	}
-	else
-	{
-		if (direction == Direction::Right)
-		{
-			ani = SIMON_ANI_IDLE_RIGHT;
-		}
-		else
-		{
-			ani = SIMON_ANI_IDLE_LEFT;
-		}
+	case SIMON_STATE_JUMP:
+		ani = direction == Direction::Right ? SIMON_ANI_JUMP_RIGHT : SIMON_ANI_JUMP_LEFT;
+		break;
+
+	case SIMON_STATE_SIT_AND_ATTACK:
+		ani = direction == Direction::Right ? SIMON_ANI_SIT_RIGHT_AND_ATTACK : SIMON_ANI_SIT_LEFT_AND_ATTACK;
+		break;
+
+	case SIMON_STATE_STAND_AND_ATTACK:
+		ani = direction == Direction::Right ? SIMON_ANI_STAND_RIGHT_AND_ATTACK : SIMON_ANI_STAND_LEFT_AND_ATTACK;
+		break;
+
+	case SIMON_STATE_DELAY:
+		ani = direction == Direction::Right ? SIMON_ANI_DELAY_RIGHT : SIMON_ANI_DELAY_LEFT;
+		break;
+
+	case SIMON_STATE_DIE:
+		ani = direction == Direction::Right ? SIMON_ANI_DIE_RIGHT : SIMON_ANI_DIE_LEFT;
+		break;
+
+	case SIMON_STATE_STAND_AND_THROW:
+		ani = direction == Direction::Right ? SIMON_ANI_STAND_RIGHT_AND_ATTACK : SIMON_ANI_STAND_LEFT_AND_ATTACK;
+		break;
+
+	default:
+		ani = direction == Direction::Right ? SIMON_ANI_IDLE_RIGHT : SIMON_ANI_IDLE_LEFT;
 	}
 
 	return ani;
@@ -397,6 +365,11 @@ bool CSimon::TouchingGround()
 	return this->touchingGround;
 }
 
+bool CSimon::Up()
+{
+	return this->up;
+}
+
 void CSimon::AddScore(int addedScore)
 {
 	this->score += addedScore;
@@ -412,14 +385,19 @@ void CSimon::AddHeart(int hearts)
 	this->hearts += hearts;
 }
 
+void CSimon::DecreaseHeart(int hearts)
+{
+	this->hearts -= hearts;
+}
+
 int CSimon::GetHearts()
 {
 	return this->hearts;
 }
 
-void CSimon::AddLife()
+void CSimon::AddLife(int lives)
 {
-	this->lives++;
+	this->lives += lives;
 }
 
 int CSimon::GetLives()
@@ -455,4 +433,42 @@ void CSimon::SetSubWeaponType(string type)
 string CSimon::GetSubWeaponType()
 {
 	return this->subWeaponType;
+}
+
+void CSimon::SetUp(bool up)
+{
+	this->up = up;
+}
+
+void CSimon::InitSubWeapon()
+{
+	SAFE_DELETE(subWeapon);
+
+	subWeapon = new WDagger();
+	subWeapon->AddAnimation("dagger_right");
+	subWeapon->AddAnimation("dagger_left");
+	subWeapon->SetDirection(direction);
+	subWeapon->SetPosition(direction == Direction::Right ? x + 40.0f : x - 20.0f, this->sitting ? y + 8.0f : y + 16.0f);
+}
+
+void CSimon::UpdateWhip()
+{
+	whip->SetDirection(direction);
+
+	switch (state)
+	{
+	case SIMON_STATE_SIT_AND_ATTACK:
+		whip->SetPosition(direction == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y + 14);
+		break;
+
+	case SIMON_STATE_STAND_AND_ATTACK:
+		whip->SetPosition(direction == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y);
+		break;
+	}
+}
+
+CSimon::~CSimon()
+{
+	SAFE_DELETE(whip);
+	SAFE_DELETE(subWeapon);
 }

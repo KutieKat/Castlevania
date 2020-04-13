@@ -1,13 +1,14 @@
 #include "Animation.h"
 #include "../Sprites/SpriteManager.h"
 #include "../Sprites/Sprite.h"
-#include "../Utilities/Debug.h"
+#include "../Utilities/Constants.h"
 
 CAnimation::CAnimation(int defaultTime)
 {
 	this->defaultTime = defaultTime;
 	this->lastFrameTime = -1;
 	this->currentFrame = -1;
+	this->endTime = -1;
 }
 
 void CAnimation::Add(string spriteId, DWORD time)
@@ -65,11 +66,6 @@ int CAnimation::GetTotalFrames()
 
 void CAnimation::SetStartTime(DWORD start)
 {
-	this->startTime = start;
-}
-
-bool CAnimation::Over()
-{
 	DWORD animationTime = 0;
 
 	for (int i = 0; i < this->frames.size(); i++)
@@ -77,7 +73,12 @@ bool CAnimation::Over()
 		animationTime += this->frames[i]->GetTime();
 	}
 
-	return GetTickCount() - this->startTime > animationTime;
+	this->endTime = start + animationTime;
+}
+
+bool CAnimation::Over()
+{
+	return GetTickCount() > this->endTime;
 }
 
 void CAnimation::Reset()

@@ -6,6 +6,7 @@
 #include "Input/InputManager.h"
 #include "Models/GameObject.h"
 #include "Utilities/Timer.h"
+#include "Camera/Camera.h"
 
 class CGame
 {
@@ -19,11 +20,8 @@ class CGame
 	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D image on the screen 
 
 	CInputManager* inputManager;
-
-	float camX = 0.0f;
-	float camY = 0.0f;
-
 	CTimer* timer;
+	CCamera* camera;
 
 public:
 	void Init(HWND hWnd, IKeyEventHandler* keyHandler);
@@ -51,10 +49,8 @@ public:
 	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
 
-	void SetCamPos(float x, float y);
-	void GetCamPos(float &x, float &y);
-
 	CTimer* GetTimer();
+	CCamera* GetCamera();
 
 	static CGame* GetInstance();
 

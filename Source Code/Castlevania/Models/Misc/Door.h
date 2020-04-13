@@ -11,6 +11,8 @@ public:
 	void SetDoorWall(CDoorWall* doorWall);
 	CDoorWall* GetDoorWall();
 
+	~CDoor();
+
 protected:
 	CDoorWall* doorWall;
 };

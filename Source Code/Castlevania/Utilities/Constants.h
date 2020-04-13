@@ -49,8 +49,8 @@ enum HealthType
 #define WINDOW_CLASS_NAME L"Castlevania"
 #define MAIN_WINDOW_TITLE L"Castlevania"
 
-#define SCREEN_WIDTH 512 // 320
-#define SCREEN_HEIGHT 480 // 240 => 480
+#define SCREEN_WIDTH 512
+#define SCREEN_HEIGHT 480
 
 #define MAX_FRAME_RATE 120
 
@@ -63,7 +63,7 @@ enum HealthType
 // Simon
 #define SIMON_WALK_SPEED 0.1f 
 #define SIMON_JUMP_SPEED 0.5f
-#define SIMON_GRAVITY 0.002f
+#define SIMON_GRAVITY 0.0025f
 
 #define SIMON_STATE_IDLE 1
 #define SIMON_STATE_WALK 2
@@ -74,9 +74,10 @@ enum HealthType
 #define SIMON_STATE_AUTO_WALK 7
 #define SIMON_STATE_DELAY 8
 #define SIMON_STATE_DIE 9
+#define SIMON_STATE_STAND_AND_THROW 10
 
 #define SIMON_BBOX_WIDTH 60
-#define SIMON_BBOX_HEIGHT 62 // 66
+#define SIMON_BBOX_HEIGHT 62
 
 #define SIMON_ANI_IDLE_LEFT	0
 #define SIMON_ANI_WALK_LEFT 1
@@ -143,6 +144,9 @@ enum HealthType
 // Dagger
 #define DAGGER_BBOX_WIDTH 32
 #define DAGGER_BBOX_HEIGHT 18
+#define DAGGER_ANI_RIGHT 0
+#define DAGGER_ANI_LEFT 1
+#define DAGGER_MOVE_SPEED 0.0015f
 
 // MorningStar
 #define MORNING_STAR_BBOX_WIDTH 32

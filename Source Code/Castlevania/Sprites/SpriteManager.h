@@ -14,6 +14,8 @@ public:
 
 	static CSpriteManager* GetInstance();
 
+	~CSpriteManager();
+
 private:
 	static CSpriteManager* instance;
 

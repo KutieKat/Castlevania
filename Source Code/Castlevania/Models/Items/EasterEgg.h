@@ -10,6 +10,8 @@ public:
 	void ShowHiddenItem();
 	void GetBoundingBox(float &l, float &t, float &r, float &b);
 
+	~CEasterEgg();
+
 protected:
 	CItem* hiddenItem;
 };

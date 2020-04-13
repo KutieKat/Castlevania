@@ -1,5 +1,5 @@
 #include "MoneyBag.h"
-#include "../../Utilities/Debug.h"
+#include "../../Utilities/SafeDelete.h"
 
 CMoneyBag::CMoneyBag()
 {
@@ -40,14 +40,14 @@ void CMoneyBag::SetState(int state)
 	}
 }
 
-void CMoneyBag::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (!showingEffect)
 	{
-		l = x;
-		t = y;
-		r = x + MONEY_BAG_BBOX_WIDTH;
-		b = y + MONEY_BAG_BBOX_HEIGHT;
+		left = x;
+		top = y;
+		right = left + MONEY_BAG_BBOX_WIDTH;
+		bottom = top + MONEY_BAG_BBOX_HEIGHT;
 	}
 }
 
@@ -79,4 +79,9 @@ void CMoneyBag::Disappear()
 	this->showingEffect = true;
 	this->endingEffect->SetPosition(x, y);
 	this->endingEffect->SetStartTime(GetTickCount());
+}
+
+CMoneyBag::~CMoneyBag()
+{
+	SAFE_DELETE(this->endingEffect);
 }

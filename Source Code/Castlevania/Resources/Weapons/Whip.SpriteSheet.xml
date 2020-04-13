@@ -16,18 +16,18 @@
   <sprite id="whip_level_2_right_2" left="315" top="463" right="430" bottom="529" />
   <sprite id="whip_level_2_right_3" left="75" top="463" right="190" bottom="529" />
 
-  <sprite id="whip_level_3_left_1" left="50" top="132" right="165" bottom="198" />
-  <sprite id="whip_level_3_left_2" left="290" top="132" right="405" bottom="198" />
-  <sprite id="whip_level_3_left_3" left="530" top="132" right="645" bottom="198" />
-  <sprite id="whip_level_3_left_4" left="50" top="198" right="165" bottom="264" />
-  <sprite id="whip_level_3_left_5" left="290" top="198" right="405" bottom="264" />
-  <sprite id="whip_level_3_left_6" left="530" top="198" right="645" bottom="264" />
-  <sprite id="whip_level_3_left_7" left="50" top="264" right="165" bottom="330" />
-  <sprite id="whip_level_3_left_8" left="290" top="264" right="405" bottom="330" />
-  <sprite id="whip_level_3_left_9" left="501" top="264" right="645" bottom="330" />
-  <sprite id="whip_level_3_left_10" left="21" top="330" right="165" bottom="396" />
-  <sprite id="whip_level_3_left_11" left="261" top="330" right="405" bottom="396" />
-  <sprite id="whip_level_3_left_12" left="501" top="330" right="645" bottom="396" />
+  <sprite id="whip_level_3_left_1" left="21" top="132" right="240" bottom="198" />
+  <sprite id="whip_level_3_left_2" left="261" top="132" right="480" bottom="198" />
+  <sprite id="whip_level_3_left_3" left="501" top="132" right="720" bottom="198" />
+  <sprite id="whip_level_3_left_4" left="21" top="198" right="240" bottom="264" />
+  <sprite id="whip_level_3_left_5" left="261" top="198" right="480" bottom="264" />
+  <sprite id="whip_level_3_left_6" left="501" top="198" right="720" bottom="264" />
+  <sprite id="whip_level_3_left_7" left="21" top="264" right="240" bottom="330" />
+  <sprite id="whip_level_3_left_8" left="261" top="264" right="480" bottom="330" />
+  <sprite id="whip_level_3_left_9" left="501" top="264" right="720" bottom="330" />
+  <sprite id="whip_level_3_left_10" left="21" top="330" right="240" bottom="396" />
+  <sprite id="whip_level_3_left_11" left="261" top="330" right="480" bottom="396" />
+  <sprite id="whip_level_3_left_12" left="501" top="330" right="720" bottom="396" />
   
   <sprite id="whip_level_3_right_1" left="555" top="529" right="670" bottom="595" />
   <sprite id="whip_level_3_right_2" left="315" top="529" right="430" bottom="595" />

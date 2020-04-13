@@ -1,11 +1,12 @@
 #include "Door.h"
+#include "../../Utilities/SafeDelete.h"
 
 void CDoor::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x;
 	top = y;
-	right = x + DOOR_BBOX_WIDTH;
-	bottom = y + DOOR_BBOX_HEIGHT;
+	right = left + DOOR_BBOX_WIDTH;
+	bottom = top + DOOR_BBOX_HEIGHT;
 }
 
 void CDoor::Render()
@@ -21,4 +22,9 @@ void CDoor::SetDoorWall(CDoorWall* doorWall)
 CDoorWall* CDoor::GetDoorWall()
 {
 	return this->doorWall;
+}
+
+CDoor::~CDoor()
+{
+	SAFE_DELETE(this->doorWall);
 }

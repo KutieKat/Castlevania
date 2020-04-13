@@ -1,4 +1,5 @@
 #include "EasterEgg.h"
+#include "../../Utilities/SafeDelete.h"
 
 void CEasterEgg::ShowHiddenItem()
 {
@@ -6,12 +7,12 @@ void CEasterEgg::ShowHiddenItem()
 	this->hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
 }
 
-void CEasterEgg::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CEasterEgg::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	l = x;
-	t = y;
-	r = x + EASTER_EGG_BBOX_WIDTH;
-	b = y + EASTER_EGG_BBOX_HEIGHT;
+	left = x;
+	top = y;
+	right = left + EASTER_EGG_BBOX_WIDTH;
+	bottom = top + EASTER_EGG_BBOX_HEIGHT;
 }
 
 void CEasterEgg::Render()
@@ -22,4 +23,9 @@ void CEasterEgg::Render()
 void CEasterEgg::SetHiddenItem(CItem* item)
 {
 	this->hiddenItem = item;
+}
+
+CEasterEgg::~CEasterEgg()
+{
+	SAFE_DELETE(this->hiddenItem);
 }

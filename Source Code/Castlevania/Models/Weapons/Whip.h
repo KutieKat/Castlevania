@@ -11,5 +11,8 @@ public:
 	virtual void Render();
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	virtual void Upgrade();
+
+protected:
+	int GetAnimationToRender();
 };
 

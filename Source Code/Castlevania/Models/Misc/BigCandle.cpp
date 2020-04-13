@@ -1,4 +1,5 @@
 #include "BigCandle.h"
+#include "../../Utilities/SafeDelete.h"
 
 CBigCandle::CBigCandle()
 {
@@ -27,14 +28,14 @@ void CBigCandle::Render()
 	}
 }
 
-void CBigCandle::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CBigCandle::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (!showingEffect)
 	{
-		l = x;
-		t = y;
-		r = x + BIG_CANDLE_BBOX_WIDTH;
-		b = y + BIG_CANDLE_BBOX_HEIGHT;
+		left = x;
+		top = y;
+		right = left + BIG_CANDLE_BBOX_WIDTH;
+		bottom = top + BIG_CANDLE_BBOX_HEIGHT;
 	}
 }
 
@@ -54,4 +55,10 @@ void CBigCandle::SetHiddenItem(CItem* item)
 {
 	this->hiddenItem = item;
 	this->hiddenItem->SetVisibility(Visibility::Hidden);
+}
+
+CBigCandle::~CBigCandle()
+{
+	SAFE_DELETE(this->endingEffect);
+	SAFE_DELETE(this->hiddenItem);
 }

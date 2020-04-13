@@ -42,12 +42,12 @@ void CDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 }
 
-void CDagger::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CDagger::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	l = x;
-	t = y;
-	r = x + DAGGER_BBOX_WIDTH;
-	b = y + DAGGER_BBOX_HEIGHT;
+	left = x;
+	top = y;
+	right = left + DAGGER_BBOX_WIDTH;
+	bottom = top + DAGGER_BBOX_HEIGHT;
 }
 
 void CDagger::Render()

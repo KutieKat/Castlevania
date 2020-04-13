@@ -41,7 +41,6 @@
 
   <animation id="whip_level_3_right">
     <frame spriteId="whip_level_3_right_1" duration="25" />
-    <frame spriteId="whip_level_3_right_1" duration="25" />
     <frame spriteId="whip_level_3_right_2" duration="25" />
     <frame spriteId="whip_level_3_right_3" duration="25" />
     <frame spriteId="whip_level_3_right_4" duration="25" />

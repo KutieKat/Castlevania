@@ -22,7 +22,7 @@ public:
 
 private:
 	DWORD lastFrameTime;
-	DWORD startTime;
+	DWORD endTime;
 
 	int defaultTime;
 	int currentFrame;

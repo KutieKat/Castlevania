@@ -1,4 +1,5 @@
 #include "AnimationFrame.h"
+#include "../../../Utilities/SafeDelete.h"
 
 CAnimationFrame::CAnimationFrame(CSprite* sprite, int time)
 {
@@ -14,4 +15,9 @@ DWORD CAnimationFrame::GetTime()
 CSprite* CAnimationFrame::GetSprite()
 {
 	return this->sprite;
+}
+
+CAnimationFrame::~CAnimationFrame()
+{
+	SAFE_DELETE(this->sprite);
 }
