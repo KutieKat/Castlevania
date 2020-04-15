@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<animations spriteSheetId="door_wall_sprite_sheet">
-  <animation id="door_wall">
-    <frame spriteId="door_wall" duration="100" />
-  </animation>
-</animations>

@@ -5,6 +5,8 @@
 class CEasterEgg : public CGameObject
 {
 public:
+	CEasterEgg();
+
 	void Render();
 	void SetHiddenItem(CItem* item);
 	void ShowHiddenItem();

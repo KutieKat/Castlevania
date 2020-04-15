@@ -27,14 +27,9 @@ CSimon::CSimon()
 	healthVolumes = 16;
 
 	whip = new CWhip();
-	whip->AddAnimation("whip_level_1_left");
-	whip->AddAnimation("whip_level_1_right");
-	whip->AddAnimation("whip_level_2_left");
-	whip->AddAnimation("whip_level_2_right");
-	whip->AddAnimation("whip_level_3_left");
-	whip->AddAnimation("whip_level_3_right");
-
 	subWeapon == nullptr;
+
+	SetAnimationSet("simon");
 }
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -115,11 +110,17 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->nx < 0)
 				{
-					door->GetDoorWall()->SetVisibility(Visibility::Visible);
-					door->SetVisibility(Visibility::Hidden);
+					//door->GetDoorWall()->SetVisibility(Visibility::Visible);
+					//door->SetVisibility(Visibility::Hidden);
 
-					SetState(SIMON_STATE_AUTO_WALK);
-					CGame::GetInstance()->GetTimer()->Stop();
+					//SetState(SIMON_STATE_AUTO_WALK);
+					//CGame::GetInstance()->GetTimer()->Stop();
+
+					//CDebug::Info("NextSceneId=" + door->GetNextSceneId());
+
+					CGame::GetInstance()->SwitchScene(door->GetNextSceneId());
+					CGame::GetInstance()->GetTimer()->SetTime(300);
+					CGame::GetInstance()->GetTimer()->Start();
 				}
 
 				if (e->ny != 0)
@@ -139,7 +140,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		UpdateWhip();
 
-		if (animations[GetAnimationToRender()]->GetCurrentFrame() == animations[GetAnimationToRender()]->GetTotalFrames() - 1)
+		if (animationSet->at(GetAnimationToRender())->GetCurrentFrame() == animationSet->at(GetAnimationToRender())->GetTotalFrames() - 1)
 		{
 			for (int i = 0; i < coObjects->size(); i++)
 			{
@@ -177,7 +178,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == SIMON_STATE_STAND_AND_THROW)
 	{
-		if (animations[GetAnimationToRender()]->GetCurrentFrame() == animations[GetAnimationToRender()]->GetTotalFrames() - 1)
+		if (animationSet->at(GetAnimationToRender())->GetCurrentFrame() == animationSet->at(GetAnimationToRender())->GetTotalFrames() - 1)
 		{
 			InitSubWeapon();
 		}
@@ -219,7 +220,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CSimon::Render()
 {
-	animations[GetAnimationToRender()]->Render(x, y);
+	animationSet->at(GetAnimationToRender())->Render(x, y);
 
 	if (whip && (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK))
 	{
@@ -271,7 +272,7 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_SIT_AND_ATTACK:
 	case SIMON_STATE_STAND_AND_ATTACK:
 		vx = 0;
-		animations[GetAnimationToRender()]->SetStartTime(GetTickCount());
+		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
 		ResetAnimations();
 		break;
 
@@ -445,8 +446,6 @@ void CSimon::InitSubWeapon()
 	SAFE_DELETE(subWeapon);
 
 	subWeapon = new WDagger();
-	subWeapon->AddAnimation("dagger_right");
-	subWeapon->AddAnimation("dagger_left");
 	subWeapon->SetDirection(direction);
 	subWeapon->SetPosition(direction == Direction::Right ? x + 40.0f : x - 20.0f, this->sitting ? y + 8.0f : y + 16.0f);
 }

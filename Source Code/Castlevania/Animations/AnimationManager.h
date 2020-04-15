@@ -9,6 +9,7 @@ class CAnimationManager
 public:
 	bool LoadFromFile(string filePath);
 	void Add(string id, CAnimation* animation);
+	void Clear();
 	CAnimation* Get(string id);
 
 	static CAnimationManager* GetInstance();

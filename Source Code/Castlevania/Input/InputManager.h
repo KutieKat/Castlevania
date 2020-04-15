@@ -10,7 +10,8 @@ class CInputManager
 public:
 	static CInputManager* GetInstance();
 
-	void Init(HWND hWnd, IKeyEventHandler* keyHandler);
+	void Init(HWND hWnd);
+	void SetKeyHandler(IKeyEventHandler* keyHandler);
 	void ProcessKeyboard();
 
 	int IsKeyDown(int keyCode);

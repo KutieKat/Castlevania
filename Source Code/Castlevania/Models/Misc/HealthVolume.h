@@ -9,7 +9,7 @@ using namespace std;
 class CHealthVolume
 {
 public:
-	void AddAnimation(string aniId);
+	void SetAnimationSet(string animationSetId);
 	void Render();
 	void SetPosition(float x, float y);
 	void SetType(HealthType type);
@@ -20,6 +20,6 @@ private:
 	float x;
 	float y;
 
-	vector<CAnimation*> animations;
+	CAnimationSet* animationSet;
 };
 

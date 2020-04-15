@@ -8,7 +8,9 @@ using namespace std;
 class CEffect
 {
 public:
-	void AddAnimation(string aniId);
+	CEffect(string type, DWORD timeout = 300);
+
+	void SetAnimationSet(string animationSetId);
 	void SetPosition(float x, float y);
 	void GetPosition(float &x, float &y);
 	void SetTimeout(DWORD timeout);
@@ -26,6 +28,6 @@ protected:
 	float x;
 	float y;
 
-	vector<CAnimation*> animations;
+	CAnimationSet* animationSet;
 };
 

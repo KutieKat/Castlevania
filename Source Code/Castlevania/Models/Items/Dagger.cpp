@@ -1,5 +1,10 @@
 #include "Dagger.h"
 
+CDagger::CDagger()
+{
+	SetAnimationSet("dagger");
+}
+
 void CDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
@@ -52,5 +57,5 @@ void CDagger::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 void CDagger::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 }

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<spriteSheet id="big_heart_sprite_sheet" textureId="big_heart_texture">
-  <sprite id="big_heart" left="0" top="0" right="24" bottom="20" />
-</spriteSheet>

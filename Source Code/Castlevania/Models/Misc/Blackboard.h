@@ -6,14 +6,13 @@
 #include "../../Utilities/Label.h"
 #include "HealthBar.h"
 #include "../../TileMap/TileMap.h"
-using namespace std;
 
 class CBlackboard
 {
 public:
 	CBlackboard(CSimon* simon);
 
-	void AddAnimation(string aniId);
+	void SetAnimationSet(string animationSetId);
 	void SetPosition(float x, float y);
 	void GetPosition(float& x, float &y);
 
@@ -28,7 +27,7 @@ protected:
 	float x;
 	float y;
 
-	vector<CAnimation*> animations;
+	CAnimationSet* animationSet;
 
 	CLabel* scoreLabel;
 	CLabel* timeLabel;

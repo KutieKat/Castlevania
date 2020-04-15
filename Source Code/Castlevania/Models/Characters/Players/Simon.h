@@ -3,6 +3,7 @@
 #include "../../../Utilities/Constants.h"
 #include "../../Weapons/Weapon.h"
 #include "../../Items/Item.h"
+using namespace std;
 
 class CSimon : public CGameObject
 {

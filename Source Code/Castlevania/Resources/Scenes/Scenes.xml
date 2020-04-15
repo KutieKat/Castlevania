@@ -1,0 +1,4 @@
+<scenes startSceneId="scene_1">
+	<scene id="scene_1" type="play_scene" path="Resources\\Scenes\\Scene1.xml" />
+  <scene id="scene_2" type="play_scene" path="Resources\\Scenes\\Scene1-Copy.xml" />
+</scenes>

@@ -4,6 +4,8 @@
 CMoneyBag::CMoneyBag()
 {
 	this->showingEffect = false;
+
+	SetAnimationSet("money_bag");
 }
 
 void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -55,7 +57,7 @@ void CMoneyBag::Render()
 {
 	if (!showingEffect)
 	{
-		animations[0]->Render(x, y);
+		animationSet->at(0)->Render(x, y);
 	}
 }
 

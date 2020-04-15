@@ -1,5 +1,10 @@
 #include "DoorWall.h"
 
+CDoorWall::CDoorWall()
+{
+	SetAnimationSet("door_wall");
+}
+
 void CDoorWall::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x;
@@ -10,5 +15,5 @@ void CDoorWall::GetBoundingBox(float & left, float & top, float & right, float &
 
 void CDoorWall::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 }

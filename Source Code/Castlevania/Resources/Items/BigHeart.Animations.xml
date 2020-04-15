@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<animations spriteSheetId="big_heart_sprite_sheet">
-  <animation id="big_heart">
-    <frame spriteId="big_heart" duration="100" />
-  </animation>
-</animations>

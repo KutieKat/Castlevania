@@ -3,11 +3,13 @@
 CWhip::CWhip()
 {
 	this->level = 1;
+
+	SetAnimationSet("whip");
 }
 
 void CWhip::Render()
 {
-	animations[GetAnimationToRender()]->Render(x, y);
+	animationSet->at(GetAnimationToRender())->Render(x, y);
 }
 
 void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)

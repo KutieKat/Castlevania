@@ -56,11 +56,7 @@ void CHealthBar::Update()
 
 	for (int i = 0; i < this->max; i++) {
 		CHealthVolume* healthVolume = new CHealthVolume();
-
-		healthVolume->AddAnimation("health_volume_empty");
-		healthVolume->AddAnimation("health_volume_player");
-		healthVolume->AddAnimation("health_volume_enemy");
-
-		this->volumes.push_back(healthVolume);
+		healthVolume->SetAnimationSet("health_volume");
+		this->volumes.emplace_back(healthVolume);
 	}
 }

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<animations spriteSheetId="brick_sprite_sheet">
-  <animation id="brick">
-    <frame spriteId="brick" duration="100" />
-  </animation>
-</animations>

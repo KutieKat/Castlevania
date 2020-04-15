@@ -1,19 +1,21 @@
 #include "Game.h"
 #include "Utilities/Debug.h"
+#include "Libraries/TinyXML/tinyxml.h"
+#include "Scenes/PlayScene.h"
 
 CGame* CGame::instance = nullptr;
 
 /*
-	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for 
+	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
 	rendering 2D images
 	- hInst: Application instance handle
 	- hWnd: Application window handle
 */
-void CGame::Init(HWND hWnd, IKeyEventHandler* keyHandler)
+void CGame::Init(HWND hWnd)
 {
 	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
-	this->hWnd = hWnd;									
+	this->hWnd = hWnd;
 
 	D3DPRESENT_PARAMETERS d3dpp;
 
@@ -51,7 +53,7 @@ void CGame::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 
 	// Initialize input manager
 	this->inputManager = CInputManager::GetInstance();
-	this->inputManager->Init(hWnd, keyHandler);
+	this->inputManager->Init(hWnd);
 
 	// Timer
 	this->timer = new CTimer();
@@ -63,18 +65,23 @@ void CGame::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 	CDebug::Info("Initialize game successfully!", "Game.cpp");
 }
 
+void CGame::SetKeyHandler(IKeyEventHandler* keyHandler)
+{
+	this->inputManager->SetKeyHandler(keyHandler);
+}
+
 /*
-	Utility function to wrap LPD3DXSPRITE::Draw 
+	Utility function to wrap LPD3DXSPRITE::Draw
 */
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 
-//D3DXVECTOR3 p(floor(x), floor(y), 0); // https://docs.microsoft.com/vi-vn/windows/desktop/direct3d9/directly-mapping-texels-to-pixels
-// Try removing floor() to see blurry Mario
-	//D3DXVECTOR3 p(floor(x - camX), floor(y - camY), 0);
+	//D3DXVECTOR3 p(floor(x), floor(y), 0); // https://docs.microsoft.com/vi-vn/windows/desktop/direct3d9/directly-mapping-texels-to-pixels
+	// Try removing floor() to see blurry Mario
+		//D3DXVECTOR3 p(floor(x - camX), floor(y - camY), 0);
 	D3DXVECTOR3 p(floor(x - this->camera->GetLeft()), floor(y - this->camera->GetTop()), 0);
 
-	RECT r; 
+	RECT r;
 	r.left = left;
 	r.top = top;
 	r.right = right;
@@ -112,19 +119,19 @@ CGame::~CGame()
 }
 
 /*
-	SweptAABB 
+	SweptAABB
 */
 void CGame::SweptAABB(
-	float ml, float mt,	float mr, float mb,			
-	float dx, float dy,			
+	float ml, float mt, float mr, float mb,
+	float dx, float dy,
 	float sl, float st, float sr, float sb,
 	float &t, float &nx, float &ny)
 {
 	float dx_entry, dx_exit, tx_entry, tx_exit;
 	float dy_entry, dy_exit, ty_entry, ty_exit;
 
-	float t_entry; 
-	float t_exit; 
+	float t_entry;
+	float t_exit;
 
 	t = -1.0f;			// no collision
 	nx = ny = 0;
@@ -145,13 +152,13 @@ void CGame::SweptAABB(
 
 	if (dx > 0)
 	{
-		dx_entry = sl - mr; 
+		dx_entry = sl - mr;
 		dx_exit = sr - ml;
 	}
 	else if (dx < 0)
 	{
 		dx_entry = sr - ml;
-		dx_exit = sl- mr;
+		dx_exit = sl - mr;
 	}
 
 
@@ -176,7 +183,7 @@ void CGame::SweptAABB(
 		tx_entry = dx_entry / dx;
 		tx_exit = dx_exit / dx;
 	}
-	
+
 	if (dy == 0)
 	{
 		ty_entry = -99999999999;
@@ -187,26 +194,26 @@ void CGame::SweptAABB(
 		ty_entry = dy_entry / dy;
 		ty_exit = dy_exit / dy;
 	}
-	
 
-	if (  (tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f) return;
+
+	if ((tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f) return;
 
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
-	
-	if (t_entry > t_exit) return; 
 
-	t = t_entry; 
+	if (t_entry > t_exit) return;
+
+	t = t_entry;
 
 	if (tx_entry > ty_entry)
 	{
 		ny = 0.0f;
 		dx > 0 ? nx = -1.0f : nx = 1.0f;
 	}
-	else 
+	else
 	{
 		nx = 0.0f;
-		dy > 0?ny = -1.0f:ny = 1.0f;
+		dy > 0 ? ny = -1.0f : ny = 1.0f;
 	}
 }
 
@@ -218,6 +225,62 @@ CTimer* CGame::GetTimer()
 CCamera* CGame::GetCamera()
 {
 	return this->camera;
+}
+
+bool CGame::Load(string filePath)
+{
+	TiXmlDocument doc(filePath.c_str());
+
+	if (!doc.LoadFile())
+	{
+		CDebug::Info(doc.ErrorDesc(), "Game.cpp");
+		return false;
+	}
+
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* scene = nullptr;
+
+	this->currentScene = root->Attribute("startSceneId");
+
+	CScene* sceneItem = nullptr;
+
+	for (scene = root->FirstChildElement(); scene != nullptr; scene = scene->NextSiblingElement())
+	{
+		string id = scene->Attribute("id");
+		string type = scene->Attribute("type");
+		string path = scene->Attribute("path");
+
+		if (type == "play_scene")
+		{
+			sceneItem = new CPlayScene(id, path);
+		}
+
+		scenes[id] = sceneItem;
+	}
+
+	SwitchScene(currentScene);
+
+	return true;
+}
+
+LPSCENE CGame::GetCurrentScene()
+{
+	return scenes[currentScene];
+}
+
+void CGame::SwitchScene(string sceneId)
+{
+	//scenes[currentScene]->Unload();
+
+	//CTextureManager::GetInstance()->Clear();
+	//CSpriteManager::GetInstance()->Clear();
+	//CAnimationManager::GetInstance()->Clear();
+
+	currentScene = sceneId;
+	LPSCENE s = scenes[sceneId];
+	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
+
+	s->Load();
 }
 
 CGame* CGame::GetInstance()

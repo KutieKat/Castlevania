@@ -6,6 +6,8 @@
 #include "../Game.h"
 #include "GameObject.h"
 #include "../Sprites/SpriteManager.h"
+#include "../Animations/AnimationSets.h"
+#include "../Utilities/SafeDelete.h"
 
 CGameObject::CGameObject()
 {
@@ -29,9 +31,9 @@ void CGameObject::SetState(int state)
 
 void CGameObject::ResetAnimations()
 {
-	for (int i = 0; i < animations.size(); i++)
+	for (int i = 0; i < animationSet->size(); i++)
 	{
-		animations[i]->Reset();
+		animationSet->at(i)->Reset();
 	}
 }
 
@@ -84,7 +86,7 @@ void CGameObject::CalcPotentialCollisions(
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
 		if (e->t > 0 && e->t <= 1.0f)
-			coEvents.push_back(e);
+			coEvents.emplace_back(e);
 		else
 			delete e;
 	}
@@ -121,8 +123,8 @@ void CGameObject::FilterCollision(
 		}
 	}
 
-	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);
-	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
+	if (min_ix >= 0) coEventsResult.emplace_back(coEvents[min_ix]);
+	if (min_iy >= 0) coEventsResult.emplace_back(coEvents[min_iy]);
 }
 
 
@@ -141,7 +143,7 @@ void CGameObject::RenderBoundingBox()
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
-	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get("bounding_box_texture");
+	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get("bounding_box");
 
 	float l, t, r, b;
 
@@ -154,12 +156,15 @@ void CGameObject::RenderBoundingBox()
 	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 100);
 }
 
-void CGameObject::AddAnimation(string aniId)
+void CGameObject::SetAnimationSet(string animationSetId)
 {
-	CAnimation* ani = CAnimationManager::GetInstance()->Get(aniId);
-	animations.push_back(ani);
+	this->animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
 }
 
 CGameObject::~CGameObject()
 {
+	for (int i = 0; i < animationSet->size(); i++)
+	{
+		SAFE_DELETE(animationSet->at(i));
+	}
 }

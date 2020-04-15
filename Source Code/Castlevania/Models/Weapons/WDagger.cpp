@@ -1,6 +1,11 @@
 #include "WDagger.h"
 #include "../../Game.h"
 
+WDagger::WDagger()
+{
+	SetAnimationSet("dagger");
+}
+
 void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
@@ -58,5 +63,5 @@ void WDagger::Render()
 {
 	int ani = direction == Direction::Right ? DAGGER_ANI_RIGHT : DAGGER_ANI_LEFT;
 
-	animations[ani]->Render(x, y);
+	animationSet->at(ani)->Render(x, y);
 }

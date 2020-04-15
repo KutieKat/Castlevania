@@ -1,5 +1,10 @@
 #include "BigHeart.h"
 
+CBigHeart::CBigHeart()
+{
+	SetAnimationSet("big_heart");
+}
+
 void CBigHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
@@ -47,10 +52,10 @@ void CBigHeart::GetBoundingBox(float& left, float& top, float& right, float& bot
 	left = x;
 	top = y;
 	right = left + BIG_HEART_BBOX_WIDTH;
-	bottom = top +BIG_HEART_BBOX_HEIGHT;
+	bottom = top + BIG_HEART_BBOX_HEIGHT;
 }
 
 void CBigHeart::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 }

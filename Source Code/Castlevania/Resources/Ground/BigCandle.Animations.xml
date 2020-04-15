@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<animations spriteSheetId="big_candle_sprite_sheet">
-  <animation id="big_candle">
-    <frame spriteId="big_candle_1" duration="100" />
-    <frame spriteId="big_candle_2" duration="100" />
-  </animation>
-</animations>

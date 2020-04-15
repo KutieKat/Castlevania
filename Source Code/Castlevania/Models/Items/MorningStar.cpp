@@ -1,4 +1,10 @@
 #include "MorningStar.h"
+#include "../../Utilities/Debug.h"
+
+CMorningStar::CMorningStar()
+{
+	SetAnimationSet("morning_star");
+}
 
 void CMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -52,5 +58,5 @@ void CMorningStar::GetBoundingBox(float& left, float& top, float& right, float& 
 
 void CMorningStar::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 }

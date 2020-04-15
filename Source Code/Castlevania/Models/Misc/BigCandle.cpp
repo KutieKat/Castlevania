@@ -1,14 +1,17 @@
 #include "BigCandle.h"
 #include "../../Utilities/SafeDelete.h"
+#include "../../Utilities/Debug.h"
 
 CBigCandle::CBigCandle()
 {
 	this->showingEffect = false;
+
+	SetAnimationSet("big_candle");
 }
 
 void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (this->endingEffect->Over())
+	if (this->endingEffect && this->endingEffect->Over())
 	{
 		if (this->hiddenItem)
 		{
@@ -24,7 +27,7 @@ void CBigCandle::Render()
 {
 	if (!showingEffect)
 	{
-		animations[0]->Render(x, y);
+		animationSet->at(0)->Render(x, y);
 	}
 }
 
@@ -42,8 +45,12 @@ void CBigCandle::GetBoundingBox(float& left, float& top, float& right, float& bo
 void CBigCandle::Disappear()
 {
 	this->showingEffect = true;
-	this->endingEffect->SetPosition(x, y);
-	this->endingEffect->SetStartTime(GetTickCount());
+
+	if (this->endingEffect)
+	{
+		this->endingEffect->SetPosition(x, y);
+		this->endingEffect->SetStartTime(GetTickCount());
+	}
 }
 
 void CBigCandle::SetEndingEffect(CEffect* effect)

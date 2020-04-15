@@ -20,6 +20,8 @@ public:
 
 	bool Over();
 
+	~CAnimation();
+
 private:
 	DWORD lastFrameTime;
 	DWORD endTime;
@@ -30,3 +32,4 @@ private:
 	vector<CAnimationFrame*> frames;
 };
 
+typedef vector<CAnimation*> CAnimationSet;

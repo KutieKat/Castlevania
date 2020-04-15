@@ -1,6 +1,11 @@
 #include "EasterEgg.h"
 #include "../../Utilities/SafeDelete.h"
 
+CEasterEgg::CEasterEgg()
+{
+	SetAnimationSet("transparency");
+}
+
 void CEasterEgg::ShowHiddenItem()
 {
 	this->hiddenItem->SetState(ITEM_STATE_APPEAR);
@@ -17,7 +22,7 @@ void CEasterEgg::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 void CEasterEgg::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 }
 
 void CEasterEgg::SetHiddenItem(CItem* item)

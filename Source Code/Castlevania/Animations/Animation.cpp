@@ -2,6 +2,8 @@
 #include "../Sprites/SpriteManager.h"
 #include "../Sprites/Sprite.h"
 #include "../Utilities/Constants.h"
+#include "../Utilities/Debug.h"
+#include "../Utilities/SafeDelete.h"
 
 CAnimation::CAnimation(int defaultTime)
 {
@@ -21,9 +23,15 @@ void CAnimation::Add(string spriteId, DWORD time)
 	}
 
 	CSprite* sprite = CSpriteManager::GetInstance()->Get(spriteId);
+
+	if (sprite == nullptr)
+	{
+		CDebug::Error("Failed to find sprite id=" + spriteId, "Animation.cpp");
+	}
+
 	CAnimationFrame* frame = new CAnimationFrame(sprite, t);
 
-	frames.push_back(frame);
+	frames.emplace_back(frame);
 }
 
 void CAnimation::Render(float x, float y, int alpha)
@@ -85,4 +93,14 @@ void CAnimation::Reset()
 {
 	this->lastFrameTime = -1;
 	this->currentFrame = -1;
+}
+
+CAnimation::~CAnimation()
+{
+	for (int i = 0; i < this->frames.size(); i++)
+	{
+		SAFE_DELETE(this->frames[i]);
+	}
+
+	frames.clear();
 }

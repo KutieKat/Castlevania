@@ -3,6 +3,7 @@
 #include "../Items/Dagger.h"
 #include "../../../Utilities/SafeDelete.h"
 #include "../../Game.h"
+#include "../../Animations/AnimationSets.h"
 
 CBlackboard::CBlackboard(CSimon* simon)
 {
@@ -24,12 +25,13 @@ CBlackboard::CBlackboard(CSimon* simon)
 	this->enemyHealthBar = new CHealthBar(HealthType::Enemy, HEALTH_BAR_MAX_VOLUMES, HEALTH_BAR_MAX_VOLUMES);
 
 	this->subWeapon = nullptr;
+
+	SetAnimationSet("blackboard");
 }
 
-void CBlackboard::AddAnimation(string aniId)
+void CBlackboard::SetAnimationSet(string animationSetId)
 {
-	CAnimation* ani = CAnimationManager::GetInstance()->Get(aniId);
-	animations.push_back(ani);
+	this->animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
 }
 
 void CBlackboard::SetPosition(float x, float y)
@@ -75,7 +77,6 @@ void CBlackboard::Update(CTileMap* tileMap)
 	if (this->simon->GetSubWeaponType() == "dagger" && this->subWeapon == nullptr)
 	{
 		this->subWeapon = new CDagger();
-		this->subWeapon->AddAnimation("dagger_right");
 		this->subWeapon->SetVisibility(Visibility::Visible);
 	}
 
@@ -96,7 +97,7 @@ void CBlackboard::Update(CTileMap* tileMap)
 
 void CBlackboard::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 
 	RenderLabels();
 	RenderHealthBars();

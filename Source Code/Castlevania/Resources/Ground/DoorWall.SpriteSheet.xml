@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<spriteSheet id="door_wall_sprite_sheet" textureId="door_wall_texture">
-  <sprite id="door_wall" left="0" top="0" right="128" bottom="163" />
-</spriteSheet>

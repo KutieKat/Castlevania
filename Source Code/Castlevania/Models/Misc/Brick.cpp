@@ -1,8 +1,13 @@
 #include "Brick.h"
 
+CBrick::CBrick()
+{
+	SetAnimationSet("brick");
+}
+
 void CBrick::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 }
 
 void CBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)

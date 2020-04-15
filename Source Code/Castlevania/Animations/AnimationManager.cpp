@@ -52,9 +52,27 @@ void CAnimationManager::Add(string id, CAnimation* animation)
 	}
 }
 
+void CAnimationManager::Clear()
+{
+	for (auto x : animations)
+	{
+		CAnimation* ani = x.second;
+		SAFE_DELETE(ani);
+	}
+
+	animations.clear();
+}
+
 CAnimation* CAnimationManager::Get(string id)
 {
-	return this->animations[id];
+	CAnimation* ani = this->animations[id];
+
+	if (ani == nullptr)
+	{
+		CDebug::Error("Failed to find animation id=" + id, "AnimationManager.cpp");
+	}
+
+	return ani;
 }
 
 CAnimationManager* CAnimationManager::GetInstance()
@@ -69,5 +87,7 @@ CAnimationManager* CAnimationManager::GetInstance()
 
 CAnimationManager::~CAnimationManager()
 {
+	Clear();
+
 	SAFE_DELETE(instance);
 }

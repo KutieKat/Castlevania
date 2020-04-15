@@ -1,11 +1,17 @@
 #include "Effect.h"
 #include "../Animations/AnimationManager.h"
-#include "../Utilities/Debug.h"
+#include "../Animations/AnimationSets.h"
 
-void CEffect::AddAnimation(string aniId)
+CEffect::CEffect(string type, DWORD timeout)
 {
-	CAnimation* ani = CAnimationManager::GetInstance()->Get(aniId);
-	animations.push_back(ani);
+	SetAnimationSet(type);
+
+	this->timeout = timeout;
+}
+
+void CEffect::SetAnimationSet(string animationSetId)
+{
+	this->animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
 }
 
 void CEffect::SetPosition(float x, float y)
@@ -34,7 +40,7 @@ void CEffect::Render()
 {
 	if (!Over())
 	{
-		this->animations[0]->Render(x, y);
+		this->animationSet->at(0)->Render(x, y);
 	}
 }
 

@@ -14,7 +14,7 @@ CInputManager* CInputManager::GetInstance()
 	return instance;
 }
 
-void CInputManager::Init(HWND hWnd, IKeyEventHandler* keyHandler)
+void CInputManager::Init(HWND hWnd)
 {
 	HRESULT
 		hr = DirectInput8Create
@@ -59,9 +59,14 @@ void CInputManager::Init(HWND hWnd, IKeyEventHandler* keyHandler)
 		return;
 	}
 
-	this->keyHandler = keyHandler;
+	this->keyHandler = nullptr;
 
 	CDebug::Info("Keyboard has been initialized successfully!", "InputManager.cpp");
+}
+
+void CInputManager::SetKeyHandler(IKeyEventHandler* keyHandler)
+{
+	this->keyHandler = keyHandler;
 }
 
 void CInputManager::ProcessKeyboard()

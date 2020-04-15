@@ -1,5 +1,7 @@
 #pragma once
+#include <vector>
 #include "HealthVolume.h"
+using namespace std;
 
 class CHealthBar
 {

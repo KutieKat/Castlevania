@@ -4,8 +4,9 @@
 #include "../Sprites/SpriteManager.h"
 #include "../Utilities/Color.h"
 #include "../Utilities/Debug.h"
+#include "../Utilities/Convert.h"
 
-CTileMap::CTileMap(string mapFile, LPWSTR tilesetFile)
+CTileMap::CTileMap(string mapFile, string tilesetFile)
 {
 	this->mapFile = mapFile;
 	this->tilesetFile = tilesetFile;
@@ -44,7 +45,7 @@ void CTileMap::LoadMap()
 		{
 			int value = stoi(column->GetText());
 
-			columns.push_back(value);
+			columns.emplace_back(value);
 		}
 
 		if (columns.size() > columnsCount)
@@ -52,7 +53,7 @@ void CTileMap::LoadMap()
 			columnsCount = columns.size();
 		}
 
-		this->map.push_back(columns);
+		this->map.emplace_back(columns);
 
 		rowsCount++;
 	}
@@ -69,7 +70,7 @@ void CTileMap::LoadTiles()
 {
 	CTextureManager* textureManager = CTextureManager::GetInstance();
 
-	textureManager->Add("tiles_texture", tilesetFile, CColor::FromRgb(255, 0, 255));
+	textureManager->Add("tiles_texture", CConvert::s2ws(tilesetFile).c_str(), CColor::FromRgb(255, 0, 255));
 	LPDIRECT3DTEXTURE9 tiles = textureManager->Get("tiles_texture");
 
 	int count = 0;

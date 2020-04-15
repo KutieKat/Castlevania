@@ -58,6 +58,17 @@ CSprite* &CSpriteManager::operator[](string id)
 	return this->sprites[id];
 }
 
+void CSpriteManager::Clear()
+{
+	for (auto x : sprites)
+	{
+		CSprite* sprite = x.second;
+		SAFE_DELETE(sprite);
+	}
+
+	sprites.clear();
+}
+
 CSpriteManager* CSpriteManager::GetInstance()
 {
 	if (instance == nullptr)
@@ -70,5 +81,7 @@ CSpriteManager* CSpriteManager::GetInstance()
 
 CSpriteManager::~CSpriteManager()
 {
+	Clear();
+
 	SAFE_DELETE(instance);
 }

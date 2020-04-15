@@ -22,6 +22,7 @@
     <ClCompile Include="Animations\Animation.cpp" />
     <ClCompile Include="Animations\AnimationFrame.cpp" />
     <ClCompile Include="Animations\AnimationManager.cpp" />
+    <ClCompile Include="Animations\AnimationSets.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Effects\Effect.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -49,6 +50,8 @@
     <ClCompile Include="Models\Weapons\WDagger.cpp" />
     <ClCompile Include="Models\Weapons\Weapon.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
+    <ClCompile Include="Scenes\PlayScene.cpp" />
+    <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
     <ClCompile Include="Sprites\SpriteManager.cpp" />
     <ClCompile Include="Textures\TextureManager.cpp" />
@@ -63,6 +66,7 @@
     <ClInclude Include="Animations\Animation.h" />
     <ClInclude Include="Animations\AnimationFrame.h" />
     <ClInclude Include="Animations\AnimationManager.h" />
+    <ClInclude Include="Animations\AnimationSets.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Effects\Effect.h" />
     <ClInclude Include="Game.h" />
@@ -89,6 +93,8 @@
     <ClInclude Include="Models\Weapons\Weapon.h" />
     <ClInclude Include="Models\Weapons\Whip.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scenes\PlayScene.h" />
+    <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Sprites\SpriteManager.h" />
     <ClInclude Include="Textures\TextureManager.h" />

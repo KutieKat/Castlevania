@@ -1,6 +1,11 @@
 #include "Door.h"
 #include "../../Utilities/SafeDelete.h"
 
+CDoor::CDoor()
+{
+	SetAnimationSet("transparency");
+}
+
 void CDoor::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x;
@@ -11,7 +16,7 @@ void CDoor::GetBoundingBox(float & left, float & top, float & right, float & bot
 
 void CDoor::Render()
 {
-	animations[0]->Render(x, y);
+	animationSet->at(0)->Render(x, y);
 }
 
 void CDoor::SetDoorWall(CDoorWall* doorWall)
@@ -22,6 +27,16 @@ void CDoor::SetDoorWall(CDoorWall* doorWall)
 CDoorWall* CDoor::GetDoorWall()
 {
 	return this->doorWall;
+}
+
+void CDoor::SetNextSceneId(string sceneId)
+{
+	this->nextSceneId = sceneId;
+}
+
+string CDoor::GetNextSceneId()
+{
+	return this->nextSceneId;
 }
 
 CDoor::~CDoor()

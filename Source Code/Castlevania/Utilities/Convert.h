@@ -8,5 +8,6 @@ class CConvert
 public:
 	static string lpcwstrToString(LPCWSTR value);
 	static LPCWSTR stringToLpcwstr(string value);
+	static wstring s2ws(const string& s);
 };
 

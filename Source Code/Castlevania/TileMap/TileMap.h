@@ -9,7 +9,7 @@ using namespace std;
 class CTileMap
 {
 public:
-	CTileMap(string mapFile, LPWSTR tilesFile);
+	CTileMap(string mapFile, string tilesetFile);
 
 	void Render(CCamera* camera);
 
@@ -23,7 +23,7 @@ protected:
 	int mapColumns;
 	int mapRows;
 
-	LPWSTR tilesetFile;
+	string tilesetFile;
 	int tileWidth;
 	int tileHeight;
 
