@@ -10,6 +10,10 @@ CTileMap::CTileMap(string mapFile, string tilesetFile)
 {
 	this->mapFile = mapFile;
 	this->tilesetFile = tilesetFile;
+	this->mapRows = 0;
+	this->mapColumns = 0;
+	this->tilesetRows = 0;
+	this->tilesetColumns = 0;
 
 	LoadMap();
 	LoadTiles();
@@ -100,7 +104,7 @@ void CTileMap::Render(CCamera* camera)
 
 	if (endingColumn >= this->mapColumns)
 	{
-		endingColumn--;
+		endingColumn = this->mapColumns - 1;
 	}
 
 	for (int row = 0; row < this->mapRows; row++)
@@ -125,4 +129,14 @@ int CTileMap::GetWidth()
 int CTileMap::GetHeight()
 {
 	return this->height;
+}
+
+CTileMap::~CTileMap()
+{
+	for (int i = 0; i < map.size(); i++)
+	{
+		map[i].clear();
+	}
+
+	map.clear();
 }

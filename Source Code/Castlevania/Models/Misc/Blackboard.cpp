@@ -5,23 +5,25 @@
 #include "../../Game.h"
 #include "../../Animations/AnimationSets.h"
 
-CBlackboard::CBlackboard(CSimon* simon)
+CBlackboard::CBlackboard()
 {
-	this->simon = simon;
-
-	string score = padZero(this->simon->GetScore(), 6);
+	string score = padZero(CGame::GetInstance()->GetScore(), 6);
 	string remainingTime = padZero(CGame::GetInstance()->GetTimer()->GetRemainingTime(), 4);
-	string hearts = padZero(this->simon->GetHearts(), 2);
-	string lives = padZero(this->simon->GetLives(), 2);
+	string stage = CGame::GetInstance()->GetCurrentScene()->GetStage();
+	string hearts = padZero(CGame::GetInstance()->GetHearts(), 2);
+	string lives = padZero(CGame::GetInstance()->GetLives(), 2);
+
+	this->x = 0;
+	this->y = 0;
 
 	this->scoreLabel = new CLabel(score, 103, 15);
 	this->timeLabel = new CLabel(remainingTime, 288, 15);
-	this->stageLabel = new CLabel("01", 460, 15);
+	this->stageLabel = new CLabel(stage, 460, 15);
 
 	this->heartsLabel = new CLabel(hearts, 394, 34, 18);
 	this->livesLabel = new CLabel(lives, 394, 51, 18);
 
-	this->simonHealthBar = new CHealthBar(HealthType::Player, HEALTH_BAR_MAX_VOLUMES, this->simon->getHealthVolumes());
+	this->simonHealthBar = new CHealthBar(HealthType::Player, HEALTH_BAR_MAX_VOLUMES, CGame::GetInstance()->getHealthVolumes());
 	this->enemyHealthBar = new CHealthBar(HealthType::Enemy, HEALTH_BAR_MAX_VOLUMES, HEALTH_BAR_MAX_VOLUMES);
 
 	this->subWeapon = nullptr;
@@ -46,35 +48,38 @@ void CBlackboard::GetPosition(float & x, float & y)
 	y = this->y;
 }
 
-void CBlackboard::Update(CTileMap* tileMap)
+void CBlackboard::Update()
 {
-	if (this->simon->x < SCREEN_WIDTH / 2)
+	if (tileMap)
 	{
-		this->x = 0;
-	}
-	else if (this->simon->x + SCREEN_WIDTH / 2 >= tileMap->GetWidth())
-	{
-		this->x = tileMap->GetWidth() - SCREEN_WIDTH;
-	}
-	else
-	{
-		this->x = this->simon->x - SCREEN_WIDTH / 2;
+		if (this->simon->x < SCREEN_WIDTH / 2)
+		{
+			this->x = 0;
+		}
+		else if (this->simon->x + SCREEN_WIDTH / 2 >= tileMap->GetWidth())
+		{
+			this->x = tileMap->GetWidth() - SCREEN_WIDTH;
+		}
+		else
+		{
+			this->x = this->simon->x - SCREEN_WIDTH / 2;
+		}
 	}
 
-	string score = padZero(this->simon->GetScore(), 6);
+	string score = padZero(CGame::GetInstance()->GetScore(), 6);
 	string remainingTime = padZero(CGame::GetInstance()->GetTimer()->GetRemainingTime(), 4);
-	string hearts = padZero(this->simon->GetHearts(), 2);
+	string hearts = padZero(CGame::GetInstance()->GetHearts(), 2);
 
 	this->scoreLabel->SetText(score);
 	this->timeLabel->SetText(remainingTime);
 	this->heartsLabel->SetText(hearts);
 
-	this->simonHealthBar->SetValue(this->simon->getHealthVolumes());
+	this->simonHealthBar->SetValue(CGame::GetInstance()->getHealthVolumes());
 	this->simonHealthBar->SetPosition(this->x + 110, this->y + 32);
 
 	this->enemyHealthBar->SetPosition(this->x + 110, this->y + 50);
 
-	if (this->simon->GetSubWeaponType() == "dagger" && this->subWeapon == nullptr)
+	if (CGame::GetInstance()->GetSubWeaponType() == "dagger" && this->subWeapon == nullptr)
 	{
 		this->subWeapon = new CDagger();
 		this->subWeapon->SetVisibility(Visibility::Visible);
@@ -108,6 +113,11 @@ void CBlackboard::Render()
 	}
 }
 
+void CBlackboard::SetPlayer(CSimon* simon)
+{
+	this->simon = simon;
+}
+
 string CBlackboard::padZero(int value, int numberOfZeros)
 {
 	int numZeros = numberOfZeros;
@@ -139,12 +149,10 @@ void CBlackboard::RenderHealthBars()
 
 CBlackboard::~CBlackboard()
 {
-	SAFE_DELETE(this->simon);
 	SAFE_DELETE(this->scoreLabel);
 	SAFE_DELETE(this->timeLabel);
 	SAFE_DELETE(this->heartsLabel);
 	SAFE_DELETE(this->livesLabel);
 	SAFE_DELETE(this->simonHealthBar);
 	SAFE_DELETE(this->enemyHealthBar);
-	SAFE_DELETE(this->subWeapon);
 }

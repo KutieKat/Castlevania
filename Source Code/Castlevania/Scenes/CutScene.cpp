@@ -1,0 +1,272 @@
+#include "CutScene.h"
+#include "../Utilities/SafeDelete.h"
+
+void CCutScene::ParseTextures(TiXmlElement* element)
+{
+	TiXmlElement* texture = nullptr;
+
+	for (texture = element->FirstChildElement(); texture != nullptr; texture = texture->NextSiblingElement())
+	{
+		int r, g, b;
+
+		string id = texture->Attribute("id");
+
+		string path = texture->Attribute("path");
+		wstring texturePath(path.begin(), path.end());
+
+		texture->QueryIntAttribute("r", &r);
+		texture->QueryIntAttribute("g", &g);
+		texture->QueryIntAttribute("b", &b);
+
+		CTextureManager::GetInstance()->Add(id, texturePath.c_str(), CColor::FromRgb(r, g, b));
+	}
+}
+
+void CCutScene::ParseSprites(TiXmlElement* element)
+{
+	TiXmlElement* sprite = nullptr;
+
+	for (sprite = element->FirstChildElement(); sprite != nullptr; sprite = sprite->NextSiblingElement())
+	{
+		int left, top, right, bottom;
+
+		string id = sprite->Attribute("id");
+
+		sprite->QueryIntAttribute("left", &left);
+		sprite->QueryIntAttribute("top", &top);
+		sprite->QueryIntAttribute("right", &right);
+		sprite->QueryIntAttribute("bottom", &bottom);
+
+		LPDIRECT3DTEXTURE9 texture = CTextureManager::GetInstance()->Get(sprite->Attribute("textureId"));
+
+		CSpriteManager::GetInstance()->Add(id, left, top, right, bottom, texture);
+	}
+}
+
+void CCutScene::ParseAnimations(TiXmlElement* element)
+{
+	TiXmlElement* animation = nullptr;
+	TiXmlElement* frame = nullptr;
+	CAnimation* ani = nullptr;
+
+	for (animation = element->FirstChildElement(); animation != nullptr; animation = animation->NextSiblingElement())
+	{
+		string id = animation->Attribute("id");
+
+		ani = new CAnimation(100);
+
+		for (frame = animation->FirstChildElement(); frame != nullptr; frame = frame->NextSiblingElement())
+		{
+			int duration;
+
+			string spriteId = frame->Attribute("spriteId");
+			frame->QueryIntAttribute("duration", &duration);
+
+			ani->Add(spriteId, duration);
+		}
+
+		CAnimationManager::GetInstance()->Add(id, ani);
+	}
+}
+
+void CCutScene::ParseAnimationSets(TiXmlElement* element)
+{
+	TiXmlElement* animationSet = nullptr;
+	TiXmlElement* animationSetItem = nullptr;
+
+	for (animationSet = element->FirstChildElement(); animationSet != nullptr; animationSet = animationSet->NextSiblingElement())
+	{
+		string id = animationSet->Attribute("id");
+		CAnimationSet* set = new CAnimationSet();
+
+		for (animationSetItem = animationSet->FirstChildElement(); animationSetItem != nullptr; animationSetItem = animationSetItem->NextSiblingElement())
+		{
+			string animationId = animationSetItem->Attribute("animationId");
+
+			set->emplace_back(CAnimationManager::GetInstance()->Get(animationId));
+		}
+
+		CAnimationSets::GetInstance()->Add(id, set);
+	}
+}
+
+void CCutScene::ParseObjects(TiXmlElement* element)
+{
+	TiXmlElement* object = nullptr;
+
+	for (object = element->FirstChildElement(); object != nullptr; object = object->NextSiblingElement())
+	{
+		int x, y;
+		object->QueryIntAttribute("x", &x);
+		object->QueryIntAttribute("y", &y);
+
+		string id = object->Attribute("id");
+		string type = object->Attribute("type");
+		string animationSetId = object->Attribute("animationSetId");
+
+		CAnimationSet* animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
+
+		if (type == "background")
+		{
+			CBackground* item = new CBackground();
+			item->SetPosition(x, y);
+
+			objects[id] = item;
+		}
+
+		if (type == "bat")
+		{
+			string trajectory = object->Attribute("trajectory");
+
+			CBat* item = new CBat();
+			item->SetPosition(x, y);
+
+			if (trajectory == "right_cross")
+			{
+				item->SetState(BAT_STATE_FLY_RIGHT_CROSS);
+			}
+			else
+			{
+				item->SetState(BAT_STATE_FLY_OVAL);
+			}
+
+			objects[id] = item;
+		}
+
+		if (type == "helicopter")
+		{
+			CHelicopter* item = new CHelicopter();
+			item->SetPosition(x, y);
+
+			objects[id] = item;
+		}
+
+		if (type == "simon")
+		{
+			player = new CSimon();
+			player->SetState(SIMON_STATE_CUT_SCENE_AUTO_WALK);
+			player->SetPosition(x, y);
+
+			objects[id] = player;
+		}
+	}
+}
+
+CCutScene::CCutScene(string id, string filePath, string stage, string nextSceneId) : CScene(id, filePath, stage, nextSceneId)
+{
+	game = CGame::GetInstance();
+	keyHandler = new CCutSceneKeyHandler(this);
+}
+
+bool CCutScene::Load()
+{
+	TiXmlDocument doc(this->filePath.c_str());
+
+	if (!doc.LoadFile())
+	{
+		CDebug::Error(doc.ErrorDesc());
+		return false;
+	}
+
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* textures = root->FirstChildElement();
+	TiXmlElement* sprites = textures->NextSiblingElement();
+	TiXmlElement* animations = sprites->NextSiblingElement();
+	TiXmlElement* animationSets = animations->NextSiblingElement();
+	TiXmlElement* objects = animationSets->NextSiblingElement();
+
+	ParseTextures(textures);
+	ParseSprites(sprites);
+	ParseAnimations(animations);
+	ParseAnimationSets(animationSets);
+	ParseObjects(objects);
+
+	blackboard = new CBlackboard();
+
+	return true;
+}
+
+void CCutScene::Update(DWORD dt)
+{
+	vector<LPGAMEOBJECT> coObjects;
+
+	if (switchSceneTime != -1)
+	{
+		if (GetTickCount() > switchSceneTime)
+		{
+			switchSceneTime = -1;
+			game->SwitchScene(game->GetCurrentScene()->GetNextSceneId());
+		}
+	}
+
+	for (auto x : objects)
+	{
+		if (x.second->GetVisibility() == Visibility::Visible)
+		{
+			if (dynamic_cast<CSimon*>(x.second))
+			{
+				continue;
+			}
+			else
+			{
+				coObjects.emplace_back(x.second);
+			}
+		}
+	}
+
+	for (auto x : objects)
+	{
+		if (x.second->GetVisibility() == Visibility::Visible)
+		{
+			x.second->Update(dt, &coObjects);
+		}
+	}
+
+	game->GetCamera()->SetPosition(0, 0.0f);
+
+	if (blackboard)
+	{
+		blackboard->Update();
+	}
+}
+
+void CCutScene::Render()
+{
+	for (auto x : objects)
+	{
+		x.second->Render();
+	}
+
+	if (blackboard)
+	{
+		blackboard->Render();
+	}
+}
+
+void CCutScene::Unload()
+{
+	//for (auto x : objects)
+	//{
+	//	CGameObject* gameObject = x.second;
+	//	SAFE_DELETE(gameObject);
+	//}
+
+	//objects.clear();
+}
+
+void CCutScene::SetSwitchSceneTime(DWORD time)
+{
+	this->switchSceneTime = time;
+}
+
+void CCutSceneKeyHandler::KeyState(BYTE* states)
+{
+}
+
+void CCutSceneKeyHandler::OnKeyDown(int keyCode)
+{
+}
+
+void CCutSceneKeyHandler::OnKeyUp(int keyCode)
+{
+}

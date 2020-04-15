@@ -17,6 +17,7 @@ public:
 
 protected:
 	DWORD time;
+	DWORD duration;
 	DWORD remainingTime;
 
 	bool stopped;

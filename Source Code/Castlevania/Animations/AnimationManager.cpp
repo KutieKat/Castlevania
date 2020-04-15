@@ -46,10 +46,7 @@ bool CAnimationManager::LoadFromFile(string filePath)
 
 void CAnimationManager::Add(string id, CAnimation* animation)
 {
-	if (this->animations.find(id) == this->animations.end())
-	{
-		this->animations[id] = animation;
-	}
+	this->animations[id] = animation;
 }
 
 void CAnimationManager::Clear()

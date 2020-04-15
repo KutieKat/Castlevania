@@ -56,47 +56,44 @@ bool CTextureManager::LoadFromFile(string filePath)
 
 void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor)
 {
-	if (this->textures.find(id) == this->textures.end())
+	D3DXIMAGE_INFO info;
+	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
+	string path = CConvert::lpcwstrToString(filePath);
+
+	if (result != D3D_OK)
 	{
-		D3DXIMAGE_INFO info;
-		HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
-		string path = CConvert::lpcwstrToString(filePath);
-
-		if (result != D3D_OK)
-		{
-			CDebug::Error("GetImageInfoFromFile failed: " + path, "TextureManager.cpp");
-			return;
-		}
-
-		LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3DDevice();
-		LPDIRECT3DTEXTURE9 texture;
-
-		result = D3DXCreateTextureFromFileEx(
-			d3ddv,								// Pointer to Direct3D device object
-			filePath,							// Path to the image to load
-			info.Width,							// Texture width
-			info.Height,						// Texture height
-			1,
-			D3DUSAGE_DYNAMIC,
-			D3DFMT_UNKNOWN,
-			D3DPOOL_DEFAULT,
-			D3DX_DEFAULT,
-			D3DX_DEFAULT,
-			transparentColor,
-			&info,
-			NULL,
-			&texture);								// Created texture pointer
-
-		if (result != D3D_OK)
-		{
-			CDebug::Error("CreateTextureFromFile failed!", "TextureManager.cpp");
-			return;
-		}
-
-		this->textures[id] = texture;
-
-		CDebug::Info("Texture loaded successfully: ID=" + id + ", Path=" + path, "TextureManager.cpp");
+		CDebug::Error("GetImageInfoFromFile failed: " + path, "TextureManager.cpp");
+		return;
 	}
+
+	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3DDevice();
+	LPDIRECT3DTEXTURE9 texture;
+
+	result = D3DXCreateTextureFromFileEx(
+		d3ddv,								// Pointer to Direct3D device object
+		filePath,							// Path to the image to load
+		info.Width,							// Texture width
+		info.Height,						// Texture height
+		1,
+		D3DUSAGE_DYNAMIC,
+		D3DFMT_UNKNOWN,
+		D3DPOOL_DEFAULT,
+		D3DX_DEFAULT,
+		D3DX_DEFAULT,
+		transparentColor,
+		&info,
+		NULL,
+		&texture);								// Created texture pointer
+
+	if (result != D3D_OK)
+	{
+		CDebug::Error("CreateTextureFromFile failed!", "TextureManager.cpp");
+		return;
+	}
+
+	this->textures[id] = texture;
+
+	CDebug::Info("Texture loaded successfully: ID=" + id + ", Path=" + path, "TextureManager.cpp");
 }
 
 LPDIRECT3DTEXTURE9 CTextureManager::Get(string id)

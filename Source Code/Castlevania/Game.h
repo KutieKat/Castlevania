@@ -28,6 +28,13 @@ class CGame
 	unordered_map<string, CScene*> scenes;
 	string currentScene;
 
+	int score;
+	int hearts;
+	int lives;
+	int healthVolumes;
+
+	string subWeaponType;
+
 public:
 	void Init(HWND hWnd);
 	void SetKeyHandler(IKeyEventHandler* keyHandler);
@@ -51,18 +58,37 @@ public:
 		float &nx,
 		float &ny);
 
-	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
-	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
+	LPDIRECT3DDEVICE9 GetDirect3DDevice();
+	LPDIRECT3DSURFACE9 GetBackBuffer();
+	LPD3DXSPRITE GetSpriteHandler();
 
 	CTimer* GetTimer();
 	CCamera* GetCamera();
 
 	bool Load(string filePath);
 	CScene* GetCurrentScene();
+	string nextSceneId;
 	void SwitchScene(string sceneId);
 
 	static CGame* GetInstance();
+
+	void AddScore(int addedScore);
+	int GetScore();
+
+	void AddHeart(int hearts);
+	void DecreaseHeart(int hearts);
+	int GetHearts();
+
+	void AddLife(int lives);
+	int GetLives();
+
+	void TakeDamage(int volumes = 1);
+	int getHealthVolumes();
+
+	void SetSubWeaponType(string type);
+	string GetSubWeaponType();
+
+	void Reset();
 
 	~CGame();
 };

@@ -16,6 +16,8 @@ public:
 	int GetWidth();
 	int GetHeight();
 
+	~CTileMap();
+
 protected:
 	vector<vector<int>> map;
 

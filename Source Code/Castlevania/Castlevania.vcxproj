@@ -40,6 +40,8 @@
     <ClCompile Include="Models\Items\Item.cpp" />
     <ClCompile Include="Models\Items\MoneyBag.cpp" />
     <ClCompile Include="Models\Items\MorningStar.cpp" />
+    <ClCompile Include="Models\Misc\Background.cpp" />
+    <ClCompile Include="Models\Misc\Bat.cpp" />
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\Blackboard.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
@@ -47,9 +49,13 @@
     <ClCompile Include="Models\Misc\DoorWall.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
+    <ClCompile Include="Models\Misc\Helicopter.cpp" />
+    <ClCompile Include="Models\Misc\IntroBat.cpp" />
     <ClCompile Include="Models\Weapons\WDagger.cpp" />
     <ClCompile Include="Models\Weapons\Weapon.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
+    <ClCompile Include="Scenes\CutScene.cpp" />
+    <ClCompile Include="Scenes\IntroScene.cpp" />
     <ClCompile Include="Scenes\PlayScene.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
@@ -82,6 +88,8 @@
     <ClInclude Include="Models\Items\Item.h" />
     <ClInclude Include="Models\Items\MoneyBag.h" />
     <ClInclude Include="Models\Items\MorningStar.h" />
+    <ClInclude Include="Models\Misc\Background.h" />
+    <ClInclude Include="Models\Misc\Bat.h" />
     <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\Blackboard.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
@@ -89,10 +97,14 @@
     <ClInclude Include="Models\Misc\DoorWall.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />
     <ClInclude Include="Models\Misc\HealthVolume.h" />
+    <ClInclude Include="Models\Misc\Helicopter.h" />
+    <ClInclude Include="Models\Misc\IntroBat.h" />
     <ClInclude Include="Models\Weapons\WDagger.h" />
     <ClInclude Include="Models\Weapons\Weapon.h" />
     <ClInclude Include="Models\Weapons\Whip.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scenes\CutScene.h" />
+    <ClInclude Include="Scenes\IntroScene.h" />
     <ClInclude Include="Scenes\PlayScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Sprites\Sprite.h" />

@@ -12,20 +12,7 @@ CLabel::CLabel(string text, float x, float y, float fontSize, LPWSTR fontFamily,
 	this->right = calcRightPosition();
 	this->bottom = calcBottomPosition();
 
-	D3DXCreateFont(
-		CGame::GetInstance()->GetDirect3DDevice(),
-		this->fontSize,
-		0,
-		FW_NORMAL,
-		1,
-		false,
-		DEFAULT_CHARSET,
-		OUT_DEFAULT_PRECIS,
-		ANTIALIASED_QUALITY,
-		FF_DONTCARE,
-		this->fontFamily,
-		&font
-	);
+	UpdateFont();
 }
 
 void CLabel::SetText(string text)
@@ -33,6 +20,11 @@ void CLabel::SetText(string text)
 	this->text = text;
 
 	ReCalcPosition();
+}
+
+void CLabel::SetColor(D3DCOLOR color)
+{
+	this->color = color;
 }
 
 void CLabel::SetPosition(float x, float y)
@@ -65,7 +57,25 @@ void CLabel::ReCalcPosition()
 	this->bottom = calcBottomPosition();
 }
 
+void CLabel::UpdateFont()
+{
+	D3DXCreateFont(
+		CGame::GetInstance()->GetDirect3DDevice(),
+		this->fontSize,
+		0,
+		FW_NORMAL,
+		1,
+		false,
+		DEFAULT_CHARSET,
+		OUT_DEFAULT_PRECIS,
+		ANTIALIASED_QUALITY,
+		FF_DONTCARE,
+		this->fontFamily,
+		&font
+	);
+}
+
 CLabel::~CLabel()
 {
-	delete this->font;
+	font->Release();
 }

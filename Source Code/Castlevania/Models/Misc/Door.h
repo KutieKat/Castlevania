@@ -14,9 +14,6 @@ public:
 	void SetDoorWall(CDoorWall* doorWall);
 	CDoorWall* GetDoorWall();
 
-	void SetNextSceneId(string sceneId);
-	string GetNextSceneId();
-
 	~CDoor();
 
 protected:

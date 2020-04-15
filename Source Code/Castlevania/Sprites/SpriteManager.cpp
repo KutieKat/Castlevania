@@ -41,11 +41,8 @@ bool CSpriteManager::LoadFromFile(string filePath)
 
 void CSpriteManager::Add(string id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
 {
-	if (this->sprites.find(id) == this->sprites.end())
-	{
-		CSprite* sprite = new CSprite(id, left, top, right, bottom, texture);
-		this->sprites[id] = sprite;
-	}
+	CSprite* sprite = new CSprite(id, left, top, right, bottom, texture);
+	this->sprites[id] = sprite;
 }
 
 CSprite* CSpriteManager::Get(string id)

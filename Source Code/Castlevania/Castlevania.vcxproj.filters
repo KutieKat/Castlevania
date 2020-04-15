@@ -249,6 +249,24 @@
     <ClCompile Include="Scenes\PlayScene.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\IntroScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\Background.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\IntroBat.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\CutScene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\Bat.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\Helicopter.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -379,6 +397,24 @@
     </ClInclude>
     <ClInclude Include="Scenes\PlayScene.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\IntroScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\Background.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\IntroBat.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\CutScene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\Bat.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\Helicopter.h">
+      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

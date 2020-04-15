@@ -1,4 +1,6 @@
-<scenes startSceneId="scene_1">
-	<scene id="scene_1" type="play_scene" path="Resources\\Scenes\\Scene1.xml" />
-  <scene id="scene_2" type="play_scene" path="Resources\\Scenes\\Scene1-Copy.xml" />
+<?xml version="1.0" encoding="UTF-8"?>
+<scenes startSceneId="intro_scene">
+  <scene id="intro_scene" type="intro_scene" path="Resources\\Scenes\\Intro.xml" stage="00" nextSceneId="cut_scene" />
+  <scene id="cut_scene" type="cut_scene" path="Resources\\Scenes\\CutScene.xml" stage="01" nextSceneId="scene_1" />
+  <scene id="scene_1" type="play_scene" path="Resources\\Scenes\\Scene1.xml" stage="01" nextSceneId="intro_scene" />
 </scenes>

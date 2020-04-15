@@ -10,19 +10,23 @@
 class CBlackboard
 {
 public:
-	CBlackboard(CSimon* simon);
+	CBlackboard();
 
 	void SetAnimationSet(string animationSetId);
 	void SetPosition(float x, float y);
 	void GetPosition(float& x, float &y);
 
-	void Update(CTileMap* tileMap);
+	void Update();
 	void Render();
+
+	void SetPlayer(CSimon* simon);
+	void SetTileMap(CTileMap* tileMap) { this->tileMap = tileMap; }
 
 	~CBlackboard();
 
 protected:
 	CSimon* simon;
+	CTileMap* tileMap;
 
 	float x;
 	float y;

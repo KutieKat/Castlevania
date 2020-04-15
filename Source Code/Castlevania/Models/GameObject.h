@@ -35,17 +35,17 @@ public:
 public:
 	CGameObject();
 
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
-	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
-	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-	void SetDirection(Direction direction) { this->direction = direction; }
-	Direction GetDirection() { return this->direction; }
+	void SetPosition(float x, float y);
+	void SetSpeed(float vx, float vy);
+	void GetPosition(float &x, float &y);
+	void GetSpeed(float &vx, float &vy);
+	void SetDirection(Direction direction);
+	Direction GetDirection();
 
 	void SetVisibility(Visibility visibility);
 	Visibility GetVisibility();
 
-	int GetState() { return this->state; }
+	int GetState();
 
 	void RenderBoundingBox();
 
@@ -57,7 +57,9 @@ public:
 		float &min_tx,
 		float &min_ty,
 		float &nx,
-		float &ny);
+		float &ny,
+		float &rdx,
+		float &rdy);
 
 	void SetAnimationSet(string animationSetId);
 

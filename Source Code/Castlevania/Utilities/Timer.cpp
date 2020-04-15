@@ -22,11 +22,12 @@ void CTimer::Stop()
 	this->stopped = true;
 }
 
-void CTimer::SetTime(DWORD time)
+void CTimer::SetTime(DWORD duration)
 {
 	Reset();
 
-	this->time = (GetTickCount() / 1000) + time;
+	this->duration = duration;
+	this->time = (GetTickCount() / 1000) + duration;
 }
 
 void CTimer::Tick()
@@ -43,11 +44,14 @@ void CTimer::Tick()
 		}
 
 	}
+	else
+	{
+		this->remainingTime = this->duration;
+	}
 }
 
 void CTimer::Reset()
 {
-	this->stopped = true;
 	this->time = -1;
 	this->remainingTime = -1;
 }

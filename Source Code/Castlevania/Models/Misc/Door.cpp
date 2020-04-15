@@ -29,16 +29,6 @@ CDoorWall* CDoor::GetDoorWall()
 	return this->doorWall;
 }
 
-void CDoor::SetNextSceneId(string sceneId)
-{
-	this->nextSceneId = sceneId;
-}
-
-string CDoor::GetNextSceneId()
-{
-	return this->nextSceneId;
-}
-
 CDoor::~CDoor()
 {
 	SAFE_DELETE(this->doorWall);

@@ -4,6 +4,7 @@
 
 #include "Game.h"
 #include "Utilities/Color.h"
+#include "Scenes/PlayScene.h"
 #include "resource.h"
 
 CGame* game;
@@ -129,9 +130,18 @@ int Run()
 		{
 			frameStart = now;
 
-			CSimon* simon = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+			game->GetTimer()->Tick();
 
-			if (simon->GetState() != SIMON_STATE_AUTO_WALK && simon->GetState() != SIMON_STATE_DELAY && simon->GetState() != SIMON_STATE_DIE)
+			if (dynamic_cast<CPlayScene*>(game->GetCurrentScene()))
+			{
+				CSimon* simon = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+				if (simon->GetState() != SIMON_STATE_AUTO_WALK && simon->GetState() != SIMON_STATE_DELAY && simon->GetState() != SIMON_STATE_DIE)
+				{
+					game->GetInputManager()->ProcessKeyboard();
+				}
+			}
+			else
 			{
 				game->GetInputManager()->ProcessKeyboard();
 			}
@@ -152,9 +162,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
-
-	game->GetTimer()->SetTime(300);
-	game->GetTimer()->Start();
 
 	game->GetCamera()->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 

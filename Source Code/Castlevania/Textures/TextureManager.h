@@ -14,7 +14,6 @@ public:
 	void Clear();
 
 	static CTextureManager* GetInstance();
-	void Show() { CDebug::Info("Length=" + to_string(textures.size())); }
 
 	~CTextureManager();
 

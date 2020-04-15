@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <textures>
+    <texture id="background" path="Resources\\Others\\Background.png" r="0" g="0" b="0" />
+    <texture id="intro_bat" path="Resources\\Others\\IntroBat.png" r="255" g="0" b="255" />
+    <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
+  </textures>
+  
+  <sprites>
+    <!-- Background -->
+    <sprite id="background" textureId="background" left="17" top="0" right="514" bottom="450" />
+    
+    <!-- IntroBat -->
+    <sprite id="intro_bat_1" textureId="intro_bat" left="0" top="0" right="157" bottom="122" />
+    <sprite id="intro_bat_2" textureId="intro_bat" left="158" top="0" right="315" bottom="122" />
+    <sprite id="intro_bat_3" textureId="intro_bat" left="316" top="0" right="473" bottom="122" />
+    <sprite id="intro_bat_4" textureId="intro_bat" left="474" top="0" right="631" bottom="122" />
+    <sprite id="intro_bat_5" textureId="intro_bat" left="632" top="0" right="789" bottom="122" />
+    <sprite id="intro_bat_6" textureId="intro_bat" left="0" top="123" right="157" bottom="245" />
+    <sprite id="intro_bat_7" textureId="intro_bat" left="158" top="123" right="315" bottom="245" />
+    <sprite id="intro_bat_8" textureId="intro_bat" left="316" top="123" right="473" bottom="245" />
+    <sprite id="intro_bat_9" textureId="intro_bat" left="474" top="123" right="631" bottom="245" />
+    <sprite id="intro_bat_10" textureId="intro_bat" left="632" top="123" right="789" bottom="245" />
+    <sprite id="intro_bat_11" textureId="intro_bat" left="0" top="246" right="158" bottom="368" />
+    <sprite id="intro_bat_12" textureId="intro_bat" left="158" top="246" right="315" bottom="368" />
+    <sprite id="intro_bat_13" textureId="intro_bat" left="316" top="246" right="473" bottom="368" />
+    <sprite id="intro_bat_14" textureId="intro_bat" left="474" top="246" right="631" bottom="368" />
+    <sprite id="intro_bat_15" textureId="intro_bat" left="632" top="246" right="789" bottom="368" />
+  </sprites>
+  
+  <animations>
+    <animation id="background">
+      <frame spriteId="background" duration="100" />
+    </animation>
+    
+    <animation id="intro_bat_1">
+      <frame spriteId="intro_bat_1" duration="100" />
+      <frame spriteId="intro_bat_2" duration="100" />
+      <frame spriteId="intro_bat_3" duration="100" />
+      <frame spriteId="intro_bat_4" duration="100" />
+      <frame spriteId="intro_bat_5" duration="100" />
+      <frame spriteId="intro_bat_6" duration="100" />
+      <frame spriteId="intro_bat_7" duration="100" />
+      <frame spriteId="intro_bat_8" duration="100" />
+      <frame spriteId="intro_bat_9" duration="100" />
+      <frame spriteId="intro_bat_10" duration="100" />
+      <frame spriteId="intro_bat_11" duration="100" />
+      <frame spriteId="intro_bat_12" duration="100" />
+      <frame spriteId="intro_bat_13" duration="100" />
+      <frame spriteId="intro_bat_14" duration="100" />
+      <frame spriteId="intro_bat_15" duration="100" />
+    </animation>
+    
+    <animation id="intro_bat_2">
+      <frame spriteId="intro_bat_13" duration="100" />
+      <frame spriteId="intro_bat_14" duration="100" />
+      <frame spriteId="intro_bat_15" duration="100" />
+    </animation>
+  </animations>
+  
+  <animationSets>
+    <animationSet id="background">
+      <animationSetItem id="background" animationId="background" />
+    </animationSet>
+    
+    <animationSet id="intro_bat">
+      <animationSetItem id="intro_bat_1" animationId="intro_bat_1" />
+      <animationSetItem id="intro_bat_2" animationId="intro_bat_2" />
+    </animationSet>
+  </animationSets>
+  
+  <objects>
+    <object id="background" type="background" animationSetId="background" x="0" y="0" />
+    <object id="intro_bat" type="intro_bat" animationSetId="intro_bat" x="360" y="202" />
+  </objects>
+</resources>

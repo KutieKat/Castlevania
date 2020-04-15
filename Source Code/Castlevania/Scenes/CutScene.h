@@ -1,43 +1,37 @@
 #pragma once
 
+#include <string>
+
 #include "Scene.h"
 #include "../Models/Characters/Players/Simon.h"
 #include "../Game.h"
-#include "../Models/Misc/Blackboard.h"
-#include "../Models/Items/MoneyBag.h"
-#include "../Models/Items/EasterEgg.h"
-#include "../Models/Items/Dagger.h"
-#include "../Models/Items/BigHeart.h"
-#include "../Models/Items/MorningStar.h"
-#include "../Models/Misc/BigCandle.h"
-#include "../Models/Misc/Brick.h"
-#include "../Models/Misc/Door.h"
+#include "../Models/Misc/Background.h"
+#include "../Utilities/Color.h"
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Animations/AnimationSets.h"
+#include "../Models/Misc/Bat.h"
+#include "../Models/Misc/Blackboard.h"
+#include "../Models/Misc/Helicopter.h"
+using namespace std;
 
-class CPlayScene : public CScene
+class CCutScene : public CScene
 {
 public:
-	CPlayScene(string id, string filePath, string stage = "", string nextSceneId = "");
+	CCutScene(string id, string filePath, string stage = "", string nextSceneId = "");
 
 	virtual bool Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-
-	CSimon* GetPlayer();
+	virtual void SetSwitchSceneTime(DWORD time);
 
 protected:
-	CSimon* player;
-
 	unordered_map<string, LPGAMEOBJECT> objects;
-	vector<CEffect*> effects;
 
+	CSimon* player;
 	CGame* game;
 	CBlackboard* blackboard;
-	CTileMap* tileMap;
 
-	void ParseTileMap(TiXmlElement* element);
 	void ParseTextures(TiXmlElement* element);
 	void ParseSprites(TiXmlElement* element);
 	void ParseAnimations(TiXmlElement* element);
@@ -45,11 +39,11 @@ protected:
 	void ParseObjects(TiXmlElement* element);
 };
 
-class CPlaySceneKeyHandler : public CSceneKeyHandler
+class CCutSceneKeyHandler : public CSceneKeyHandler
 {
 public:
 	virtual void KeyState(BYTE* states);
 	virtual void OnKeyDown(int keyCode);
 	virtual void OnKeyUp(int keyCode);
-	CPlaySceneKeyHandler(CScene* s) : CSceneKeyHandler(s) {};
+	CCutSceneKeyHandler(CScene* s) : CSceneKeyHandler(s) {};
 };

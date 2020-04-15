@@ -1,6 +1,7 @@
 #include "BigCandle.h"
 #include "../../Utilities/SafeDelete.h"
 #include "../../Utilities/Debug.h"
+#include "../../Models/Misc/Brick.h"
 
 CBigCandle::CBigCandle()
 {
@@ -11,6 +12,10 @@ CBigCandle::CBigCandle()
 
 void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CGameObject::Update(dt);
+
+	vy += BIG_CANDLE_GRAVITY * dt;
+
 	if (this->endingEffect && this->endingEffect->Over())
 	{
 		if (this->hiddenItem)
@@ -20,6 +25,41 @@ void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 		this->visibility = Visibility::Hidden;
+	}
+
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+
+	CalcPotentialCollisions(coObjects, coEvents);
+
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CBrick*>(e->obj))
+			{
+				if (nx != 0) vx = 0;
+				if (ny != 0) vy = 0;
+			}
+		}
 	}
 }
 

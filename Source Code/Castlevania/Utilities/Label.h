@@ -13,6 +13,7 @@ public:
 	CLabel(string text, float x = 0.0f, float y = 0.0f, float fontSize = 14, LPWSTR fontFamily = L"Press Start", D3DCOLOR color = CColor::FromRgb(255, 255, 255));
 
 	void SetText(string text);
+	void SetColor(D3DCOLOR color);
 	void SetPosition(float x, float y);
 	void Render();
 
@@ -38,5 +39,6 @@ protected:
 	float calcBottomPosition();
 
 	void ReCalcPosition();
+	void UpdateFont();
 };
 

@@ -10,8 +10,6 @@ void CPlayScene::ParseTileMap(TiXmlElement* element)
 
 void CPlayScene::ParseTextures(TiXmlElement* element)
 {
-	CTextureManager::GetInstance()->Show();
-
 	TiXmlElement* texture = nullptr;
 
 	for (texture = element->FirstChildElement(); texture != nullptr; texture = texture->NextSiblingElement())
@@ -29,8 +27,6 @@ void CPlayScene::ParseTextures(TiXmlElement* element)
 
 		CTextureManager::GetInstance()->Add(id, texturePath.c_str(), CColor::FromRgb(r, g, b));
 	}
-
-	CTextureManager::GetInstance()->Show();
 }
 
 void CPlayScene::ParseSprites(TiXmlElement* element)
@@ -217,20 +213,18 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 		if (type == "door")
 		{
-			string nextSceneId = object->Attribute("nextSceneId");
 			hiddenItemId = object->Attribute("hiddenItemId");
 
 			CDoor* item = new CDoor();
 			item->SetPosition(x, y);
 			item->SetDoorWall(dynamic_cast<CDoorWall*>(objects[hiddenItemId]));
-			item->SetNextSceneId(nextSceneId);
 
 			objects[id] = item;
 		}
 	}
 }
 
-CPlayScene::CPlayScene(string id, string filePath) : CScene(id, filePath)
+CPlayScene::CPlayScene(string id, string filePath, string stage, string nextSceneId) : CScene(id, filePath, stage, nextSceneId)
 {
 	game = CGame::GetInstance();
 	keyHandler = new CPlaySceneKeyHandler(this);
@@ -247,22 +241,25 @@ bool CPlayScene::Load()
 	}
 
 	TiXmlElement* root = doc.RootElement();
-	TiXmlElement* tileMap = root->FirstChildElement();
-	TiXmlElement* textures = tileMap->NextSiblingElement();
+	TiXmlElement* tileMap1 = root->FirstChildElement();
+	TiXmlElement* textures = tileMap1->NextSiblingElement();
 	TiXmlElement* sprites = textures->NextSiblingElement();
 	TiXmlElement* animations = sprites->NextSiblingElement();
 	TiXmlElement* animationSets = animations->NextSiblingElement();
-	TiXmlElement* effects = animationSets->NextSiblingElement();
-	TiXmlElement* objects = effects->NextSiblingElement();
+	TiXmlElement* objects = animationSets->NextSiblingElement();
 
-	ParseTileMap(tileMap);
+	ParseTileMap(tileMap1);
 	ParseTextures(textures);
 	ParseSprites(sprites);
 	ParseAnimations(animations);
 	ParseAnimationSets(animationSets);
 	ParseObjects(objects);
 
-	blackboard = new CBlackboard(player);
+	blackboard = new CBlackboard();
+	blackboard->SetPlayer(player);
+	blackboard->SetTileMap(tileMap);
+
+	CGame::GetInstance()->GetTimer()->Start();
 
 	return true;
 }
@@ -298,7 +295,7 @@ void CPlayScene::Update(DWORD dt)
 	game->GetTimer()->Tick();
 
 	// Update camera to follow the player
-	float cx = 0, cy = 0;
+	float cx, cy;
 
 	if (player) player->GetPosition(cx, cy);
 
@@ -338,7 +335,10 @@ void CPlayScene::Update(DWORD dt)
 	}
 
 	// Update blackboard position
-	blackboard->Update(tileMap);
+	if (blackboard)
+	{
+		blackboard->Update();
+	}
 
 	// Update camera position
 	game->GetCamera()->SetPosition(cx, 0.0f);
@@ -347,14 +347,20 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	// TileMap
-	tileMap->Render(game->GetCamera());
+	if (tileMap)
+	{
+		tileMap->Render(game->GetCamera());
+	}
 
 	// Effects
-	for (int i = 0; i < effects.size(); i++)
+	if (effects.size() > 0)
 	{
-		if (effects[i]->GetStartTime() != -1)
+		for (int i = 0; i < effects.size(); i++)
 		{
-			effects[i]->Render();
+			if (effects[i]->GetStartTime() != -1)
+			{
+				effects[i]->Render();
+			}
 		}
 	}
 
@@ -362,16 +368,34 @@ void CPlayScene::Render()
 	{
 		if (x.second->GetVisibility() == Visibility::Visible)
 		{
-				x.second->Render();
+			x.second->Render();
 		}
 	}
 
 	// Blackboard
-	blackboard->Render();
+	if (blackboard)
+	{
+		blackboard->Render();
+	}
 }
 
 void CPlayScene::Unload()
-{
+{	
+	// Unload blackboard :)
+	// Unload effects :)
+	// Unload tilemap :)
+	// Unload objects :(
+	// Unload player :(
+
+	SAFE_DELETE(blackboard);
+	SAFE_DELETE(tileMap);
+
+	for (int i = 0; i < effects.size(); i++)
+	{
+		SAFE_DELETE(effects[i]);
+	}
+
+	effects.clear();
 }
 
 CSimon* CPlayScene::GetPlayer()
@@ -421,14 +445,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 			simon->SetUp(true);
 		}
 
-		if (game->GetInputManager()->IsKeyDown(DIK_UP))
-		{
-			if (simon->TouchingGround())
-			{
-				simon->SetState(SIMON_STATE_IDLE);
-			}
-		}
-		else if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
+		if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 		{
 			simon->SetDirection(Direction::Right);
 
@@ -458,22 +475,25 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 			}
 			else
 			{
-				simon->SetState(SIMON_STATE_DIE);
+				simon->SetState(SIMON_STATE_DIE);		
 			}
 		}
 	}
-
-
 }
 
 void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 {
+	CGame* game = CGame::GetInstance();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 
 	if (simon != nullptr)
 	{
 		switch (keyCode)
 		{
+		case DIK_R:
+			game->SwitchScene(game->GetCurrentScene()->GetNextSceneId());
+			break;
+
 		case DIK_Z:
 			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->animationSet->at(simon->GetAnimationToRender())->Over() == false)
 			{
@@ -485,7 +505,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				return;
 			}
 
-			if (simon->GetSubWeaponType() != "" && simon->GetHearts() > 0 && simon->Up())
+			if (game->GetSubWeaponType() != "" && game->GetHearts() > 0 && simon->Up())
 			{
 				simon->SetState(SIMON_STATE_STAND_AND_THROW);
 			}
@@ -524,7 +544,6 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			break;
 		}
 	}
-
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int keyCode)

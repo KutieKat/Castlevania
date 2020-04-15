@@ -10,11 +10,16 @@ class CScene
 {
 protected:
 	IKeyEventHandler* keyHandler;
+
 	string id;
 	string filePath;
+	string nextSceneId;
+	string stage;
+
+	DWORD switchSceneTime;
 
 public:
-	CScene(std::string id, std::string filePath);
+	CScene(string id, string filePath, string stage = "", string nextSceneId = "");
 
 	IKeyEventHandler* GetKeyEventHandler();
 
@@ -22,7 +27,10 @@ public:
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
-	virtual CSimon* GetPlayer() = 0;
+
+	string GetId();
+	string GetNextSceneId();
+	string GetStage();
 };
 
 typedef CScene* LPSCENE;
