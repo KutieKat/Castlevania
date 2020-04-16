@@ -110,9 +110,9 @@ enum HealthType
 
 #define SIMON_DELAY_TIMEOUT 900
 
-// Brick
-#define BRICK_BBOX_WIDTH 32
-#define BRICK_BBOX_HEIGHT 36
+// Ground
+#define GROUND_BBOX_WIDTH 32
+#define GROUND_BBOX_HEIGHT 36
 
 // BigCandle
 #define BIG_CANDLE_BBOX_WIDTH 31

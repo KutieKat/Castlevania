@@ -10,7 +10,7 @@
 #include "../Models/Items/BigHeart.h"
 #include "../Models/Items/MorningStar.h"
 #include "../Models/Misc/BigCandle.h"
-#include "../Models/Misc/Brick.h"
+#include "../Models/Misc/Ground.h"
 #include "../Models/Misc/Door.h"
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Animations/AnimationSets.h"

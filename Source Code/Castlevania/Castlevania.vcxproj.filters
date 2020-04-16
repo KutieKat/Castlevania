@@ -168,9 +168,6 @@
     <ClCompile Include="Models\GameObject.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Misc\Brick.cpp">
-      <Filter>Source Files\Models\Misc</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\Debug.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
@@ -267,6 +264,9 @@
     <ClCompile Include="Models\Misc\Helicopter.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Misc\Ground.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -307,9 +307,6 @@
     </ClInclude>
     <ClInclude Include="Models\GameObject.h">
       <Filter>Header Files\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Misc\Brick.h">
-      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\Debug.h">
       <Filter>Header Files\Utilities</Filter>
@@ -414,6 +411,9 @@
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\Helicopter.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\Ground.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>

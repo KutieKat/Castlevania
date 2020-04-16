@@ -103,7 +103,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 	for (object = element->FirstChildElement(); object != nullptr; object = object->NextSiblingElement())
 	{
-		int x, y;
+		int x, y, visibility;
 		object->QueryIntAttribute("x", &x);
 		object->QueryIntAttribute("y", &y);
 
@@ -114,9 +114,9 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 		CAnimationSet* animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
 
-		if (type == "brick")
+		if (type == "ground")
 		{
-			CBrick* item = new CBrick();
+			CGround* item = new CGround();
 			item->SetPosition(x, y);
 
 			objects[id] = item;
@@ -124,27 +124,33 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 		
 		if (type == "big_heart")
 		{
+			object->QueryIntAttribute("visible", &visibility);
+
 			CBigHeart* item = new CBigHeart();
 			item->SetPosition(x, y);
-			item->SetVisibility(Visibility::Hidden);
+			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
 			objects[id] = item;
 		}
 
 		if (type == "morning_star")
 		{
+			object->QueryIntAttribute("visible", &visibility);
+
 			CMorningStar* item = new CMorningStar();
 			item->SetPosition(x, y);
-			item->SetVisibility(Visibility::Hidden);
+			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
 			objects[id] = item;
 		}
 
 		if (type == "dagger")
 		{
+			object->QueryIntAttribute("visible", &visibility);
+
 			CDagger* item = new CDagger();
 			item->SetPosition(x, y);
-			item->SetVisibility(Visibility::Hidden);
+			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
 			objects[id] = item;
 		}
@@ -204,9 +210,11 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 		if (type == "door_wall")
 		{
+			object->QueryIntAttribute("visible", &visibility);
+
 			CDoorWall* item = new CDoorWall();
 			item->SetPosition(x, y);
-			item->SetVisibility(Visibility::Hidden);
+			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
 			objects[id] = item;
 		}

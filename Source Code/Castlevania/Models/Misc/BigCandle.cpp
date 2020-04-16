@@ -1,7 +1,7 @@
 #include "BigCandle.h"
 #include "../../Utilities/SafeDelete.h"
 #include "../../Utilities/Debug.h"
-#include "../../Models/Misc/Brick.h"
+#include "../../Models/Misc/Ground.h"
 
 CBigCandle::CBigCandle()
 {
@@ -54,7 +54,7 @@ void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CBrick*>(e->obj))
+			if (dynamic_cast<CGround*>(e->obj))
 			{
 				if (nx != 0) vx = 0;
 				if (ny != 0) vy = 0;

@@ -1,7 +1,7 @@
 ﻿#include "Simon.h"
 #include "../../../Game.h"
 #include "../../Misc/BigCandle.h"
-#include "../../Misc/Brick.h"
+#include "../../Misc/Ground.h"
 #include "../../Misc/Door.h"
 #include "../../Misc/DoorWall.h"
 #include "../../Items/BigHeart.h"
@@ -88,7 +88,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CBrick*>(e->obj))
+			if (dynamic_cast<CGround*>(e->obj))
 			{
 				touchingGround = true;
 

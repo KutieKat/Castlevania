@@ -44,9 +44,9 @@
     <ClCompile Include="Models\Misc\Bat.cpp" />
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\Blackboard.cpp" />
-    <ClCompile Include="Models\Misc\Brick.cpp" />
     <ClCompile Include="Models\Misc\Door.cpp" />
     <ClCompile Include="Models\Misc\DoorWall.cpp" />
+    <ClCompile Include="Models\Misc\Ground.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
     <ClCompile Include="Models\Misc\Helicopter.cpp" />
@@ -92,9 +92,9 @@
     <ClInclude Include="Models\Misc\Bat.h" />
     <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\Blackboard.h" />
-    <ClInclude Include="Models\Misc\Brick.h" />
     <ClInclude Include="Models\Misc\Door.h" />
     <ClInclude Include="Models\Misc\DoorWall.h" />
+    <ClInclude Include="Models\Misc\Ground.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />
     <ClInclude Include="Models\Misc\HealthVolume.h" />
     <ClInclude Include="Models\Misc\Helicopter.h" />
