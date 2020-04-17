@@ -19,5 +19,4 @@ CSprite* CAnimationFrame::GetSprite()
 
 CAnimationFrame::~CAnimationFrame()
 {
-	SAFE_DELETE(this->sprite);
 }

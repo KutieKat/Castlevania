@@ -23,10 +23,9 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-	virtual void SetSwitchSceneTime(DWORD time);
 
 protected:
-	unordered_map<string, LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> objects;
 
 	CSimon* player;
 	CGame* game;

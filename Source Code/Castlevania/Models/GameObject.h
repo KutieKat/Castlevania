@@ -31,6 +31,7 @@ public:
 	DWORD dt;
 
 	CAnimationSet* animationSet;
+	string id;
 
 public:
 	CGameObject();
@@ -41,6 +42,8 @@ public:
 	void GetSpeed(float &vx, float &vy);
 	void SetDirection(Direction direction);
 	Direction GetDirection();
+	void SetId(string id);
+	string GetId();
 
 	void SetVisibility(Visibility visibility);
 	Visibility GetVisibility();

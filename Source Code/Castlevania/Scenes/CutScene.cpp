@@ -111,7 +111,7 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 			CBackground* item = new CBackground();
 			item->SetPosition(x, y);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "bat")
@@ -130,7 +130,7 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 				item->SetState(BAT_STATE_FLY_OVAL);
 			}
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "helicopter")
@@ -138,7 +138,7 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 			CHelicopter* item = new CHelicopter();
 			item->SetPosition(x, y);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "simon")
@@ -147,7 +147,7 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 			player->SetState(SIMON_STATE_CUT_SCENE_AUTO_WALK);
 			player->SetPosition(x, y);
 
-			objects[id] = player;
+			objects.emplace_back(player);
 		}
 	}
 }
@@ -188,37 +188,11 @@ bool CCutScene::Load()
 
 void CCutScene::Update(DWORD dt)
 {
-	vector<LPGAMEOBJECT> coObjects;
-
-	if (switchSceneTime != -1)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		if (GetTickCount() > switchSceneTime)
+		if (objects[i]->GetVisibility() == Visibility::Visible)
 		{
-			switchSceneTime = -1;
-			game->SwitchScene(game->GetCurrentScene()->GetNextSceneId());
-		}
-	}
-
-	for (auto x : objects)
-	{
-		if (x.second->GetVisibility() == Visibility::Visible)
-		{
-			if (dynamic_cast<CSimon*>(x.second))
-			{
-				continue;
-			}
-			else
-			{
-				coObjects.emplace_back(x.second);
-			}
-		}
-	}
-
-	for (auto x : objects)
-	{
-		if (x.second->GetVisibility() == Visibility::Visible)
-		{
-			x.second->Update(dt, &coObjects);
+			objects[i]->Update(dt, nullptr);
 		}
 	}
 
@@ -232,9 +206,9 @@ void CCutScene::Update(DWORD dt)
 
 void CCutScene::Render()
 {
-	for (auto x : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		x.second->Render();
+		objects[i]->Render();
 	}
 
 	if (blackboard)
@@ -245,18 +219,16 @@ void CCutScene::Render()
 
 void CCutScene::Unload()
 {
-	//for (auto x : objects)
-	//{
-	//	CGameObject* gameObject = x.second;
-	//	SAFE_DELETE(gameObject);
-	//}
+	SAFE_DELETE(blackboard);
 
-	//objects.clear();
-}
+	for (int i = 0; i < objects.size(); i++)
+	{
+		SAFE_DELETE(objects[i]);
+	}
 
-void CCutScene::SetSwitchSceneTime(DWORD time)
-{
-	this->switchSceneTime = time;
+	objects.clear();
+
+	player = nullptr;
 }
 
 void CCutSceneKeyHandler::KeyState(BYTE* states)

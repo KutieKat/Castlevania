@@ -25,7 +25,7 @@ public:
 	virtual void SetSwitchSceneTime(DWORD time);
 
 protected:
-	unordered_map<string, LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> objects;
 
 	CGame* game;
 	CLabel* startLabel;

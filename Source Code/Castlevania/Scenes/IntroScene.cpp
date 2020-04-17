@@ -109,17 +109,19 @@ void CIntroScene::ParseObjects(TiXmlElement* element)
 		if (type == "background")
 		{
 			CBackground* item = new CBackground();
+			item->SetId(id);
 			item->SetPosition(x, y);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "intro_bat")
 		{
 			CIntroBat* item = new CIntroBat();
+			item->SetId(id);
 			item->SetPosition(x, y);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 	}
 }
@@ -128,8 +130,6 @@ CIntroScene::CIntroScene(string id, string filePath, string stage, string nextSc
 {
 	game = CGame::GetInstance();
 	keyHandler = new CIntroSceneKeyHandler(this);
-
-	startLabel = new CLabel("PRESS START KEY", 142, 270, 17);
 }
 
 bool CIntroScene::Load()
@@ -155,6 +155,8 @@ bool CIntroScene::Load()
 	ParseAnimationSets(animationSets);
 	ParseObjects(objects);
 
+	startLabel = new CLabel("PRESS START KEY", 142, 270, 17);
+
 	return true;
 }
 
@@ -170,23 +172,27 @@ void CIntroScene::Update(DWORD dt)
 			switchSceneTime = -1;
 
 			game->SwitchScene(game->GetCurrentScene()->GetNextSceneId());
-			//CGame::GetInstance()->GetTimer()->SetTime(DEFAULT_GAME_TIME);
 		}
 
-		if (interval >= 30 && interval <= 60 || interval >= 90 && interval <= 120 || interval >= 150 && interval <= 180)
+		if (startLabel)
 		{
-			startLabel->SetColor(CColor::Black);
-		}
-		else
-		{
-			startLabel->SetColor(CColor::White);
+			if (interval >= 30 && interval <= 60 || interval >= 90 && interval <= 120 || interval >= 150 && interval <= 180)
+			{
+				startLabel->SetColor(CColor::Black);
+			}
+			else
+			{
+				startLabel->SetColor(CColor::White);
+			}
 		}
 	}
 
-
-	for (auto x : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		x.second->Update(dt, nullptr);
+		if (objects[i]->GetVisibility() == Visibility::Visible)
+		{
+			objects[i]->Update(dt, nullptr);
+		}
 	}
 
 	game->GetCamera()->SetPosition(0, 0.0f);
@@ -194,20 +200,21 @@ void CIntroScene::Update(DWORD dt)
 
 void CIntroScene::Render()
 {
-	startLabel->Render();
+	if (startLabel) startLabel->Render();
 
-	for (auto x : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		x.second->Render();
+		objects[i]->Render();
 	}
 }
 
 void CIntroScene::Unload()
 {
-	for (auto x : objects)
+	SAFE_DELETE(startLabel);
+
+	for (int i = 0; i < objects.size(); i++)
 	{
-		CGameObject* gameObject = x.second;
-		SAFE_DELETE(gameObject);
+		SAFE_DELETE(objects[i]);
 	}
 
 	objects.clear();

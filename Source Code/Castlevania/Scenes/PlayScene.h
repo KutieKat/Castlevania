@@ -30,7 +30,8 @@ public:
 protected:
 	CSimon* player;
 
-	unordered_map<string, LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> coObjects;
 	vector<CEffect*> effects;
 
 	CGame* game;
@@ -43,6 +44,8 @@ protected:
 	void ParseAnimations(TiXmlElement* element);
 	void ParseAnimationSets(TiXmlElement* element);
 	void ParseObjects(TiXmlElement* element);
+
+	CGameObject* FindObject(string id);
 };
 
 class CPlaySceneKeyHandler : public CSceneKeyHandler

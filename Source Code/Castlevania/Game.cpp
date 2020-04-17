@@ -280,10 +280,10 @@ bool CGame::Load(string filePath)
 		{
 			sceneItem = new CPlayScene(id, path, stage, nextSceneId);
 		}
-		
+
 		if (type == "intro_scene")
 		{
-			sceneItem = new CIntroScene(id, path, stage,nextSceneId);
+			sceneItem = new CIntroScene(id, path, stage, nextSceneId);
 		}
 
 		if (type == "cut_scene")
@@ -306,15 +306,12 @@ LPSCENE CGame::GetCurrentScene()
 
 void CGame::SwitchScene(string sceneId)
 {
-	// Unload TextureManager :(
-	// Unload SpriteManager :(
-	// Unload AnimationManager :(
-
 	scenes[currentScene]->Unload();
 
-	//CTextureManager::GetInstance()->Clear();
-	//CSpriteManager::GetInstance()->Clear();
-	//CAnimationManager::GetInstance()->Clear();
+	CTextureManager::GetInstance()->Clear();
+	CSpriteManager::GetInstance()->Clear();
+	CAnimationManager::GetInstance()->Clear();
+	CAnimationSets::GetInstance()->Clear();
 
 	currentScene = sceneId;
 	CScene* scene = scenes[sceneId];
@@ -324,7 +321,7 @@ void CGame::SwitchScene(string sceneId)
 	{
 		Reset();
 	}
-	
+
 	scene->Load();
 	CGame::GetInstance()->GetTimer()->SetTime(300);
 }

@@ -56,7 +56,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(SIMON_STATE_IDLE);
 	}
 
-	if (this->state == SIMON_STATE_CUT_SCENE_AUTO_WALK && x <= (SCREEN_WIDTH / 2) - 50)
+	if (state == SIMON_STATE_CUT_SCENE_AUTO_WALK && x <= (SCREEN_WIDTH / 2) - 50)
 	{
 		SetState(SIMON_STATE_WATCH);
 	}
@@ -66,7 +66,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	coEvents.clear();
 
-	CalcPotentialCollisions(coObjects, coEvents);
+	if (coObjects) CalcPotentialCollisions(coObjects, coEvents);
 
 	if (coEvents.size() == 0)
 	{
@@ -132,11 +132,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	for (UINT i = 0; i < coEvents.size(); i++)
-	{
-		delete coEvents[i];
-	}
-
 	if (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK)
 	{
 		UpdateWhip();
@@ -193,37 +188,45 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		game->SwitchScene(game->GetCurrentScene()->GetNextSceneId());
 	}
 
-	for (int i = 0; i < coObjects->size(); i++)
+	if (coObjects)
 	{
-		if (dynamic_cast<CItem*>(coObjects->at(i)))
+		for (int i = 0; i < coObjects->size(); i++)
 		{
-			auto item = dynamic_cast<CItem*>(coObjects->at(i));
-
-			if (CGame::GetInstance()->HaveCollision(this, item))
+			if (dynamic_cast<CItem*>(coObjects->at(i)))
 			{
-				if (dynamic_cast<CMorningStar*>(coObjects->at(i)))
-				{
-					SetState(SIMON_STATE_DELAY);
-					this->whip->Upgrade();
-				}
-				else if (dynamic_cast<CBigHeart*>(coObjects->at(i)))
-				{
-					auto heart = dynamic_cast<CBigHeart*>(coObjects->at(i));
-					CGame::GetInstance()->AddHeart(5);
-				}
-				else if (dynamic_cast<CMoneyBag*>(coObjects->at(i)))
-				{
-					auto moneyBag = dynamic_cast<CMoneyBag*>(coObjects->at(i));
-					CGame::GetInstance()->AddScore(moneyBag->GetScore());
-				}
-				else if (dynamic_cast<CDagger*>(coObjects->at(i)))
-				{
-					CGame::GetInstance()->SetSubWeaponType("dagger");
-				}
+				auto item = dynamic_cast<CItem*>(coObjects->at(i));
 
-				item->Disappear();
+				if (CGame::GetInstance()->HaveCollision(this, item))
+				{
+					if (dynamic_cast<CMorningStar*>(coObjects->at(i)))
+					{
+						SetState(SIMON_STATE_DELAY);
+						this->whip->Upgrade();
+					}
+					else if (dynamic_cast<CBigHeart*>(coObjects->at(i)))
+					{
+						auto heart = dynamic_cast<CBigHeart*>(coObjects->at(i));
+						CGame::GetInstance()->AddHeart(5);
+					}
+					else if (dynamic_cast<CMoneyBag*>(coObjects->at(i)))
+					{
+						auto moneyBag = dynamic_cast<CMoneyBag*>(coObjects->at(i));
+						CGame::GetInstance()->AddScore(moneyBag->GetScore());
+					}
+					else if (dynamic_cast<CDagger*>(coObjects->at(i)))
+					{
+						CGame::GetInstance()->SetSubWeaponType("dagger");
+					}
+
+					item->Disappear();
+				}
 			}
 		}
+	}
+
+	for (UINT i = 0; i < coEvents.size(); i++)
+	{
+		delete coEvents[i];
 	}
 }
 
@@ -286,7 +289,11 @@ void CSimon::SetState(int state)
 
 	case SIMON_STATE_SIT_AND_ATTACK:
 	case SIMON_STATE_STAND_AND_ATTACK:
-		vx = 0;
+		if (touchingGround)
+		{
+			vx = 0;
+		}
+
 		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
 		ResetAnimations();
 		break;

@@ -50,6 +50,16 @@ Direction CGameObject::GetDirection()
 	return this->direction;
 }
 
+void CGameObject::SetId(string id)
+{
+	this->id = id;
+}
+
+string CGameObject::GetId()
+{
+	return this->id;
+}
+
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	this->dt = dt;

@@ -21,6 +21,17 @@ CAnimationSet* CAnimationSets::Get(string id)
 	return animationSet;
 }
 
+void CAnimationSets::Clear()
+{
+	for (auto x : animationSets)
+	{
+		CAnimationSet* animationSet = x.second;
+		SAFE_DELETE(animationSet);
+	}
+
+	animationSets.clear();
+}
+
 CAnimationSets* CAnimationSets::GetInstance()
 {
 	if (instance == nullptr)
@@ -33,13 +44,7 @@ CAnimationSets* CAnimationSets::GetInstance()
 
 CAnimationSets::~CAnimationSets()
 {
-	for (auto x : animationSets)
-	{
-		CAnimationSet* animationSet = x.second;
-		SAFE_DELETE(animationSet);
-	}
-
-	animationSets.clear();
+	Clear();
 
 	SAFE_DELETE(instance);
 }

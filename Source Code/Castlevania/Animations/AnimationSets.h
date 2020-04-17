@@ -11,6 +11,7 @@ public:
 
 	void Add(string id, CAnimationSet* animationSet);
 	CAnimationSet* Get(string id);
+	void Clear();
 
 	~CAnimationSets();
 

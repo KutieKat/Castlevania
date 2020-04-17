@@ -117,20 +117,22 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 		if (type == "ground")
 		{
 			CGround* item = new CGround();
+			item->SetId(id);
 			item->SetPosition(x, y);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
-		
+
 		if (type == "big_heart")
 		{
 			object->QueryIntAttribute("visible", &visibility);
 
 			CBigHeart* item = new CBigHeart();
+			item->SetId(id);
 			item->SetPosition(x, y);
 			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "morning_star")
@@ -138,10 +140,11 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			object->QueryIntAttribute("visible", &visibility);
 
 			CMorningStar* item = new CMorningStar();
+			item->SetId(id);
 			item->SetPosition(x, y);
 			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "dagger")
@@ -149,10 +152,11 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			object->QueryIntAttribute("visible", &visibility);
 
 			CDagger* item = new CDagger();
+			item->SetId(id);
 			item->SetPosition(x, y);
 			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "big_candle")
@@ -164,11 +168,12 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			effects.emplace_back(effect);
 
 			CBigCandle* item = new CBigCandle();
+			item->SetId(id);
 			item->SetPosition(x, y);
-			item->SetHiddenItem(dynamic_cast<CItem*>(objects[hiddenItemId]));
+			item->SetHiddenItem(dynamic_cast<CItem*>(FindObject(hiddenItemId)));
 			item->SetEndingEffect(effect);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "money_bag")
@@ -182,11 +187,12 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			effects.emplace_back(effect);
 
 			CMoneyBag* item = new CMoneyBag();
+			item->SetId(id);
 			item->SetEndingEffect(effect);
 			item->SetScore(1000);
 			item->SetPosition(x, y);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "easter_egg")
@@ -194,18 +200,20 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			hiddenItemId = object->Attribute("hiddenItemId");
 
 			CEasterEgg* item = new CEasterEgg();
+			item->SetId(id);
 			item->SetPosition(x, y);
-			item->SetHiddenItem(dynamic_cast<CItem*>(objects[hiddenItemId]));
+			item->SetHiddenItem(dynamic_cast<CItem*>(FindObject(hiddenItemId)));
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "simon")
 		{
 			player = new CSimon();
+			player->SetId(id);
 			player->SetPosition(x, y);
 
-			objects[id] = player;
+			objects.emplace_back(player);
 		}
 
 		if (type == "door_wall")
@@ -213,10 +221,11 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			object->QueryIntAttribute("visible", &visibility);
 
 			CDoorWall* item = new CDoorWall();
+			item->SetId(id);
 			item->SetPosition(x, y);
 			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
-			objects[id] = item;
+			objects.emplace_back(item);
 		}
 
 		if (type == "door")
@@ -224,10 +233,22 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			hiddenItemId = object->Attribute("hiddenItemId");
 
 			CDoor* item = new CDoor();
+			item->SetId(id);
 			item->SetPosition(x, y);
-			item->SetDoorWall(dynamic_cast<CDoorWall*>(objects[hiddenItemId]));
+			item->SetDoorWall(dynamic_cast<CDoorWall*>(FindObject(hiddenItemId)));
 
-			objects[id] = item;
+			objects.emplace_back(item);
+		}
+	}
+}
+
+CGameObject * CPlayScene::FindObject(string id)
+{
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (objects[i]->GetId() == id)
+		{
+			return objects[i];
 		}
 	}
 }
@@ -274,28 +295,28 @@ bool CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
-	vector<LPGAMEOBJECT> coObjects;
+	coObjects.clear();
 
-	for (auto x : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		if (x.second->GetVisibility() == Visibility::Visible)
+		if (objects[i]->GetVisibility() == Visibility::Visible)
 		{
-			if (dynamic_cast<CSimon*>(x.second))
+			if (dynamic_cast<CSimon*>(objects[i]))
 			{
 				continue;
 			}
 			else
 			{
-				coObjects.emplace_back(x.second);
+				coObjects.emplace_back(objects[i]);
 			}
 		}
 	}
 
-	for (auto x : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		if (x.second->GetVisibility() == Visibility::Visible)
+		if (objects[i]->GetVisibility() == Visibility::Visible)
 		{
-			x.second->Update(dt, &coObjects);
+			objects[i]->Update(dt, &coObjects);
 		}
 	}
 
@@ -303,7 +324,7 @@ void CPlayScene::Update(DWORD dt)
 	game->GetTimer()->Tick();
 
 	// Update camera to follow the player
-	float cx, cy;
+	float cx = 0, cy = 0;
 
 	if (player) player->GetPosition(cx, cy);
 
@@ -372,11 +393,11 @@ void CPlayScene::Render()
 		}
 	}
 
-	for (auto x : objects)
+	for (int i = 0; i < objects.size(); i++)
 	{
-		if (x.second->GetVisibility() == Visibility::Visible)
+		if (objects[i]->GetVisibility() == Visibility::Visible)
 		{
-			x.second->Render();
+			objects[i]->Render();
 		}
 	}
 
@@ -388,15 +409,18 @@ void CPlayScene::Render()
 }
 
 void CPlayScene::Unload()
-{	
-	// Unload blackboard :)
-	// Unload effects :)
-	// Unload tilemap :)
-	// Unload objects :(
-	// Unload player :(
-
+{
 	SAFE_DELETE(blackboard);
 	SAFE_DELETE(tileMap);
+
+	for (int i = 0; i < objects.size(); i++)
+	{
+		SAFE_DELETE(objects[i]);
+	}
+
+	objects.clear();
+
+	coObjects.clear();
 
 	for (int i = 0; i < effects.size(); i++)
 	{
@@ -404,6 +428,8 @@ void CPlayScene::Unload()
 	}
 
 	effects.clear();
+
+	player = nullptr;
 }
 
 CSimon* CPlayScene::GetPlayer()
@@ -483,7 +509,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 			}
 			else
 			{
-				simon->SetState(SIMON_STATE_DIE);		
+				simon->SetState(SIMON_STATE_DIE);
 			}
 		}
 	}
