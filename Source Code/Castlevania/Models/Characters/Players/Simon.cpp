@@ -92,6 +92,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				touchingGround = true;
 
+				if (state == SIMON_STATE_STAND_AND_ATTACK)
+				{
+					vx = 0;
+				}
+
 				if (ny != 0) vy = 0;
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj) || dynamic_cast<CItem*>(e->obj) || dynamic_cast<CDoorWall*>(e->obj))
@@ -122,6 +127,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 					SetState(SIMON_STATE_AUTO_WALK);
 					CGame::GetInstance()->GetTimer()->Stop();
+				}
+				else
+				{
+					x += dx;
 				}
 
 				if (e->ny != 0)

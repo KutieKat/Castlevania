@@ -9,6 +9,8 @@ using namespace std;
 class CHealthVolume
 {
 public:
+	CHealthVolume();
+
 	void SetAnimationSet(string animationSetId);
 	void Render();
 	void SetPosition(float x, float y);

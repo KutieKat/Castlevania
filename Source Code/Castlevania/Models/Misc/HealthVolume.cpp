@@ -2,6 +2,11 @@
 #include "../../Animations/AnimationManager.h"
 #include "../../Animations/AnimationSets.h"
 
+CHealthVolume::CHealthVolume()
+{
+	SetAnimationSet("health_volume");
+}
+
 void CHealthVolume::SetAnimationSet(string animationSetId)
 {
 	this->animationSet = CAnimationSets::GetInstance()->Get(animationSetId);

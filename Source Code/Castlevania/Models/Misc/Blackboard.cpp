@@ -76,8 +76,10 @@ void CBlackboard::Update()
 
 	this->simonHealthBar->SetValue(CGame::GetInstance()->getHealthVolumes());
 	this->simonHealthBar->SetPosition(this->x + 110, this->y + 32);
+	this->simonHealthBar->Update();
 
 	this->enemyHealthBar->SetPosition(this->x + 110, this->y + 50);
+	this->enemyHealthBar->Update();
 
 	if (CGame::GetInstance()->GetSubWeaponType() == "dagger" && this->subWeapon == nullptr)
 	{

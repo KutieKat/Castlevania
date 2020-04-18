@@ -11,6 +11,7 @@ public:
 	void SetPosition(float x, float y);
 	void SetValue(int value);
 	void Render();
+	void Update();
 
 protected:
 	vector<CHealthVolume*> volumes;
@@ -22,7 +23,5 @@ protected:
 
 	int max;
 	int value;
-
-	void Update();
 };
 
