@@ -6,7 +6,6 @@
 
 #include "../Animations/Animation.h"
 #include "../Animations/AnimationManager.h"
-#include "../Effects/Effect.h"
 #include "../Sprites/SpriteManager.h"
 #include "../Utilities/Constants.h"
 using namespace std;
@@ -14,6 +13,8 @@ using namespace std;
 class CGameObject
 {
 public:
+	string id;
+
 	float x;
 	float y;
 
@@ -27,11 +28,20 @@ public:
 	Visibility visibility;
 
 	int state;
+	int value;
 
 	DWORD dt;
+	DWORD disappearingTime;
 
 	CAnimationSet* animationSet;
-	string id;
+
+	CGameObject* hiddenItem;
+	CGameObject* endingEffect;
+
+	bool showingEffect;
+	bool isItem;
+	bool comeThrough;
+	bool isEffect;
 
 public:
 	CGameObject();
@@ -49,6 +59,7 @@ public:
 	Visibility GetVisibility();
 
 	int GetState();
+	int GetValue();
 
 	void RenderBoundingBox();
 
@@ -62,17 +73,29 @@ public:
 		float &nx,
 		float &ny,
 		float &rdx,
-		float &rdy);
+		float &rdy
+	);
 
 	void SetAnimationSet(string animationSetId);
+	void SetDisplayTime(DWORD time);
+	void SetHiddenItem(CGameObject* item);
+
+	CGameObject* GetHiddenItem() { return this->hiddenItem; }
+
+	void SetEndingEffect(CGameObject* effect);
+	void SetValue(int value) { this->value = value; }
+
+	bool IsItem();
+	bool ComeThrough();
+	bool Over();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = nullptr);
 	virtual void Render() = 0;
 	virtual void SetState(int state);
 	virtual void ResetAnimations();
-
-	virtual void Disappear() {};
+	virtual void Disappear();
+	virtual void ShowHiddenItem();
 
 	~CGameObject();
 };

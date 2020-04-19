@@ -2,17 +2,13 @@
 
 CBigHeart::CBigHeart()
 {
+	isItem = true;
 	SetAnimationSet("big_heart");
 }
 
 void CBigHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
-	if (GetTickCount() > this->disappearingTime)
-	{
-		this->SetVisibility(Visibility::Hidden);
-	}
 
 	vy += ITEM_GRAVITY * dt;
 

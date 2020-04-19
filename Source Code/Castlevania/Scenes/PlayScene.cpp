@@ -1,5 +1,5 @@
 #include "PlayScene.h"
-
+#include "../Models/ObjectFactory.h"
 #include "../Utilities/Debug.h"
 #include "../Utilities/SafeDelete.h"
 
@@ -103,7 +103,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 	for (object = element->FirstChildElement(); object != nullptr; object = object->NextSiblingElement())
 	{
-		int x, y, visibility;
+		int x, y, visibility = 1, value = 0;
 		object->QueryIntAttribute("x", &x);
 		object->QueryIntAttribute("y", &y);
 
@@ -113,99 +113,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 		string hiddenItemId, endingEffect;
 
 		CAnimationSet* animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
-
-		if (type == "ground")
-		{
-			CGround* item = new CGround();
-			item->SetId(id);
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "big_heart")
-		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CBigHeart* item = new CBigHeart();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "morning_star")
-		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CMorningStar* item = new CMorningStar();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "dagger")
-		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CDagger* item = new CDagger();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "big_candle")
-		{
-			endingEffect = object->Attribute("endingEffect");
-			hiddenItemId = object->Attribute("hiddenItemId");
-
-			CEffect* effect = new CEffect(endingEffect);
-			effects.emplace_back(effect);
-
-			CBigCandle* item = new CBigCandle();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetHiddenItem(dynamic_cast<CItem*>(FindObject(hiddenItemId)));
-			item->SetEndingEffect(effect);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "money_bag")
-		{
-			int score;
-
-			object->QueryIntAttribute("score", &score);
-			endingEffect = object->Attribute("endingEffect");
-
-			CEffect* effect = new CEffect(endingEffect);
-			effects.emplace_back(effect);
-
-			CMoneyBag* item = new CMoneyBag();
-			item->SetId(id);
-			item->SetEndingEffect(effect);
-			item->SetScore(1000);
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "easter_egg")
-		{
-			hiddenItemId = object->Attribute("hiddenItemId");
-
-			CEasterEgg* item = new CEasterEgg();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetHiddenItem(dynamic_cast<CItem*>(FindObject(hiddenItemId)));
-
-			objects.emplace_back(item);
-		}
+		CGameObject* gameObject = nullptr;
 
 		if (type == "simon")
 		{
@@ -215,29 +123,41 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 			objects.emplace_back(player);
 		}
-
-		if (type == "door_wall")
+		else
 		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CDoorWall* item = new CDoorWall();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
+			gameObject = CObjectFactory::Construct(type);
 		}
 
-		if (type == "door")
+		if (gameObject)
 		{
-			hiddenItemId = object->Attribute("hiddenItemId");
+			gameObject->SetId(id);
+			gameObject->SetPosition(x, y);
 
-			CDoor* item = new CDoor();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetDoorWall(dynamic_cast<CDoorWall*>(FindObject(hiddenItemId)));
+			object->QueryIntAttribute("visible", &visibility);
+			gameObject->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
 
-			objects.emplace_back(item);
+			if (object->Attribute("hiddenItemId"))
+			{
+				gameObject->SetHiddenItem(FindObject(object->Attribute("hiddenItemId")));
+			}
+
+			if (object->Attribute("endingEffect"))
+			{
+				CGameObject* effect = CObjectFactory::Construct(object->Attribute("endingEffect"));
+				effect->SetPosition(x, y);
+				objects.emplace_back(effect);
+
+				gameObject->SetEndingEffect(effect);
+			}
+
+			object->QueryIntAttribute("value", &value);
+			
+			if (value > 0)
+			{
+				gameObject->SetValue(value);
+			}
+
+			objects.emplace_back(gameObject);
 		}
 	}
 }
@@ -299,7 +219,7 @@ void CPlayScene::Update(DWORD dt)
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->GetVisibility() == Visibility::Visible)
+		if (objects[i]->GetVisibility() == Visibility::Visible && objects[i]->isEffect == false)
 		{
 			if (dynamic_cast<CSimon*>(objects[i]))
 			{
@@ -381,18 +301,6 @@ void CPlayScene::Render()
 		tileMap->Render(game->GetCamera());
 	}
 
-	// Effects
-	if (effects.size() > 0)
-	{
-		for (int i = 0; i < effects.size(); i++)
-		{
-			if (effects[i]->GetStartTime() != -1)
-			{
-				effects[i]->Render();
-			}
-		}
-	}
-
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->GetVisibility() == Visibility::Visible)
@@ -421,13 +329,6 @@ void CPlayScene::Unload()
 	objects.clear();
 
 	coObjects.clear();
-
-	for (int i = 0; i < effects.size(); i++)
-	{
-		SAFE_DELETE(effects[i]);
-	}
-
-	effects.clear();
 
 	player = nullptr;
 }

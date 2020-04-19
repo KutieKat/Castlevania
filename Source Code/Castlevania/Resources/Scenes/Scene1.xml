@@ -445,7 +445,7 @@
   </animationSets>
   
   <objects>
-    <object id="money_bag_1" type="money_bag" animationSetId="money_bag" x="1256" y="367" score="1000" endingEffect="one_thousand" visible="0" />
+    <object id="money_bag_1" type="money_bag" animationSetId="money_bag" x="1256" y="367" value="1000" endingEffect="one_thousand" visible="0" />
     <object id="easter_egg_1" type="easter_egg" animationSetId="transparency" x="1420" y="334" hiddenItemId="money_bag_1" />
     <object id="ground_1" type="ground" animationSetId="ground" x="0" y="366" />
     <object id="ground_2" type="ground" animationSetId="ground" x="32" y="366" />
@@ -505,9 +505,8 @@
     <object id="big_candle_4" type="big_candle" animationSetId="big_candle" x="950" y="302" endingEffect="flash" hiddenItemId="big_heart_2" />
     <object id="dagger_1" type="dagger" animationSetId="dagger" x="1200" y="302" visible="0" />
     <object id="big_candle_5" type="big_candle" animationSetId="big_candle" x="1200" y="302" endingEffect="flash" hiddenItemId="dagger_1" />
-    <object id="simon" type="simon" animationSetId="simon" x="65" y="100" />
+    <object id="simon" type="simon" animationSetId="simon" x="1200" y="100" />
     <object id="door_wall" type="door_wall" animationSetId="door_wall" x="1408" y="233" visible="0" />
     <object id="door_1" type="door" animationSetId="transparency" x="1376" y="350" hiddenItemId="door_wall" />
-    <object id="blackboard_1" type="blackboard" animationSetId="blackboard" />
   </objects>
 </resources>

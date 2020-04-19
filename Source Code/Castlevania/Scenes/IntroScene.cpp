@@ -1,4 +1,5 @@
 #include "IntroScene.h"
+#include "../Models/ObjectFactory.h"
 #include "../Utilities/SafeDelete.h"
 
 void CIntroScene::ParseTextures(TiXmlElement* element)
@@ -105,24 +106,12 @@ void CIntroScene::ParseObjects(TiXmlElement* element)
 		string animationSetId = object->Attribute("animationSetId");
 
 		CAnimationSet* animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
+		
+		CGameObject* gameObject = CObjectFactory::Construct(type);
+		gameObject->SetId(id);
+		gameObject->SetPosition(x, y);
 
-		if (type == "background")
-		{
-			CBackground* item = new CBackground();
-			item->SetId(id);
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "intro_bat")
-		{
-			CIntroBat* item = new CIntroBat();
-			item->SetId(id);
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
+		objects.emplace_back(gameObject);
 	}
 }
 

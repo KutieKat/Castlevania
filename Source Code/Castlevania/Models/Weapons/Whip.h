@@ -1,9 +1,8 @@
 #pragma once
 #include "../GameObject.h"
 #include "../../Utilities/Constants.h"
-#include "../Weapons/Weapon.h"
 
-class CWhip : public CWeapon
+class CWhip : public CGameObject
 {
 public:
 	CWhip();
@@ -12,7 +11,10 @@ public:
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	virtual void Upgrade();
 
+	int GetLevel();
+
 protected:
 	int GetAnimationToRender();
+	int level;
 };
 

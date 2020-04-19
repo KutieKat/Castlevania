@@ -97,12 +97,6 @@
     <Filter Include="Source Files\Models\Items">
       <UniqueIdentifier>{a9d0c2b3-a3c3-44fa-bead-8ba62af311e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Effects">
-      <UniqueIdentifier>{750b71f3-8da1-4560-8143-876b9230b5ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Effects">
-      <UniqueIdentifier>{813c7c05-f442-4a28-b474-c0e51ac690c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\TileMap">
       <UniqueIdentifier>{0ac197d8-d457-4306-8ff9-5783b5d0f965}</UniqueIdentifier>
     </Filter>
@@ -120,6 +114,12 @@
     </Filter>
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{4747b93d-49f2-47f3-8be3-3638e6ec0d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models\Effects">
+      <UniqueIdentifier>{7e2058e9-50d8-4516-bcde-2db8635e2ced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Effects">
+      <UniqueIdentifier>{8fb8732c-39d4-4f6d-af23-ba41cc63d6ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,17 +183,11 @@
     <ClCompile Include="Models\Weapons\Whip.cpp">
       <Filter>Source Files\Models\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Items\Item.cpp">
-      <Filter>Source Files\Models\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Models\Items\MoneyBag.cpp">
       <Filter>Source Files\Models\Items</Filter>
     </ClCompile>
     <ClCompile Include="Models\Items\EasterEgg.cpp">
       <Filter>Source Files\Models\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Effects\Effect.cpp">
-      <Filter>Source Files\Effects</Filter>
     </ClCompile>
     <ClCompile Include="Models\Items\BigHeart.cpp">
       <Filter>Source Files\Models\Items</Filter>
@@ -212,9 +206,6 @@
     </ClCompile>
     <ClCompile Include="Utilities\Label.cpp">
       <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Weapons\Weapon.cpp">
-      <Filter>Source Files\Models\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Models\Misc\HealthVolume.cpp">
       <Filter>Source Files\Models\Misc</Filter>
@@ -266,6 +257,15 @@
     </ClCompile>
     <ClCompile Include="Models\Misc\Ground.cpp">
       <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\ObjectFactory.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\OneThousand.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\Flash.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -326,17 +326,11 @@
     <ClInclude Include="Models\Weapons\Whip.h">
       <Filter>Header Files\Models\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Items\Item.h">
-      <Filter>Header Files\Models\Items</Filter>
-    </ClInclude>
     <ClInclude Include="Models\Items\MoneyBag.h">
       <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
     <ClInclude Include="Models\Items\EasterEgg.h">
       <Filter>Header Files\Models\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Effects\Effect.h">
-      <Filter>Header Files\Effects</Filter>
     </ClInclude>
     <ClInclude Include="Models\Items\BigHeart.h">
       <Filter>Header Files\Models\Items</Filter>
@@ -355,9 +349,6 @@
     </ClInclude>
     <ClInclude Include="Utilities\Label.h">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Weapons\Weapon.h">
-      <Filter>Header Files\Models\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\HealthBar.h">
       <Filter>Header Files\Models\Misc</Filter>
@@ -415,6 +406,15 @@
     </ClInclude>
     <ClInclude Include="Models\Misc\Ground.h">
       <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ObjectFactory.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\OneThousand.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\Flash.h">
+      <Filter>Header Files\Models\Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

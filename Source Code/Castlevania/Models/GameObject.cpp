@@ -13,7 +13,14 @@ CGameObject::CGameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
+	value = 0;
+	disappearingTime = -1;
 	direction = Direction::Right;
+
+	showingEffect = false;
+	isItem = false;
+	comeThrough = false;
+	isEffect = false;
 }
 
 void CGameObject::SetPosition(float x, float y)
@@ -60,12 +67,49 @@ string CGameObject::GetId()
 	return this->id;
 }
 
+void CGameObject::SetEndingEffect(CGameObject * effect)
+{
+	this->endingEffect = effect;
+	this->endingEffect->visibility = Visibility::Hidden;
+}
+
+bool CGameObject::IsItem()
+{
+	return this->isItem;
+}
+
+bool CGameObject::ComeThrough()
+{
+	return this->comeThrough;
+}
+
+bool CGameObject::Over()
+{
+	return disappearingTime != -1 && GetTickCount() > this->disappearingTime;
+}
+
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	this->dt = dt;
 
 	dx = vx * dt;
 	dy = vy * dt;
+
+	if (GetTickCount() > this->disappearingTime)
+	{
+		this->SetVisibility(Visibility::Hidden);
+	}
+
+	if (this->endingEffect && this->endingEffect->Over())
+	{
+		if (this->hiddenItem)
+		{
+			this->hiddenItem->SetVisibility(Visibility::Visible);
+			this->hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+		}
+
+		this->visibility = Visibility::Hidden;
+	}
 }
 
 void CGameObject::SetState(int state)
@@ -79,6 +123,16 @@ void CGameObject::ResetAnimations()
 	{
 		animationSet->at(i)->Reset();
 	}
+}
+
+void CGameObject::Disappear()
+{
+	this->visibility = Visibility::Hidden;
+}
+
+void CGameObject::ShowHiddenItem()
+{
+	this->hiddenItem->SetVisibility(Visibility::Visible);
 }
 
 /*
@@ -172,7 +226,6 @@ void CGameObject::FilterCollision(
 	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
-
 void CGameObject::SetVisibility(Visibility visibility)
 {
 	this->visibility = visibility;
@@ -186,6 +239,11 @@ Visibility CGameObject::GetVisibility()
 int CGameObject::GetState()
 {
 	return this->state;
+}
+
+int CGameObject::GetValue()
+{
+	return this->value;
 }
 
 void CGameObject::RenderBoundingBox()
@@ -209,6 +267,17 @@ void CGameObject::RenderBoundingBox()
 void CGameObject::SetAnimationSet(string animationSetId)
 {
 	this->animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
+}
+
+void CGameObject::SetDisplayTime(DWORD time)
+{
+	this->disappearingTime = GetTickCount() + time;
+}
+
+void CGameObject::SetHiddenItem(CGameObject* item)
+{
+	this->hiddenItem = item;
+	this->hiddenItem->SetVisibility(Visibility::Hidden);
 }
 
 CGameObject::~CGameObject()

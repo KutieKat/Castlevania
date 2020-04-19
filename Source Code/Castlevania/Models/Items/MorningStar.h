@@ -1,8 +1,8 @@
 #pragma once
-#include "Item.h"
+#include "../GameObject.h"
 #include "../../Utilities/Constants.h"
 
-class CMorningStar : public CItem
+class CMorningStar : public CGameObject
 {
 public:
 	CMorningStar();

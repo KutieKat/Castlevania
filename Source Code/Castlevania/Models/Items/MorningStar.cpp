@@ -3,17 +3,13 @@
 
 CMorningStar::CMorningStar()
 {
+	isItem = true;
 	SetAnimationSet("morning_star");
 }
 
 void CMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
-	if (GetTickCount() > this->disappearingTime)
-	{
-		this->SetVisibility(Visibility::Hidden);
-	}
 
 	vy += ITEM_GRAVITY * dt;
 

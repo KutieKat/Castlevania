@@ -137,7 +137,7 @@ enum HealthType
 // Item
 #define ITEM_STATE_APPEAR 1
 #define ITEM_GRAVITY 0.002f
-#define ITEM_DISPLAY_TIME 3
+#define ITEM_DISPLAY_TIME 3000
 
 // MoneyBag
 #define MONEY_BAG_MOVE_UP_SPEED 0.05f
@@ -189,3 +189,6 @@ enum HealthType
 
 // Helicopter
 #define HELICOPTER_FLY_SPEED 0.01f
+
+// Effect
+#define EFFECT_DISPLAY_TIME 300

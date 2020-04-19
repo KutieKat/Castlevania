@@ -7,7 +7,6 @@
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
-#include "../../Items/Item.h"
 #include "../../Items/MoneyBag.h"
 #include "../../Items/MorningStar.h"
 #include "../../Weapons/Whip.h"
@@ -99,7 +98,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (ny != 0) vy = 0;
 			}
-			else if (dynamic_cast<CBigCandle*>(e->obj) || dynamic_cast<CItem*>(e->obj) || dynamic_cast<CDoorWall*>(e->obj))
+			else if (e->obj->ComeThrough() || e->obj->IsItem())
 			{
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
@@ -122,7 +121,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->nx < 0)
 				{
-					door->GetDoorWall()->SetVisibility(Visibility::Visible);
+					door->GetHiddenItem()->SetVisibility(Visibility::Visible);
 					door->SetVisibility(Visibility::Hidden);
 
 					SetState(SIMON_STATE_AUTO_WALK);
@@ -201,34 +200,30 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		for (int i = 0; i < coObjects->size(); i++)
 		{
-			if (dynamic_cast<CItem*>(coObjects->at(i)))
+			auto item = coObjects->at(i);
+
+			if (item->IsItem() && CGame::GetInstance()->HaveCollision(this, item))
 			{
-				auto item = dynamic_cast<CItem*>(coObjects->at(i));
-
-				if (CGame::GetInstance()->HaveCollision(this, item))
+				if (dynamic_cast<CMorningStar*>(item))
 				{
-					if (dynamic_cast<CMorningStar*>(coObjects->at(i)))
-					{
-						SetState(SIMON_STATE_DELAY);
-						this->whip->Upgrade();
-					}
-					else if (dynamic_cast<CBigHeart*>(coObjects->at(i)))
-					{
-						auto heart = dynamic_cast<CBigHeart*>(coObjects->at(i));
-						CGame::GetInstance()->AddHeart(5);
-					}
-					else if (dynamic_cast<CMoneyBag*>(coObjects->at(i)))
-					{
-						auto moneyBag = dynamic_cast<CMoneyBag*>(coObjects->at(i));
-						CGame::GetInstance()->AddScore(moneyBag->GetScore());
-					}
-					else if (dynamic_cast<CDagger*>(coObjects->at(i)))
-					{
-						CGame::GetInstance()->SetSubWeaponType("dagger");
-					}
-
-					item->Disappear();
+					SetState(SIMON_STATE_DELAY);
+					this->whip->Upgrade();
 				}
+				else if (dynamic_cast<CBigHeart*>(item))
+				{
+					CGame::GetInstance()->AddHeart(5);
+				}
+				else if (dynamic_cast<CDagger*>(item))
+				{
+					CGame::GetInstance()->SetSubWeaponType("dagger");
+				}
+				else if (dynamic_cast<CMoneyBag*>(item))
+				{
+					auto moneyBag = dynamic_cast<CMoneyBag*>(coObjects->at(i));
+					CGame::GetInstance()->AddScore(moneyBag->GetValue());
+				}
+
+				item->Disappear();
 			}
 		}
 	}

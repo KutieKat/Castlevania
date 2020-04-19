@@ -42,6 +42,11 @@ void CWhip::Upgrade()
 	}
 }
 
+int CWhip::GetLevel()
+{
+	return this->level;
+}
+
 int CWhip::GetAnimationToRender()
 {
 	int ani;

@@ -2,7 +2,6 @@
 #include <vector>
 
 #include "../Characters/Players/Simon.h"
-#include "../Items/Item.h"
 #include "../../Utilities/Label.h"
 #include "HealthBar.h"
 #include "../../TileMap/TileMap.h"
@@ -42,7 +41,7 @@ protected:
 	CHealthBar* simonHealthBar;
 	CHealthBar* enemyHealthBar;
 
-	CItem* subWeapon;
+	CGameObject* subWeapon;
 
 	void RenderLabels();
 	void RenderHealthBars();

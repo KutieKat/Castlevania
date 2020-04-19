@@ -1,7 +1,7 @@
 #pragma once
-#include "Weapon.h"
+#include "../GameObject.h"
 
-class WDagger : public CWeapon
+class WDagger : public CGameObject
 {
 public:
 	WDagger();

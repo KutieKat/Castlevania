@@ -1,12 +1,9 @@
 #include "BigCandle.h"
-#include "../../Utilities/SafeDelete.h"
-#include "../../Utilities/Debug.h"
 #include "../../Models/Misc/Ground.h"
 
 CBigCandle::CBigCandle()
 {
-	this->showingEffect = false;
-
+	comeThrough = true;
 	SetAnimationSet("big_candle");
 }
 
@@ -15,17 +12,6 @@ void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 
 	vy += BIG_CANDLE_GRAVITY * dt;
-
-	if (this->endingEffect && this->endingEffect->Over())
-	{
-		if (this->hiddenItem)
-		{
-			this->hiddenItem->SetVisibility(Visibility::Visible);
-			this->hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
-		}
-
-		this->visibility = Visibility::Hidden;
-	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -73,13 +59,10 @@ void CBigCandle::Render()
 
 void CBigCandle::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
-	{
-		left = x;
-		top = y;
-		right = left + BIG_CANDLE_BBOX_WIDTH;
-		bottom = top + BIG_CANDLE_BBOX_HEIGHT;
-	}
+	left = x;
+	top = y;
+	right = left + BIG_CANDLE_BBOX_WIDTH;
+	bottom = top + BIG_CANDLE_BBOX_HEIGHT;
 }
 
 void CBigCandle::Disappear()
@@ -88,24 +71,7 @@ void CBigCandle::Disappear()
 
 	if (this->endingEffect)
 	{
-		this->endingEffect->SetPosition(x, y);
-		this->endingEffect->SetStartTime(GetTickCount());
+		this->endingEffect->SetVisibility(Visibility::Visible);
+		this->endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
 	}
-}
-
-void CBigCandle::SetEndingEffect(CEffect* effect)
-{
-	this->endingEffect = effect;
-}
-
-void CBigCandle::SetHiddenItem(CItem* item)
-{
-	this->hiddenItem = item;
-	this->hiddenItem->SetVisibility(Visibility::Hidden);
-}
-
-CBigCandle::~CBigCandle()
-{
-	SAFE_DELETE(this->endingEffect);
-	SAFE_DELETE(this->hiddenItem);
 }

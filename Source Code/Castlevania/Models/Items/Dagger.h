@@ -1,8 +1,8 @@
 #pragma once
-#include "Item.h"
+#include "../GameObject.h"
 #include "../../Utilities/Constants.h"
 
-class CDagger : public CItem
+class CDagger : public CGameObject
 {
 public:
 	CDagger();

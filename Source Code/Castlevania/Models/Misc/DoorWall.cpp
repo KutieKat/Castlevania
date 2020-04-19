@@ -2,6 +2,8 @@
 
 CDoorWall::CDoorWall()
 {
+	comeThrough = true;
+
 	SetAnimationSet("door_wall");
 }
 

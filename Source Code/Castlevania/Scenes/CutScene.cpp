@@ -1,4 +1,5 @@
 #include "CutScene.h"
+#include "../Models/ObjectFactory.h"
 #include "../Utilities/SafeDelete.h"
 
 void CCutScene::ParseTextures(TiXmlElement* element)
@@ -105,41 +106,7 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 		string animationSetId = object->Attribute("animationSetId");
 
 		CAnimationSet* animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
-
-		if (type == "background")
-		{
-			CBackground* item = new CBackground();
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "bat")
-		{
-			string trajectory = object->Attribute("trajectory");
-
-			CBat* item = new CBat();
-			item->SetPosition(x, y);
-
-			if (trajectory == "right_cross")
-			{
-				item->SetState(BAT_STATE_FLY_RIGHT_CROSS);
-			}
-			else
-			{
-				item->SetState(BAT_STATE_FLY_OVAL);
-			}
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "helicopter")
-		{
-			CHelicopter* item = new CHelicopter();
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
+		CGameObject* gameObject = nullptr;
 
 		if (type == "simon")
 		{
@@ -148,6 +115,37 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 			player->SetPosition(x, y);
 
 			objects.emplace_back(player);
+		}
+		else
+		{
+			gameObject = CObjectFactory::Construct(type);
+		}
+
+		if (gameObject)
+		{
+			gameObject->SetId(id);
+			gameObject->SetPosition(x, y);
+
+			if (type == "bat")
+			{
+				string trajectory = "";
+
+				if (object->Attribute("trajectory"))
+				{
+					trajectory = object->Attribute("trajectory");
+				}
+				
+				if (trajectory == "right_cross")
+				{
+					gameObject->SetState(BAT_STATE_FLY_RIGHT_CROSS);
+				}
+				else if (trajectory == "oval")
+				{
+					gameObject->SetState(BAT_STATE_FLY_OVAL);
+				}
+			}
+
+			objects.emplace_back(gameObject);
 		}
 	}
 }

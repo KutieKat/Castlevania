@@ -1,8 +1,7 @@
 #pragma once
 #include "../../GameObject.h"
 #include "../../../Utilities/Constants.h"
-#include "../../Weapons/Weapon.h"
-#include "../../Items/Item.h"
+#include "../../Weapons/Whip.h"
 using namespace std;
 
 class CSimon : public CGameObject
@@ -27,8 +26,8 @@ public:
 	~CSimon();
 
 protected:
-	CWeapon* whip;
-	CWeapon* subWeapon;
+	CWhip* whip;
+	CGameObject* subWeapon;
 
 	bool sitting;
 	bool touchingGround;
