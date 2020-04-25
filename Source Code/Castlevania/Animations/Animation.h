@@ -15,10 +15,8 @@ public:
 	void SetStartTime(DWORD start);
 	void Reset();
 
-	int GetCurrentFrame();
-	int GetTotalFrames();
-
 	bool Over();
+	bool ReachLastFrame();
 
 	~CAnimation();
 

@@ -15,10 +15,10 @@ CCamera* CCamera::GetInstance()
 
 void CCamera::Init()
 {
-	this->x = 0.0f;
-	this->y = 0.0f;
-	this->width = 0;
-	this->height = 0;
+	x = 0.0f;
+	y = 0.0f;
+	width = 0;
+	height = 0;
 }
 
 void CCamera::SetPosition(float x, float y)
@@ -35,22 +35,22 @@ void CCamera::SetSize(int width, int height)
 
 float CCamera::GetTop()
 {
-	return this->y;
+	return y;
 }
 
 float CCamera::GetLeft()
 {
-	return this->x;
+	return x;
 }
 
 float CCamera::GetRight()
 {
-	return this->x + this->width;
+	return x + width;
 }
 
 float CCamera::GetBottom()
 {
-	return this->y + this->height;
+	return y + height;
 }
 
 CCamera::~CCamera()

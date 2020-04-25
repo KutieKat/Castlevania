@@ -38,6 +38,6 @@ protected:
 	int height;
 
 	void LoadMap();
-	void LoadTiles();
+	void LoadTileset();
 };
 

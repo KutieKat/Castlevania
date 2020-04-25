@@ -24,7 +24,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void Update(DWORD dt)
 {
-	CGame::GetInstance()->GetCurrentScene()->Update(dt);
+	CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->Update(dt);
 }
 
 void Render()
@@ -40,7 +40,7 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		CGame::GetInstance()->GetCurrentScene()->Render();
+		CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -132,11 +132,11 @@ int Run()
 
 			game->GetTimer()->Tick();
 
-			if (dynamic_cast<CPlayScene*>(game->GetCurrentScene()))
+			if (dynamic_cast<CPlayScene*>(game->GetSceneManager()->GetCurrentScene()))
 			{
-				CSimon* simon = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+				CSimon* simon = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetSceneManager()->GetCurrentScene())->GetPlayer();
 
-				if (simon->GetState() != SIMON_STATE_AUTO_WALK && simon->GetState() != SIMON_STATE_DELAY && simon->GetState() != SIMON_STATE_DIE)
+				if (simon->GetState() != SIMON_STATE_DELAY && simon->GetState() != SIMON_STATE_DIE)
 				{
 					game->GetInputManager()->ProcessKeyboard();
 				}
@@ -162,10 +162,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
-
 	game->GetCamera()->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	game->Load("Resources\\Scenes\\Scenes.xml");
+	game->GetSceneManager()->Load("Resources\\Scenes\\Scenes.xml");
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

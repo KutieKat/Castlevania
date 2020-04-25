@@ -6,7 +6,6 @@
 
 #include "../Animations/Animation.h"
 #include "../Animations/AnimationManager.h"
-#include "../Effects/Effect.h"
 #include "../Sprites/SpriteManager.h"
 #include "../Utilities/Constants.h"
 using namespace std;
@@ -14,12 +13,12 @@ using namespace std;
 class CGameObject
 {
 public:
+	string id;
+
 	float x;
 	float y;
-
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
-
 	float vx;
 	float vy;
 
@@ -27,11 +26,24 @@ public:
 	Visibility visibility;
 
 	int state;
+	int value;
+
+	int leftBound;
+	int topBound;
+	int rightBound;
+	int bottomBound;
 
 	DWORD dt;
+	DWORD disappearingTime;
 
 	CAnimationSet* animationSet;
-	string id;
+
+	CGameObject* hiddenItem;
+	CGameObject* endingEffect;
+
+	bool showingEffect;
+	bool isEffect;
+	bool isItem;
 
 public:
 	CGameObject();
@@ -49,8 +61,14 @@ public:
 	Visibility GetVisibility();
 
 	int GetState();
+	int GetValue();
 
 	void RenderBoundingBox();
+
+	void SetLeftBound(int left);
+	void SetTopBound(int top);
+	void SetRightBound(int right);
+	void SetBottomBound(int bottom);
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);
@@ -62,17 +80,27 @@ public:
 		float &nx,
 		float &ny,
 		float &rdx,
-		float &rdy);
+		float &rdy
+	);
 
 	void SetAnimationSet(string animationSetId);
+	void SetDisplayTime(DWORD time);
+	void SetHiddenItem(CGameObject* item);
+
+	CGameObject* GetHiddenItem();
+
+	void SetEndingEffect(CGameObject* effect);
+	void SetValue(int value);
+
+	bool Over();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = nullptr);
 	virtual void Render() = 0;
 	virtual void SetState(int state);
 	virtual void ResetAnimations();
-
-	virtual void Disappear() {};
+	virtual void Disappear();
+	virtual void ShowHiddenItem();
 
 	~CGameObject();
 };

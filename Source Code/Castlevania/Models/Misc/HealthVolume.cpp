@@ -1,6 +1,7 @@
 #include "HealthVolume.h"
 #include "../../Animations/AnimationManager.h"
 #include "../../Animations/AnimationSets.h"
+#include "../../Utilities/Debug.h"
 
 CHealthVolume::CHealthVolume()
 {
@@ -9,7 +10,7 @@ CHealthVolume::CHealthVolume()
 
 void CHealthVolume::SetAnimationSet(string animationSetId)
 {
-	this->animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
+	animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
 }
 
 void CHealthVolume::Render()
@@ -31,7 +32,7 @@ void CHealthVolume::Render()
 		break;
 	}
 
-	this->animationSet->at(ani)->Render(x, y);
+	animationSet->at(ani)->Render(x, y);
 }
 
 void CHealthVolume::SetPosition(float x, float y)

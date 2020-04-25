@@ -12,45 +12,10 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (x > CGame::GetInstance()->GetCamera()->GetRight())
 	{
-		this->SetVisibility(Visibility::Hidden);
+		SetVisibility(Visibility::Hidden);
 	}
 
-	vx += (direction == Direction::Right ? DAGGER_MOVE_SPEED : -DAGGER_MOVE_SPEED) * dt;
-
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
-
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		//x += min_tx * dx + nx * 0.4f;
-		//y += min_ty * dy + ny * 0.4f;
-
-		//if (nx != 0) vx = 0;
-		//if (ny != 0) vy = 0;
-
-		x += dx;
-		y += dy;
-	}
-
-	for (UINT i = 0; i < coEvents.size(); i++)
-	{
-		delete coEvents[i];
-	}
+	x += (direction == Direction::Right ? DAGGER_MOVE_SPEED : -DAGGER_MOVE_SPEED) * dt;
 }
 
 void WDagger::GetBoundingBox(float& left, float& top, float& right, float& bottom)

@@ -19,7 +19,7 @@ void CAnimation::Add(string spriteId, DWORD time)
 
 	if (time == 0)
 	{
-		t = this->defaultTime;
+		t = defaultTime;
 	}
 
 	CSprite* sprite = CSpriteManager::GetInstance()->Get(spriteId);
@@ -62,44 +62,39 @@ void CAnimation::Render(float x, float y, int alpha)
 	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
 }
 
-int CAnimation::GetCurrentFrame()
-{
-	return this->currentFrame;
-}
-
-int CAnimation::GetTotalFrames()
-{
-	return this->frames.size();
-}
-
 void CAnimation::SetStartTime(DWORD start)
 {
 	DWORD animationTime = 0;
 
-	for (int i = 0; i < this->frames.size(); i++)
+	for (int i = 0; i < frames.size(); i++)
 	{
-		animationTime += this->frames[i]->GetTime();
+		animationTime += frames[i]->GetTime();
 	}
 
-	this->endTime = start + animationTime;
+	endTime = start + animationTime;
 }
 
 bool CAnimation::Over()
 {
-	return GetTickCount() > this->endTime;
+	return GetTickCount() > endTime;
+}
+
+bool CAnimation::ReachLastFrame()
+{
+	return currentFrame == frames.size() - 1;
 }
 
 void CAnimation::Reset()
 {
-	this->lastFrameTime = -1;
-	this->currentFrame = -1;
+	lastFrameTime = -1;
+	currentFrame = -1;
 }
 
 CAnimation::~CAnimation()
 {
-	for (int i = 0; i < this->frames.size(); i++)
+	for (int i = 0; i < frames.size(); i++)
 	{
-		SAFE_DELETE(this->frames[i]);
+		SAFE_DELETE(frames[i]);
 	}
 
 	frames.clear();

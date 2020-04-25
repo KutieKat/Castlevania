@@ -32,7 +32,6 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> coObjects;
-	vector<CEffect*> effects;
 
 	CGame* game;
 	CBlackboard* blackboard;

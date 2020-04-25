@@ -9,6 +9,8 @@
 #include "Camera/Camera.h"
 #include "Scenes/Scene.h"
 #include "Textures/TextureManager.h"
+#include "Models/Characters/Players/PlayerData.h"
+#include "Scenes/SceneManager.h"
 
 class CGame
 {
@@ -24,16 +26,8 @@ class CGame
 	CInputManager* inputManager;
 	CTimer* timer;
 	CCamera* camera;
-
-	unordered_map<string, CScene*> scenes;
-	string currentScene;
-
-	int score;
-	int hearts;
-	int lives;
-	int healthVolumes;
-
-	string subWeaponType;
+	CPlayerData* playerData;
+	CSceneManager* sceneManager;
 
 public:
 	void Init(HWND hWnd);
@@ -64,29 +58,10 @@ public:
 
 	CTimer* GetTimer();
 	CCamera* GetCamera();
-
-	bool Load(string filePath);
-	CScene* GetCurrentScene();
-	string nextSceneId;
-	void SwitchScene(string sceneId);
+	CPlayerData* GetPlayerData();
+	CSceneManager* GetSceneManager();
 
 	static CGame* GetInstance();
-
-	void AddScore(int addedScore);
-	int GetScore();
-
-	void AddHeart(int hearts);
-	void DecreaseHeart(int hearts);
-	int GetHearts();
-
-	void AddLife(int lives);
-	int GetLives();
-
-	void TakeDamage(int volumes = 1);
-	int getHealthVolumes();
-
-	void SetSubWeaponType(string type);
-	string GetSubWeaponType();
 
 	void Reset();
 

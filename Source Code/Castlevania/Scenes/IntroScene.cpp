@@ -1,4 +1,5 @@
 #include "IntroScene.h"
+#include "../Models/ObjectFactory.h"
 #include "../Utilities/SafeDelete.h"
 
 void CIntroScene::ParseTextures(TiXmlElement* element)
@@ -105,23 +106,14 @@ void CIntroScene::ParseObjects(TiXmlElement* element)
 		string animationSetId = object->Attribute("animationSetId");
 
 		CAnimationSet* animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
+		CGameObject* gameObject = CObjectFactory::Construct(type);
 
-		if (type == "background")
+		if (gameObject)
 		{
-			CBackground* item = new CBackground();
-			item->SetId(id);
-			item->SetPosition(x, y);
+			gameObject->SetId(id);
+			gameObject->SetPosition(x, y);
 
-			objects.emplace_back(item);
-		}
-
-		if (type == "intro_bat")
-		{
-			CIntroBat* item = new CIntroBat();
-			item->SetId(id);
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
+			objects.emplace_back(gameObject);
 		}
 	}
 }
@@ -134,7 +126,7 @@ CIntroScene::CIntroScene(string id, string filePath, string stage, string nextSc
 
 bool CIntroScene::Load()
 {
-	TiXmlDocument doc(this->filePath.c_str());
+	TiXmlDocument doc(filePath.c_str());
 
 	if (!doc.LoadFile())
 	{
@@ -155,7 +147,7 @@ bool CIntroScene::Load()
 	ParseAnimationSets(animationSets);
 	ParseObjects(objects);
 
-	startLabel = new CLabel("PRESS START KEY", 142, 270, 17);
+	startLabel = new CLabel("PUSH START KEY", 136, 270, 17);
 
 	return true;
 }
@@ -171,7 +163,7 @@ void CIntroScene::Update(DWORD dt)
 			interval = 0;
 			switchSceneTime = -1;
 
-			game->SwitchScene(game->GetCurrentScene()->GetNextSceneId());
+			game->GetSceneManager()->SwitchScene(GetNextSceneId());
 		}
 
 		if (startLabel)
@@ -222,7 +214,7 @@ void CIntroScene::Unload()
 
 void CIntroScene::SetSwitchSceneTime(DWORD time)
 {
-	this->switchSceneTime = time;
+	switchSceneTime = time;
 }
 
 void CIntroSceneKeyHandler::KeyState(BYTE* states)
@@ -236,7 +228,7 @@ void CIntroSceneKeyHandler::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case DIK_W:
-		dynamic_cast<CIntroScene*>(game->GetCurrentScene())->SetSwitchSceneTime(GetTickCount() + 3000);
+		dynamic_cast<CIntroScene*>(game->GetSceneManager()->GetCurrentScene())->SetSwitchSceneTime(GetTickCount() + 3000);
 		break;
 	}
 }

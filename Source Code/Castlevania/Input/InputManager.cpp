@@ -59,7 +59,7 @@ void CInputManager::Init(HWND hWnd)
 		return;
 	}
 
-	this->keyHandler = nullptr;
+	keyHandler = nullptr;
 
 	CDebug::Info("Keyboard has been initialized successfully!", "InputManager.cpp");
 }

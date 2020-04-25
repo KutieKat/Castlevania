@@ -1,10 +1,10 @@
 #pragma once
 #include "../GameObject.h"
 
-class CDoorWall : public CGameObject
+class CFlash : public CGameObject
 {
 public:
-	CDoorWall();
+	CFlash();
 
 	virtual void GetBoundingBox(float & left, float & top, float & right, float & bottom);
 	virtual void Render();

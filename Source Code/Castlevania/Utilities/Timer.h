@@ -1,5 +1,6 @@
 #pragma once
 #include <d3d9.h>
+using namespace std;
 
 class CTimer
 {
@@ -8,18 +9,16 @@ public:
 	CTimer(DWORD time);
 
 	void Start();
-	void Stop();
+	void Pause();
 	void SetTime(DWORD time);
 	void Tick();
-	void Reset();
 
 	DWORD GetRemainingTime();
 
 protected:
-	DWORD time;
-	DWORD duration;
+	DWORD endTime;
 	DWORD remainingTime;
 
-	bool stopped;
+	bool paused;
 };
 

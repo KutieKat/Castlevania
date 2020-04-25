@@ -1,9 +1,10 @@
 #pragma once
 #include "../../GameObject.h"
 #include "../../../Utilities/Constants.h"
-#include "../../Weapons/Weapon.h"
-#include "../../Items/Item.h"
+#include "../../Weapons/Whip.h"
 using namespace std;
+
+class CWhip;
 
 class CSimon : public CGameObject
 {
@@ -18,25 +19,28 @@ public:
 
 	int GetAnimationToRender();
 
-	bool Sitting();
-	bool TouchingGround();
-	bool Up();
-
-	void SetUp(bool up);
+	bool sitting;
+	bool touchingGround;
+	bool up;
+	bool lastFrameShown;
 
 	~CSimon();
 
 protected:
-	CWeapon* whip;
-	CWeapon* subWeapon;
-
-	bool sitting;
-	bool touchingGround;
-	bool up;
+	CWhip* whip;
+	CGameObject* subWeapon;
 
 	DWORD delayEndTime;
 	DWORD switchSceneTime;
 
-	void InitSubWeapon();
-	void UpdateWhip();
+	void HandleGravity();
+	void HandleDelay();
+	void HandleAttackWithWhip(vector<LPGAMEOBJECT>* coObjects = nullptr);
+	void HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects = nullptr);
+	void HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects = nullptr);
+	void HandleCollisionWithItems(CGameObject* item);
+	void HandleSwitchScene();
+
+	void RenderWhip();
+	void RenderSubWeapon();
 };

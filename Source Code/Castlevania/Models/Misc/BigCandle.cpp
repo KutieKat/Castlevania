@@ -1,66 +1,8 @@
 #include "BigCandle.h"
-#include "../../Utilities/SafeDelete.h"
-#include "../../Utilities/Debug.h"
-#include "../../Models/Misc/Ground.h"
 
 CBigCandle::CBigCandle()
 {
-	this->showingEffect = false;
-
 	SetAnimationSet("big_candle");
-}
-
-void CBigCandle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	CGameObject::Update(dt);
-
-	vy += BIG_CANDLE_GRAVITY * dt;
-
-	if (this->endingEffect && this->endingEffect->Over())
-	{
-		if (this->hiddenItem)
-		{
-			this->hiddenItem->SetVisibility(Visibility::Visible);
-			this->hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
-		}
-
-		this->visibility = Visibility::Hidden;
-	}
-
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
-
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
-
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-
-			if (dynamic_cast<CGround*>(e->obj))
-			{
-				if (nx != 0) vx = 0;
-				if (ny != 0) vy = 0;
-			}
-		}
-	}
 }
 
 void CBigCandle::Render()
@@ -82,30 +24,14 @@ void CBigCandle::GetBoundingBox(float& left, float& top, float& right, float& bo
 	}
 }
 
-void CBigCandle::Disappear()
-{
-	this->showingEffect = true;
-
-	if (this->endingEffect)
-	{
-		this->endingEffect->SetPosition(x, y);
-		this->endingEffect->SetStartTime(GetTickCount());
-	}
-}
-
-void CBigCandle::SetEndingEffect(CEffect* effect)
-{
-	this->endingEffect = effect;
-}
-
-void CBigCandle::SetHiddenItem(CItem* item)
-{
-	this->hiddenItem = item;
-	this->hiddenItem->SetVisibility(Visibility::Hidden);
-}
-
-CBigCandle::~CBigCandle()
-{
-	SAFE_DELETE(this->endingEffect);
-	SAFE_DELETE(this->hiddenItem);
-}
+//void CBigCandle::Disappear()
+//{
+//	//if (endingEffect)
+//	//{
+//	//	showingEffect = true;
+//
+//	//	endingEffect->SetVisibility(Visibility::Visible);
+//	//	endingEffect->SetPosition(x, y);
+//	//	endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
+//	//}
+//}

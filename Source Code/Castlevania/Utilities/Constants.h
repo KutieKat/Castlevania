@@ -119,6 +119,11 @@ enum HealthType
 #define BIG_CANDLE_BBOX_HEIGHT 63
 #define BIG_CANDLE_GRAVITY 0.0025f
 
+// SmallCandle
+#define SMALL_CANDLE_BBOX_WIDTH 15
+#define SMALL_CANDLE_BBOX_HEIGHT 24
+#define SMALL_CANDLE_GRAVITY 0.0025f
+
 // Whip
 #define WHIP_LEVEL_1 1
 
@@ -137,7 +142,7 @@ enum HealthType
 // Item
 #define ITEM_STATE_APPEAR 1
 #define ITEM_GRAVITY 0.002f
-#define ITEM_DISPLAY_TIME 3
+#define ITEM_DISPLAY_TIME 3000
 
 // MoneyBag
 #define MONEY_BAG_MOVE_UP_SPEED 0.05f
@@ -158,7 +163,7 @@ enum HealthType
 #define DAGGER_BBOX_HEIGHT 18
 #define DAGGER_ANI_RIGHT 0
 #define DAGGER_ANI_LEFT 1
-#define DAGGER_MOVE_SPEED 0.0015f
+#define DAGGER_MOVE_SPEED 0.5f
 
 // MorningStar
 #define MORNING_STAR_BBOX_WIDTH 32
@@ -189,3 +194,6 @@ enum HealthType
 
 // Helicopter
 #define HELICOPTER_FLY_SPEED 0.01f
+
+// Effect
+#define EFFECT_DISPLAY_TIME 300

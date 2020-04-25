@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 
+#include "../../Game.h"
 #include "../Characters/Players/Simon.h"
-#include "../Items/Item.h"
 #include "../../Utilities/Label.h"
 #include "HealthBar.h"
 #include "../../TileMap/TileMap.h"
@@ -20,11 +20,12 @@ public:
 	void Render();
 
 	void SetPlayer(CSimon* simon);
-	void SetTileMap(CTileMap* tileMap) { this->tileMap = tileMap; }
+	void SetTileMap(CTileMap* tileMap);
 
 	~CBlackboard();
 
 protected:
+	CGame* game;
 	CSimon* simon;
 	CTileMap* tileMap;
 
@@ -42,11 +43,22 @@ protected:
 	CHealthBar* simonHealthBar;
 	CHealthBar* enemyHealthBar;
 
-	CItem* subWeapon;
+	CGameObject* subWeapon;
+
+	void InitLabels();
+	void InitHealthBars();
+	void InitSubWeapon();
 
 	void RenderLabels();
 	void RenderHealthBars();
+	void RenderSubWeapon();
+
+	void UpdatePosition();
+	void UpdateLabels();
+	void UpdateHealthBars();
+	void UpdateSubWeapon();
 
 	string padZero(int value, int numberOfZeros);
+	string currentSubWeaponType;
 };
 

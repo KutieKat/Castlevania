@@ -54,22 +54,22 @@ void CGame::Init(HWND hWnd)
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
 	// Initialize input manager
-	this->inputManager = CInputManager::GetInstance();
-	this->inputManager->Init(hWnd);
+	inputManager = CInputManager::GetInstance();
+	inputManager->Init(hWnd);
 
 	// Timer
-	this->timer = new CTimer();
+	timer = new CTimer();
 
 	// Camera
-	this->camera = CCamera::GetInstance();
-	this->camera->Init();
+	camera = CCamera::GetInstance();
+	camera->Init();
 
 	// Player data
-	score = 0;
-	hearts = 5;
-	lives = 3;
-	healthVolumes = 16;
-	subWeaponType.clear();
+	playerData = CPlayerData::GetInstance();
+	playerData->Init();
+
+	// Scene manager
+	sceneManager = CSceneManager::GetInstance();
 
 	CDebug::Info("Initialize game successfully!", "Game.cpp");
 }
@@ -251,79 +251,14 @@ CCamera* CGame::GetCamera()
 	return this->camera;
 }
 
-bool CGame::Load(string filePath)
+CPlayerData* CGame::GetPlayerData()
 {
-	TiXmlDocument doc(filePath.c_str());
-
-	if (!doc.LoadFile())
-	{
-		CDebug::Info(doc.ErrorDesc(), "Game.cpp");
-		return false;
-	}
-
-	TiXmlElement* root = doc.RootElement();
-	TiXmlElement* scene = nullptr;
-
-	this->currentScene = root->Attribute("startSceneId");
-
-	CScene* sceneItem = nullptr;
-
-	for (scene = root->FirstChildElement(); scene != nullptr; scene = scene->NextSiblingElement())
-	{
-		string id = scene->Attribute("id");
-		string type = scene->Attribute("type");
-		string path = scene->Attribute("path");
-		string stage = scene->Attribute("stage");
-		string nextSceneId = scene->Attribute("nextSceneId");
-
-		if (type == "play_scene")
-		{
-			sceneItem = new CPlayScene(id, path, stage, nextSceneId);
-		}
-
-		if (type == "intro_scene")
-		{
-			sceneItem = new CIntroScene(id, path, stage, nextSceneId);
-		}
-
-		if (type == "cut_scene")
-		{
-			sceneItem = new CCutScene(id, path, stage, nextSceneId);
-		}
-
-		scenes[id] = sceneItem;
-	}
-
-	SwitchScene(currentScene);
-
-	return true;
+	return playerData;
 }
 
-LPSCENE CGame::GetCurrentScene()
+CSceneManager* CGame::GetSceneManager()
 {
-	return scenes[currentScene];
-}
-
-void CGame::SwitchScene(string sceneId)
-{
-	scenes[currentScene]->Unload();
-
-	CTextureManager::GetInstance()->Clear();
-	CSpriteManager::GetInstance()->Clear();
-	CAnimationManager::GetInstance()->Clear();
-	CAnimationSets::GetInstance()->Clear();
-
-	currentScene = sceneId;
-	CScene* scene = scenes[sceneId];
-	CGame::GetInstance()->SetKeyHandler(scene->GetKeyEventHandler());
-
-	if (dynamic_cast<CIntroScene*>(scene))
-	{
-		Reset();
-	}
-
-	scene->Load();
-	CGame::GetInstance()->GetTimer()->SetTime(300);
+	return sceneManager;
 }
 
 CGame* CGame::GetInstance()
@@ -336,67 +271,8 @@ CGame* CGame::GetInstance()
 	return instance;
 }
 
-void CGame::AddScore(int addedScore)
-{
-	this->score += addedScore;
-}
-
-int CGame::GetScore()
-{
-	return this->score;
-}
-
-void CGame::AddHeart(int hearts)
-{
-	this->hearts += hearts;
-}
-
-void CGame::DecreaseHeart(int hearts)
-{
-	this->hearts -= hearts;
-}
-
-int CGame::GetHearts()
-{
-	return this->hearts;
-}
-
-void CGame::AddLife(int lives)
-{
-	this->lives += lives;
-}
-
-int CGame::GetLives()
-{
-	return this->lives;
-}
-
-void CGame::TakeDamage(int volumes)
-{
-	this->healthVolumes -= volumes;
-}
-
-int CGame::getHealthVolumes()
-{
-	return this->healthVolumes;
-}
-
-void CGame::SetSubWeaponType(string type)
-{
-	this->subWeaponType = type;
-}
-
-string CGame::GetSubWeaponType()
-{
-	return this->subWeaponType;
-}
-
 void CGame::Reset()
 {
-	score = 0;
-	hearts = 5;
-	lives = 3;
-	healthVolumes = 16;
-	subWeaponType.clear();
+	playerData->Reset();
 	camera->SetPosition(0, 0);
 }

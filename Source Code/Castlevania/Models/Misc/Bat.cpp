@@ -3,7 +3,7 @@
 
 CBat::CBat()
 {
-	this->alpha = 0.0f;
+	alpha = 0.0f;
 
 	SetAnimationSet("bat");
 }
@@ -17,7 +17,7 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	if (this->state == BAT_STATE_FLY_RIGHT_CROSS)
+	if (state == BAT_STATE_FLY_RIGHT_CROSS)
 	{
 		vx = vy = BAT_FLY_RIGHT_CROSS_SPEED;
 
@@ -25,7 +25,7 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y -= vy * dt;
 	}
 	
-	if (this->state == BAT_STATE_FLY_OVAL)
+	if (state == BAT_STATE_FLY_OVAL)
 	{
 		// Circular: https://answers.unity.com/questions/596671/circular-rotation-via-the-mathematical-circle-equa.html
 		// Circular: https://gamedev.stackexchange.com/questions/67206/how-to-set-speed-of-circular-motion

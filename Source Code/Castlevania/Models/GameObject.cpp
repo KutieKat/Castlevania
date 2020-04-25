@@ -13,7 +13,13 @@ CGameObject::CGameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
+	value = 0;
+	disappearingTime = -1;
 	direction = Direction::Right;
+
+	showingEffect = false;
+	isEffect = false;
+	isItem = false;
 }
 
 void CGameObject::SetPosition(float x, float y)
@@ -47,7 +53,7 @@ void CGameObject::SetDirection(Direction direction)
 
 Direction CGameObject::GetDirection()
 {
-	return this->direction;
+	return direction;
 }
 
 void CGameObject::SetId(string id)
@@ -57,7 +63,23 @@ void CGameObject::SetId(string id)
 
 string CGameObject::GetId()
 {
-	return this->id;
+	return id;
+}
+
+void CGameObject::SetEndingEffect(CGameObject* effect)
+{
+	endingEffect = effect;
+	endingEffect->visibility = Visibility::Hidden;
+}
+
+void CGameObject::SetValue(int value)
+{
+	this->value = value;
+}
+
+bool CGameObject::Over()
+{
+	return disappearingTime != -1 && GetTickCount() > disappearingTime;
 }
 
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -66,6 +88,23 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	dx = vx * dt;
 	dy = vy * dt;
+
+	if (GetTickCount() > disappearingTime)
+	{
+		SetVisibility(Visibility::Hidden);
+	}
+
+	if (endingEffect && endingEffect->Over())
+	{
+		if (hiddenItem)
+		{
+			hiddenItem->SetVisibility(Visibility::Visible);
+			hiddenItem->SetPosition(x, y);
+			hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+		}
+
+		visibility = Visibility::Hidden;
+	}
 }
 
 void CGameObject::SetState(int state)
@@ -79,6 +118,27 @@ void CGameObject::ResetAnimations()
 	{
 		animationSet->at(i)->Reset();
 	}
+}
+
+void CGameObject::Disappear()
+{
+	if (endingEffect)
+	{
+		showingEffect = true;
+
+		endingEffect->SetVisibility(Visibility::Visible);
+		endingEffect->SetPosition(x, y);
+		endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
+	}
+	else
+	{
+		visibility = Visibility::Hidden;
+	}
+}
+
+void CGameObject::ShowHiddenItem()
+{
+	hiddenItem->SetVisibility(Visibility::Visible);
 }
 
 /*
@@ -100,8 +160,8 @@ LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	float sdy = svy * dt;
 
 	// (rdx, rdy) is RELATIVE movement distance/velocity 
-	float rdx = this->dx - sdx;
-	float rdy = this->dy - sdy;
+	float rdx = dx - sdx;
+	float rdy = dy - sdy;
 
 	GetBoundingBox(ml, mt, mr, mb);
 
@@ -172,7 +232,6 @@ void CGameObject::FilterCollision(
 	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
-
 void CGameObject::SetVisibility(Visibility visibility)
 {
 	this->visibility = visibility;
@@ -180,12 +239,17 @@ void CGameObject::SetVisibility(Visibility visibility)
 
 Visibility CGameObject::GetVisibility()
 {
-	return this->visibility;
+	return visibility;
 }
 
 int CGameObject::GetState()
 {
-	return this->state;
+	return state;
+}
+
+int CGameObject::GetValue()
+{
+	return value;
 }
 
 void CGameObject::RenderBoundingBox()
@@ -206,9 +270,45 @@ void CGameObject::RenderBoundingBox()
 	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 100);
 }
 
+void CGameObject::SetLeftBound(int left)
+{
+	leftBound = left;
+}
+
+void CGameObject::SetTopBound(int top)
+{
+	topBound = top;
+}
+
+void CGameObject::SetRightBound(int right)
+{
+	rightBound = right;
+}
+
+void CGameObject::SetBottomBound(int bottom)
+{
+	bottomBound = bottom;
+}
+
 void CGameObject::SetAnimationSet(string animationSetId)
 {
-	this->animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
+	animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
+}
+
+void CGameObject::SetDisplayTime(DWORD time)
+{
+	disappearingTime = GetTickCount() + time;
+}
+
+void CGameObject::SetHiddenItem(CGameObject* item)
+{
+	hiddenItem = item;
+	hiddenItem->SetVisibility(Visibility::Hidden);
+}
+
+CGameObject* CGameObject::GetHiddenItem()
+{
+	return hiddenItem;
 }
 
 CGameObject::~CGameObject()

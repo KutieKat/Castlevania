@@ -91,7 +91,7 @@ void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor
 		return;
 	}
 
-	this->textures[id] = texture;
+	textures[id] = texture;
 
 	CDebug::Info("Texture loaded successfully: ID=" + id + ", Path=" + path, "TextureManager.cpp");
 }
@@ -107,7 +107,7 @@ void CTextureManager::Clear()
 	{
 		LPDIRECT3DTEXTURE9 tex = x.second;
 
-		if (tex != NULL)
+		if (tex != nullptr)
 		{
 			tex->Release();
 		}

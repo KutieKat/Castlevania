@@ -9,12 +9,12 @@ CAnimationFrame::CAnimationFrame(CSprite* sprite, int time)
 
 DWORD CAnimationFrame::GetTime()
 {
-	return this->time;
+	return time;
 }
 
 CSprite* CAnimationFrame::GetSprite()
 {
-	return this->sprite;
+	return sprite;
 }
 
 CAnimationFrame::~CAnimationFrame()

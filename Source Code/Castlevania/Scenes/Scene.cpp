@@ -11,20 +11,20 @@ CScene::CScene(string id, string filePath, string stage, string nextSceneId)
 
 IKeyEventHandler* CScene::GetKeyEventHandler()
 {
-	return this->keyHandler;
+	return keyHandler;
 }
 
 string CScene::GetId()
 {
-	return this->id;
+	return id;
 }
 
 string CScene::GetNextSceneId()
 {
-	return this->nextSceneId;
+	return nextSceneId;
 }
 
 string CScene::GetStage()
 {
-	return this->stage;
+	return stage;
 }

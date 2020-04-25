@@ -1,8 +1,8 @@
 #pragma once
-#include "Item.h"
+#include "../GameObject.h"
 #include "../../Utilities/Constants.h"
 
-class CMoneyBag : public CItem
+class CMoneyBag : public CGameObject
 {
 public:
 	CMoneyBag();
@@ -11,18 +11,5 @@ public:
 	void SetState(int state);
 	void GetBoundingBox(float &l, float &t, float &r, float &b);
 	void Render();
-	void SetScore(int score);
-	void Disappear();
-	void SetEndingEffect(CEffect* effect);
-
-	int GetScore();
-
-	~CMoneyBag();
-
-protected:
-	CEffect* endingEffect;
-
-	int score;
-	bool showingEffect;
 };
 

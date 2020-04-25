@@ -2,17 +2,13 @@
 
 CDagger::CDagger()
 {
+	isItem = true;
 	SetAnimationSet("dagger");
 }
 
 void CDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
-	if (GetTickCount() > this->disappearingTime)
-	{
-		this->SetVisibility(Visibility::Hidden);
-	}
 
 	vy += ITEM_GRAVITY * dt;
 

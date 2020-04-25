@@ -1,5 +1,5 @@
 #include "PlayScene.h"
-
+#include "../Models/ObjectFactory.h"
 #include "../Utilities/Debug.h"
 #include "../Utilities/SafeDelete.h"
 
@@ -103,7 +103,9 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 	for (object = element->FirstChildElement(); object != nullptr; object = object->NextSiblingElement())
 	{
-		int x, y, visibility;
+		int x, y, leftBound, topBound, rightBound, bottomBound, value = 0;
+		bool visibility = true;
+
 		object->QueryIntAttribute("x", &x);
 		object->QueryIntAttribute("y", &y);
 
@@ -113,99 +115,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 		string hiddenItemId, endingEffect;
 
 		CAnimationSet* animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
-
-		if (type == "ground")
-		{
-			CGround* item = new CGround();
-			item->SetId(id);
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "big_heart")
-		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CBigHeart* item = new CBigHeart();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "morning_star")
-		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CMorningStar* item = new CMorningStar();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "dagger")
-		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CDagger* item = new CDagger();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "big_candle")
-		{
-			endingEffect = object->Attribute("endingEffect");
-			hiddenItemId = object->Attribute("hiddenItemId");
-
-			CEffect* effect = new CEffect(endingEffect);
-			effects.emplace_back(effect);
-
-			CBigCandle* item = new CBigCandle();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetHiddenItem(dynamic_cast<CItem*>(FindObject(hiddenItemId)));
-			item->SetEndingEffect(effect);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "money_bag")
-		{
-			int score;
-
-			object->QueryIntAttribute("score", &score);
-			endingEffect = object->Attribute("endingEffect");
-
-			CEffect* effect = new CEffect(endingEffect);
-			effects.emplace_back(effect);
-
-			CMoneyBag* item = new CMoneyBag();
-			item->SetId(id);
-			item->SetEndingEffect(effect);
-			item->SetScore(1000);
-			item->SetPosition(x, y);
-
-			objects.emplace_back(item);
-		}
-
-		if (type == "easter_egg")
-		{
-			hiddenItemId = object->Attribute("hiddenItemId");
-
-			CEasterEgg* item = new CEasterEgg();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetHiddenItem(dynamic_cast<CItem*>(FindObject(hiddenItemId)));
-
-			objects.emplace_back(item);
-		}
+		CGameObject* gameObject = nullptr;
 
 		if (type == "simon")
 		{
@@ -215,34 +125,54 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 			objects.emplace_back(player);
 		}
-
-		if (type == "door_wall")
+		else
 		{
-			object->QueryIntAttribute("visible", &visibility);
-
-			CDoorWall* item = new CDoorWall();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetVisibility(visibility == 1 ? Visibility::Visible : Visibility::Hidden);
-
-			objects.emplace_back(item);
+			gameObject = CObjectFactory::Construct(type);
 		}
 
-		if (type == "door")
+		if (gameObject)
 		{
-			hiddenItemId = object->Attribute("hiddenItemId");
+			gameObject->SetId(id);
+			gameObject->SetPosition(x, y);
 
-			CDoor* item = new CDoor();
-			item->SetId(id);
-			item->SetPosition(x, y);
-			item->SetDoorWall(dynamic_cast<CDoorWall*>(FindObject(hiddenItemId)));
+			object->QueryBoolAttribute("visible", &visibility);
+			gameObject->SetVisibility(visibility ? Visibility::Visible : Visibility::Hidden);
 
-			objects.emplace_back(item);
+			if (object->Attribute("hiddenItemId"))
+			{
+				gameObject->SetHiddenItem(FindObject(object->Attribute("hiddenItemId")));
+			}
+
+			if (object->Attribute("endingEffect"))
+			{
+				CGameObject* effect = CObjectFactory::Construct(object->Attribute("endingEffect"));
+				effect->SetPosition(x, y);
+				objects.emplace_back(effect);
+
+				gameObject->SetEndingEffect(effect);
+			}
+
+			object->QueryIntAttribute("value", &value);
+			gameObject->SetValue(value);
+
+			object->QueryIntAttribute("leftBound", &leftBound);
+			gameObject->SetLeftBound(leftBound);
+
+			object->QueryIntAttribute("topBound", &topBound);
+			gameObject->SetTopBound(topBound);
+
+			object->QueryIntAttribute("rightBound", &rightBound);
+			gameObject->SetRightBound(rightBound);
+
+			object->QueryIntAttribute("bottomBound", &bottomBound);
+			gameObject->SetBottomBound(bottomBound);
+
+			objects.emplace_back(gameObject);
 		}
 	}
 }
 
-CGameObject * CPlayScene::FindObject(string id)
+CGameObject* CPlayScene::FindObject(string id)
 {
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -261,7 +191,7 @@ CPlayScene::CPlayScene(string id, string filePath, string stage, string nextScen
 
 bool CPlayScene::Load()
 {
-	TiXmlDocument doc(this->filePath.c_str());
+	TiXmlDocument doc(filePath.c_str());
 
 	if (!doc.LoadFile())
 	{
@@ -299,7 +229,7 @@ void CPlayScene::Update(DWORD dt)
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->GetVisibility() == Visibility::Visible)
+		if (objects[i]->GetVisibility() == Visibility::Visible && !objects[i]->isEffect)
 		{
 			if (dynamic_cast<CSimon*>(objects[i]))
 			{
@@ -381,18 +311,6 @@ void CPlayScene::Render()
 		tileMap->Render(game->GetCamera());
 	}
 
-	// Effects
-	if (effects.size() > 0)
-	{
-		for (int i = 0; i < effects.size(); i++)
-		{
-			if (effects[i]->GetStartTime() != -1)
-			{
-				effects[i]->Render();
-			}
-		}
-	}
-
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->GetVisibility() == Visibility::Visible)
@@ -422,13 +340,6 @@ void CPlayScene::Unload()
 
 	coObjects.clear();
 
-	for (int i = 0; i < effects.size(); i++)
-	{
-		SAFE_DELETE(effects[i]);
-	}
-
-	effects.clear();
-
 	player = nullptr;
 }
 
@@ -441,30 +352,31 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
+	CPlayerData* playerData = game->GetPlayerData();
 
 	if (simon != nullptr)
 	{
-		if (simon->Up() && simon->TouchingGround() == false && simon->animationSet->at(simon->GetAnimationToRender())->Over() == false)
+		if (simon->up && !simon->touchingGround && simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
 			return;
 		}
 
-		if (simon->GetState() == SIMON_STATE_JUMP && simon->TouchingGround() == false)
+		if (simon->GetState() == SIMON_STATE_JUMP && !simon->touchingGround)
 		{
 			return;
 		}
 
-		if (simon->GetState() == SIMON_STATE_STAND_AND_THROW && simon->animationSet->at(simon->GetAnimationToRender())->Over() == false)
+		if (simon->GetState() == SIMON_STATE_STAND_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
 			return;
 		}
 
-		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->animationSet->at(simon->GetAnimationToRender())->Over() == false)
+		if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
 			return;
 		}
 
-		if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK && simon->animationSet->at(simon->GetAnimationToRender())->Over() == false)
+		if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
 			return;
 		}
@@ -476,14 +388,14 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 
 		if (game->GetInputManager()->IsKeyDown(DIK_UP))
 		{
-			simon->SetUp(true);
+			simon->up = true;
 		}
 
 		if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 		{
 			simon->SetDirection(Direction::Right);
 
-			if (!simon->Sitting())
+			if (!simon->sitting)
 			{
 				simon->SetState(SIMON_STATE_WALK);
 			}
@@ -492,7 +404,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		{
 			simon->SetDirection(Direction::Left);
 
-			if (!simon->Sitting())
+			if (!simon->sitting)
 			{
 				simon->SetState(SIMON_STATE_WALK);
 			}
@@ -503,7 +415,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		}
 		else
 		{
-			if (game->GetTimer()->GetRemainingTime() > 0)
+			if (game->GetTimer()->GetRemainingTime() > 0 && playerData->GetHealthVolumes() > 0)
 			{
 				simon->SetState(SIMON_STATE_IDLE);
 			}
@@ -519,27 +431,24 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 {
 	CGame* game = CGame::GetInstance();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
+	CPlayerData* playerData = game->GetPlayerData();
 
 	if (simon != nullptr)
 	{
 		switch (keyCode)
 		{
-		case DIK_R:
-			game->SwitchScene(game->GetCurrentScene()->GetNextSceneId());
-			break;
-
 		case DIK_Z:
-			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->animationSet->at(simon->GetAnimationToRender())->Over() == false)
+			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 			{
 				return;
 			}
 
-			if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->Sitting() == true && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
+			if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->sitting && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
 			{
 				return;
 			}
 
-			if (game->GetSubWeaponType() != "" && game->GetHearts() > 0 && simon->Up())
+			if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
 			{
 				simon->SetState(SIMON_STATE_STAND_AND_THROW);
 			}
@@ -556,12 +465,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			break;
 
 		case DIK_X:
-			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && simon->TouchingGround() == false && simon->animationSet->at(simon->GetAnimationToRender())->Over() == false)
+			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->touchingGround && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 			{
 				return;
 			}
 
-			if (simon->Sitting())
+			if (simon->sitting)
 			{
 				return;
 			}
@@ -571,7 +480,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			break;
 
 		case DIK_UP:
-			simon->SetUp(true);
+			simon->up = true;
 			break;
 
 		default:
@@ -589,7 +498,7 @@ void CPlaySceneKeyHandler::OnKeyUp(int keyCode)
 		switch (keyCode)
 		{
 		case DIK_UP:
-			simon->SetUp(false);
+			simon->up = false;
 			break;
 
 		case DIK_DOWN:

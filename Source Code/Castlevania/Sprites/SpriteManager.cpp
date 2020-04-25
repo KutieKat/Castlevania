@@ -42,17 +42,17 @@ bool CSpriteManager::LoadFromFile(string filePath)
 void CSpriteManager::Add(string id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
 {
 	CSprite* sprite = new CSprite(id, left, top, right, bottom, texture);
-	this->sprites[id] = sprite;
+	sprites[id] = sprite;
 }
 
 CSprite* CSpriteManager::Get(string id)
 {
-	return this->sprites[id];
+	return sprites[id];
 }
 
 CSprite* &CSpriteManager::operator[](string id)
 {
-	return this->sprites[id];
+	return sprites[id];
 }
 
 void CSpriteManager::Clear()

@@ -46,7 +46,7 @@ bool CAnimationManager::LoadFromFile(string filePath)
 
 void CAnimationManager::Add(string id, CAnimation* animation)
 {
-	this->animations[id] = animation;
+	animations[id] = animation;
 }
 
 void CAnimationManager::Clear()
@@ -62,7 +62,7 @@ void CAnimationManager::Clear()
 
 CAnimation* CAnimationManager::Get(string id)
 {
-	CAnimation* ani = this->animations[id];
+	CAnimation* ani = animations[id];
 
 	if (ani == nullptr)
 	{

@@ -16,7 +16,7 @@ CTileMap::CTileMap(string mapFile, string tilesetFile)
 	this->tilesetColumns = 0;
 
 	LoadMap();
-	LoadTiles();
+	LoadTileset();
 }
 
 void CTileMap::LoadMap()
@@ -33,10 +33,10 @@ void CTileMap::LoadMap()
 	TiXmlElement* row = nullptr;
 	TiXmlElement* column = nullptr;
 
-	root->QueryIntAttribute("tileWidth", &this->tileWidth);
-	root->QueryIntAttribute("tileHeight", &this->tileHeight);
-	root->QueryIntAttribute("tilesetWidth", &this->tilesetWidth);
-	root->QueryIntAttribute("tilesetHeight", &this->tilesetHeight);
+	root->QueryIntAttribute("tileWidth", &tileWidth);
+	root->QueryIntAttribute("tileHeight", &tileHeight);
+	root->QueryIntAttribute("tilesetWidth", &tilesetWidth);
+	root->QueryIntAttribute("tilesetHeight", &tilesetHeight);
 
 	int rowsCount = 0;
 	int columnsCount = 0;
@@ -57,31 +57,31 @@ void CTileMap::LoadMap()
 			columnsCount = columns.size();
 		}
 
-		this->map.emplace_back(columns);
+		map.emplace_back(columns);
 
 		rowsCount++;
 	}
 
-	this->width = tileWidth * columnsCount;
-	this->height = tileHeight * rowsCount;
-	this->mapRows = this->height / tileHeight;
-	this->mapColumns = this->width / tileWidth;
-	this->tilesetRows = this->tilesetHeight / tileHeight;
-	this->tilesetColumns = this->tilesetWidth / tileWidth;
+	width = tileWidth * columnsCount;
+	height = tileHeight * rowsCount;
+	mapRows = height / tileHeight;
+	mapColumns = width / tileWidth;
+	tilesetRows = tilesetHeight / tileHeight;
+	tilesetColumns = tilesetWidth / tileWidth;
 }
 
-void CTileMap::LoadTiles()
+void CTileMap::LoadTileset()
 {
 	CTextureManager* textureManager = CTextureManager::GetInstance();
 
-	textureManager->Add("tiles_texture", CConvert::s2ws(tilesetFile).c_str(), CColor::FromRgb(255, 0, 255));
-	LPDIRECT3DTEXTURE9 tiles = textureManager->Get("tiles_texture");
+	textureManager->Add("tileset_texture", CConvert::s2ws(tilesetFile).c_str(), CColor::FromRgb(255, 0, 255));
+	LPDIRECT3DTEXTURE9 tileset = textureManager->Get("tileset_texture");
 
 	int count = 0;
 
-	for (int row = 0; row < this->tilesetRows; row++)
+	for (int row = 0; row < tilesetRows; row++)
 	{
-		for (int column = 0; column < this->tilesetColumns; column++)
+		for (int column = 0; column < tilesetColumns; column++)
 		{
 			string tileId = "tile_" + to_string(count);
 
@@ -90,7 +90,7 @@ void CTileMap::LoadTiles()
 			int right = left + tileWidth;
 			int bottom = top + tileHeight;
 
-			CSpriteManager::GetInstance()->Add(tileId, left, top, right, bottom, tiles);
+			CSpriteManager::GetInstance()->Add(tileId, left, top, right, bottom, tileset);
 
 			count++;
 		}
@@ -102,16 +102,16 @@ void CTileMap::Render(CCamera* camera)
 	int startingColumn = camera->GetLeft() / tileWidth;
 	int endingColumn = camera->GetRight() / tileWidth;
 
-	if (endingColumn >= this->mapColumns)
+	if (endingColumn >= mapColumns)
 	{
-		endingColumn = this->mapColumns - 1;
+		endingColumn = mapColumns - 1;
 	}
 
-	for (int row = 0; row < this->mapRows; row++)
+	for (int row = 0; row < mapRows; row++)
 	{
 		for (int column = startingColumn; column <= endingColumn; column++)
 		{
-			string tileId = "tile_" + to_string(this->map[row][column]);
+			string tileId = "tile_" + to_string(map[row][column]);
 
 			float x = tileWidth * column;
 			float y = tileHeight * row;
@@ -123,12 +123,12 @@ void CTileMap::Render(CCamera* camera)
 
 int CTileMap::GetWidth()
 {
-	return this->width;
+	return width;
 }
 
 int CTileMap::GetHeight()
 {
-	return this->height;
+	return height;
 }
 
 CTileMap::~CTileMap()

@@ -29,39 +29,39 @@ void CLabel::SetColor(D3DCOLOR color)
 
 void CLabel::SetPosition(float x, float y)
 {
-	this->left = x;
-	this->top = y;
+	left = x;
+	top = y;
 
 	ReCalcPosition();
 }
 
 void CLabel::Render()
 {
-	SetRect(&rect, this->left, this->top, this->right, this->bottom);
-	font->DrawTextA(nullptr, this->text.c_str(), -1, &rect, DT_LEFT, this->color);
+	SetRect(&rect, left, top, right, bottom);
+	font->DrawTextA(nullptr, text.c_str(), -1, &rect, DT_LEFT, color);
 }
 
 float CLabel::calcRightPosition()
 {
-	return this->left + this->text.length() * this->fontSize;
+	return left + text.length() * fontSize;
 }
 
 float CLabel::calcBottomPosition()
 {
-	return this->top + this->fontSize;
+	return top + fontSize;
 }
 
 void CLabel::ReCalcPosition()
 {
-	this->right = calcRightPosition();
-	this->bottom = calcBottomPosition();
+	right = calcRightPosition();
+	bottom = calcBottomPosition();
 }
 
 void CLabel::UpdateFont()
 {
 	D3DXCreateFont(
 		CGame::GetInstance()->GetDirect3DDevice(),
-		this->fontSize,
+		fontSize,
 		0,
 		FW_NORMAL,
 		1,
@@ -70,7 +70,7 @@ void CLabel::UpdateFont()
 		OUT_DEFAULT_PRECIS,
 		ANTIALIASED_QUALITY,
 		FF_DONTCARE,
-		this->fontFamily,
+		fontFamily,
 		&font
 	);
 }

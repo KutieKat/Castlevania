@@ -97,12 +97,6 @@
     <Filter Include="Source Files\Models\Items">
       <UniqueIdentifier>{a9d0c2b3-a3c3-44fa-bead-8ba62af311e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Effects">
-      <UniqueIdentifier>{750b71f3-8da1-4560-8143-876b9230b5ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Effects">
-      <UniqueIdentifier>{813c7c05-f442-4a28-b474-c0e51ac690c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\TileMap">
       <UniqueIdentifier>{0ac197d8-d457-4306-8ff9-5783b5d0f965}</UniqueIdentifier>
     </Filter>
@@ -118,8 +112,14 @@
     <Filter Include="Header Files\Scene">
       <UniqueIdentifier>{2dbb7e45-62d8-4b59-984b-48b410347e45}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scene">
+    <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{4747b93d-49f2-47f3-8be3-3638e6ec0d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models\Effects">
+      <UniqueIdentifier>{024d03ea-fed4-4236-b62f-ed412d143ec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Effects">
+      <UniqueIdentifier>{1d37394e-9a85-4c98-afda-6cff304d26e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,17 +183,11 @@
     <ClCompile Include="Models\Weapons\Whip.cpp">
       <Filter>Source Files\Models\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Items\Item.cpp">
-      <Filter>Source Files\Models\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Models\Items\MoneyBag.cpp">
       <Filter>Source Files\Models\Items</Filter>
     </ClCompile>
     <ClCompile Include="Models\Items\EasterEgg.cpp">
       <Filter>Source Files\Models\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Effects\Effect.cpp">
-      <Filter>Source Files\Effects</Filter>
     </ClCompile>
     <ClCompile Include="Models\Items\BigHeart.cpp">
       <Filter>Source Files\Models\Items</Filter>
@@ -213,16 +207,10 @@
     <ClCompile Include="Utilities\Label.cpp">
       <Filter>Source Files\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Weapons\Weapon.cpp">
-      <Filter>Source Files\Models\Weapons</Filter>
-    </ClCompile>
     <ClCompile Include="Models\Misc\HealthVolume.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Models\Misc\HealthBar.cpp">
-      <Filter>Source Files\Models\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Misc\DoorWall.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Models\Misc\Door.cpp">
@@ -241,13 +229,13 @@
       <Filter>Source Files\Animations</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\Scene.cpp">
-      <Filter>Source Files\Scene</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\PlayScene.cpp">
-      <Filter>Source Files\Scene</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\IntroScene.cpp">
-      <Filter>Source Files\Scene</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Models\Misc\Background.cpp">
       <Filter>Source Files\Models\Misc</Filter>
@@ -256,7 +244,7 @@
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\CutScene.cpp">
-      <Filter>Source Files\Scene</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Models\Misc\Bat.cpp">
       <Filter>Source Files\Models\Misc</Filter>
@@ -266,6 +254,21 @@
     </ClCompile>
     <ClCompile Include="Models\Misc\Ground.cpp">
       <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\ObjectFactory.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Players\PlayerData.cpp">
+      <Filter>Source Files\Models\Characters\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SceneManager.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\Flash.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\OneThousand.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -326,17 +329,11 @@
     <ClInclude Include="Models\Weapons\Whip.h">
       <Filter>Header Files\Models\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Items\Item.h">
-      <Filter>Header Files\Models\Items</Filter>
-    </ClInclude>
     <ClInclude Include="Models\Items\MoneyBag.h">
       <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
     <ClInclude Include="Models\Items\EasterEgg.h">
       <Filter>Header Files\Models\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Effects\Effect.h">
-      <Filter>Header Files\Effects</Filter>
     </ClInclude>
     <ClInclude Include="Models\Items\BigHeart.h">
       <Filter>Header Files\Models\Items</Filter>
@@ -356,9 +353,6 @@
     <ClInclude Include="Utilities\Label.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Models\Weapons\Weapon.h">
-      <Filter>Header Files\Models\Weapons</Filter>
-    </ClInclude>
     <ClInclude Include="Models\Misc\HealthBar.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
@@ -367,9 +361,6 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Misc\DoorWall.h">
-      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\Door.h">
       <Filter>Header Files\Models\Misc</Filter>
@@ -415,6 +406,21 @@
     </ClInclude>
     <ClInclude Include="Models\Misc\Ground.h">
       <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\ObjectFactory.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Players\PlayerData.h">
+      <Filter>Header Files\Models\Characters\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SceneManager.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\Flash.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\OneThousand.h">
+      <Filter>Header Files\Models\Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

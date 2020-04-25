@@ -1,4 +1,5 @@
 #include "HealthBar.h"
+#include "../../Utilities/Debug.h"
 
 CHealthBar::CHealthBar(HealthType type, int max, int value)
 {
@@ -35,9 +36,9 @@ void CHealthBar::Update()
 {
 	for (int i = 0; i < volumes.size(); i++)
 	{
-		volumes[i]->SetPosition(this->x + i * 11, this->y);
+		volumes[i]->SetPosition(x + i * 11, y);
 
-		if (i < this->value)
+		if (i < value)
 		{
 			switch (type)
 			{
@@ -48,11 +49,11 @@ void CHealthBar::Update()
 			case HealthType::Enemy:
 				volumes[i]->SetType(HealthType::Enemy);
 				break;
-
-			default:
-				volumes[i]->SetType(HealthType::Empty);
-				break;
 			}
+		}
+		else
+		{
+			volumes[i]->SetType(HealthType::Empty);
 		}
 	}
 }

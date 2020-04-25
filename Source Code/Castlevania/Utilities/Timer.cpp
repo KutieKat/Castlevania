@@ -2,9 +2,7 @@
 
 CTimer::CTimer()
 {
-	this->stopped = true;
-	this->time = -1;
-	this->remainingTime = -1;
+	paused = true;
 }
 
 CTimer::CTimer(DWORD time)
@@ -14,49 +12,29 @@ CTimer::CTimer(DWORD time)
 
 void CTimer::Start()
 {
-	this->stopped = false;
+	paused = false;
 }
 
-void CTimer::Stop()
+void CTimer::Pause()
 {
-	this->stopped = true;
+	paused = true;
 }
 
-void CTimer::SetTime(DWORD duration)
+void CTimer::SetTime(DWORD time)
 {
-	Reset();
-
-	this->duration = duration;
-	this->time = (GetTickCount() / 1000) + duration;
+	endTime = GetTickCount() + time * 1000;
+	remainingTime = time;
 }
 
 void CTimer::Tick()
 {
-	if (this->stopped == false)
+	if (!paused)
 	{
-		if (this->remainingTime == 0)
-		{
-			this->stopped = true;
-		}
-		else
-		{
-			this->remainingTime = this->time - (GetTickCount() / 1000);
-		}
-
+		remainingTime = (endTime - GetTickCount()) / 1000;
 	}
-	else
-	{
-		this->remainingTime = this->duration;
-	}
-}
-
-void CTimer::Reset()
-{
-	this->time = -1;
-	this->remainingTime = -1;
 }
 
 DWORD CTimer::GetRemainingTime()
 {
-	return this->remainingTime;
+	return remainingTime;
 }

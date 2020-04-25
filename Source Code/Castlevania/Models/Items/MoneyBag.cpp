@@ -3,7 +3,7 @@
 
 CMoneyBag::CMoneyBag()
 {
-	this->showingEffect = false;
+	isItem = true;
 
 	SetAnimationSet("money_bag");
 }
@@ -14,25 +14,15 @@ void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	y += vy * dt;
 
-	if (y < 338)
+	if (y < topBound)
 	{
 		vy = 0;
-	}
-
-	if (GetTickCount() > this->disappearingTime)
-	{
-		this->SetVisibility(Visibility::Hidden);
-	}
-
-	if (this->endingEffect->Over())
-	{
-		this->visibility = Visibility::Hidden;
 	}
 }
 
 void CMoneyBag::SetState(int state)
 {
-	CItem::SetState(state);
+	CGameObject::SetState(state);
 
 	switch (state)
 	{
@@ -59,31 +49,4 @@ void CMoneyBag::Render()
 	{
 		animationSet->at(0)->Render(x, y);
 	}
-}
-
-void CMoneyBag::SetScore(int score)
-{
-	this->score = score;
-}
-
-void CMoneyBag::SetEndingEffect(CEffect* effect)
-{
-	this->endingEffect = effect;
-}
-
-int CMoneyBag::GetScore()
-{
-	return this->score;
-}
-
-void CMoneyBag::Disappear()
-{
-	this->showingEffect = true;
-	this->endingEffect->SetPosition(x, y);
-	this->endingEffect->SetStartTime(GetTickCount());
-}
-
-CMoneyBag::~CMoneyBag()
-{
-	SAFE_DELETE(this->endingEffect);
 }

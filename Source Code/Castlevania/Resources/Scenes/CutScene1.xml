@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <textures>
-    <texture id="background" path="Resources\\Others\\CutScene.png" r="0" g="0" b="0" />
+    <texture id="background" path="Resources\\Others\\CutScene1.png" r="0" g="0" b="0" />
     <texture id="bat" path="Resources\\Others\\Bat.png" r="255" g="0" b="255" />
     <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
     <texture id="blackboard" path="Resources\\Others\\Blackboard.png" r="0" g="0" b="0" />
