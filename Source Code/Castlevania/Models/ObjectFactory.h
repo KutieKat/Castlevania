@@ -19,6 +19,7 @@
 #include "Misc/BigCandle.h"
 #include "Misc/Bat.h"
 #include "Misc/Helicopter.h"
+#include "Misc/MapPin.h"
 using namespace std;
 
 class CObjectFactory

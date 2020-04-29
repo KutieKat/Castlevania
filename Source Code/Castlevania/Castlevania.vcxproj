@@ -51,6 +51,7 @@
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
     <ClCompile Include="Models\Misc\Helicopter.cpp" />
     <ClCompile Include="Models\Misc\IntroBat.cpp" />
+    <ClCompile Include="Models\Misc\MapPin.cpp" />
     <ClCompile Include="Models\ObjectFactory.cpp" />
     <ClCompile Include="Models\Weapons\WDagger.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Models\Misc\HealthVolume.h" />
     <ClInclude Include="Models\Misc\Helicopter.h" />
     <ClInclude Include="Models\Misc\IntroBat.h" />
+    <ClInclude Include="Models\Misc\MapPin.h" />
     <ClInclude Include="Models\ObjectFactory.h" />
     <ClInclude Include="Models\Weapons\WDagger.h" />
     <ClInclude Include="Models\Weapons\Whip.h" />

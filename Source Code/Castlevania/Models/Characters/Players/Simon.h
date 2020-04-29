@@ -23,6 +23,12 @@ public:
 	bool touchingGround;
 	bool up;
 	bool lastFrameShown;
+	bool standingToWatch;
+
+	string movingDirection;
+	string switchScenePosition;
+
+	DWORD waitingTime;
 
 	~CSimon();
 

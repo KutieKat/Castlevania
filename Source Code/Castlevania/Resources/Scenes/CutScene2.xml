@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <textures>
-    <texture id="background" path="Resources\\Others\\CutScene1.png" r="0" g="0" b="0" />
+    <texture id="background" path="Resources\\Others\\CutScene2.png" r="0" g="0" b="0" />
     <texture id="bat" path="Resources\\Others\\Bat.png" r="255" g="0" b="255" />
     <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
     <texture id="blackboard" path="Resources\\Others\\Blackboard.png" r="0" g="0" b="0" />
     <texture id="health_volume" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
-    <texture id="helicopter" path="Resources\\Others\\Helicopter.png" r="255" g="0" b="255" />
     <texture id="simon" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
+    <texture id="map_pin" path="Resources\\Others\\MapPin.png" r="255" g="0" b="255" />
+    <texture id="dagger" path="Resources\\Items\\Dagger.png" r="255" g="0" b="255" />
   </textures>
   
   <sprites>
@@ -18,6 +19,10 @@
     <sprite id="bat_1" textureId="bat" left="0" top="0" right="15" bottom="15" />
     <sprite id="bat_2" textureId="bat" left="16" top="0" right="31" bottom="15" />
 
+    <!-- MapPin -->
+    <sprite id="map_pin_1" textureId="map_pin" left="0" top="0" right="11" bottom="13" />
+    <sprite id="map_pin_2" textureId="map_pin" left="12" top="0" right="23" bottom="13" />
+
     <!-- Blackboard -->
     <sprite id="blackboard" textureId="blackboard" left="0" top="0" right="512" bottom="80" />
 
@@ -25,9 +30,6 @@
     <sprite id="health_volume_player" textureId="health_volume" left="0" top="0" right="10" bottom="17" />
     <sprite id="health_volume_empty" textureId="health_volume" left="11" top="0" right="21" bottom="17" />
     <sprite id="health_volume_enemy" textureId="health_volume" left="22" top="0" right="32" bottom="17" />
-    
-    <!-- Helicopter -->
-    <sprite id="helicopter" textureId="helicopter" left="0" top="0" right="64" bottom="28" />
 
     <!-- Simon -->
     <sprite id="simon_idle_left" textureId="simon" left="0" top="0" right="60" bottom="66" />
@@ -63,6 +65,10 @@
     <sprite id="simon_delay_right_3" textureId="simon" left="300" top="463" right="360" bottom="529" />
     <sprite id="simon_die_right" textureId="simon" left="180" top="463" right="240" bottom="529" />
     <sprite id="simon_watch" textureId="simon" left="60" top="66" right="120" bottom="132" />
+
+    <!-- Dagger -->
+    <sprite id="dagger_right" textureId="dagger" left="0" top="0" right="32" bottom="18" />
+    <sprite id="dagger_left" textureId="dagger" left="0" top="19" right="32" bottom="36" />
   </sprites>
   
   <animations>
@@ -73,6 +79,11 @@
     <animation id="bat">
       <frame spriteId="bat_1" duration="100" />
       <frame spriteId="bat_2" duration="100" />
+    </animation>
+
+    <animation id="map_pin">
+      <frame spriteId="map_pin_1" duration="100" />
+      <frame spriteId="map_pin_2" duration="100" />
     </animation>
 
     <animation id="blackboard">
@@ -181,6 +192,15 @@
     <animation id="simon_watch">
       <frame spriteId="simon_watch" duration="100" />
     </animation>
+
+    <!-- Dagger -->
+    <animation id="dagger_right">
+      <frame spriteId="dagger_right" duration="100" />
+    </animation>
+
+    <animation id="dagger_left">
+      <frame spriteId="dagger_left" duration="100" />
+    </animation>
   </animations>
   
   <animationSets>
@@ -192,6 +212,10 @@
       <animationSetItem id="bat" animationId="bat" />
     </animationSet>
 
+    <animationSet id="map_pin">
+      <animationSetItem id="map_pin" animationId="map_pin" />
+    </animationSet>
+
     <animationSet id="blackboard">
       <animationSetItem id="blackboard" animationId="blackboard" />
     </animationSet>
@@ -200,10 +224,6 @@
       <animationSetItem id="health_volume_empty" animationId="health_volume_empty" />
       <animationSetItem id="health_volume_player" animationId="health_volume_player" />
       <animationSetItem id="health_volume_enemy" animationId="health_volume_enemy" />
-    </animationSet>
-
-    <animationSet id="helicopter">
-      <animationSetItem id="helicopter" animationId="helicopter" />
     </animationSet>
 
     <animationSet id="simon">
@@ -225,13 +245,17 @@
       <animationSetItem id="simon_die_right" animationId="simon_die_right" />
       <animationSetItem id="simon_watch" animationId="simon_watch" />
     </animationSet>
+
+    <animationSet id="dagger">
+      <animationSetItem id="dagger_right" animationId="dagger_right" />
+      <animationSetItem id="dagger_left" animationId="dagger_left" />
+    </animationSet>
   </animationSets>
   
   <objects>
     <object id="background" type="background" animationSetId="background" x="0" y="81" />
-    <object id="bat_01" type="bat" animationSetId="bat" x="80" y="240" trajectory="right_cross" />
-    <object id="bat_02" type="bat" animationSetId="bat" x="298" y="118" trajectory="oval" />
-    <object id="helicopter" type="helicopter" animationSetId="helicopter" x="460" y="130" />
-    <object id="simon" type="simon" animationSetId="simon" x="520" y="338" standingToWatch="true" movingDirection="leftward" switchScenePosition="center" waitingTime="3000" />
+    <object id="bat_01" type="bat" animationSetId="bat" x="160" y="222" />
+    <object id="map_pin" type="map_pin" animationSetId="map_pin" x="281" y="285" />
+    <object id="simon" type="simon" animationSetId="simon" x="-100" y="310" standingToWatch="false" movingDirection="rightward" switchScenePosition="right" waitingTime="1000" />
   </objects>
 </resources>

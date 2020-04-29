@@ -18,9 +18,11 @@ CSimon::CSimon()
 	sitting = false;
 	touchingGround = false;
 	lastFrameShown = false;
+	standingToWatch = false;
 
 	delayEndTime = -1;
 	switchSceneTime = -1;
+	waitingTime = -1;
 
 	whip = new CWhip(this);
 	subWeapon == nullptr;
@@ -189,8 +191,17 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_CUT_SCENE_AUTO_WALK:
-		direction = Direction::Left;
-		vx = -SIMON_SLOW_WALK_SPEED;
+		if (movingDirection == "rightward")
+		{
+			direction = Direction::Right;
+			vx = SIMON_SLOW_WALK_SPEED;
+		}
+		else if (movingDirection == "leftward")
+		{
+			direction = Direction::Left;
+			vx = -SIMON_SLOW_WALK_SPEED;
+		}
+
 		break;
 
 	case SIMON_STATE_DIE:
@@ -393,9 +404,59 @@ void CSimon::HandleSwitchScene()
 {
 	CGame* game = CGame::GetInstance();
 
-	if (state == SIMON_STATE_CUT_SCENE_AUTO_WALK && x <= (SCREEN_WIDTH / 2) - 50)
+	if (state == SIMON_STATE_CUT_SCENE_AUTO_WALK)
 	{
-		SetState(SIMON_STATE_WATCH);
+		if (switchScenePosition == "right")
+		{
+			if (x >= SCREEN_WIDTH)
+			{
+				if (standingToWatch)
+				{
+					SetState(SIMON_STATE_WATCH);
+				}
+				else
+				{
+					if (switchSceneTime == -1)
+					{
+						switchSceneTime = GetTickCount() + waitingTime;
+					}
+				}
+			}
+		}
+		else if (switchScenePosition == "center")
+		{
+			if (x <= (SCREEN_WIDTH / 2) - 50)
+			{
+				if (standingToWatch)
+				{
+					SetState(SIMON_STATE_WATCH);
+				}
+				else
+				{
+					if (switchSceneTime == -1)
+					{
+						switchSceneTime = GetTickCount() + waitingTime;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (x <= 0)
+			{
+				if (standingToWatch)
+				{
+					SetState(SIMON_STATE_WATCH);
+				}
+				else
+				{
+					if (switchSceneTime == -1)
+					{
+						switchSceneTime = GetTickCount() + waitingTime;
+					}
+				}
+			}
+		}
 	}
 
 	if (switchSceneTime != -1 && GetTickCount() > switchSceneTime)

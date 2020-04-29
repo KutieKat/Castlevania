@@ -270,6 +270,9 @@
     <ClCompile Include="Models\Effects\OneThousand.cpp">
       <Filter>Source Files\Models\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Misc\MapPin.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -421,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="Models\Effects\OneThousand.h">
       <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\MapPin.h">
+      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

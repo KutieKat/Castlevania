@@ -58,6 +58,10 @@ CGameObject* CObjectFactory::Construct(string type)
 	{
 		return new CFlash();
 	}
+	else if (type == "map_pin")
+	{
+		return new CMapPin();
+	}
 	else
 	{
 		return nullptr;

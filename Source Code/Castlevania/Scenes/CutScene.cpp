@@ -110,7 +110,17 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 
 		if (type == "simon")
 		{
+			bool standingToWatch;
+			object->QueryBoolAttribute("standingToWatch", &standingToWatch);
+
+			int waitingTime;
+			object->QueryIntAttribute("waitingTime", &waitingTime);
+
 			player = new CSimon();
+			player->movingDirection = object->Attribute("movingDirection");
+			player->switchScenePosition = object->Attribute("switchScenePosition");
+			player->standingToWatch = standingToWatch;
+			player->waitingTime = waitingTime;
 			player->SetState(SIMON_STATE_CUT_SCENE_AUTO_WALK);
 			player->SetPosition(x, y);
 
