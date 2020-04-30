@@ -3,6 +3,7 @@
 #include "../../Misc/BigCandle.h"
 #include "../../Misc/Ground.h"
 #include "../../Misc/Door.h"
+#include "../../Misc/Brick.h"
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
@@ -78,6 +79,29 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->nx != 0) vx = 0;
 				if (e->ny != 0) vy = 0;
 			}
+			else if (dynamic_cast<CBrick*>(e->obj))
+			{
+				auto brick = dynamic_cast<CBrick*>(e->obj);
+
+				if (brick->isGround)
+				{
+					if (e->ny < 0)
+					{
+						touchingGround = true;
+					}
+
+					if (state == SIMON_STATE_STAND_AND_ATTACK)
+					{
+						vx = 0;
+					}
+
+					if (e->ny != 0) vy = 0;
+				}
+				else
+				{
+					if (e->nx != 0) vx = 0;
+				}
+			}
 			else if (dynamic_cast<CEasterEgg*>(e->obj))
 			{
 				auto easterEgg = dynamic_cast<CEasterEgg*>(e->obj);
@@ -135,6 +159,8 @@ void CSimon::Render()
 
 	RenderWhip();
 	RenderSubWeapon();
+
+	//RenderBoundingBox();
 }
 
 void CSimon::SetState(int state)
@@ -219,7 +245,7 @@ void CSimon::SetState(int state)
 
 void CSimon::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	left = x;
+	left = x + 15;
 	top = y;
 	right = left + SIMON_BBOX_WIDTH;
 	bottom = top + SIMON_BBOX_HEIGHT;

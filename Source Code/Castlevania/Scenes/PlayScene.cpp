@@ -125,6 +125,18 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 			objects.emplace_back(player);
 		}
+		else if (type == "brick")
+		{
+			bool isGround = false;
+			object->QueryBoolAttribute("isGround", &isGround);
+
+			CBrick* brick = new CBrick();
+			brick->SetId(id);
+			brick->SetPosition(x, y);
+			brick->isGround = isGround;
+
+			objects.emplace_back(brick);
+		}
 		else
 		{
 			gameObject = CObjectFactory::Construct(type);

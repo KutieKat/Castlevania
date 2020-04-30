@@ -62,6 +62,10 @@ CGameObject* CObjectFactory::Construct(string type)
 	{
 		return new CMapPin();
 	}
+	else if (type == "brick")
+	{
+		return new CBrick();
+	}
 	else
 	{
 		return nullptr;

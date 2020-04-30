@@ -20,6 +20,7 @@
 #include "Misc/Bat.h"
 #include "Misc/Helicopter.h"
 #include "Misc/MapPin.h"
+#include "Misc/Brick.h"
 using namespace std;
 
 class CObjectFactory

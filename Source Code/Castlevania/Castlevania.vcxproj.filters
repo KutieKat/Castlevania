@@ -273,6 +273,9 @@
     <ClCompile Include="Models\Misc\MapPin.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Misc\Brick.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -426,6 +429,9 @@
       <Filter>Header Files\Models\Effects</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\MapPin.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\Brick.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>

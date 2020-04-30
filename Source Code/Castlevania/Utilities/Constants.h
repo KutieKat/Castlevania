@@ -85,7 +85,7 @@ enum HealthType
 #define SIMON_STATE_CUT_SCENE_AUTO_WALK 11
 #define SIMON_STATE_WATCH 12
 
-#define SIMON_BBOX_WIDTH 60
+#define SIMON_BBOX_WIDTH 35
 #define SIMON_BBOX_HEIGHT 62
 
 #define SIMON_ANI_IDLE_LEFT	0
@@ -197,3 +197,7 @@ enum HealthType
 
 // Effect
 #define EFFECT_DISPLAY_TIME 300
+
+// Brick
+#define BRICK_BBOX_WIDTH 25
+#define BRICK_BBOX_HEIGHT 25
