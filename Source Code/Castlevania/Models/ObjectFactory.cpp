@@ -66,6 +66,18 @@ CGameObject* CObjectFactory::Construct(string type)
 	{
 		return new CBrick();
 	}
+	else if (type == "next_scene")
+	{
+		return new CNextScene();
+	}
+	else if (type == "previous_scene")
+	{
+		return new CPreviousScene();
+	}
+	else if (type == "moving_bar")
+	{
+		return new CMovingBar();
+	}
 	else
 	{
 		return nullptr;

@@ -118,7 +118,7 @@ void CIntroScene::ParseObjects(TiXmlElement* element)
 	}
 }
 
-CIntroScene::CIntroScene(string id, string filePath, string stage, string nextSceneId) : CScene(id, filePath, stage, nextSceneId)
+CIntroScene::CIntroScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId)
 {
 	game = CGame::GetInstance();
 	keyHandler = new CIntroSceneKeyHandler(this);
@@ -150,6 +150,11 @@ bool CIntroScene::Load()
 	startLabel = new CLabel("PUSH START KEY", 136, 270, 17);
 
 	return true;
+}
+
+bool CIntroScene::Reload()
+{
+	return Load();
 }
 
 void CIntroScene::Update(DWORD dt)

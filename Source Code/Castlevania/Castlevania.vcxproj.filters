@@ -109,9 +109,6 @@
     <Filter Include="Source Files\Camera">
       <UniqueIdentifier>{bc652390-0f47-4acd-a43d-af2aa3f0a75b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene">
-      <UniqueIdentifier>{2dbb7e45-62d8-4b59-984b-48b410347e45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{4747b93d-49f2-47f3-8be3-3638e6ec0d43}</UniqueIdentifier>
     </Filter>
@@ -120,6 +117,9 @@
     </Filter>
     <Filter Include="Source Files\Models\Effects">
       <UniqueIdentifier>{1d37394e-9a85-4c98-afda-6cff304d26e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{2dbb7e45-62d8-4b59-984b-48b410347e45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +276,21 @@
     <ClCompile Include="Models\Misc\Brick.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Misc\TopStair.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\BottomStair.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\NextScene.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\PreviousScene.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\MovingBar.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -387,13 +402,13 @@
       <Filter>Header Files\Animations</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\Scene.h">
-      <Filter>Header Files\Scene</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\PlayScene.h">
-      <Filter>Header Files\Scene</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\IntroScene.h">
-      <Filter>Header Files\Scene</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\Background.h">
       <Filter>Header Files\Models\Misc</Filter>
@@ -402,7 +417,7 @@
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\CutScene.h">
-      <Filter>Header Files\Scene</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\Bat.h">
       <Filter>Header Files\Models\Misc</Filter>
@@ -420,7 +435,7 @@
       <Filter>Header Files\Models\Characters\Players</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\SceneManager.h">
-      <Filter>Header Files\Scene</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Models\Effects\Flash.h">
       <Filter>Header Files\Models\Effects</Filter>
@@ -432,6 +447,21 @@
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\Brick.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\TopStair.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\BottomStair.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\NextScene.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\PreviousScene.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\MovingBar.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>

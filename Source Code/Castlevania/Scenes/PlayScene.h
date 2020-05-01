@@ -18,9 +18,10 @@
 class CPlayScene : public CScene
 {
 public:
-	CPlayScene(string id, string filePath, string stage = "", string nextSceneId = "");
+	CPlayScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "");
 
 	virtual bool Load();
+	virtual bool Reload();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
@@ -36,6 +37,8 @@ protected:
 	CGame* game;
 	CBlackboard* blackboard;
 	CTileMap* tileMap;
+
+	bool reloading;
 
 	void ParseTileMap(TiXmlElement* element);
 	void ParseTextures(TiXmlElement* element);

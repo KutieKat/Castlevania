@@ -13,24 +13,29 @@ protected:
 
 	string id;
 	string filePath;
+	string previousSceneId;
 	string nextSceneId;
 	string stage;
 
 	DWORD switchSceneTime;
 
 public:
-	CScene(string id, string filePath, string stage = "", string nextSceneId = "");
+	CScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "");
 
 	IKeyEventHandler* GetKeyEventHandler();
 
 	virtual bool Load() = 0;
+	virtual bool Reload() = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 
 	string GetId();
+	string GetPreviousSceneId();
 	string GetNextSceneId();
 	string GetStage();
+
+	bool needReloading;
 };
 
 typedef CScene* LPSCENE;

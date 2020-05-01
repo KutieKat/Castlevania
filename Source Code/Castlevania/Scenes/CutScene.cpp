@@ -160,7 +160,7 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 	}
 }
 
-CCutScene::CCutScene(string id, string filePath, string stage, string nextSceneId) : CScene(id, filePath, stage, nextSceneId)
+CCutScene::CCutScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId)
 {
 	game = CGame::GetInstance();
 	keyHandler = new CCutSceneKeyHandler(this);
@@ -192,6 +192,11 @@ bool CCutScene::Load()
 	blackboard = new CBlackboard();
 
 	return true;
+}
+
+bool CCutScene::Reload()
+{
+	return Load();
 }
 
 void CCutScene::Update(DWORD dt)

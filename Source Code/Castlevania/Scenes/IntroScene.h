@@ -16,9 +16,10 @@ using namespace std;
 class CIntroScene : public CScene
 {
 public:
-	CIntroScene(string id, string filePath, string stage = "", string nextSceneId = "");
+	CIntroScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "");
 
 	virtual bool Load();
+	virtual bool Reload();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();

@@ -36,27 +36,33 @@ bool CSceneManager::Load(string filePath)
 
 	for (scene = root->FirstChildElement(); scene != nullptr; scene = scene->NextSiblingElement())
 	{
+		bool needReloading = false;
+
 		string id = scene->Attribute("id");
 		string type = scene->Attribute("type");
 		string path = scene->Attribute("path");
 		string stage = scene->Attribute("stage");
+		string previousSceneId = scene->Attribute("previousSceneId");
 		string nextSceneId = scene->Attribute("nextSceneId");
+
+		scene->QueryBoolAttribute("needReloading", &needReloading);
 
 		if (type == "play_scene")
 		{
-			sceneItem = new CPlayScene(id, path, stage, nextSceneId);
+			sceneItem = new CPlayScene(id, path, stage, previousSceneId, nextSceneId);
 		}
 
 		if (type == "intro_scene")
 		{
-			sceneItem = new CIntroScene(id, path, stage, nextSceneId);
+			sceneItem = new CIntroScene(id, path, stage, previousSceneId, nextSceneId);
 		}
 
 		if (type == "cut_scene")
 		{
-			sceneItem = new CCutScene(id, path, stage, nextSceneId);
+			sceneItem = new CCutScene(id, path, stage, previousSceneId, nextSceneId);
 		}
 
+		sceneItem->needReloading = needReloading;
 		scenes[id] = sceneItem;
 	}
 
@@ -90,7 +96,16 @@ void CSceneManager::SwitchScene(string sceneId)
 		game->Reset();
 	}
 
-	scene->Load();
+	if (scene->needReloading && IsSceneLoaded(sceneId))
+	{
+		scene->Reload();
+	}
+	else
+	{
+		scene->Load();
+		AddLoadedScenes(sceneId);
+	}
+
 	game->GetTimer()->SetTime(300);
 }
 
@@ -102,4 +117,27 @@ string CSceneManager::GetCurrentSceneId()
 string CSceneManager::GetNextSceneId()
 {
 	return GetCurrentScene()->GetNextSceneId();
+}
+
+string CSceneManager::GetPreviousSceneId()
+{
+	return GetCurrentScene()->GetPreviousSceneId();
+}
+
+void CSceneManager::AddLoadedScenes(string sceneId)
+{
+	if (find(loadedScenes.begin(), loadedScenes.end(), sceneId) == loadedScenes.end())
+	{
+		loadedScenes.emplace_back(sceneId);
+	}
+}
+
+bool CSceneManager::IsSceneLoaded(string sceneId)
+{
+	if (find(loadedScenes.begin(), loadedScenes.end(), sceneId) != loadedScenes.end())
+	{
+		return true;
+	}
+
+	return false;
 }

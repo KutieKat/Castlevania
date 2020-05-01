@@ -52,8 +52,10 @@ public:
 	void SetSpeed(float vx, float vy);
 	void GetPosition(float &x, float &y);
 	void GetSpeed(float &vx, float &vy);
+
 	void SetDirection(Direction direction);
 	Direction GetDirection();
+
 	void SetId(string id);
 	string GetId();
 

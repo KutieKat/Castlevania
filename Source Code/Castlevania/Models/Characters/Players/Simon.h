@@ -24,9 +24,16 @@ public:
 	bool up;
 	bool lastFrameShown;
 	bool standingToWatch;
+	bool onStair;
+	bool atBottomStair;
+	bool atTopStair;
+	bool onBar;
 
 	string movingDirection;
 	string switchScenePosition;
+
+	Direction stairDirectionX;
+	Direction stairDirectionY;
 
 	DWORD waitingTime;
 

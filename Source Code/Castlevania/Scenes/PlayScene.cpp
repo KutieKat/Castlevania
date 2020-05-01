@@ -1,5 +1,7 @@
 #include "PlayScene.h"
 #include "../Models/ObjectFactory.h"
+#include "../Models/Misc/TopStair.h"
+#include "../Models/Misc/BottomStair.h"
 #include "../Utilities/Debug.h"
 #include "../Utilities/SafeDelete.h"
 
@@ -119,9 +121,65 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 		if (type == "simon")
 		{
+			string state, stairDirectionX, stairDirectionY;
+			string reloadState, reloadStairDirectionX, reloadStairDirectionY;
+
 			player = new CSimon();
 			player->SetId(id);
-			player->SetPosition(x, y);
+
+			if (!reloading)
+			{
+				if (object->Attribute("state"))
+				{
+					state = object->Attribute("state");
+				}
+
+				if (object->Attribute("stairDirectionX"))
+				{
+					stairDirectionX = object->Attribute("stairDirectionX");
+				}
+
+				if (object->Attribute("stairDirectionY"))
+				{
+					stairDirectionY = object->Attribute("stairDirectionY");
+				}
+
+				player->SetPosition(x, y);
+				player->stairDirectionX = stairDirectionX == "right" ? Direction::Right : Direction::Left;
+				player->stairDirectionY = stairDirectionY == "up" ? Direction::Up : Direction::Down;
+			}
+			else
+			{
+				int reloadX, reloadY;
+
+				object->QueryIntAttribute("reloadX", &reloadX);
+				object->QueryIntAttribute("reloadY", &reloadY);
+
+				if (object->Attribute("reloadState"))
+				{
+					reloadState = object->Attribute("reloadState");
+				}
+
+				if (object->Attribute("reloadStairDirectionX"))
+				{
+					reloadStairDirectionX = object->Attribute("reloadStairDirectionX");
+				}
+
+				if (object->Attribute("reloadStairDirectionY"))
+				{
+					reloadStairDirectionY = object->Attribute("reloadStairDirectionY");
+				}
+
+				player->SetPosition(reloadX, reloadY);
+				player->stairDirectionX = reloadStairDirectionX == "right" ? Direction::Right : Direction::Left;
+				player->stairDirectionY = reloadStairDirectionY == "up" ? Direction::Up : Direction::Down;
+			}
+
+			if (state == "on_stair" || (reloading && reloadState == "on_stair"))
+			{
+				player->onStair = true;
+				player->SetState(SIMON_STATE_IDLE_ON_STAIR);
+			}
 
 			objects.emplace_back(player);
 		}
@@ -136,6 +194,58 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			brick->isGround = isGround;
 
 			objects.emplace_back(brick);
+		}
+		else if (type == "top_stair")
+		{
+			string directionX = object->Attribute("directionX");
+			string directionY = object->Attribute("directionY");
+
+			CTopStair* stair = new CTopStair();
+			stair->SetId(id);
+			stair->SetPosition(x, y);
+			stair->directionX = directionX == "right" ? Direction::Right : Direction::Left;
+			stair->directionY = directionY == "up" ? Direction::Up : Direction::Down;
+
+			objects.emplace_back(stair);
+		}
+		else if (type == "bottom_stair")
+		{
+			string directionX = object->Attribute("directionX");
+			string directionY = object->Attribute("directionY");
+
+			CBottomStair* stair = new CBottomStair();
+			stair->SetId(id);
+			stair->SetPosition(x, y);
+			stair->directionX = directionX == "right" ? Direction::Right : Direction::Left;
+			stair->directionY = directionY == "up" ? Direction::Up : Direction::Down;
+			
+			objects.emplace_back(stair);
+		}
+		else if (type == "next_scene")
+		{
+			bool playerMustBeOnStair = false;
+
+			object->QueryBoolAttribute("playerMustBeOnStair", &playerMustBeOnStair);
+
+			CNextScene* scene = new CNextScene();
+			scene->SetId(id);
+			scene->SetPosition(x, y);
+			scene->playerMustBeOnStair = playerMustBeOnStair;
+
+			objects.emplace_back(scene);
+		}
+		else if (type == "previous_scene")
+		{
+			bool playerMustBeOnStair = false;
+
+			object->QueryBoolAttribute("playerMustBeOnStair", &playerMustBeOnStair);
+
+			CPreviousScene* scene = new CPreviousScene();
+			scene->SetId(id);
+			scene->SetPosition(x, y);
+			scene->playerMustBeOnStair = playerMustBeOnStair;
+
+			objects.emplace_back(scene);
 		}
 		else
 		{
@@ -195,9 +305,10 @@ CGameObject* CPlayScene::FindObject(string id)
 	}
 }
 
-CPlayScene::CPlayScene(string id, string filePath, string stage, string nextSceneId) : CScene(id, filePath, stage, nextSceneId)
+CPlayScene::CPlayScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId)
 {
 	game = CGame::GetInstance();
+	reloading = false;
 	keyHandler = new CPlaySceneKeyHandler(this);
 }
 
@@ -233,6 +344,13 @@ bool CPlayScene::Load()
 	CGame::GetInstance()->GetTimer()->Start();
 
 	return true;
+}
+
+bool CPlayScene::Reload()
+{
+	reloading = true;
+
+	return Load();
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -395,7 +513,10 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 
 		if (game->GetInputManager()->IsKeyDown(DIK_DOWN))
 		{
-			simon->SetState(SIMON_STATE_SIT);
+			if (!simon->onStair)
+			{
+				simon->SetState(SIMON_STATE_SIT);
+			}
 		}
 
 		if (game->GetInputManager()->IsKeyDown(DIK_UP))
@@ -403,13 +524,30 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 			simon->up = true;
 		}
 
-		if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
+		if (game->GetInputManager()->IsKeyDown(DIK_UP))
+		{
+			if (simon->onStair)
+			{
+				simon->SetDirection(Direction::Right);
+				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+			}
+			else
+			{
+				simon->SetState(SIMON_STATE_IDLE);
+			}
+		}
+		else if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 		{
 			simon->SetDirection(Direction::Right);
 
 			if (!simon->sitting)
 			{
 				simon->SetState(SIMON_STATE_WALK);
+			}
+
+			if (simon->onStair)
+			{
+				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
 			}
 		}
 		else if (game->GetInputManager()->IsKeyDown(DIK_LEFT))
@@ -420,16 +558,36 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 			{
 				simon->SetState(SIMON_STATE_WALK);
 			}
+
+			if (simon->onStair)
+			{
+				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+			}
 		}
 		else if (game->GetInputManager()->IsKeyDown(DIK_DOWN))
 		{
-			simon->SetState(SIMON_STATE_SIT);
+			if (!simon->onStair)
+			{
+				simon->SetState(SIMON_STATE_SIT);
+			}
+			else
+			{
+				simon->SetDirection(Direction::Left);
+				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+			}
 		}
 		else
 		{
 			if (game->GetTimer()->GetRemainingTime() > 0 && playerData->GetHealthVolumes() > 0)
 			{
-				simon->SetState(SIMON_STATE_IDLE);
+				if (simon->onStair)
+				{
+					simon->SetState(SIMON_STATE_IDLE_ON_STAIR);
+				}
+				else
+				{
+					simon->SetState(SIMON_STATE_IDLE);
+				}
 			}
 			else
 			{
@@ -477,6 +635,11 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			break;
 
 		case DIK_X:
+			if (simon->onStair)
+			{
+				return;
+			}
+
 			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->touchingGround && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 			{
 				return;
@@ -493,6 +656,27 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 
 		case DIK_UP:
 			simon->up = true;
+
+			if (simon->atBottomStair && simon->GetDirection() == simon->stairDirectionX)
+			{
+				simon->onStair = true;
+				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+			}
+
+			break;
+
+		case DIK_DOWN:
+			if (simon->onStair)
+			{
+				return;
+			}
+
+			if (simon->atTopStair && simon->GetDirection() == simon->stairDirectionX)
+			{
+				simon->onStair = true;
+				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+			}
+
 			break;
 
 		default:
@@ -514,7 +698,15 @@ void CPlaySceneKeyHandler::OnKeyUp(int keyCode)
 			break;
 
 		case DIK_DOWN:
-			simon->SetState(SIMON_STATE_IDLE);
+			if (simon->onStair)
+			{
+				simon->SetState(SIMON_STATE_IDLE_ON_STAIR);
+			}
+			else
+			{
+				simon->SetState(SIMON_STATE_IDLE);
+			}
+
 			break;
 		}
 	}

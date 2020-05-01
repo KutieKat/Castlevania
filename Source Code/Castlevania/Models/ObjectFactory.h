@@ -21,6 +21,9 @@
 #include "Misc/Helicopter.h"
 #include "Misc/MapPin.h"
 #include "Misc/Brick.h"
+#include "Misc/NextScene.h"
+#include "Misc/PreviousScene.h"
+#include "Misc/MovingBar.h"
 using namespace std;
 
 class CObjectFactory

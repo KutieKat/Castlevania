@@ -4,6 +4,11 @@
 #include "../../Misc/Ground.h"
 #include "../../Misc/Door.h"
 #include "../../Misc/Brick.h"
+#include "../../Misc/TopStair.h"
+#include "../../Misc/BottomStair.h"
+#include "../../Misc/NextScene.h"
+#include "../../Misc/PreviousScene.h"
+#include "../../Misc/MovingBar.h"
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
@@ -20,6 +25,10 @@ CSimon::CSimon()
 	touchingGround = false;
 	lastFrameShown = false;
 	standingToWatch = false;
+	onStair = false;
+	atTopStair = false;
+	atBottomStair = false;
+	onBar = false;
 
 	delayEndTime = -1;
 	switchSceneTime = -1;
@@ -69,6 +78,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny < 0)
 				{
 					touchingGround = true;
+					onBar = false;
 				}
 
 				if (state == SIMON_STATE_STAND_AND_ATTACK)
@@ -83,23 +93,43 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto brick = dynamic_cast<CBrick*>(e->obj);
 
-				if (brick->isGround)
+				if (onStair)
 				{
-					if (e->ny < 0)
-					{
-						touchingGround = true;
-					}
-
-					if (state == SIMON_STATE_STAND_AND_ATTACK)
-					{
-						vx = 0;
-					}
-
-					if (e->ny != 0) vy = 0;
+					x += dx;
+					y += dy;
 				}
 				else
 				{
-					if (e->nx != 0) vx = 0;
+					if (brick->isGround)
+					{
+						if (e->ny < 0)
+						{
+							touchingGround = true;
+							onStair = false;
+							onBar = false;
+						}
+
+						if (state == SIMON_STATE_STAND_AND_ATTACK)
+						{
+							vx = 0;
+						}
+
+						if (e->ny != 0) vy = 0;
+					}
+					else
+					{
+						if (e->nx != 0) vx = 0;
+					}
+				}
+			}
+			else if (dynamic_cast<CMovingBar*>(e->obj))
+			{
+				if (e->ny < 0)
+				{
+					touchingGround = true;
+					onBar = true;
+
+					vx = e->obj->vx;
 				}
 			}
 			else if (dynamic_cast<CEasterEgg*>(e->obj))
@@ -113,14 +143,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CDoor*>(e->obj))
 			{
-				auto door = dynamic_cast<CDoor*>(e->obj);
+				e->obj->SetVisibility(Visibility::Hidden);
 
 				if (e->nx < 0)
 				{
 					CGame* game = CGame::GetInstance();
 
 					game->GetTimer()->Pause();
-					game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+					game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetCurrentScene()->GetNextSceneId());
+
 					break;
 				}
 				else
@@ -132,6 +163,90 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					y += dy;
 				}
+			}
+			else if (dynamic_cast<CNextScene*>(e->obj))
+			{
+				auto nextScene = dynamic_cast<CNextScene*>(e->obj);
+
+				if (e->nx < 0 && onStair == nextScene->playerMustBeOnStair)
+				{
+					CGame* game = CGame::GetInstance();
+
+					nextScene->SetVisibility(Visibility::Hidden);
+					game->GetTimer()->Pause();
+					game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+
+					break;
+				}
+				else
+				{
+					x += dx;
+				}
+
+				if (e->ny != 0)
+				{
+					y += dy;
+				}
+			}
+			else if (dynamic_cast<CPreviousScene*>(e->obj))
+			{
+				auto previousScene = dynamic_cast<CPreviousScene*>(e->obj);
+
+				if (e->nx > 0 && onStair == previousScene->playerMustBeOnStair)
+				{
+					CGame* game = CGame::GetInstance();
+
+					previousScene->SetVisibility(Visibility::Hidden);
+					game->GetTimer()->Pause();
+					game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetPreviousSceneId());
+
+					break;
+				}
+				else
+				{
+					x += dx;
+				}
+
+				if (e->ny != 0)
+				{
+					y += dy;
+				}
+			}
+			else if (dynamic_cast<CBottomStair*>(e->obj))
+			{
+				auto stair = dynamic_cast<CBottomStair*>(e->obj);
+
+				if (onStair)
+				{
+					onStair = false;
+					atTopStair = false;
+					SetState(SIMON_STATE_IDLE);
+				}
+
+				atBottomStair = true;
+				stairDirectionX = stair->directionX;
+				stairDirectionY = stair->directionY;
+
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CTopStair*>(e->obj))
+			{
+				auto stair = dynamic_cast<CTopStair*>(e->obj);
+
+				if (onStair)
+				{
+					onStair = false;
+					atBottomStair = false;
+					SetState(SIMON_STATE_IDLE);
+				}
+
+				atTopStair = true;
+				stairDirectionX = stair->directionX;
+				stairDirectionY = stair->directionY;
+
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else
 			{
@@ -159,8 +274,6 @@ void CSimon::Render()
 
 	RenderWhip();
 	RenderSubWeapon();
-
-	//RenderBoundingBox();
 }
 
 void CSimon::SetState(int state)
@@ -183,7 +296,11 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_SIT:
-		vx = 0;
+		if (!onBar)
+		{
+			vx = 0;
+		}
+
 		sitting = true;
 		break;
 
@@ -195,7 +312,7 @@ void CSimon::SetState(int state)
 
 	case SIMON_STATE_SIT_AND_ATTACK:
 	case SIMON_STATE_STAND_AND_ATTACK:
-		if (touchingGround)
+		if (!onBar)
 		{
 			vx = 0;
 		}
@@ -210,7 +327,11 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_IDLE:
-		vx = 0;
+		if (!onBar)
+		{
+			vx = 0;
+		}
+
 		touchingGround = true;
 		sitting = false;
 		ResetAnimations();
@@ -228,6 +349,36 @@ void CSimon::SetState(int state)
 			vx = -SIMON_SLOW_WALK_SPEED;
 		}
 
+		break;
+
+	case SIMON_STATE_IDLE_ON_STAIR:
+		vx = 0;
+		vy = 0;
+		break;
+
+	case SIMON_STATE_WALK_DOWNSTAIR:
+		if (stairDirectionX == direction)
+		{
+			vx = stairDirectionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
+		}
+		else
+		{
+			vx = stairDirectionX == Direction::Right ? -SIMON_WALK_SPEED : SIMON_WALK_SPEED;
+		}
+
+		vy = SIMON_WALK_SPEED;
+		break;
+
+	case SIMON_STATE_WALK_UPSTAIR:
+		if (stairDirectionX == direction)
+		{
+			vx = stairDirectionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
+		}
+		else
+		{
+			vx = stairDirectionX == Direction::Right ? -SIMON_WALK_SPEED : SIMON_WALK_SPEED;
+		}
+		vy = -SIMON_WALK_SPEED;
 		break;
 
 	case SIMON_STATE_DIE:
@@ -260,6 +411,40 @@ int CSimon::GetAnimationToRender()
 	case SIMON_STATE_WALK:
 	case SIMON_STATE_CUT_SCENE_AUTO_WALK:
 		ani = direction == Direction::Right ? SIMON_ANI_WALK_RIGHT : SIMON_ANI_WALK_LEFT;
+		break;
+
+	case SIMON_STATE_IDLE_ON_STAIR:
+		if (stairDirectionY == Direction::Up)
+		{
+			if (direction == stairDirectionX)
+			{
+				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_UP_RIGHT : SIMON_ANI_IDLE_ON_STAIR_UP_LEFT;
+			}
+			else
+			{
+				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_DOWN_RIGHT : SIMON_ANI_IDLE_ON_STAIR_DOWN_LEFT;
+			}
+		}
+		else
+		{
+			if (direction == stairDirectionX)
+			{
+				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_DOWN_RIGHT : SIMON_ANI_IDLE_ON_STAIR_DOWN_LEFT;
+			}
+			else
+			{
+				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_UP_RIGHT : SIMON_ANI_IDLE_ON_STAIR_UP_LEFT;
+			}
+		}
+
+		break;
+
+	case SIMON_STATE_WALK_UPSTAIR:
+		ani = direction == Direction::Right ? SIMON_ANI_WALK_UPSTAIR_RIGHT : SIMON_ANI_WALK_UPSTAIR_LEFT;
+		break;
+
+	case SIMON_STATE_WALK_DOWNSTAIR:
+		ani = direction == Direction::Right ? SIMON_ANI_WALK_DOWNSTAIR_RIGHT : SIMON_ANI_WALK_DOWNSTAIR_LEFT;
 		break;
 
 	case SIMON_STATE_WATCH:
@@ -311,7 +496,7 @@ void CSimon::ResetAnimations()
 
 void CSimon::HandleGravity()
 {
-	if (state != SIMON_STATE_CUT_SCENE_AUTO_WALK && state != SIMON_STATE_WATCH)
+	if (!onStair && state != SIMON_STATE_WALK_UPSTAIR && state != SIMON_STATE_CUT_SCENE_AUTO_WALK && state != SIMON_STATE_WATCH)
 	{
 		vy += SIMON_GRAVITY * dt;
 	}
