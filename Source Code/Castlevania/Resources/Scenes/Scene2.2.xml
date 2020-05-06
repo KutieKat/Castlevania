@@ -5,6 +5,7 @@
   <textures>
     <texture id="simon" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
     <texture id="whip" path="Resources\\Weapons\\Whip.png" r="255" g="0" b="255" />
+    <texture id="seven_hundred" path="Resources\\Effects\\SevenHundred.png" r="255" g="0" b="255" />
     <texture id="one_thousand" path="Resources\\Effects\\OneThousand.png" r="255" g="0" b="255" />
     <texture id="flash" path="Resources\\Effects\\Flash.png" r="255" g="0" b="255" />
     <texture id="big_heart" path="Resources\\Items\\BigHeart.png" r="255" g="0" b="255" />
@@ -16,6 +17,11 @@
     <texture id="transparency" path="Resources\\Others\\Transparency.png" r="255" g="0" b="255" />
     <texture id="health_volume" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
     <texture id="moving_bar" path="Resources\\Ground\\MovingBar.png" r="255" g="0" b="255" />
+    <texture id="small_heart" path="Resources\\Items\\SmallHeart.png" r="255" g="0" b="255" />
+    <texture id="double_shot" path="Resources\\Items\\DoubleShot.png" r="255" g="0" b="255" />
+    <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
+    <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
+    <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
   </textures>
 
   <sprites>
@@ -65,6 +71,10 @@
     <!-- Flash -->
     <sprite id="flash_1" textureId="flash" left="0" top="0" right="15" bottom="19" />
     <sprite id="flash_2" textureId="flash" left="16" top="0" right="31" bottom="19" />
+
+    <!-- SevenHundred -->
+    <sprite id="seven_hundred_1" textureId="seven_hundred" left="0" top="0" right="31" bottom="17" />
+    <sprite id="seven_hundred_2" textureId="seven_hundred" left="32" top="0" right="63" bottom="17" />
 
     <!-- OneThousand -->
     <sprite id="one_thousand_1" textureId="one_thousand" left="0" top="0" right="38" bottom="18" />
@@ -146,6 +156,27 @@
     
     <!-- MovingBar -->
     <sprite id="moving_bar" textureId="moving_bar" left="0" top="0" right="63" bottom="15" />
+
+    <!-- SmallHeart -->
+    <sprite id="small_heart" textureId="small_heart" left="0" top="0" right="15" bottom="15" />
+
+    <!-- DoubleShot -->
+    <sprite id="double_shot" textureId="double_shot" left="0" top="0" right="27" bottom="27" />
+
+    <!-- BigDoubleShot -->
+    <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+
+    <!-- Boomerang -->
+    <sprite id="boomerang_1" textureId="boomerang" left="0" top="0" right="27" bottom="27" />
+    <sprite id="boomerang_2" textureId="boomerang" left="28" top="0" right="55" bottom="27" />
+    <sprite id="boomerang_3" textureId="boomerang" left="56" top="0" right="83" bottom="27" />
+
+    <!-- SmallCandle -->
+    <sprite id="small_candle_1" textureId="small_candle" left="0" top="0" right="15" bottom="31" />
+    <sprite id="small_candle_2" textureId="small_candle" left="16" top="0" right="31" bottom="31" />
+
+    <!-- WhiteMoneyBag -->
+    <sprite id="white_money_bag" textureId="money_bag" left="30" top="0" right="59" bottom="29" />
   </sprites>
 
   <animations>
@@ -278,6 +309,12 @@
       <frame spriteId="flash_2" duration="100" />
     </animation>
 
+    <!-- SevenHundred -->
+    <animation id="seven_hundred">
+      <frame spriteId="seven_hundred_1" duration="100" />
+      <frame spriteId="seven_hundred_2" duration="100" />
+    </animation>
+
     <!-- OneThousand -->
     <animation id="one_thousand">
       <frame spriteId="one_thousand_1" duration="100" />
@@ -408,6 +445,43 @@
     <animation id="moving_bar">
       <frame spriteId="moving_bar" duration="100" />
     </animation>
+
+    <!-- SmallHeart -->
+    <animation id="small_heart">
+      <frame spriteId="small_heart" duration="100" />
+    </animation>
+
+    <!-- DoubleShot -->
+    <animation id="double_shot">
+      <frame spriteId="double_shot" duration="100" />
+    </animation>
+
+    <!-- BigDoubleShot -->
+    <animation id="big_double_shot">
+      <frame spriteId="big_double_shot" duration="100" />
+    </animation>
+
+    <!-- Boomerang -->
+    <animation id="boomerang_static">
+      <frame spriteId="boomerang_2" duration="100" />
+    </animation>
+
+    <animation id="boomerang_move">
+      <frame spriteId="boomerang_1" duration="100" />
+      <frame spriteId="boomerang_2" duration="100" />
+      <frame spriteId="boomerang_3" duration="100" />
+    </animation>
+
+    <!-- SmallCandle -->
+    <animation id="small_candle">
+      <frame spriteId="small_candle_1" duration="100" />
+      <frame spriteId="small_candle_2" duration="100" />
+    </animation>
+
+    <!-- WhiteMoneyBag -->
+    <animation id="white_money_bag">
+      <frame spriteId="white_money_bag" duration="100" />
+    </animation>
   </animations>
 
   <animationSets>
@@ -441,6 +515,10 @@
 
     <animationSet id="flash">
       <animationSetItem id="flash" animationId="flash" />
+    </animationSet>
+
+    <animationSet id="seven_hundred">
+      <animationSetItem id="seven_hundred" animationId="seven_hundred" />
     </animationSet>
 
     <animationSet id="one_thousand">
@@ -502,64 +580,115 @@
     <animationSet id="moving_bar">
       <animationSetItem id="moving_bar" animationId="moving_bar" />
     </animationSet>
+
+    <animationSet id="small_heart">
+      <animationSetItem id="small_heart" animationId="small_heart" />
+    </animationSet>
+
+    <animationSet id="double_shot">
+      <animationSetItem id="double_shot" animationId="double_shot" />
+    </animationSet>
+
+    <animationSet id="big_double_shot">
+      <animationSetItem id="big_double_shot" animationId="big_double_shot" />
+    </animationSet>
+
+    <animationSet id="boomerang">
+      <animationSetItem id="boomerang_static" animationId="boomerang_static" />
+      <animationSetItem id="boomerang_move" animationId="boomerang_move" />
+    </animationSet>
+
+    <animationSet id="small_candle">
+      <animationSetItem id="small_candle" animationId="small_candle" />
+    </animationSet>
+
+    <animationSet id="white_money_bag">
+      <animationSetItem id="white_money_bag" animationId="white_money_bag" />
+    </animationSet>
   </animationSets>
 
   <objects>
-    <object id="brick_1" type="brick" animationSetId="brick" x="0" y="108" />
-    <object id="brick_2" type="brick" animationSetId="brick" x="26" y="108" />
-    <object id="brick_3" type="brick" animationSetId="brick" x="52" y="108" />
-    <object id="brick_4" type="brick" animationSetId="brick" x="52" y="82" />
+    <object id="brick_1" type="brick" animationSetId="brick" x="0" y="81" />
+    <object id="brick_2" type="brick" animationSetId="brick" x="0" y="113" />
+    <object id="brick_3" type="brick" animationSetId="brick" x="0" y="145" />
+    <object id="brick_4" type="brick" animationSetId="brick" x="0" y="177" />
+    <object id="brick_5" type="brick" animationSetId="brick" x="0" y="209" />
+    <object id="brick_6" type="brick" animationSetId="brick" x="0" y="241" />
+    <object id="brick_7" type="brick" animationSetId="brick" x="32" y="241" isGround="true" />
+
+    <object id="brick_8" type="brick" animationSetId="brick" x="128" y="305" isGround="true" />
+    <object id="brick_9" type="brick" animationSetId="brick" x="160" y="305" isGround="true" />
+
+    <object id="brick_10" type="brick" animationSetId="brick" x="192" y="241" isGround="true" />
+    <object id="brick_11" type="brick" animationSetId="brick" x="224" y="241" isGround="true" />
+    <object id="brick_12" type="brick" animationSetId="brick" x="256" y="241" isGround="true" />
+    <object id="brick_13" type="brick" animationSetId="brick" x="288" y="241" isGround="true" />
+    <object id="brick_14" type="brick" animationSetId="brick" x="288" y="273" />
+    <object id="brick_15" type="brick" animationSetId="brick" x="288" y="305" />
+    <object id="brick_16" type="brick" animationSetId="brick" x="288" y="337" />
+    <object id="brick_17" type="brick" animationSetId="brick" x="288" y="369" />
+    <object id="brick_18" type="brick" animationSetId="brick" x="288" y="401" />
+    <object id="brick_19" type="brick" animationSetId="brick" x="288" y="433" />
+
+    <object id="brick_20" type="brick" animationSetId="brick" x="384" y="241" isGround="true" />
+    <object id="brick_21" type="brick" animationSetId="brick" x="416" y="241" isGround="true" />
+    <object id="brick_22" type="brick" animationSetId="brick" x="448" y="241" isGround="true" />
+    <object id="brick_23" type="brick" animationSetId="brick" x="480" y="241" isGround="true" />
+    <object id="brick_24" type="brick" animationSetId="brick" x="512" y="241" isGround="true" />
+    <object id="brick_25" type="brick" animationSetId="brick" x="544" y="241" isGround="true" />
+
+    <object id="brick_26" type="brick" animationSetId="brick" x="576" y="305" isGround="true" />
+    <object id="brick_27" type="brick" animationSetId="brick" x="608" y="305" isGround="true" />
+
+    <object id="brick_28" type="brick" animationSetId="brick" x="640" y="369" isGround="true" />
+    <object id="brick_29" type="brick" animationSetId="brick" x="672" y="369" isGround="true" />
+
+    <object id="brick_30" type="brick" animationSetId="brick" x="704" y="273" isGround="true" />
+    <object id="brick_31" type="brick" animationSetId="brick" x="704" y="305" />
+    <object id="brick_32" type="brick" animationSetId="brick" x="704" y="337" />
+    <object id="brick_33" type="brick" animationSetId="brick" x="704" y="369" />
+
+    <object id="brick_34" type="brick" animationSetId="brick" x="736" y="241" isGround="true" />
+    <object id="brick_35" type="brick" animationSetId="brick" x="768" y="241" isGround="true" />
+    <object id="brick_36" type="brick" animationSetId="brick" x="800" y="241" isGround="true" />
+    <object id="brick_37" type="brick" animationSetId="brick" x="832" y="241" isGround="true" />
+    <object id="brick_38" type="brick" animationSetId="brick" x="864" y="241" isGround="true" />
     
-    <object id="brick_5" type="brick" animationSetId="brick" x="0" y="213" isGround="true" />
-    <object id="brick_6" type="brick" animationSetId="brick" x="26" y="213" isGround="true" />
-    <object id="brick_7" type="brick" animationSetId="brick" x="52" y="213" isGround="true" />
-    <object id="brick_8" type="brick" animationSetId="brick" x="78" y="213" isGround="true" />
+    <object id="brick_39" type="brick" animationSetId="brick" x="960" y="81" />
+    <object id="brick_40" type="brick" animationSetId="brick" x="960" y="113" />
+    <object id="brick_41" type="brick" animationSetId="brick" x="960" y="145" />
+    <object id="brick_42" type="brick" animationSetId="brick" x="960" y="177" />
+    <object id="brick_43" type="brick" animationSetId="brick" x="960" y="209" />
+    <object id="brick_44" type="brick" animationSetId="brick" x="960" y="241" />
+    <object id="brick_45" type="brick" animationSetId="brick" x="960" y="273" />
+    <object id="brick_46" type="brick" animationSetId="brick" x="960" y="305" />
 
-    <object id="brick_9" type="brick" animationSetId="brick" x="158" y="266" isGround="true" />
-    <object id="brick_10" type="brick" animationSetId="brick" x="184" y="266" isGround="true" />
+    <object id="brick_47" type="brick" animationSetId="brick" x="928" y="305" isGround="true" />
+    <object id="brick_48" type="brick" animationSetId="brick" x="896" y="305" isGround="true" />
 
-    <object id="brick_11" type="brick" animationSetId="brick" x="210" y="213" isGround="true" />
-    <object id="brick_12" type="brick" animationSetId="brick" x="237" y="213" isGround="true" />
-    <object id="brick_13" type="brick" animationSetId="brick" x="263" y="213" isGround="true" />
-    <object id="brick_14" type="brick" animationSetId="brick" x="289" y="213" isGround="true" />
+    <object id="moving_bar_1" type="moving_bar" animationSetId="moving_bar" x="105" y="241" />
 
-    <object id="brick_15" type="brick" animationSetId="brick" x="369" y="213" isGround="true" />
-    <object id="brick_16" type="brick" animationSetId="brick" x="395" y="213" isGround="true" />
-    <object id="brick_17" type="brick" animationSetId="brick" x="421" y="213" isGround="true" />
-    <object id="brick_18" type="brick" animationSetId="brick" x="448" y="213" isGround="true" />
-    <object id="brick_19" type="brick" animationSetId="brick" x="474" y="213" isGround="true" />
-    <object id="brick_20" type="brick" animationSetId="brick" x="500" y="213" isGround="true" />
+    <object id="small_heart_1" type="small_heart" animationSetId="small_heart" x="794" y="116" visible="false" />
+    <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="794" y="116" endingEffect="flash" hiddenItemId="small_heart_1" />
 
-    <object id="brick_21" type="brick" animationSetId="brick" x="527" y="266" isGround="true" />
-    <object id="brick_22" type="brick" animationSetId="brick" x="553" y="266" isGround="true" />
+    <object id="small_heart_2" type="small_heart" animationSetId="small_heart" x="920" y="116" visible="false" />
+    <object id="small_candle_2" type="small_candle" animationSetId="small_candle" x="920" y="116" endingEffect="flash" hiddenItemId="small_heart_2" />
 
-    <object id="brick_23" type="brick" animationSetId="brick" x="580" y="319" isGround="true" />
-    <object id="brick_24" type="brick" animationSetId="brick" x="606" y="319" isGround="true" />
-    <object id="brick_25" type="brick" animationSetId="brick" x="632" y="292" />
-    <object id="brick_26" type="brick" animationSetId="brick" x="632" y="266" />
-    <object id="brick_27" type="brick" animationSetId="brick" x="632" y="240" isGround="true" />
+    <object id="small_heart_3" type="small_heart" animationSetId="small_heart" x="664" y="116" visible="false" />
+    <object id="small_candle_3" type="small_candle" animationSetId="small_candle" x="664" y="116" endingEffect="flash" hiddenItemId="small_heart_3" />
+
+    <object id="small_heart_4" type="small_heart" animationSetId="small_heart" x="530" y="116" visible="false" />
+    <object id="small_candle_4" type="small_candle" animationSetId="small_candle" x="530" y="116" endingEffect="flash" hiddenItemId="small_heart_4" />
+
+    <object id="white_money_bag_1" type="white_money_bag" animationSetId="white_money_bag" x="284" y="116" visible="false" />
+    <object id="small_candle_5" type="small_candle" animationSetId="small_candle" x="284" y="116" endingEffect="flash" hiddenItemId="white_money_bag_1" />
+
+    <object id="small_heart_6" type="small_heart" animationSetId="small_heart" x="154" y="116" visible="false" />
+    <object id="small_candle_6" type="small_candle" animationSetId="small_candle" x="154" y="116" endingEffect="flash" hiddenItemId="small_heart_6" />
     
-    <object id="brick_28" type="brick" animationSetId="brick" x="659" y="213" isGround="true" />
-    <object id="brick_29" type="brick" animationSetId="brick" x="685" y="213" isGround="true" />
-    <object id="brick_30" type="brick" animationSetId="brick" x="711" y="213" isGround="true" />
+    <object id="simon" type="simon" animationSetId="simon" x="760" y="370" state="on_stair" stairDirectionX="right" stairDirectionY="up" />
     
-    <object id="brick_31" type="brick" animationSetId="brick" x="738" y="213" isGround="true" />
-    <object id="brick_32" type="brick" animationSetId="brick" x="764" y="213" isGround="true" />
-    
-    <object id="brick_33" type="brick" animationSetId="brick" x="843" y="82" />
-    <object id="brick_34" type="brick" animationSetId="brick" x="843" y="108" />
-    <object id="brick_35" type="brick" animationSetId="brick" x="843" y="134" />
-    <object id="brick_36" type="brick" animationSetId="brick" x="843" y="161" />
-    <object id="brick_37" type="brick" animationSetId="brick" x="843" y="187" />
-    <object id="brick_38" type="brick" animationSetId="brick" x="843" y="213" />
-    <object id="brick_39" type="brick" animationSetId="brick" x="843" y="240" />
-    <object id="brick_40" type="brick" animationSetId="brick" x="817" y="266" isGround="true" />
-    <object id="brick_41" type="brick" animationSetId="brick" x="843" y="266" />
-
-    <object id="moving_bar_1" type="moving_bar" animationSetId="moving_bar" x="105" y="214" />
-
-    <object id="simon" type="simon" animationSetId="simon" x="668" y="320" state="on_stair" stairDirectionX="right" stairDirectionY="up" />
-    <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="791" y="180" />
-    <object id="previous_scene_1" type="previous_scene" animationSetId="transparency" x="668" y="330" playerMustBeOnStair="true" />
+    <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="896" y="220" />
+    <object id="previous_scene_1" type="previous_scene" animationSetId="transparency" x="760" y="400" playerMustBeOnStair="true" />
   </objects>
 </resources>

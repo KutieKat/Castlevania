@@ -3,6 +3,7 @@
 #include "../Textures/TextureManager.h"
 #include "../Sprites/SpriteManager.h"
 #include "../Utilities/Color.h"
+#include "../Utilities/Constants.h"
 #include "../Utilities/Debug.h"
 #include "../Utilities/Convert.h"
 
@@ -116,7 +117,7 @@ void CTileMap::Render(CCamera* camera)
 			float x = tileWidth * column;
 			float y = tileHeight * row;
 
-			CSpriteManager::GetInstance()->Get(tileId)->Draw(x, y);
+			CSpriteManager::GetInstance()->Get(tileId)->Draw(x, y + BLACKBOARD_HEIGHT);
 		}
 	}
 }

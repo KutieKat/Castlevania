@@ -1,6 +1,7 @@
 #include "Whip.h"
 #include "../../Game.h"
 #include "../Misc/BigCandle.h"
+#include "../Misc/SmallCandle.h"
 
 CWhip::CWhip(CSimon* simon)
 {
@@ -26,6 +27,10 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (HaveCollision(object))
 		{
 			if (dynamic_cast<CBigCandle*>(object))
+			{
+				object->Disappear();
+			}
+			else if (dynamic_cast<CSmallCandle*>(object))
 			{
 				object->Disappear();
 			}

@@ -1,6 +1,5 @@
 ﻿#include "Simon.h"
 #include "../../../Game.h"
-#include "../../Misc/BigCandle.h"
 #include "../../Misc/Ground.h"
 #include "../../Misc/Door.h"
 #include "../../Misc/Brick.h"
@@ -14,8 +13,15 @@
 #include "../../Items/EasterEgg.h"
 #include "../../Items/MoneyBag.h"
 #include "../../Items/MorningStar.h"
+#include "../../Items/RedMoneyBag.h"
+#include "../../Items/PurpleMoneyBag.h"
+#include "../../Items/WhiteMoneyBag.h"
+#include "../../Items/Crown.h"
+#include "../../Items/Boomerang.h"
+#include "../../Items/SmallHeart.h"
 #include "../../Weapons/Whip.h"
 #include "../../Weapons/WDagger.h"
+#include "../../Weapons/WBoomerang.h"
 #include "../../../Utilities/Debug.h"
 #include "../../../Utilities/SafeDelete.h"
 
@@ -121,6 +127,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						if (e->nx != 0) vx = 0;
 					}
 				}
+			}
+			else if (e->obj->isItem)
+			{
+				if (e->nx != 0) x -= min_tx * dx + nx * 0.4f;
+				if (e->ny != 0) y -= min_ty * dy + ny * 0.4f;
 			}
 			else if (dynamic_cast<CMovingBar*>(e->obj))
 			{
@@ -312,10 +323,15 @@ void CSimon::SetState(int state)
 
 	case SIMON_STATE_SIT_AND_ATTACK:
 	case SIMON_STATE_STAND_AND_ATTACK:
-		if (!onBar)
+		if (touchingGround)
 		{
 			vx = 0;
 		}
+
+		//if (!onBar)
+		//{
+		//	vx = 0;
+		//}
 
 		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
 		ResetAnimations();
@@ -556,9 +572,14 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 			if (type == "dagger")
 			{
 				subWeapon = new WDagger();
-				subWeapon->SetDirection(direction);
-				subWeapon->SetPosition(direction == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
 			}
+			else if (type == "boomerang")
+			{
+				subWeapon = new WBoomerang(this);
+			}
+
+			subWeapon->SetDirection(direction);
+			subWeapon->SetPosition(direction == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
 		}
 	}
 }
@@ -584,7 +605,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 	}
 }
 
-void CSimon::HandleCollisionWithItems(CGameObject * item)
+void CSimon::HandleCollisionWithItems(CGameObject* item)
 {
 	CPlayerData* playerData = CGame::GetInstance()->GetPlayerData();
 
@@ -599,13 +620,37 @@ void CSimon::HandleCollisionWithItems(CGameObject * item)
 	{
 		playerData->AddHearts(5);
 	}
+	else if (dynamic_cast<CSmallHeart*>(item))
+	{
+		playerData->AddHearts(2);
+	}
 	else if (dynamic_cast<CDagger*>(item))
 	{
 		playerData->SetSubWeaponType("dagger");
 	}
 	else if (dynamic_cast<CMoneyBag*>(item))
 	{
-		playerData->AddScore(item->GetValue());
+		playerData->AddScore(1000);
+	}
+	else if (dynamic_cast<CRedMoneyBag*>(item))
+	{
+		playerData->AddScore(100);
+	}
+	else if (dynamic_cast<CPurpleMoneyBag*>(item))
+	{
+		playerData->AddScore(400);
+	}
+	else if (dynamic_cast<CWhiteMoneyBag*>(item))
+	{
+		playerData->AddScore(700);
+	}
+	else if (dynamic_cast<CCrown*>(item))
+	{
+		playerData->AddScore(2000);
+	}
+	else if (dynamic_cast<CBoomerang*>(item))
+	{
+		playerData->SetSubWeaponType("boomerang");
 	}
 
 	item->Disappear();

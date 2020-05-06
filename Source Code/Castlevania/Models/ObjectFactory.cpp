@@ -50,9 +50,25 @@ CGameObject* CObjectFactory::Construct(string type)
 	{
 		return new CBat();
 	}
+	else if (type == "one_hundred")
+	{
+		return new COneHundred();
+	}
+	else if (type == "four_hundred")
+	{
+		return new CFourHundred();
+	}
+	else if (type == "seven_hundred")
+	{
+		return new CSevenHundred();
+	}
 	else if (type == "one_thousand")
 	{
 		return new COneThousand();
+	}
+	else if (type == "two_thousand")
+	{
+		return new CTwoThousand();
 	}
 	else if (type == "flash")
 	{
@@ -77,6 +93,42 @@ CGameObject* CObjectFactory::Construct(string type)
 	else if (type == "moving_bar")
 	{
 		return new CMovingBar();
+	}
+	else if (type == "red_money_bag")
+	{
+		return new CRedMoneyBag();
+	}
+	else if (type == "purple_money_bag")
+	{
+		return new CPurpleMoneyBag();
+	}
+	else if (type == "white_money_bag")
+	{
+		return new CWhiteMoneyBag();
+	}
+	else if (type == "crown")
+	{
+		return new CCrown();
+	}
+	else if (type == "small_heart")
+	{
+		return new CSmallHeart();
+	}
+	else if (type == "double_shot")
+	{
+		return new CDoubleShot();
+	}
+	else if (type == "big_double_shot")
+	{
+		return new CBigDoubleShot();
+	}
+	else if (type == "boomerang")
+	{
+		return new CBoomerang();
+	}
+	else if (type == "small_candle")
+	{
+		return new CSmallCandle();
 	}
 	else
 	{

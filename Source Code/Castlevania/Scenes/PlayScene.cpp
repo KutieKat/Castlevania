@@ -407,7 +407,7 @@ void CPlayScene::Update(DWORD dt)
 			float left, top, right, bottom;
 
 			player->GetBoundingBox(left, top, right, bottom);
-			cx = tileMap->GetWidth() - SCREEN_WIDTH;
+			cx = tileMap->GetWidth() > SCREEN_WIDTH + 50 ? cx = tileMap->GetWidth() - SCREEN_WIDTH : 0;
 
 			float playerBoundingBoxWidth = right - left;
 

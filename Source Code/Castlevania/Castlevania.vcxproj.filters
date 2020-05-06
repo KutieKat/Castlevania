@@ -291,6 +291,48 @@
     <ClCompile Include="Models\Misc\MovingBar.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Items\PurpleMoneyBag.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\RedMoneyBag.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\WhiteMoneyBag.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\Crown.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\OneHundred.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\FourHundred.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\SevenHundred.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\SmallHeart.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\TwoThousand.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\DoubleShot.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\BigDoubleShot.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\Boomerang.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Weapons\WBoomerang.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\SmallCandle.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -462,6 +504,48 @@
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\MovingBar.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\PurpleMoneyBag.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\RedMoneyBag.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\WhiteMoneyBag.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\FourHundred.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\OneHundred.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\SevenHundred.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\TwoThousand.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Crown.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\SmallHeart.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\DoubleShot.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\BigDoubleShot.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Boomerang.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\WBoomerang.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\SmallCandle.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>

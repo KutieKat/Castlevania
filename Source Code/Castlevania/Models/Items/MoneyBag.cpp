@@ -4,7 +4,6 @@
 CMoneyBag::CMoneyBag()
 {
 	isItem = true;
-
 	SetAnimationSet("money_bag");
 }
 

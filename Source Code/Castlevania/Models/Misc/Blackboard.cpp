@@ -144,7 +144,7 @@ void CBlackboard::UpdatePosition()
 		}
 		else if (simon->x + SCREEN_WIDTH / 2 >= tileMap->GetWidth())
 		{
-			x = tileMap->GetWidth() - SCREEN_WIDTH;
+			x = tileMap->GetWidth() > SCREEN_WIDTH + 50 ? tileMap->GetWidth() - SCREEN_WIDTH : 0;
 		}
 		else
 		{

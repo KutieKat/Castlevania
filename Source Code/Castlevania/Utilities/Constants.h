@@ -50,12 +50,15 @@ enum HealthType
 	Enemy
 };
 
+// Math
+#define PI 3.14f
+
 // Window
 #define WINDOW_CLASS_NAME L"Castlevania"
 #define MAIN_WINDOW_TITLE L"Castlevania"
 
-#define SCREEN_WIDTH 512
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 528
+#define SCREEN_HEIGHT 528
 
 #define MAX_FRAME_RATE 120
 
@@ -68,10 +71,13 @@ enum HealthType
 #define DIRECTINPUT_VERSION 0x0800
 #define KEYBOARD_BUFFER_SIZE 1024
 
+// Blackboard
+#define BLACKBOARD_HEIGHT 80
+
 // Simon
 #define SIMON_WALK_SPEED 0.1f 
 #define SIMON_SLOW_WALK_SPEED 0.08f
-#define SIMON_JUMP_SPEED 0.5f
+#define SIMON_JUMP_SPEED 0.55f
 #define SIMON_GRAVITY 0.0025f
 
 #define SIMON_STATE_IDLE 1
@@ -193,10 +199,6 @@ enum HealthType
 #define DOOR_BBOX_WIDTH 5
 #define DOOR_BBOX_HEIGHT 10
 
-// DoorWall
-#define DOOR_WALL_BBOX_WIDTH 128
-#define DOOR_WALL_BBOX_HEIGHT 163
-
 // Bat
 #define BAT_STATE_FLY_RIGHT_CROSS 1
 #define BAT_STATE_FLY_OVAL 2
@@ -211,8 +213,8 @@ enum HealthType
 #define EFFECT_DISPLAY_TIME 300
 
 // Brick
-#define BRICK_BBOX_WIDTH 25
-#define BRICK_BBOX_HEIGHT 25
+#define BRICK_BBOX_WIDTH 31
+#define BRICK_BBOX_HEIGHT 31
 
 // TopStair
 #define TOP_STAIR_BBOX_WIDTH 25
@@ -235,3 +237,45 @@ enum HealthType
 
 #define MOVING_BAR_BBOX_WIDTH 64
 #define MOVING_BAR_BBOX_HEIGHT 16
+
+// RedMoneyBag
+#define RED_MONEY_BAG_BBOX_WIDTH 29
+#define RED_MONEY_BAG_BBOX_HEIGHT 29
+
+// PurpleMoneyBag
+#define PURPLE_MONEY_BAG_BBOX_WIDTH 29
+#define PURPLE_MONEY_BAG_BBOX_HEIGHT 29
+
+// WhiteMoneyBag
+#define WHITE_MONEY_BAG_BBOX_WIDTH 29
+#define WHITE_MONEY_BAG_BBOX_HEIGHT 29
+
+// Crown
+#define CROWN_BBOX_WIDTH 29
+#define CROWN_BBOX_HEIGHT 31
+
+// SmallHeart
+#define SMALL_HEART_MOVE_SPEED 0.02f
+
+#define SMALL_HEART_BBOX_WIDTH 15
+#define SMALL_HEART_BBOX_HEIGHT 15
+
+// BigDoubleShot
+#define BIG_DOUBLE_SHOT_BBOX_WIDTH 41
+#define BIG_DOUBLE_SHOT_BBOX_HEIGHT 41
+
+// DoubleShot
+#define DOUBLE_SHOT_BBOX_WIDTH 27
+#define DOUBLE_SHOT_BBOX_HEIGHT 27
+
+// Boomerang
+#define BOOMERANG_STATE_STATIC 1
+#define BOOMERANG_STATE_MOVE 2
+
+#define BOOMERANG_ANI_STATIC 0
+#define BOOMERANG_ANI_MOVE 1
+
+#define BOOMERANG_MOVE_SPEED 0.1f
+
+#define BOOMERANG_BBOX_WIDTH 27
+#define BOOMERANG_BBOX_HEIGHT 27
