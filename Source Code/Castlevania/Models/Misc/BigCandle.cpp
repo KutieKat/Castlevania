@@ -23,15 +23,3 @@ void CBigCandle::GetBoundingBox(float& left, float& top, float& right, float& bo
 		bottom = top + BIG_CANDLE_BBOX_HEIGHT;
 	}
 }
-
-//void CBigCandle::Disappear()
-//{
-//	//if (endingEffect)
-//	//{
-//	//	showingEffect = true;
-//
-//	//	endingEffect->SetVisibility(Visibility::Visible);
-//	//	endingEffect->SetPosition(x, y);
-//	//	endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
-//	//}
-//}

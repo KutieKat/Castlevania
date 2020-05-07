@@ -8,6 +8,7 @@
 #include "../../Misc/NextScene.h"
 #include "../../Misc/PreviousScene.h"
 #include "../../Misc/MovingBar.h"
+#include "../../Misc/BreakableBrick.h"
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
@@ -19,6 +20,7 @@
 #include "../../Items/Crown.h"
 #include "../../Items/Boomerang.h"
 #include "../../Items/SmallHeart.h"
+#include "../../Items/DoubleShot.h"
 #include "../../Weapons/Whip.h"
 #include "../../Weapons/WDagger.h"
 #include "../../Weapons/WBoomerang.h"
@@ -128,10 +130,49 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
+			else if (dynamic_cast<CBreakableBrick*>(e->obj))
+			{
+				auto brick = dynamic_cast<CBreakableBrick*>(e->obj);
+
+				if (onStair)
+				{
+					x += dx;
+					y += dy;
+				}
+				else
+				{
+					if (brick->isGround)
+					{
+						if (e->ny < 0)
+						{
+							touchingGround = true;
+							onStair = false;
+							onBar = false;
+						}
+
+						if (state == SIMON_STATE_STAND_AND_ATTACK)
+						{
+							vx = 0;
+						}
+
+						if (e->ny != 0) vy = 0;
+					}
+					else
+					{
+						if (e->nx != 0) vx = 0;
+					}
+				}
+			}
 			else if (e->obj->isItem)
 			{
-				if (e->nx != 0) x -= min_tx * dx + nx * 0.4f;
-				if (e->ny != 0) y -= min_ty * dy + ny * 0.4f;
+				y -= min_ty * dy + ny * 0.4f;
+
+				if (e->nx != 0) x += dx;
+
+				if (dynamic_cast<CSmallHeart*>(e->obj) || dynamic_cast<CCrown*>(e->obj))
+				{
+					if (e->ny != 0) y += dy;
+				}
 			}
 			else if (dynamic_cast<CMovingBar*>(e->obj))
 			{
@@ -230,11 +271,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (onStair)
 				{
 					onStair = false;
-					atTopStair = false;
 					SetState(SIMON_STATE_IDLE);
 				}
 
-				atBottomStair = true;
 				stairDirectionX = stair->directionX;
 				stairDirectionY = stair->directionY;
 
@@ -248,11 +287,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (onStair)
 				{
 					onStair = false;
-					atBottomStair = false;
 					SetState(SIMON_STATE_IDLE);
 				}
 
-				atTopStair = true;
 				stairDirectionX = stair->directionX;
 				stairDirectionY = stair->directionY;
 
@@ -588,6 +625,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 {
 	if (coObjects && state != SIMON_STATE_DIE)
 	{
+		int countAtBottom = 0, countAtTop = 0;
 		CGame* game = CGame::GetInstance();
 
 		for (int i = 0; i < coObjects->size(); i++)
@@ -600,8 +638,19 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				{
 					HandleCollisionWithItems(object);
 				}
+				else if (dynamic_cast<CTopStair*>(object))
+				{
+					countAtTop++;
+				}
+				else if (dynamic_cast<CBottomStair*>(object))
+				{
+					countAtBottom++;
+				}
 			}
 		}
+
+		atTopStair = touchingGround && countAtTop > 0;
+		atBottomStair = touchingGround && countAtBottom > 0;
 	}
 }
 
@@ -651,6 +700,11 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	else if (dynamic_cast<CBoomerang*>(item))
 	{
 		playerData->SetSubWeaponType("boomerang");
+	}
+	else if (dynamic_cast<CDoubleShot*>(item))
+	{
+		CDebug::Info("Here!");
+		playerData->SetWhipPowerType("double_shot");
 	}
 
 	item->Disappear();

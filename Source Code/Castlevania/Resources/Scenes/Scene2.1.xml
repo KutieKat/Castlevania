@@ -22,6 +22,8 @@
     <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
     <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
+    <texture id="breakable_brick" path="Resources\\Ground\\BreakableBrick.png" r="255" g="0" b="255" />
+    <texture id="brick_piece" path="Resources\\Ground\\BrickPiece.png" r="255" g="0" b="255" />
   </textures>
 
   <sprites>
@@ -186,6 +188,12 @@
     <!-- SmallCandle -->
     <sprite id="small_candle_1" textureId="small_candle" left="0" top="0" right="15" bottom="31" />
     <sprite id="small_candle_2" textureId="small_candle" left="16" top="0" right="31" bottom="31" />
+
+    <!-- BreakableBrick -->
+    <sprite id="breakable_brick" textureId="breakable_brick" left="0" top="0" right="31" bottom="31" />
+
+    <!-- BrickPiece -->
+    <sprite id="brick_piece" textureId="brick_piece" left="0" top="0" right="18" bottom="22" />
   </sprites>
 
   <animations>
@@ -504,6 +512,15 @@
       <frame spriteId="small_candle_1" duration="100" />
       <frame spriteId="small_candle_2" duration="100" />
     </animation>
+
+    <!-- BreakableBrick -->
+    <animation id="breakable_brick">
+      <frame spriteId="breakable_brick" duration="100" />
+    </animation>
+
+    <animation id="brick_piece">
+      <frame spriteId="brick_piece" duration="100" />
+    </animation>
   </animations>
 
   <animationSets>
@@ -635,6 +652,14 @@
     <animationSet id="small_candle">
       <animationSetItem id="small_candle" animationId="small_candle" />
     </animationSet>
+
+    <animationSet id="breakable_brick">
+      <animationSetItem id="breakable_brick" animationId="breakable_brick" />
+    </animationSet>
+
+    <animationSet id="brick_piece">
+      <animationSetItem id="brick_piece" animationId="brick_piece" />
+    </animationSet>
   </animationSets>
 
   <objects>
@@ -699,6 +724,9 @@
     <object id="brick_49" type="brick" animationSetId="brick" x="448" y="367" />
     <object id="brick_50" type="brick" animationSetId="brick" x="448" y="399" />
 
+    <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="447" y="240" endingEffect="breaking" />
+    <object id="breakable_brick_2" type="breakable_brick" animationSetId="breakable_brick" x="447" y="272" endingEffect="breaking" />
+
     <object id="boomerang_1" type="boomerang" animationSetId="boomerang" x="175" y="308" visible="false" />
     <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="154" y="308" endingEffect="flash" hiddenItemId="boomerang_1" />
 
@@ -710,10 +738,10 @@
 
     <object id="simon" type="simon" animationSetId="simon" x="90" y="250" reloadX="220" reloadY="83" reloadState="on_stair" reloadStairDirectionX="left" reloadStairDirectionY="down" />
 
-    <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="148" y="230" />
+    <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="154" y="228" />
     <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="238" y="110" playerMustBeOnStair="true" />
     
-    <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="210" y="420" />
+    <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="218" y="420" />
     <object id="top_stair_2" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="320" y="218" />
   </objects>
 </resources>

@@ -195,6 +195,31 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 			objects.emplace_back(brick);
 		}
+		else if (type == "breakable_brick")
+		{
+			bool isGround = false;
+			object->QueryBoolAttribute("isGround", &isGround);
+
+			CBreakableBrick* brick = new CBreakableBrick();
+			brick->SetId(id);
+			brick->SetPosition(x, y);
+			brick->isGround = isGround;
+
+			if (object->Attribute("hiddenItemId"))
+			{
+				brick->SetHiddenItem(FindObject(object->Attribute("hiddenItemId")));
+			}
+
+			if (object->Attribute("endingEffect"))
+			{
+				CGameObject* effect = CObjectFactory::Construct(object->Attribute("endingEffect"), x, y);
+				objects.emplace_back(effect);
+
+				brick->SetEndingEffect(effect);
+			}
+
+			objects.emplace_back(brick);
+		}
 		else if (type == "top_stair")
 		{
 			string directionX = object->Attribute("directionX");
@@ -249,7 +274,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 		}
 		else
 		{
-			gameObject = CObjectFactory::Construct(type);
+			gameObject = CObjectFactory::Construct(type, x, y);
 		}
 
 		if (gameObject)

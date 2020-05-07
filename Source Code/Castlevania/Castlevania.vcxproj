@@ -33,6 +33,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Models\Characters\Players\PlayerData.cpp" />
     <ClCompile Include="Models\Characters\Players\Simon.cpp" />
+    <ClCompile Include="Models\Effects\Breaking.cpp" />
+    <ClCompile Include="Models\Effects\BrickPiece.cpp" />
     <ClCompile Include="Models\Effects\Flash.cpp" />
     <ClCompile Include="Models\Effects\FourHundred.cpp" />
     <ClCompile Include="Models\Effects\OneHundred.cpp" />
@@ -58,6 +60,7 @@
     <ClCompile Include="Models\Misc\BigDoubleShot.cpp" />
     <ClCompile Include="Models\Misc\Blackboard.cpp" />
     <ClCompile Include="Models\Misc\BottomStair.cpp" />
+    <ClCompile Include="Models\Misc\BreakableBrick.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
     <ClCompile Include="Models\Misc\Door.cpp" />
     <ClCompile Include="Models\Misc\Ground.cpp" />
@@ -103,6 +106,8 @@
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
     <ClInclude Include="Models\Characters\Players\PlayerData.h" />
     <ClInclude Include="Models\Characters\Players\Simon.h" />
+    <ClInclude Include="Models\Effects\Breaking.h" />
+    <ClInclude Include="Models\Effects\BrickPiece.h" />
     <ClInclude Include="Models\Effects\Flash.h" />
     <ClInclude Include="Models\Effects\FourHundred.h" />
     <ClInclude Include="Models\Effects\OneHundred.h" />
@@ -128,6 +133,7 @@
     <ClInclude Include="Models\Misc\BigDoubleShot.h" />
     <ClInclude Include="Models\Misc\Blackboard.h" />
     <ClInclude Include="Models\Misc\BottomStair.h" />
+    <ClInclude Include="Models\Misc\BreakableBrick.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
     <ClInclude Include="Models\Misc\Door.h" />
     <ClInclude Include="Models\Misc\Ground.h" />

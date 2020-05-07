@@ -160,7 +160,7 @@ enum HealthType
 // Item
 #define ITEM_STATE_APPEAR 1
 #define ITEM_GRAVITY 0.002f
-#define ITEM_DISPLAY_TIME 3000
+#define ITEM_DISPLAY_TIME 4000
 
 // MoneyBag
 #define MONEY_BAG_MOVE_UP_SPEED 0.05f
@@ -221,8 +221,8 @@ enum HealthType
 #define TOP_STAIR_BBOX_HEIGHT 25
 
 // BottomStair
-#define BOTTOM_STAIR_BBOX_WIDTH 25
-#define BOTTOM_STAIR_BBOX_HEIGHT 25
+#define BOTTOM_STAIR_BBOX_WIDTH 12
+#define BOTTOM_STAIR_BBOX_HEIGHT 12
 
 // NextScene
 #define NEXT_SCENE_BBOX_WIDTH 5
@@ -265,8 +265,8 @@ enum HealthType
 #define BIG_DOUBLE_SHOT_BBOX_HEIGHT 41
 
 // DoubleShot
-#define DOUBLE_SHOT_BBOX_WIDTH 27
-#define DOUBLE_SHOT_BBOX_HEIGHT 27
+#define DOUBLE_SHOT_BBOX_WIDTH 31
+#define DOUBLE_SHOT_BBOX_HEIGHT 31
 
 // Boomerang
 #define BOOMERANG_STATE_STATIC 1
@@ -279,3 +279,7 @@ enum HealthType
 
 #define BOOMERANG_BBOX_WIDTH 27
 #define BOOMERANG_BBOX_HEIGHT 27
+
+// BreakableBrick
+#define BREAKABLE_BRICK_BBOX_WIDTH 31
+#define BREAKABLE_BRICK_BBOX_HEIGHT 31

@@ -44,21 +44,26 @@ protected:
 	CHealthBar* enemyHealthBar;
 
 	CGameObject* subWeapon;
+	CGameObject* whipPower;
 
 	void InitLabels();
 	void InitHealthBars();
 	void InitSubWeapon();
+	void InitWhipPower();
 
 	void RenderLabels();
 	void RenderHealthBars();
 	void RenderSubWeapon();
+	void RenderWhipPowerType();
 
 	void UpdatePosition();
 	void UpdateLabels();
 	void UpdateHealthBars();
 	void UpdateSubWeapon();
+	void UpdateWhipPowerType();
 
 	string padZero(int value, int numberOfZeros);
 	string currentSubWeaponType;
+	string currentWhipPowerType;
 };
 

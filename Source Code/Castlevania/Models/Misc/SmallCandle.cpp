@@ -1,7 +1,4 @@
 #include "SmallCandle.h"
-#include "../../Models/Misc/Ground.h"
-#include "../Characters/Players/Simon.h"
-#include "../../Utilities/Debug.h"
 
 CSmallCandle::CSmallCandle()
 {

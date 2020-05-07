@@ -2,6 +2,7 @@
 #include "../../Game.h"
 #include "../Misc/BigCandle.h"
 #include "../Misc/SmallCandle.h"
+#include "../Misc/BreakableBrick.h"
 
 CWhip::CWhip(CSimon* simon)
 {
@@ -31,6 +32,10 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				object->Disappear();
 			}
 			else if (dynamic_cast<CSmallCandle*>(object))
+			{
+				object->Disappear();
+			}
+			else if (dynamic_cast<CBreakableBrick*>(object))
 			{
 				object->Disappear();
 			}
@@ -79,7 +84,7 @@ bool CWhip::HaveCollision(CGameObject* object)
 	GetBoundingBox(wl, wt, wr, wb);
 
 	scx = sl + (sr - sl) / 2;
-	wcy = wt + (wb - wt) / 2;
+	wcy = wt + (wb - wt) / 3;
 	obcx = obl + (obr - obl) / 2;
 
 	if (CGame::GetInstance()->HaveCollision(this, object))

@@ -22,6 +22,8 @@
     <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
     <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
+    <texture id="breakable_brick" path="Resources\\Ground\\BreakableBrick.png" r="255" g="0" b="255" />
+    <texture id="brick_piece" path="Resources\\Ground\\BrickPiece.png" r="255" g="0" b="255" />
   </textures>
 
   <sprites>
@@ -161,7 +163,7 @@
     <sprite id="small_heart" textureId="small_heart" left="0" top="0" right="15" bottom="15" />
 
     <!-- DoubleShot -->
-    <sprite id="double_shot" textureId="double_shot" left="0" top="0" right="27" bottom="27" />
+    <sprite id="double_shot" textureId="double_shot" left="0" top="0" right="31" bottom="31" />
 
     <!-- BigDoubleShot -->
     <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
@@ -177,6 +179,12 @@
 
     <!-- WhiteMoneyBag -->
     <sprite id="white_money_bag" textureId="money_bag" left="30" top="0" right="59" bottom="29" />
+
+    <!-- BreakableBrick -->
+    <sprite id="breakable_brick" textureId="breakable_brick" left="0" top="0" right="31" bottom="31" />
+
+    <!-- BrickPiece -->
+    <sprite id="brick_piece" textureId="brick_piece" left="0" top="0" right="18" bottom="22" />
   </sprites>
 
   <animations>
@@ -412,33 +420,33 @@
     </animation>
 
     <animation id="whip_level_3_left">
-      <frame spriteId="whip_level_3_left_1" duration="100" />
-      <!--<frame spriteId="whip_level_3_left_2" duration="25" />
+      <frame spriteId="whip_level_3_left_1" duration="25" />
+      <frame spriteId="whip_level_3_left_2" duration="25" />
       <frame spriteId="whip_level_3_left_3" duration="25" />
-      <frame spriteId="whip_level_3_left_4" duration="25" />-->
-      <frame spriteId="whip_level_3_left_5" duration="100" />
-      <!--<frame spriteId="whip_level_3_left_6" duration="25" />
+      <frame spriteId="whip_level_3_left_4" duration="25" />
+      <frame spriteId="whip_level_3_left_5" duration="25" />
+      <frame spriteId="whip_level_3_left_6" duration="25" />
       <frame spriteId="whip_level_3_left_7" duration="25" />
-      <frame spriteId="whip_level_3_left_8" duration="25" />-->
-      <frame spriteId="whip_level_3_left_9" duration="100" />
-      <!--<frame spriteId="whip_level_3_left_10" duration="25" />
+      <frame spriteId="whip_level_3_left_8" duration="25" />
+      <frame spriteId="whip_level_3_left_9" duration="25" />
+      <frame spriteId="whip_level_3_left_10" duration="25" />
       <frame spriteId="whip_level_3_left_11" duration="25" />
-      <frame spriteId="whip_level_3_left_12" duration="25" />-->
+      <frame spriteId="whip_level_3_left_12" duration="25" />
     </animation>
 
     <animation id="whip_level_3_right">
-      <frame spriteId="whip_level_3_right_1" duration="100" />
-      <!--<frame spriteId="whip_level_3_right_2" duration="25" />
+      <frame spriteId="whip_level_3_right_1" duration="25" />
+      <frame spriteId="whip_level_3_right_2" duration="25" />
       <frame spriteId="whip_level_3_right_3" duration="25" />
-      <frame spriteId="whip_level_3_right_4" duration="25" />-->
-      <frame spriteId="whip_level_3_right_5" duration="100" />
-      <!--<frame spriteId="whip_level_3_right_6" duration="25" />
+      <frame spriteId="whip_level_3_right_4" duration="25" />
+      <frame spriteId="whip_level_3_right_5" duration="25" />
+      <frame spriteId="whip_level_3_right_6" duration="25" />
       <frame spriteId="whip_level_3_right_7" duration="25" />
-      <frame spriteId="whip_level_3_right_8" duration="25" />-->
-      <frame spriteId="whip_level_3_right_9" duration="100" />
-      <!--<frame spriteId="whip_level_3_right_10" duration="25" />
+      <frame spriteId="whip_level_3_right_8" duration="25" />
+      <frame spriteId="whip_level_3_right_9" duration="25" />
+      <frame spriteId="whip_level_3_right_10" duration="25" />
       <frame spriteId="whip_level_3_right_11" duration="25" />
-      <frame spriteId="whip_level_3_right_12" duration="25" />-->
+      <frame spriteId="whip_level_3_right_12" duration="25" />
     </animation>
     
     <!-- MovingBar -->
@@ -481,6 +489,15 @@
     <!-- WhiteMoneyBag -->
     <animation id="white_money_bag">
       <frame spriteId="white_money_bag" duration="100" />
+    </animation>
+
+    <!-- BreakableBrick -->
+    <animation id="breakable_brick">
+      <frame spriteId="breakable_brick" duration="100" />
+    </animation>
+
+    <animation id="brick_piece">
+      <frame spriteId="brick_piece" duration="100" />
     </animation>
   </animations>
 
@@ -605,6 +622,14 @@
     <animationSet id="white_money_bag">
       <animationSetItem id="white_money_bag" animationId="white_money_bag" />
     </animationSet>
+
+    <animationSet id="breakable_brick">
+      <animationSetItem id="breakable_brick" animationId="breakable_brick" />
+    </animationSet>
+
+    <animationSet id="brick_piece">
+      <animationSetItem id="brick_piece" animationId="brick_piece" />
+    </animationSet>
   </animationSets>
 
   <objects>
@@ -642,7 +667,7 @@
 
     <object id="brick_28" type="brick" animationSetId="brick" x="640" y="369" isGround="true" />
     <object id="brick_29" type="brick" animationSetId="brick" x="672" y="369" isGround="true" />
-
+    
     <object id="brick_30" type="brick" animationSetId="brick" x="704" y="273" isGround="true" />
     <object id="brick_31" type="brick" animationSetId="brick" x="704" y="305" />
     <object id="brick_32" type="brick" animationSetId="brick" x="704" y="337" />
@@ -666,6 +691,9 @@
     <object id="brick_47" type="brick" animationSetId="brick" x="928" y="305" isGround="true" />
     <object id="brick_48" type="brick" animationSetId="brick" x="896" y="305" isGround="true" />
 
+    <object id="double_shot_1" type="double_shot" animationSetId="double_shot" x="704" y="240" visible="false" />
+    <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="704" y="241" endingEffect="breaking" hiddenItemId="double_shot_1" isGround="true" />
+
     <object id="moving_bar_1" type="moving_bar" animationSetId="moving_bar" x="105" y="241" />
 
     <object id="small_heart_1" type="small_heart" animationSetId="small_heart" x="794" y="116" visible="false" />
@@ -680,7 +708,7 @@
     <object id="small_heart_4" type="small_heart" animationSetId="small_heart" x="530" y="116" visible="false" />
     <object id="small_candle_4" type="small_candle" animationSetId="small_candle" x="530" y="116" endingEffect="flash" hiddenItemId="small_heart_4" />
 
-    <object id="white_money_bag_1" type="white_money_bag" animationSetId="white_money_bag" x="284" y="116" visible="false" />
+    <object id="white_money_bag_1" type="white_money_bag" animationSetId="white_money_bag" x="284" y="116" endingEffect="seven_hundred" visible="false" />
     <object id="small_candle_5" type="small_candle" animationSetId="small_candle" x="284" y="116" endingEffect="flash" hiddenItemId="white_money_bag_1" />
 
     <object id="small_heart_6" type="small_heart" animationSetId="small_heart" x="154" y="116" visible="false" />

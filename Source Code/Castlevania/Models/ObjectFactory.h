@@ -22,6 +22,7 @@
 #include "Effects/SevenHundred.h"
 #include "Effects/OneThousand.h"
 #include "Effects/TwoThousand.h"
+#include "Effects/Breaking.h"
 
 #include "Misc/Background.h"
 #include "Misc/IntroBat.h"
@@ -37,11 +38,12 @@
 #include "Misc/MovingBar.h"
 #include "Misc/BigDoubleShot.h"
 #include "Misc/SmallCandle.h"
+#include "Misc/BreakableBrick.h"
 using namespace std;
 
 class CObjectFactory
 {
 public:
-	static CGameObject* Construct(string type);
+	static CGameObject* Construct(string type, float x = 0, float y = 0);
 };
 

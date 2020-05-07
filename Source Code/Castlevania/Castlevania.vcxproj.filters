@@ -333,6 +333,15 @@
     <ClCompile Include="Models\Misc\SmallCandle.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Effects\Breaking.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Effects\BrickPiece.cpp">
+      <Filter>Source Files\Models\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\BreakableBrick.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -546,6 +555,15 @@
       <Filter>Header Files\Models\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\SmallCandle.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\Breaking.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Effects\BrickPiece.h">
+      <Filter>Header Files\Models\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\BreakableBrick.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>

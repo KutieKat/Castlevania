@@ -13,6 +13,7 @@ CBlackboard::CBlackboard()
 	game = CGame::GetInstance();
 
 	InitSubWeapon();
+	InitWhipPower();
 	InitLabels();
 	InitHealthBars();
 
@@ -43,6 +44,7 @@ void CBlackboard::Update()
 	UpdateHealthBars();
 	UpdateSubWeapon();
 	UpdateSubWeapon();
+	UpdateWhipPowerType();
 }
 
 void CBlackboard::Render()
@@ -52,6 +54,7 @@ void CBlackboard::Render()
 	RenderLabels();
 	RenderHealthBars();
 	RenderSubWeapon();
+	RenderWhipPowerType();
 }
 
 void CBlackboard::SetPlayer(CSimon* simon)
@@ -111,6 +114,14 @@ void CBlackboard::InitSubWeapon()
 	subWeapon = CObjectFactory::Construct(currentSubWeaponType);
 }
 
+void CBlackboard::InitWhipPower()
+{
+	CPlayerData* playerData = game->GetPlayerData();
+
+	currentWhipPowerType = "big_" + playerData->GetWhipPowerType();
+	whipPower = CObjectFactory::Construct(currentWhipPowerType);
+}
+
 void CBlackboard::RenderLabels()
 {
 	scoreLabel->Render();
@@ -131,6 +142,14 @@ void CBlackboard::RenderSubWeapon()
 	if (subWeapon)
 	{
 		subWeapon->Render();
+	}
+}
+
+void CBlackboard::RenderWhipPowerType()
+{
+	if (whipPower)
+	{
+		whipPower->Render();
 	}
 }
 
@@ -207,6 +226,32 @@ void CBlackboard::UpdateSubWeapon()
 		float itemY = y + 33 + (30 - itemHeight) / 2;
 
 		subWeapon->SetPosition(itemX, itemY);
+	}
+}
+
+void CBlackboard::UpdateWhipPowerType()
+{
+	CPlayerData* playerData = game->GetPlayerData();
+
+	if (playerData->GetWhipPowerType() != currentWhipPowerType)
+	{
+		string type = playerData->GetWhipPowerType();
+
+		if (whipPower)
+		{
+			SAFE_DELETE(whipPower);
+		}
+
+		currentWhipPowerType = "big_" + type;
+		whipPower = CObjectFactory::Construct(currentWhipPowerType);
+	}
+
+	if (whipPower)
+	{
+		float whipPowerX = x + 438;
+		float whipPowerY = y + 30;
+
+		whipPower->SetPosition(whipPowerX, whipPowerY);
 	}
 }
 

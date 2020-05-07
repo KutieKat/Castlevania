@@ -1,6 +1,6 @@
 #include "ObjectFactory.h"
 
-CGameObject* CObjectFactory::Construct(string type)
+CGameObject* CObjectFactory::Construct(string type, float x, float y)
 {
 	if (type == "background")
 	{
@@ -129,6 +129,10 @@ CGameObject* CObjectFactory::Construct(string type)
 	else if (type == "small_candle")
 	{
 		return new CSmallCandle();
+	}
+	else if (type == "breaking")
+	{
+		return new CBreaking(x, y);
 	}
 	else
 	{

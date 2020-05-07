@@ -25,6 +25,7 @@ void CPlayerData::Reset()
 	healthVolumes = 16;
 	whipLevel = 1;
 	subWeaponType = "";
+	whipPowerType = "";
 }
 
 void CPlayerData::AddScore(int score)
@@ -90,6 +91,16 @@ void CPlayerData::SetSubWeaponType(string type)
 string CPlayerData::GetSubWeaponType()
 {
 	return subWeaponType;
+}
+
+void CPlayerData::SetWhipPowerType(string type)
+{
+	whipPowerType = type;
+}
+
+string CPlayerData::GetWhipPowerType()
+{
+	return whipPowerType;
 }
 
 void CPlayerData::SetWhipLevel(int level)

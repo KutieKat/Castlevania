@@ -28,6 +28,9 @@ public:
 	void SetSubWeaponType(string type);
 	string GetSubWeaponType();
 
+	void SetWhipPowerType(string type);
+	string GetWhipPowerType();
+
 	void SetWhipLevel(int level);
 	int GetWhipLevel();
 
@@ -39,6 +42,7 @@ protected:
 	int whipLevel;
 
 	string subWeaponType;
+	string whipPowerType;
 
 	static CPlayerData* instance;
 };
