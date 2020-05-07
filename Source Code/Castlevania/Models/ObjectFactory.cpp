@@ -134,6 +134,14 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y)
 	{
 		return new CBreaking(x, y);
 	}
+	else if (type == "red_bat")
+	{
+		return new CRedBat();
+	}
+	else if (type == "spear_knight")
+	{
+		return new CSpearKnight();
+	}
 	else
 	{
 		return nullptr;

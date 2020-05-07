@@ -3,6 +3,9 @@
 
 #include "GameObject.h"
 
+#include "Characters/Enemies/RedBat.h"
+#include "Characters/Enemies/SpearKnight.h"
+
 #include "Items/BigHeart.h"
 #include "Items/MoneyBag.h"
 #include "Items/MorningStar.h"

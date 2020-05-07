@@ -31,6 +31,8 @@
     <ClCompile Include="Libraries\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="Libraries\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Models\Characters\Enemies\RedBat.cpp" />
+    <ClCompile Include="Models\Characters\Enemies\SpearKnight.cpp" />
     <ClCompile Include="Models\Characters\Players\PlayerData.cpp" />
     <ClCompile Include="Models\Characters\Players\Simon.cpp" />
     <ClCompile Include="Models\Effects\Breaking.cpp" />
@@ -104,6 +106,8 @@
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Libraries\TinyXML\tinystr.h" />
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
+    <ClInclude Include="Models\Characters\Enemies\RedBat.h" />
+    <ClInclude Include="Models\Characters\Enemies\SpearKnight.h" />
     <ClInclude Include="Models\Characters\Players\PlayerData.h" />
     <ClInclude Include="Models\Characters\Players\Simon.h" />
     <ClInclude Include="Models\Effects\Breaking.h" />

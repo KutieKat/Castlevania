@@ -64,6 +64,7 @@ protected:
 
 	string padZero(int value, int numberOfZeros);
 	string currentSubWeaponType;
-	string currentWhipPowerType;
+
+	int currentWhipPower;
 };
 

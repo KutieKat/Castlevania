@@ -44,6 +44,7 @@ public:
 	bool showingEffect;
 	bool isEffect;
 	bool isItem;
+	bool isEnemy;
 
 public:
 	CGameObject();

@@ -52,6 +52,7 @@ protected:
 	void HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects = nullptr);
 	void HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects = nullptr);
 	void HandleCollisionWithItems(CGameObject* item);
+	void HandleCollisionWithEnemies(CGameObject* item);
 	void HandleSwitchScene();
 
 	void RenderWhip();

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "../../../Utilities/Constants.h"
 using namespace std;
 
 class CPlayerData
@@ -28,8 +29,8 @@ public:
 	void SetSubWeaponType(string type);
 	string GetSubWeaponType();
 
-	void SetWhipPowerType(string type);
-	string GetWhipPowerType();
+	void SetWhipPower(int power);
+	int GetWhipPower();
 
 	void SetWhipLevel(int level);
 	int GetWhipLevel();
@@ -40,6 +41,7 @@ protected:
 	int lives;
 	int healthVolumes;
 	int whipLevel;
+	int whipPower;
 
 	string subWeaponType;
 	string whipPowerType;

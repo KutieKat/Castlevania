@@ -116,10 +116,16 @@ void CBlackboard::InitSubWeapon()
 
 void CBlackboard::InitWhipPower()
 {
-	CPlayerData* playerData = game->GetPlayerData();
+	switch (game->GetPlayerData()->GetWhipPower())
+	{
+	case WHIP_DOUBLE_POWER:
+		whipPower = CObjectFactory::Construct("big_double_shot");
+		break;
 
-	currentWhipPowerType = "big_" + playerData->GetWhipPowerType();
-	whipPower = CObjectFactory::Construct(currentWhipPowerType);
+	case WHIP_TRIPLE_POWER:
+		whipPower = CObjectFactory::Construct("big_triple_shot");
+		break;
+	}
 }
 
 void CBlackboard::RenderLabels()
@@ -233,17 +239,23 @@ void CBlackboard::UpdateWhipPowerType()
 {
 	CPlayerData* playerData = game->GetPlayerData();
 
-	if (playerData->GetWhipPowerType() != currentWhipPowerType)
+	if (playerData->GetWhipPower() != currentWhipPower)
 	{
-		string type = playerData->GetWhipPowerType();
-
 		if (whipPower)
 		{
 			SAFE_DELETE(whipPower);
 		}
 
-		currentWhipPowerType = "big_" + type;
-		whipPower = CObjectFactory::Construct(currentWhipPowerType);
+		switch (game->GetPlayerData()->GetWhipPower())
+		{
+		case WHIP_DOUBLE_POWER:
+			whipPower = CObjectFactory::Construct("big_double_shot");
+			break;
+
+		case WHIP_TRIPLE_POWER:
+			whipPower = CObjectFactory::Construct("big_triple_shot");
+			break;
+		}
 	}
 
 	if (whipPower)

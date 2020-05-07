@@ -1,5 +1,7 @@
 #include "Whip.h"
 #include "../../Game.h"
+#include "../Characters/Enemies/RedBat.h"
+#include "../Characters/Enemies/SpearKnight.h"
 #include "../Misc/BigCandle.h"
 #include "../Misc/SmallCandle.h"
 #include "../Misc/BreakableBrick.h"
@@ -20,6 +22,7 @@ void CWhip::Render()
 void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CPlayerData* playerData = CGame::GetInstance()->GetPlayerData();
 
 	for (int i = 0; i < coObjects->size(); i++)
 	{
@@ -38,6 +41,17 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBreakableBrick*>(object))
 			{
 				object->Disappear();
+			}
+			else if (dynamic_cast<CRedBat*>(object))
+			{
+				object->Disappear();
+				playerData->AddScore(300);
+			}
+			else if (dynamic_cast<CSpearKnight*>(object))
+			{
+				auto knight = dynamic_cast<CSpearKnight*>(object);
+
+				knight->TakeDamage(playerData->GetWhipPower());
 			}
 		}
 	}

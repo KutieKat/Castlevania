@@ -342,6 +342,12 @@
     <ClCompile Include="Models\Misc\BreakableBrick.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\RedBat.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\SpearKnight.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -565,6 +571,12 @@
     </ClInclude>
     <ClInclude Include="Models\Misc\BreakableBrick.h">
       <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\RedBat.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\SpearKnight.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

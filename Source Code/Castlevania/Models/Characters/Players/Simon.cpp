@@ -1,5 +1,6 @@
 ﻿#include "Simon.h"
 #include "../../../Game.h"
+#include "../../Characters/Enemies/RedBat.h"
 #include "../../Misc/Ground.h"
 #include "../../Misc/Door.h"
 #include "../../Misc/Brick.h"
@@ -638,6 +639,10 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				{
 					HandleCollisionWithItems(object);
 				}
+				else if (object->isEnemy)
+				{
+					HandleCollisionWithEnemies(object);
+				}
 				else if (dynamic_cast<CTopStair*>(object))
 				{
 					countAtTop++;
@@ -645,6 +650,15 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				else if (dynamic_cast<CBottomStair*>(object))
 				{
 					countAtBottom++;
+				}
+			}
+			else if (dynamic_cast<CRedBat*>(object))
+			{
+				auto redBat = dynamic_cast<CRedBat*>(object);
+
+				if (redBat->IsPlayerNearby(x, y, RED_BAT_NEARBY_RADIUS))
+				{
+					redBat->SetState(RED_BAT_STATE_MOVE);
 				}
 			}
 		}
@@ -703,11 +717,14 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	}
 	else if (dynamic_cast<CDoubleShot*>(item))
 	{
-		CDebug::Info("Here!");
-		playerData->SetWhipPowerType("double_shot");
+		playerData->SetWhipPower(WHIP_DOUBLE_POWER);
 	}
 
 	item->Disappear();
+}
+
+void CSimon::HandleCollisionWithEnemies(CGameObject* item)
+{
 }
 
 void CSimon::HandleSwitchScene()
