@@ -657,9 +657,19 @@ void CSimon::HandleAttackWithWhip(vector<LPGAMEOBJECT>* coObjects)
 
 void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 {
-	if (subWeapon && coObjects->size() > 0)
+	if (subWeapons.size() > 0 && coObjects->size() > 0)
 	{
-		subWeapon->Update(dt, coObjects);
+		for (int i = 0; i < subWeapons.size(); i++)
+		{
+			if (subWeapons[i]->GetVisibility() == Visibility::Visible)
+			{
+				subWeapons[i]->Update(dt, coObjects);
+			}
+			else
+			{
+				SAFE_DELETE(subWeapons[i]);
+			}
+		}
 	}
 
 	if (state == SIMON_STATE_STAND_AND_THROW || state == SIMON_STATE_STAND_ON_STAIR_AND_THROW)
@@ -668,21 +678,22 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 		{
 			lastFrameShown = true;
 
-			SAFE_DELETE(subWeapon);
-
 			string type = CGame::GetInstance()->GetPlayerData()->GetSubWeaponType();
+			CGameObject* weapon = nullptr;
 
 			if (type == "dagger")
 			{
-				subWeapon = new WDagger();
+				weapon = new WDagger();
 			}
 			else if (type == "boomerang")
 			{
-				subWeapon = new WBoomerang(this);
+				weapon = new WBoomerang(this);
 			}
 
-			subWeapon->SetDirectionX(directionX);
-			subWeapon->SetPosition(directionX == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
+			weapon->SetDirectionX(directionX);
+			weapon->SetPosition(directionX == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
+
+			subWeapons.emplace_back(weapon);
 		}
 	}
 }
@@ -889,9 +900,17 @@ void CSimon::RenderWhip()
 
 void CSimon::RenderSubWeapon()
 {
-	if (subWeapon)
+	//if (subWeapon)
+	//{
+	//	subWeapon->Render();
+	//}
+
+	if (subWeapons.size() > 0)
 	{
-		subWeapon->Render();
+		for (int i = 0; i < subWeapons.size(); i++)
+		{
+			subWeapons[i]->Render();
+		}
 	}
 }
 

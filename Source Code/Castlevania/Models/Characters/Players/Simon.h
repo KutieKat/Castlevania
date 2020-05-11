@@ -44,6 +44,7 @@ public:
 protected:
 	CWhip* whip;
 	CGameObject* subWeapon;
+	vector<CGameObject*> subWeapons;
 
 	DWORD delayEndTime;
 	DWORD switchSceneTime;

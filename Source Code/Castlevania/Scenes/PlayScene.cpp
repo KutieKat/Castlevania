@@ -570,12 +570,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 
 		if (game->GetInputManager()->IsKeyDown(DIK_UP))
 		{
-			if (simon->onStair)
-			{
-				simon->SetDirectionX(Direction::Right);
-				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
-			}
-			else
+			if (!simon->onStair)
 			{
 				simon->SetState(SIMON_STATE_IDLE);
 			}
@@ -613,11 +608,6 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 			if (!simon->onStair)
 			{
 				simon->SetState(SIMON_STATE_SIT);
-			}
-			else
-			{
-				simon->SetDirectionX(Direction::Left);
-				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
 			}
 		}
 		else
