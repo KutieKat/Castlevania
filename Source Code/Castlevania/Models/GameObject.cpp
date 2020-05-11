@@ -15,7 +15,8 @@ CGameObject::CGameObject()
 	vx = vy = 0;
 	value = 0;
 	disappearingTime = -1;
-	direction = Direction::Right;
+	directionX = Direction::Right;
+	directionY = Direction::None;
 
 	showingEffect = false;
 	isEffect = false;
@@ -47,14 +48,14 @@ void CGameObject::GetSpeed(float & vx, float & vy)
 	vy = this->vy;
 }
 
-void CGameObject::SetDirection(Direction direction)
+void CGameObject::SetDirectionX(Direction direction)
 {
-	this->direction = direction;
+	this->directionX = direction;
 }
 
-Direction CGameObject::GetDirection()
+Direction CGameObject::GetDirectionX()
 {
-	return direction;
+	return directionX;
 }
 
 void CGameObject::SetId(string id)

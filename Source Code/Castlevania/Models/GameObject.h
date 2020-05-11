@@ -22,7 +22,9 @@ public:
 	float vx;
 	float vy;
 
-	Direction direction;
+	Direction directionX;
+	Direction directionY;
+
 	Visibility visibility;
 
 	int state;
@@ -54,8 +56,11 @@ public:
 	void GetPosition(float &x, float &y);
 	void GetSpeed(float &vx, float &vy);
 
-	void SetDirection(Direction direction);
-	Direction GetDirection();
+	void SetDirectionX(Direction direction);
+	Direction GetDirectionX();
+
+	void SetDirectionY(Direction direction) { directionY = direction; }
+	Direction GetDirectionY() { return directionY; };
 
 	void SetId(string id);
 	string GetId();

@@ -19,6 +19,7 @@ public:
 
 	int GetAnimationToRender();
 
+	bool invisible;
 	bool sitting;
 	bool touchingGround;
 	bool up;
@@ -36,6 +37,7 @@ public:
 	Direction stairDirectionY;
 
 	DWORD waitingTime;
+	DWORD invisibleTimeout;
 
 	~CSimon();
 
@@ -54,6 +56,7 @@ protected:
 	void HandleCollisionWithItems(CGameObject* item);
 	void HandleCollisionWithEnemies(CGameObject* item);
 	void HandleSwitchScene();
+	void HandleInvisibility();
 
 	void RenderWhip();
 	void RenderSubWeapon();

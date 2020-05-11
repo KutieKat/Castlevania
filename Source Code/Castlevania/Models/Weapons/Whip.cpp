@@ -103,11 +103,11 @@ bool CWhip::HaveCollision(CGameObject* object)
 
 	if (CGame::GetInstance()->HaveCollision(this, object))
 	{
-		if (direction == Direction::Right && wcy >= obt && scx < obcx && wr >= obl)
+		if (directionX == Direction::Right && wcy >= obt && scx < obcx && wr >= obl)
 		{
 			return true;
 		}
-		else if (direction == Direction::Left && wcy >= obt && scx > obcx && wl <= obr)
+		else if (directionX == Direction::Left && wcy >= obt && scx > obcx && wl <= obr)
 		{
 			return true;
 		}
@@ -128,15 +128,15 @@ int CWhip::GetAnimationToRender()
 	switch (level)
 	{
 	case 1:
-		ani = direction == Direction::Right ? WHIP_ANI_LEVEL_1_RIGHT : WHIP_ANI_LEVEL_1_LEFT;
+		ani = directionX == Direction::Right ? WHIP_ANI_LEVEL_1_RIGHT : WHIP_ANI_LEVEL_1_LEFT;
 		break;
 
 	case 2:
-		ani = direction == Direction::Right ? WHIP_ANI_LEVEL_2_RIGHT : WHIP_ANI_LEVEL_2_LEFT;
+		ani = directionX == Direction::Right ? WHIP_ANI_LEVEL_2_RIGHT : WHIP_ANI_LEVEL_2_LEFT;
 		break;
 
 	case 3:
-		ani = direction == Direction::Right ? WHIP_ANI_LEVEL_3_RIGHT : WHIP_ANI_LEVEL_3_LEFT;
+		ani = directionX == Direction::Right ? WHIP_ANI_LEVEL_3_RIGHT : WHIP_ANI_LEVEL_3_LEFT;
 		break;
 	}
 

@@ -7,7 +7,7 @@ CSpearKnight::CSpearKnight()
 	isEnemy = true;
 	SetAnimationSet("spear_knight");
 
-	direction = Direction::Right;
+	directionX = Direction::Right;
 	remainingHits = 2;
 	delayTimeout = -1;
 	SetState(SPEAR_KNIGHT_STATE_WALK);
@@ -20,7 +20,7 @@ void CSpearKnight::SetState(int state)
 	switch (state)
 	{
 	case SPEAR_KNIGHT_STATE_WALK:
-		vx = direction == Direction::Right ? SPEAR_KNIGHT_WALK_SPEED : -SPEAR_KNIGHT_WALK_SPEED;
+		vx = directionX == Direction::Right ? SPEAR_KNIGHT_WALK_SPEED : -SPEAR_KNIGHT_WALK_SPEED;
 		break;
 
 	case SPEAR_KNIGHT_STATE_DELAY:
@@ -36,12 +36,12 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (x <= leftBound)
 	{
-		direction = Direction::Right;
+		directionX = Direction::Right;
 		vx = -vx;
 	}
 	else if (x >= rightBound)
 	{
-		direction = Direction::Left;
+		directionX = Direction::Left;
 		vx = -vx;
 	}
 
@@ -107,11 +107,11 @@ void CSpearKnight::Render()
 	switch (state)
 	{
 	case SPEAR_KNIGHT_STATE_DELAY:
-		ani = direction == Direction::Right ? SPEAR_KNIGHT_ANI_DELAY_RIGHT : SPEAR_KNIGHT_ANI_DELAY_LEFT;
+		ani = directionX == Direction::Right ? SPEAR_KNIGHT_ANI_DELAY_RIGHT : SPEAR_KNIGHT_ANI_DELAY_LEFT;
 		break;
 
 	case SPEAR_KNIGHT_STATE_WALK:
-		ani = direction == Direction::Right ? SPEAR_KNIGHT_ANI_WALK_RIGHT : SPEAR_KNIGHT_ANI_WALK_LEFT;
+		ani = directionX == Direction::Right ? SPEAR_KNIGHT_ANI_WALK_RIGHT : SPEAR_KNIGHT_ANI_WALK_LEFT;
 		break;
 	}
 

@@ -11,5 +11,6 @@ public:
 	virtual void Render();
 
 	bool playerMustBeOnStair;
+	Direction sceneDirection;
 };
 

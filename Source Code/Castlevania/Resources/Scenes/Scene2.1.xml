@@ -49,6 +49,13 @@
     <sprite id="simon_walk_upstair_left_2" textureId="simon" left="300" top="66" right="360" bottom="132" />
     <sprite id="simon_walk_downstair_left_1" textureId="simon" left="120" top="66" right="180" bottom="132" />
     <sprite id="simon_walk_downstair_left_2" textureId="simon" left="180" top="66" right="240" bottom="132" />
+    <sprite id="simon_walk_upstair_left_and_attack_1" textureId="simon" left="300" top="132" right="360" bottom="198" />
+    <sprite id="simon_walk_upstair_left_and_attack_2" textureId="simon" left="360" top="132" right="420" bottom="198" />
+    <sprite id="simon_walk_upstair_left_and_attack_3" textureId="simon" left="420" top="132" right="480" bottom="198" />
+    <sprite id="simon_walk_downstair_left_and_attack_1" textureId="simon" left="120" top="132" right="180" bottom="198" />
+    <sprite id="simon_walk_downstair_left_and_attack_2" textureId="simon" left="180" top="132" right="240" bottom="198" />
+    <sprite id="simon_walk_downstair_left_and_attack_3" textureId="simon" left="240" top="132" right="300" bottom="198"  />
+    <sprite id="simon_deflect_left" textureId="simon" left="0" top="66" right="60" bottom="132" />
     <sprite id="simon_die_left" textureId="simon" left="240" top="198" right="300" bottom="264" />
     <sprite id="simon_idle_right" textureId="simon" left="420" top="265" right="480" bottom="331" />
     <sprite id="simon_walk_right_1" textureId="simon" left="360" top="265" right="420" bottom="331" />
@@ -69,6 +76,13 @@
     <sprite id="simon_walk_upstair_right_2" textureId="simon" left="120" top="331" right="180" bottom="397" />
     <sprite id="simon_walk_downstair_right_1" textureId="simon" left="300" top="331" right="360" bottom="397" />
     <sprite id="simon_walk_downstair_right_2" textureId="simon" left="240" top="331" right="300" bottom="397" />
+    <sprite id="simon_walk_upstair_right_and_attack_1" textureId="simon" left="120" top="397" right="180" bottom="463" />
+    <sprite id="simon_walk_upstair_right_and_attack_2" textureId="simon" left="60" top="397" right="120" bottom="463" />
+    <sprite id="simon_walk_upstair_right_and_attack_3" textureId="simon" left="0" top="397" right="60" bottom="463" />
+    <sprite id="simon_walk_downstair_right_and_attack_1" textureId="simon" left="300" top="397" right="360" bottom="463" />
+    <sprite id="simon_walk_downstair_right_and_attack_2" textureId="simon" left="240" top="397" right="300" bottom="463" />
+    <sprite id="simon_walk_downstair_right_and_attack_3" textureId="simon" left="180" top="397" right="240" bottom="463" />
+    <sprite id="simon_deflect_right" textureId="simon" left="420" top="331" right="480" bottom="397" />
     <sprite id="simon_die_right" textureId="simon" left="180" top="463" right="240" bottom="529" />
     <sprite id="simon_watch" textureId="simon" left="60" top="66" right="120" bottom="132" />
 
@@ -277,6 +291,22 @@
       <frame spriteId="simon_walk_downstair_left_2" duration="100" />
     </animation>
 
+    <animation id="simon_walk_upstair_left_and_attack">
+      <frame spriteId="simon_walk_upstair_left_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_upstair_left_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_upstair_left_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_downstair_left_and_attack">
+      <frame spriteId="simon_walk_downstair_left_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_downstair_left_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_downstair_left_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_deflect_left">
+      <frame spriteId="simon_deflect_left" duration="400" />
+    </animation>
+
     <animation id="simon_die_left">
       <frame spriteId="simon_die_left" duration="100" />
     </animation>
@@ -334,6 +364,22 @@
     <animation id="simon_walk_downstair_right">
       <frame spriteId="simon_walk_downstair_right_1" duration="100" />
       <frame spriteId="simon_walk_downstair_right_2" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_upstair_right_and_attack">
+      <frame spriteId="simon_walk_upstair_right_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_upstair_right_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_upstair_right_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_downstair_right_and_attack">
+      <frame spriteId="simon_walk_downstair_right_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_downstair_right_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_downstair_right_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_deflect_right">
+      <frame spriteId="simon_deflect_right" duration="400" />
     </animation>
 
     <animation id="simon_die_right">
@@ -604,6 +650,9 @@
       <animationSetItem id="simon_idle_on_stair_down_left" animationId="simon_idle_on_stair_down_left" />
       <animationSetItem id="simon_walk_upstair_left" animationId="simon_walk_upstair_left" />
       <animationSetItem id="simon_walk_downstair_left" animationId="simon_walk_downstair_left" />
+      <animationSetItem id="simon_walk_upstair_left_and_attack" animationId="simon_walk_upstair_left_and_attack" />
+      <animationSetItem id="simon_walk_downstair_left_and_attack" animationId="simon_walk_downstair_left_and_attack" />
+      <animationSetItem id="simon_deflect_left" animationId="simon_deflect_left" />
       <animationSetItem id="simon_die_left" animationId="simon_die_left" />
       <animationSetItem id="simon_idle_right" animationId="simon_idle_right" />
       <animationSetItem id="simon_walk_right" animationId="simon_walk_right" />
@@ -616,6 +665,9 @@
       <animationSetItem id="simon_idle_on_stair_down_right" animationId="simon_idle_on_stair_down_right" />
       <animationSetItem id="simon_walk_upstair_right" animationId="simon_walk_upstair_right" />
       <animationSetItem id="simon_walk_downstair_right" animationId="simon_walk_downstair_right" />
+      <animationSetItem id="simon_walk_upstair_right_and_attack" animationId="simon_walk_upstair_right_and_attack" />
+      <animationSetItem id="simon_walk_downstair_right_and_attack" animationId="simon_walk_downstair_right_and_attack" />
+      <animationSetItem id="simon_deflect_right" animationId="simon_deflect_right" />
       <animationSetItem id="simon_die_right" animationId="simon_die_right" />
       <animationSetItem id="simon_watch" animationId="simon_watch" />
     </animationSet>
@@ -824,7 +876,7 @@
     <object id="simon" type="simon" animationSetId="simon" x="90" y="250" reloadX="220" reloadY="83" reloadState="on_stair" reloadStairDirectionX="left" reloadStairDirectionY="down" />
 
     <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="154" y="228" />
-    <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="238" y="110" playerMustBeOnStair="true" />
+    <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="238" y="110" playerMustBeOnStair="true" sceneDirection="right" />
     
     <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="218" y="420" />
     <object id="top_stair_2" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="320" y="218" />

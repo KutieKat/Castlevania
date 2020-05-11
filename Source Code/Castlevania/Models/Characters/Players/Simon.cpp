@@ -30,6 +30,7 @@
 
 CSimon::CSimon()
 {
+	invisible = false;
 	sitting = false;
 	touchingGround = false;
 	lastFrameShown = false;
@@ -42,6 +43,7 @@ CSimon::CSimon()
 	delayEndTime = -1;
 	switchSceneTime = -1;
 	waitingTime = -1;
+	invisibleTimeout = -1;
 
 	whip = new CWhip(this);
 	subWeapon == nullptr;
@@ -169,10 +171,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y -= min_ty * dy + ny * 0.4f;
 
 				if (e->nx != 0) x += dx;
+				if (e->ny < 0) y += dy;
 
-				if (dynamic_cast<CSmallHeart*>(e->obj) || dynamic_cast<CCrown*>(e->obj))
+				if (dynamic_cast<CSmallHeart*>(e->obj))
 				{
-					if (e->ny != 0) y += dy;
+					if (e->ny > 0) y += dy;
 				}
 			}
 			else if (dynamic_cast<CMovingBar*>(e->obj))
@@ -221,13 +224,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto nextScene = dynamic_cast<CNextScene*>(e->obj);
 
-				if (e->nx < 0 && onStair == nextScene->playerMustBeOnStair)
+				if (onStair == nextScene->playerMustBeOnStair)
 				{
-					CGame* game = CGame::GetInstance();
+					if ((nextScene->sceneDirection == Direction::Right && e->nx < 0) || (nextScene->sceneDirection == Direction::Left && e->nx > 0))
+					{
+						CGame* game = CGame::GetInstance();
 
-					nextScene->SetVisibility(Visibility::Hidden);
-					game->GetTimer()->Pause();
-					game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+						nextScene->SetVisibility(Visibility::Hidden);
+						game->GetTimer()->Pause();
+						game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+					}
 
 					break;
 				}
@@ -245,15 +251,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto previousScene = dynamic_cast<CPreviousScene*>(e->obj);
 
-				if (e->nx > 0 && onStair == previousScene->playerMustBeOnStair)
+				if (onStair == previousScene->playerMustBeOnStair)
 				{
-					CGame* game = CGame::GetInstance();
+					if ((previousScene->sceneDirection == Direction::Right && e->nx < 0) || (previousScene->sceneDirection == Direction::Left && e->nx > 0))
+					{
+						CGame* game = CGame::GetInstance();
 
-					previousScene->SetVisibility(Visibility::Hidden);
-					game->GetTimer()->Pause();
-					game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetPreviousSceneId());
-
-					break;
+						previousScene->SetVisibility(Visibility::Hidden);
+						game->GetTimer()->Pause();
+						game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+					}
 				}
 				else
 				{
@@ -310,6 +317,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	HandleAttackWithSubWeapon(coObjects);
 	HandleCollisionObjects(coObjects);
 	HandleSwitchScene();
+	HandleInvisibility();
 
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
@@ -319,7 +327,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CSimon::Render()
 {
-	animationSet->at(GetAnimationToRender())->Render(x, y);
+	animationSet->at(GetAnimationToRender())->Render(x, y, invisible ? 150 : 255);
 
 	RenderWhip();
 	RenderSubWeapon();
@@ -332,7 +340,7 @@ void CSimon::SetState(int state)
 	switch (state)
 	{
 	case SIMON_STATE_WALK:
-		vx = direction == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
+		vx = directionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
 		break;
 
 	case SIMON_STATE_JUMP:
@@ -354,6 +362,7 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_STAND_AND_THROW:
+	case SIMON_STATE_STAND_ON_STAIR_AND_THROW:
 		if (CGame::GetInstance()->GetPlayerData()->GetHearts() > 0)
 		{
 			CGame::GetInstance()->GetPlayerData()->DecreaseHearts(1);
@@ -370,6 +379,15 @@ void CSimon::SetState(int state)
 		//{
 		//	vx = 0;
 		//}
+
+		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
+		ResetAnimations();
+		break;
+
+	case SIMON_STATE_WALK_UPSTAIR_AND_ATTACK:
+	case SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK:
+		vx = 0;
+		vy = 0;
 
 		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
 		ResetAnimations();
@@ -394,12 +412,12 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_CUT_SCENE_AUTO_WALK:
 		if (movingDirection == "rightward")
 		{
-			direction = Direction::Right;
+			directionX = Direction::Right;
 			vx = SIMON_SLOW_WALK_SPEED;
 		}
 		else if (movingDirection == "leftward")
 		{
-			direction = Direction::Left;
+			directionX = Direction::Left;
 			vx = -SIMON_SLOW_WALK_SPEED;
 		}
 
@@ -411,7 +429,7 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_WALK_DOWNSTAIR:
-		if (stairDirectionX == direction)
+		if (stairDirectionX == directionX)
 		{
 			vx = stairDirectionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
 		}
@@ -421,10 +439,11 @@ void CSimon::SetState(int state)
 		}
 
 		vy = SIMON_WALK_SPEED;
+		directionY = Direction::Down;
 		break;
 
 	case SIMON_STATE_WALK_UPSTAIR:
-		if (stairDirectionX == direction)
+		if (stairDirectionX == directionX)
 		{
 			vx = stairDirectionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
 		}
@@ -432,7 +451,28 @@ void CSimon::SetState(int state)
 		{
 			vx = stairDirectionX == Direction::Right ? -SIMON_WALK_SPEED : SIMON_WALK_SPEED;
 		}
+
 		vy = -SIMON_WALK_SPEED;
+		directionY = Direction::Up;
+		break;
+
+	case SIMON_STATE_DEFLECT:
+		invisible = true;
+		invisibleTimeout = GetTickCount() + 3000;
+
+		if (directionX == Direction::Right)
+		{
+			vy = -SIMON_JUMP_SPEED;
+			vx = -SIMON_WALK_SPEED;
+		}
+		else
+		{
+			vy = -SIMON_JUMP_SPEED;
+			vx = SIMON_WALK_SPEED;
+		}
+
+		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
+
 		break;
 
 	case SIMON_STATE_DIE:
@@ -464,41 +504,41 @@ int CSimon::GetAnimationToRender()
 	{
 	case SIMON_STATE_WALK:
 	case SIMON_STATE_CUT_SCENE_AUTO_WALK:
-		ani = direction == Direction::Right ? SIMON_ANI_WALK_RIGHT : SIMON_ANI_WALK_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_WALK_RIGHT : SIMON_ANI_WALK_LEFT;
 		break;
 
 	case SIMON_STATE_IDLE_ON_STAIR:
 		if (stairDirectionY == Direction::Up)
 		{
-			if (direction == stairDirectionX)
+			if (directionX == stairDirectionX)
 			{
-				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_UP_RIGHT : SIMON_ANI_IDLE_ON_STAIR_UP_LEFT;
+				ani = directionX == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_UP_RIGHT : SIMON_ANI_IDLE_ON_STAIR_UP_LEFT;
 			}
 			else
 			{
-				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_DOWN_RIGHT : SIMON_ANI_IDLE_ON_STAIR_DOWN_LEFT;
+				ani = directionX == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_DOWN_RIGHT : SIMON_ANI_IDLE_ON_STAIR_DOWN_LEFT;
 			}
 		}
 		else
 		{
-			if (direction == stairDirectionX)
+			if (directionX == stairDirectionX)
 			{
-				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_DOWN_RIGHT : SIMON_ANI_IDLE_ON_STAIR_DOWN_LEFT;
+				ani = directionX == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_DOWN_RIGHT : SIMON_ANI_IDLE_ON_STAIR_DOWN_LEFT;
 			}
 			else
 			{
-				ani = direction == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_UP_RIGHT : SIMON_ANI_IDLE_ON_STAIR_UP_LEFT;
+				ani = directionX == Direction::Right ? SIMON_ANI_IDLE_ON_STAIR_UP_RIGHT : SIMON_ANI_IDLE_ON_STAIR_UP_LEFT;
 			}
 		}
 
 		break;
 
 	case SIMON_STATE_WALK_UPSTAIR:
-		ani = direction == Direction::Right ? SIMON_ANI_WALK_UPSTAIR_RIGHT : SIMON_ANI_WALK_UPSTAIR_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_WALK_UPSTAIR_RIGHT : SIMON_ANI_WALK_UPSTAIR_LEFT;
 		break;
 
 	case SIMON_STATE_WALK_DOWNSTAIR:
-		ani = direction == Direction::Right ? SIMON_ANI_WALK_DOWNSTAIR_RIGHT : SIMON_ANI_WALK_DOWNSTAIR_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_WALK_DOWNSTAIR_RIGHT : SIMON_ANI_WALK_DOWNSTAIR_LEFT;
 		break;
 
 	case SIMON_STATE_WATCH:
@@ -506,35 +546,58 @@ int CSimon::GetAnimationToRender()
 		break;
 
 	case SIMON_STATE_SIT:
-		ani = direction == Direction::Right ? SIMON_ANI_SIT_RIGHT : SIMON_ANI_SIT_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_SIT_RIGHT : SIMON_ANI_SIT_LEFT;
 		break;
 
 	case SIMON_STATE_JUMP:
-		ani = direction == Direction::Right ? SIMON_ANI_JUMP_RIGHT : SIMON_ANI_JUMP_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_JUMP_RIGHT : SIMON_ANI_JUMP_LEFT;
 		break;
 
 	case SIMON_STATE_SIT_AND_ATTACK:
-		ani = direction == Direction::Right ? SIMON_ANI_SIT_RIGHT_AND_ATTACK : SIMON_ANI_SIT_LEFT_AND_ATTACK;
+		ani = directionX == Direction::Right ? SIMON_ANI_SIT_RIGHT_AND_ATTACK : SIMON_ANI_SIT_LEFT_AND_ATTACK;
 		break;
 
 	case SIMON_STATE_STAND_AND_ATTACK:
-		ani = direction == Direction::Right ? SIMON_ANI_STAND_RIGHT_AND_ATTACK : SIMON_ANI_STAND_LEFT_AND_ATTACK;
+		ani = directionX == Direction::Right ? SIMON_ANI_STAND_RIGHT_AND_ATTACK : SIMON_ANI_STAND_LEFT_AND_ATTACK;
 		break;
 
 	case SIMON_STATE_DELAY:
-		ani = direction == Direction::Right ? SIMON_ANI_DELAY_RIGHT : SIMON_ANI_DELAY_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_DELAY_RIGHT : SIMON_ANI_DELAY_LEFT;
 		break;
 
 	case SIMON_STATE_DIE:
-		ani = direction == Direction::Right ? SIMON_ANI_DIE_RIGHT : SIMON_ANI_DIE_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_DIE_RIGHT : SIMON_ANI_DIE_LEFT;
 		break;
 
 	case SIMON_STATE_STAND_AND_THROW:
-		ani = direction == Direction::Right ? SIMON_ANI_STAND_RIGHT_AND_ATTACK : SIMON_ANI_STAND_LEFT_AND_ATTACK;
+		ani = directionX == Direction::Right ? SIMON_ANI_STAND_RIGHT_AND_ATTACK : SIMON_ANI_STAND_LEFT_AND_ATTACK;
+		break;
+
+	case SIMON_STATE_WALK_UPSTAIR_AND_ATTACK:
+		ani = directionX == Direction::Right ? SIMON_ANI_WALK_UPSTAIR_RIGHT_AND_ATTACK : SIMON_ANI_WALK_UPSTAIR_LEFT_AND_ATTACK;
+		break;
+
+	case SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK:
+		ani = directionX == Direction::Right ? SIMON_ANI_WALK_DOWNSTAIR_RIGHT_AND_ATTACK : SIMON_ANI_WALK_DOWNSTAIR_LEFT_AND_ATTACK;
+		break;
+
+	case SIMON_STATE_DEFLECT:
+		ani = directionX == Direction::Right ? SIMON_ANI_DEFLECT_LEFT : SIMON_ANI_DEFLECT_RIGHT;
+		break;
+
+	case SIMON_STATE_STAND_ON_STAIR_AND_THROW:
+		if (directionY == Direction::Up)
+		{
+			ani = directionX == Direction::Right ? SIMON_ANI_WALK_UPSTAIR_RIGHT_AND_ATTACK : SIMON_ANI_WALK_UPSTAIR_LEFT_AND_ATTACK;
+		}
+		else
+		{
+			ani = directionX == Direction::Right ? SIMON_ANI_WALK_DOWNSTAIR_RIGHT_AND_ATTACK : SIMON_ANI_WALK_DOWNSTAIR_LEFT_AND_ATTACK;
+		}
 		break;
 
 	default:
-		ani = direction == Direction::Right ? SIMON_ANI_IDLE_RIGHT : SIMON_ANI_IDLE_LEFT;
+		ani = directionX == Direction::Right ? SIMON_ANI_IDLE_RIGHT : SIMON_ANI_IDLE_LEFT;
 	}
 
 	return ani;
@@ -566,18 +629,20 @@ void CSimon::HandleDelay()
 
 void CSimon::HandleAttackWithWhip(vector<LPGAMEOBJECT>* coObjects)
 {
-	if (whip && (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK))
+	if (whip && (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK || state == SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK || state == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK))
 	{
-		whip->direction = direction;
+		whip->directionX = directionX;
 
 		switch (state)
 		{
 		case SIMON_STATE_SIT_AND_ATTACK:
-			whip->SetPosition(direction == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y + 14);
+			whip->SetPosition(directionX == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y + 14);
 			break;
 
 		case SIMON_STATE_STAND_AND_ATTACK:
-			whip->SetPosition(direction == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y);
+		case SIMON_STATE_WALK_UPSTAIR_AND_ATTACK:
+		case SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK:
+			whip->SetPosition(directionX == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y);
 			break;
 		}
 
@@ -597,7 +662,7 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 		subWeapon->Update(dt, coObjects);
 	}
 
-	if (state == SIMON_STATE_STAND_AND_THROW)
+	if (state == SIMON_STATE_STAND_AND_THROW || state == SIMON_STATE_STAND_ON_STAIR_AND_THROW)
 	{
 		if (lastFrameShown == false && animationSet->at(GetAnimationToRender())->ReachLastFrame())
 		{
@@ -616,8 +681,8 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 				subWeapon = new WBoomerang(this);
 			}
 
-			subWeapon->SetDirection(direction);
-			subWeapon->SetPosition(direction == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
+			subWeapon->SetDirectionX(directionX);
+			subWeapon->SetPosition(directionX == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
 		}
 	}
 }
@@ -725,6 +790,13 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 
 void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 {
+	CPlayerData* playerData = CGame::GetInstance()->GetPlayerData();
+
+	if (!invisible)
+	{
+		playerData->DecreaseHealthVolumes(1);
+		SetState(SIMON_STATE_DEFLECT);
+	}
 }
 
 void CSimon::HandleSwitchScene()
@@ -793,9 +865,23 @@ void CSimon::HandleSwitchScene()
 	}
 }
 
+void CSimon::HandleInvisibility()
+{
+	if (invisible && GetTickCount() >= invisibleTimeout)
+	{
+		invisible = false;
+		invisibleTimeout = -1;
+
+		if (state != SIMON_STATE_DIE)
+		{
+			SetState(SIMON_STATE_IDLE);
+		}
+	}
+}
+
 void CSimon::RenderWhip()
 {
-	if (whip && (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK))
+	if (whip && (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK || state == SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK || state == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK))
 	{
 		whip->Render();
 	}

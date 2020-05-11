@@ -249,6 +249,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 		else if (type == "next_scene")
 		{
 			bool playerMustBeOnStair = false;
+			string sceneDirection = object->Attribute("sceneDirection");
 
 			object->QueryBoolAttribute("playerMustBeOnStair", &playerMustBeOnStair);
 
@@ -256,12 +257,14 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			scene->SetId(id);
 			scene->SetPosition(x, y);
 			scene->playerMustBeOnStair = playerMustBeOnStair;
+			scene->sceneDirection = sceneDirection == "right" ? Direction::Right : Direction::Left;
 
 			objects.emplace_back(scene);
 		}
 		else if (type == "previous_scene")
 		{
 			bool playerMustBeOnStair = false;
+			string sceneDirection = object->Attribute("sceneDirection");
 
 			object->QueryBoolAttribute("playerMustBeOnStair", &playerMustBeOnStair);
 
@@ -269,6 +272,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			scene->SetId(id);
 			scene->SetPosition(x, y);
 			scene->playerMustBeOnStair = playerMustBeOnStair;
+			scene->sceneDirection = sceneDirection == "right" ? Direction::Right : Direction::Left;
 
 			objects.emplace_back(scene);
 		}
@@ -511,6 +515,21 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 
 	if (simon != nullptr)
 	{
+		if (simon->GetState() == SIMON_STATE_STAND_ON_STAIR_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+		{
+			return;
+		}
+
+		if (simon->GetState() == SIMON_STATE_DEFLECT && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+		{
+			return;
+		}
+
+		if ((simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK || simon->GetState() == SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK) && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+		{
+			return;
+		}
+
 		if (simon->up && !simon->touchingGround && simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
 			return;
@@ -553,7 +572,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		{
 			if (simon->onStair)
 			{
-				simon->SetDirection(Direction::Right);
+				simon->SetDirectionX(Direction::Right);
 				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
 			}
 			else
@@ -561,9 +580,9 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 				simon->SetState(SIMON_STATE_IDLE);
 			}
 		}
-		else if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
+		if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 		{
-			simon->SetDirection(Direction::Right);
+			simon->SetDirectionX(Direction::Right);
 
 			if (!simon->sitting)
 			{
@@ -577,7 +596,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		}
 		else if (game->GetInputManager()->IsKeyDown(DIK_LEFT))
 		{
-			simon->SetDirection(Direction::Left);
+			simon->SetDirectionX(Direction::Left);
 
 			if (!simon->sitting)
 			{
@@ -597,7 +616,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 			}
 			else
 			{
-				simon->SetDirection(Direction::Left);
+				simon->SetDirectionX(Direction::Left);
 				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
 			}
 		}
@@ -633,6 +652,11 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 		switch (keyCode)
 		{
 		case DIK_Z:
+			if (simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+			{
+				return;
+			}
+
 			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 			{
 				return;
@@ -643,9 +667,28 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				return;
 			}
 
-			if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+			if (simon->onStair)
 			{
-				simon->SetState(SIMON_STATE_STAND_AND_THROW);
+				if (simon->GetDirectionY() == Direction::Up)
+				{
+					simon->SetState(SIMON_STATE_WALK_UPSTAIR_AND_ATTACK);
+				}
+				else
+				{
+					simon->SetState(SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK);
+				}
+
+				if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+				{
+					simon->SetState(SIMON_STATE_STAND_ON_STAIR_AND_THROW);
+				}
+			}
+			else
+			{
+				if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+				{
+					simon->SetState(SIMON_STATE_STAND_AND_THROW);
+				}
 			}
 
 			if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_WALK || simon->GetState() == SIMON_STATE_JUMP)
@@ -682,7 +725,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 		case DIK_UP:
 			simon->up = true;
 
-			if (simon->atBottomStair && simon->GetDirection() == simon->stairDirectionX)
+			if (simon->atBottomStair && simon->GetDirectionX() == simon->stairDirectionX)
 			{
 				simon->onStair = true;
 				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
@@ -696,7 +739,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				return;
 			}
 
-			if (simon->atTopStair && simon->GetDirection() == simon->stairDirectionX)
+			if (simon->atTopStair && simon->GetDirectionX() == simon->stairDirectionX)
 			{
 				simon->onStair = true;
 				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);

@@ -5,7 +5,7 @@ CRedBat::CRedBat()
 	isEnemy = true;
 	SetAnimationSet("red_bat");
 
-	direction = Direction::Right;
+	directionX = Direction::Right;
 
 	SetState(RED_BAT_STATE_STATIC);
 }
@@ -21,7 +21,7 @@ void CRedBat::SetState(int state)
 		break;
 
 	case RED_BAT_STATE_MOVE:
-		vx = direction == Direction::Right ? RED_BAT_MOVE_SPEED : -RED_BAT_MOVE_SPEED;
+		vx = directionX == Direction::Right ? RED_BAT_MOVE_SPEED : -RED_BAT_MOVE_SPEED;
 		break;
 	}
 }
@@ -44,11 +44,11 @@ void CRedBat::Render()
 	switch (state)
 	{
 	case RED_BAT_STATE_STATIC:
-		ani = direction == Direction::Right ? RED_BAT_ANI_STATIC_RIGHT : RED_BAT_ANI_STATIC_LEFT;
+		ani = directionX == Direction::Right ? RED_BAT_ANI_STATIC_RIGHT : RED_BAT_ANI_STATIC_LEFT;
 		break;
 
 	case RED_BAT_STATE_MOVE:
-		ani = direction == Direction::Right ? RED_BAT_ANI_MOVE_RIGHT : RED_BAT_ANI_MOVE_LEFT;
+		ani = directionX == Direction::Right ? RED_BAT_ANI_MOVE_RIGHT : RED_BAT_ANI_MOVE_LEFT;
 		break;
 	}
 
