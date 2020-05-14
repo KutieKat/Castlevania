@@ -9,7 +9,6 @@
 CWhip::CWhip(CSimon* simon)
 {
 	this->simon = simon;
-	this->level = CGame::GetInstance()->GetPlayerData()->GetWhipLevel();
 
 	SetAnimationSet("whip");
 }
@@ -42,16 +41,11 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				object->Disappear();
 			}
-			else if (dynamic_cast<CRedBat*>(object))
+			else if (dynamic_cast<CEnemy*>(object))
 			{
-				object->Disappear();
-				playerData->AddScore(300);
-			}
-			else if (dynamic_cast<CSpearKnight*>(object))
-			{
-				auto knight = dynamic_cast<CSpearKnight*>(object);
+				auto enemy = dynamic_cast<CEnemy*>(object);
 
-				knight->TakeDamage(playerData->GetWhipPower());
+				enemy->TakeDamage(playerData->GetWhipPower());
 			}
 		}
 	}
@@ -63,27 +57,19 @@ void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
 	t = y;
 	b = y + WHIP_BBOX_HEIGHT;
 
-	switch (level)
+	switch (CGame::GetInstance()->GetPlayerData()->GetWhipLevel())
 	{
-	case 1:
+	case WHIP_LEVEL_1:
 		r = l + WHIP_LEVEL_1_BBOX_WIDTH;
 		break;
 
-	case 2:
+	case WHIP_LEVEL_2:
 		r = l + WHIP_LEVEL_2_BBOX_WIDTH;
 		break;
 
-	case 3:
+	case WHIP_LEVEL_3:
 		r = l + WHIP_LEVEL_3_BBOX_WIDTH;
 		break;
-	}
-}
-
-void CWhip::Upgrade()
-{
-	if (level < 3)
-	{
-		level += 1;
 	}
 }
 
@@ -116,26 +102,21 @@ bool CWhip::HaveCollision(CGameObject* object)
 	return false;
 }
 
-int CWhip::GetLevel()
-{
-	return level;
-}
-
 int CWhip::GetAnimationToRender()
 {
 	int ani;
 
-	switch (level)
+	switch (CGame::GetInstance()->GetPlayerData()->GetWhipLevel())
 	{
-	case 1:
+	case WHIP_LEVEL_1:
 		ani = directionX == Direction::Right ? WHIP_ANI_LEVEL_1_RIGHT : WHIP_ANI_LEVEL_1_LEFT;
 		break;
 
-	case 2:
+	case WHIP_LEVEL_2:
 		ani = directionX == Direction::Right ? WHIP_ANI_LEVEL_2_RIGHT : WHIP_ANI_LEVEL_2_LEFT;
 		break;
 
-	case 3:
+	case WHIP_LEVEL_3:
 		ani = directionX == Direction::Right ? WHIP_ANI_LEVEL_3_RIGHT : WHIP_ANI_LEVEL_3_LEFT;
 		break;
 	}

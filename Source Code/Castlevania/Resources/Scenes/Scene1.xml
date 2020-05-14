@@ -17,6 +17,9 @@
     <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
     <texture id="transparency" path="Resources\\Others\\Transparency.png" r="255" g="0" b="255" />
     <texture id="health_volume" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
+    <texture id="paused" path="Resources\\Others\\Paused.png" r="255" g="0" b="255" />
+    <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
+    <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
   </textures>
   
   <sprites>
@@ -36,6 +39,17 @@
     <sprite id="simon_delay_left_1" textureId="simon" left="0" top="198" right="60" bottom="264" />
     <sprite id="simon_delay_left_2" textureId="simon" left="60" top="198" right="120" bottom="264" />
     <sprite id="simon_delay_left_3" textureId="simon" left="120" top="198" right="180" bottom="264" />
+    <sprite id="simon_walk_upstair_left_1" textureId="simon" left="240" top="66" right="300" bottom="132" />
+    <sprite id="simon_walk_upstair_left_2" textureId="simon" left="300" top="66" right="360" bottom="132" />
+    <sprite id="simon_walk_downstair_left_1" textureId="simon" left="120" top="66" right="180" bottom="132" />
+    <sprite id="simon_walk_downstair_left_2" textureId="simon" left="180" top="66" right="240" bottom="132" />
+    <sprite id="simon_walk_upstair_left_and_attack_1" textureId="simon" left="300" top="132" right="360" bottom="198" />
+    <sprite id="simon_walk_upstair_left_and_attack_2" textureId="simon" left="360" top="132" right="420" bottom="198" />
+    <sprite id="simon_walk_upstair_left_and_attack_3" textureId="simon" left="420" top="132" right="480" bottom="198" />
+    <sprite id="simon_walk_downstair_left_and_attack_1" textureId="simon" left="120" top="132" right="180" bottom="198" />
+    <sprite id="simon_walk_downstair_left_and_attack_2" textureId="simon" left="180" top="132" right="240" bottom="198" />
+    <sprite id="simon_walk_downstair_left_and_attack_3" textureId="simon" left="240" top="132" right="300" bottom="198"  />
+    <sprite id="simon_deflect_left" textureId="simon" left="0" top="66" right="60" bottom="132" />
     <sprite id="simon_die_left" textureId="simon" left="240" top="198" right="300" bottom="264" />
     <sprite id="simon_idle_right" textureId="simon" left="420" top="265" right="480" bottom="331" />
     <sprite id="simon_walk_right_1" textureId="simon" left="360" top="265" right="420" bottom="331" />
@@ -52,6 +66,17 @@
     <sprite id="simon_delay_right_1" textureId="simon" left="420" top="463" right="480" bottom="529" />
     <sprite id="simon_delay_right_2" textureId="simon" left="360" top="463" right="420" bottom="529" />
     <sprite id="simon_delay_right_3" textureId="simon" left="300" top="463" right="360" bottom="529" />
+    <sprite id="simon_walk_upstair_right_1" textureId="simon" left="180" top="331" right="240" bottom="397" />
+    <sprite id="simon_walk_upstair_right_2" textureId="simon" left="120" top="331" right="180" bottom="397" />
+    <sprite id="simon_walk_downstair_right_1" textureId="simon" left="300" top="331" right="360" bottom="397" />
+    <sprite id="simon_walk_downstair_right_2" textureId="simon" left="240" top="331" right="300" bottom="397" />
+    <sprite id="simon_walk_upstair_right_and_attack_1" textureId="simon" left="120" top="397" right="180" bottom="463" />
+    <sprite id="simon_walk_upstair_right_and_attack_2" textureId="simon" left="60" top="397" right="120" bottom="463" />
+    <sprite id="simon_walk_upstair_right_and_attack_3" textureId="simon" left="0" top="397" right="60" bottom="463" />
+    <sprite id="simon_walk_downstair_right_and_attack_1" textureId="simon" left="300" top="397" right="360" bottom="463" />
+    <sprite id="simon_walk_downstair_right_and_attack_2" textureId="simon" left="240" top="397" right="300" bottom="463" />
+    <sprite id="simon_walk_downstair_right_and_attack_3" textureId="simon" left="180" top="397" right="240" bottom="463" />
+    <sprite id="simon_deflect_right" textureId="simon" left="420" top="331" right="480" bottom="397" />
     <sprite id="simon_die_right" textureId="simon" left="180" top="463" right="240" bottom="529" />
     <sprite id="simon_watch" textureId="simon" left="60" top="66" right="120" bottom="132" />
     
@@ -133,6 +158,17 @@
     <sprite id="whip_level_3_right_10" textureId="whip" left="555" top="727" right="695" bottom="793" />
     <sprite id="whip_level_3_right_11" textureId="whip" left="315" top="727" right="455" bottom="793" />
     <sprite id="whip_level_3_right_12" textureId="whip" left="75" top="727" right="215" bottom="793" />
+    
+    <!-- Paused -->
+    <sprite id="paused" textureId="paused" left="0" top="0" right="246" bottom="40" />
+
+    <!-- BigDoubleShot -->
+    <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+
+    <!-- Boomerang -->
+    <sprite id="boomerang_1" textureId="boomerang" left="0" top="0" right="27" bottom="27" />
+    <sprite id="boomerang_2" textureId="boomerang" left="28" top="0" right="55" bottom="27" />
+    <sprite id="boomerang_3" textureId="boomerang" left="56" top="0" right="83" bottom="27" />
   </sprites>
   
   <animations>
@@ -174,6 +210,40 @@
       <frame spriteId="simon_delay_left_3" duration="100" />
     </animation>
 
+    <animation id="simon_idle_on_stair_up_left">
+      <frame spriteId="simon_walk_upstair_left_1" duration="100" />
+    </animation>
+
+    <animation id="simon_idle_on_stair_down_left">
+      <frame spriteId="simon_walk_downstair_left_1" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_upstair_left">
+      <frame spriteId="simon_walk_upstair_left_1" duration="100" />
+      <frame spriteId="simon_walk_upstair_left_2" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_downstair_left">
+      <frame spriteId="simon_walk_downstair_left_1" duration="100" />
+      <frame spriteId="simon_walk_downstair_left_2" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_upstair_left_and_attack">
+      <frame spriteId="simon_walk_upstair_left_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_upstair_left_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_upstair_left_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_downstair_left_and_attack">
+      <frame spriteId="simon_walk_downstair_left_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_downstair_left_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_downstair_left_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_deflect_left">
+      <frame spriteId="simon_deflect_left" duration="400" />
+    </animation>
+
     <animation id="simon_die_left">
       <frame spriteId="simon_die_left" duration="100" />
     </animation>
@@ -213,6 +283,40 @@
       <frame spriteId="simon_delay_right_1" duration="100" />
       <frame spriteId="simon_delay_right_2" duration="100" />
       <frame spriteId="simon_delay_right_3" duration="100" />
+    </animation>
+
+    <animation id="simon_idle_on_stair_up_right">
+      <frame spriteId="simon_walk_upstair_right_1" duration="100" />
+    </animation>
+
+    <animation id="simon_idle_on_stair_down_right">
+      <frame spriteId="simon_walk_downstair_right_1" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_upstair_right">
+      <frame spriteId="simon_walk_upstair_right_1" duration="100" />
+      <frame spriteId="simon_walk_upstair_right_2" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_downstair_right">
+      <frame spriteId="simon_walk_downstair_right_1" duration="100" />
+      <frame spriteId="simon_walk_downstair_right_2" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_upstair_right_and_attack">
+      <frame spriteId="simon_walk_upstair_right_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_upstair_right_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_upstair_right_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_walk_downstair_right_and_attack">
+      <frame spriteId="simon_walk_downstair_right_and_attack_1" duration="100" />
+      <frame spriteId="simon_walk_downstair_right_and_attack_2" duration="100" />
+      <frame spriteId="simon_walk_downstair_right_and_attack_3" duration="100" />
+    </animation>
+
+    <animation id="simon_deflect_right">
+      <frame spriteId="simon_deflect_right" duration="400" />
     </animation>
 
     <animation id="simon_die_right">
@@ -349,6 +453,27 @@
       <frame spriteId="whip_level_3_right_11" duration="25" />
       <frame spriteId="whip_level_3_right_12" duration="25" />
     </animation>
+    
+    <!-- Paused -->
+    <animation id="paused">
+      <frame spriteId="paused" duration="100" />
+    </animation>
+
+    <!-- Boomerang -->
+    <animation id="boomerang_static">
+      <frame spriteId="boomerang_2" duration="100" />
+    </animation>
+
+    <animation id="boomerang_move">
+      <frame spriteId="boomerang_1" duration="100" />
+      <frame spriteId="boomerang_2" duration="100" />
+      <frame spriteId="boomerang_3" duration="100" />
+    </animation>
+
+    <!-- BigDoubleShot -->
+    <animation id="big_double_shot">
+      <frame spriteId="big_double_shot" duration="100" />
+    </animation>
   </animations>
   
   <animationSets>
@@ -360,6 +485,13 @@
       <animationSetItem id="simon_sit_left_and_attack" animationId="simon_sit_left_and_attack" />
       <animationSetItem id="simon_stand_left_and_attack" animationId="simon_stand_left_and_attack" />
       <animationSetItem id="simon_delay_left" animationId="simon_delay_left" />
+      <animationSetItem id="simon_idle_on_stair_up_left" animationId="simon_idle_on_stair_up_left" />
+      <animationSetItem id="simon_idle_on_stair_down_left" animationId="simon_idle_on_stair_down_left" />
+      <animationSetItem id="simon_walk_upstair_left" animationId="simon_walk_upstair_left" />
+      <animationSetItem id="simon_walk_downstair_left" animationId="simon_walk_downstair_left" />
+      <animationSetItem id="simon_walk_upstair_left_and_attack" animationId="simon_walk_upstair_left_and_attack" />
+      <animationSetItem id="simon_walk_downstair_left_and_attack" animationId="simon_walk_downstair_left_and_attack" />
+      <animationSetItem id="simon_deflect_left" animationId="simon_deflect_left" />
       <animationSetItem id="simon_die_left" animationId="simon_die_left" />
       <animationSetItem id="simon_idle_right" animationId="simon_idle_right" />
       <animationSetItem id="simon_walk_right" animationId="simon_walk_right" />
@@ -368,6 +500,13 @@
       <animationSetItem id="simon_sit_right_and_attack" animationId="simon_sit_right_and_attack" />
       <animationSetItem id="simon_stand_right_and_attack" animationId="simon_stand_right_and_attack" />
       <animationSetItem id="simon_delay_right" animationId="simon_delay_right" />
+      <animationSetItem id="simon_idle_on_stair_up_right" animationId="simon_idle_on_stair_up_right" />
+      <animationSetItem id="simon_idle_on_stair_down_right" animationId="simon_idle_on_stair_down_right" />
+      <animationSetItem id="simon_walk_upstair_right" animationId="simon_walk_upstair_right" />
+      <animationSetItem id="simon_walk_downstair_right" animationId="simon_walk_downstair_right" />
+      <animationSetItem id="simon_walk_upstair_right_and_attack" animationId="simon_walk_upstair_right_and_attack" />
+      <animationSetItem id="simon_walk_downstair_right_and_attack" animationId="simon_walk_downstair_right_and_attack" />
+      <animationSetItem id="simon_deflect_right" animationId="simon_deflect_right" />
       <animationSetItem id="simon_die_right" animationId="simon_die_right" />
       <animationSetItem id="simon_watch" animationId="simon_watch" />
     </animationSet>
@@ -427,10 +566,23 @@
       <animationSetItem id="whip_level_3_left" animationId="whip_level_3_left" />
       <animationSetItem id="whip_level_3_right" animationId="whip_level_3_right" />
     </animationSet>
+
+    <animationSet id="paused">
+      <animationSetItem id="paused" animationId="paused" />
+    </animationSet>
+
+    <animationSet id="boomerang">
+      <animationSetItem id="boomerang_static" animationId="boomerang_static" />
+      <animationSetItem id="boomerang_move" animationId="boomerang_move" />
+    </animationSet>
+
+    <animationSet id="big_double_shot">
+      <animationSetItem id="big_double_shot" animationId="big_double_shot" />
+    </animationSet>
   </animationSets>
-  
-  <objects>
-    <object id="money_bag_1" type="money_bag" animationSetId="money_bag" x="1256" y="367" value="1000" endingEffect="one_thousand" visible="false" topBound="337" />
+
+  <objects gridWidth="1536" gridHeight="448" cellWidth="64" cellHeight="64">
+    <object id="money_bag_1" type="money_bag" animationSetId="money_bag" x="1256" y="367" endingEffect="one_thousand" visible="false" topBound="337" />
     <object id="easter_egg_1" type="easter_egg" animationSetId="transparency" x="1420" y="334" hiddenItemId="money_bag_1" />
     <object id="ground_1" type="ground" animationSetId="ground" x="0" y="366" />
     <object id="ground_2" type="ground" animationSetId="ground" x="32" y="366" />
@@ -491,6 +643,6 @@
     <object id="dagger_1" type="dagger" animationSetId="dagger" x="1200" y="302" visible="false" />
     <object id="big_candle_5" type="big_candle" animationSetId="big_candle" x="1200" y="302" endingEffect="flash" hiddenItemId="dagger_1" />
     <object id="simon" type="simon" animationSetId="simon" x="65" y="100" />
-    <object id="door_1" type="door" animationSetId="transparency" x="1376" y="350" />
+    <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="1376" y="350" playerMustBeOnStair="false" sceneDirection="right" />
   </objects>
 </resources>

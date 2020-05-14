@@ -1,8 +1,8 @@
 #pragma once
-#include "../../GameObject.h"
+#include "Enemy.h"
 #include "../../../Utilities/Constants.h"
 
-class CRedBat : public CGameObject
+class CRedBat : public CEnemy
 {
 public:
 	CRedBat();
@@ -10,7 +10,7 @@ public:
 	void SetState(int state);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 	void Render();
-	void GetBoundingBox(float &l, float &t, float &r, float &b);
-
-	bool IsPlayerNearby(float playerX, float playerY, float radius);
+	void GetBoundingBox(float & left, float & top, float & right, float & bottom);
+	void TakeDamage(int damages = ENEMY_DEFAULT_DAMAGES);
+	void OnPlayerEnterArea();
 };

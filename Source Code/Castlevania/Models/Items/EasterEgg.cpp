@@ -12,7 +12,6 @@ void CEasterEgg::ShowHiddenItem()
 	CGameObject::ShowHiddenItem();
 
 	hiddenItem->SetState(ITEM_STATE_APPEAR);
-	hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
 }
 
 void CEasterEgg::GetBoundingBox(float& left, float& top, float& right, float& bottom)

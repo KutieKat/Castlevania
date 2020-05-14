@@ -1,8 +1,11 @@
 #include "Timer.h"
+#include "../Utilities/Debug.h"
 
 CTimer::CTimer()
 {
 	paused = true;
+	remainingTime = -1;
+	counter = 0;
 }
 
 CTimer::CTimer(DWORD time)
@@ -10,7 +13,7 @@ CTimer::CTimer(DWORD time)
 	SetTime(time);
 }
 
-void CTimer::Start()
+void CTimer::Resume()
 {
 	paused = false;
 }
@@ -22,15 +25,19 @@ void CTimer::Pause()
 
 void CTimer::SetTime(DWORD time)
 {
-	endTime = GetTickCount() + time * 1000;
 	remainingTime = time;
 }
 
 void CTimer::Tick()
 {
-	if (!paused)
+	if (!paused && remainingTime > 0)
 	{
-		remainingTime = (endTime - GetTickCount()) / 1000;
+		counter++;
+
+		if (counter % 70 == 0)
+		{
+			remainingTime -= 1;
+		}
 	}
 }
 

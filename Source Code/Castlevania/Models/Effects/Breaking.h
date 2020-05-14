@@ -17,5 +17,7 @@ public:
 
 protected:
 	vector<CBrickPiece*> pieces;
+
+	void GetPieceSpeed(int index, float& speedX, float &speedY);
 };
 

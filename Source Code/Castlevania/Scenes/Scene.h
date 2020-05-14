@@ -4,6 +4,7 @@
 
 #include "../Input/IKeyEventHandler.h"
 #include "../Models/Characters/Players/Simon.h"
+#include "../Models/Grid.h"
 using namespace std;
 
 class CScene
@@ -11,16 +12,21 @@ class CScene
 protected:
 	IKeyEventHandler* keyHandler;
 
+	CGrid* grid;
+
 	string id;
 	string filePath;
 	string previousSceneId;
 	string nextSceneId;
 	string stage;
+	string requiredSceneId;
 
 	DWORD switchSceneTime;
 
+	bool paused;
+
 public:
-	CScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "");
+	CScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "", string requiredSceneId = "");
 
 	IKeyEventHandler* GetKeyEventHandler();
 
@@ -30,10 +36,18 @@ public:
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 
+	void Pause();
+	void Resume();
+
+	bool Paused();
+
 	string GetId();
+	string GetStage();
 	string GetPreviousSceneId();
 	string GetNextSceneId();
-	string GetStage();
+	string GetRequiredSceneId() { return requiredSceneId; }
+
+	CGrid* GetGrid();
 
 	bool needReloading;
 };

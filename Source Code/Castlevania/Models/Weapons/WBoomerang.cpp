@@ -1,5 +1,7 @@
 #include "WBoomerang.h"
 #include "../../Utilities/Debug.h"
+#include "../Characters/Enemies/Enemy.h"
+#include "../Misc/Brick.h"
 
 WBoomerang::WBoomerang(CSimon* simon)
 {
@@ -8,8 +10,8 @@ WBoomerang::WBoomerang(CSimon* simon)
 	this->simon = simon;
 	this->directionX = simon->directionX;
 	this->vx = simon->directionX == Direction::Right ? BOOMERANG_MOVE_SPEED : -BOOMERANG_MOVE_SPEED;
-	this->maxRight = simon->x + 200;
-	this->maxLeft = simon->x - 200;
+	this->maxRight = simon->x + BOOMERANG_MOVABLE_AREA_WIDTH;
+	this->maxLeft = simon->x - BOOMERANG_MOVABLE_AREA_WIDTH;
 	this->hidden = false;
 }
 
@@ -55,13 +57,21 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->isEnemy)
+			if (dynamic_cast<CEnemy*>(e->obj))
 			{
-				e->obj->Disappear();
+				auto enemy = dynamic_cast<CEnemy*>(e->obj);
+
+				enemy->TakeDamage();
+
+				vx = -vx;
+			}
+			else if (dynamic_cast<CBrick*>(e->obj))
+			{
+				vx = -vx;
 			}
 			else
 			{
-				vx = -vx;
+				if (e->nx != 0) x += dx;
 			}
 		}
 	}

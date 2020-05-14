@@ -2,7 +2,6 @@
 #include "../../../Game.h"
 #include "../../Characters/Enemies/RedBat.h"
 #include "../../Misc/Ground.h"
-#include "../../Misc/Door.h"
 #include "../../Misc/Brick.h"
 #include "../../Misc/TopStair.h"
 #include "../../Misc/BottomStair.h"
@@ -44,6 +43,7 @@ CSimon::CSimon()
 	switchSceneTime = -1;
 	waitingTime = -1;
 	invisibleTimeout = -1;
+	waitingTime = DEFAULT_WAITING_TIME;
 
 	whip = new CWhip(this);
 	subWeapon == nullptr;
@@ -193,32 +193,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				auto easterEgg = dynamic_cast<CEasterEgg*>(e->obj);
 
 				easterEgg->ShowHiddenItem();
-				easterEgg->SetVisibility(Visibility::Hidden);
+				easterEgg->removable = true;
 
 				x += dx;
-			}
-			else if (dynamic_cast<CDoor*>(e->obj))
-			{
-				e->obj->SetVisibility(Visibility::Hidden);
-
-				if (e->nx < 0)
-				{
-					CGame* game = CGame::GetInstance();
-
-					game->GetTimer()->Pause();
-					game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetCurrentScene()->GetNextSceneId());
-
-					break;
-				}
-				else
-				{
-					x += dx;
-				}
-
-				if (e->ny != 0)
-				{
-					y += dy;
-				}
 			}
 			else if (dynamic_cast<CNextScene*>(e->obj))
 			{
@@ -226,16 +203,19 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (onStair == nextScene->playerMustBeOnStair)
 				{
-					if ((nextScene->sceneDirection == Direction::Right && e->nx < 0) || (nextScene->sceneDirection == Direction::Left && e->nx > 0))
+					if ((nextScene->sceneDirection == Direction::Right && (e->nx < 0 || e->ny < 0)) || (nextScene->sceneDirection == Direction::Left && (e->nx > 0 || e->ny < 0)))
 					{
 						CGame* game = CGame::GetInstance();
 
-						nextScene->SetVisibility(Visibility::Hidden);
 						game->GetTimer()->Pause();
 						game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+						
+						nextScene->removable = true;
+						break;
 					}
 
-					break;
+					x += dx;
+					y += dy;
 				}
 				else
 				{
@@ -253,14 +233,19 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (onStair == previousScene->playerMustBeOnStair)
 				{
-					if ((previousScene->sceneDirection == Direction::Right && e->nx < 0) || (previousScene->sceneDirection == Direction::Left && e->nx > 0))
+					if ((previousScene->sceneDirection == Direction::Right && (e->nx < 0 || e->ny < 0)) || (previousScene->sceneDirection == Direction::Left && (e->nx > 0 || e->ny < 0)))
 					{
 						CGame* game = CGame::GetInstance();
 
-						previousScene->SetVisibility(Visibility::Hidden);
 						game->GetTimer()->Pause();
-						game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+						game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetPreviousSceneId());
+						
+						previousScene->removable = true;
+						break;
 					}
+
+					x += dx;
+					y += dy;
 				}
 				else
 				{
@@ -330,7 +315,6 @@ void CSimon::Render()
 	animationSet->at(GetAnimationToRender())->Render(x, y, invisible ? 150 : 255);
 
 	RenderWhip();
-	RenderSubWeapon();
 }
 
 void CSimon::SetState(int state)
@@ -395,7 +379,7 @@ void CSimon::SetState(int state)
 
 	case SIMON_STATE_DELAY:
 		vx = 0;
-		delayEndTime = GetTickCount() + SIMON_DELAY_TIMEOUT;
+		delayEndTime = GetTickCount() + SIMON_DELAY_TIME;
 		break;
 
 	case SIMON_STATE_IDLE:
@@ -458,7 +442,7 @@ void CSimon::SetState(int state)
 
 	case SIMON_STATE_DEFLECT:
 		invisible = true;
-		invisibleTimeout = GetTickCount() + 3000;
+		invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
 
 		if (directionX == Direction::Right)
 		{
@@ -481,7 +465,7 @@ void CSimon::SetState(int state)
 
 		if (switchSceneTime == -1)
 		{
-			switchSceneTime = GetTickCount() + 3000;
+			switchSceneTime = GetTickCount() + waitingTime;
 		}
 
 		break;
@@ -621,8 +605,9 @@ void CSimon::HandleGravity()
 
 void CSimon::HandleDelay()
 {
-	if (state == SIMON_STATE_DELAY && GetTickCount() >= delayEndTime && state != SIMON_STATE_DIE)
+	if (state == SIMON_STATE_DELAY && delayEndTime != -1 && GetTickCount() >= delayEndTime && state != SIMON_STATE_DIE)
 	{
+		delayEndTime = -1;
 		SetState(SIMON_STATE_IDLE);
 	}
 }
@@ -636,13 +621,13 @@ void CSimon::HandleAttackWithWhip(vector<LPGAMEOBJECT>* coObjects)
 		switch (state)
 		{
 		case SIMON_STATE_SIT_AND_ATTACK:
-			whip->SetPosition(directionX == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y + 14);
+			whip->SetPosition(directionX == Direction::Right ? x - 10 : CGame::GetInstance()->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_3 ? x - 70 : x - 40, y + 14);
 			break;
 
 		case SIMON_STATE_STAND_AND_ATTACK:
 		case SIMON_STATE_WALK_UPSTAIR_AND_ATTACK:
 		case SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK:
-			whip->SetPosition(directionX == Direction::Right ? x - 10 : whip->GetLevel() == 3 ? x - 70 : x - 40, y);
+			whip->SetPosition(directionX == Direction::Right ? x - 10 : CGame::GetInstance()->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_3 ? x - 70 : x - 40, y);
 			break;
 		}
 
@@ -657,21 +642,6 @@ void CSimon::HandleAttackWithWhip(vector<LPGAMEOBJECT>* coObjects)
 
 void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 {
-	if (subWeapons.size() > 0 && coObjects->size() > 0)
-	{
-		for (int i = 0; i < subWeapons.size(); i++)
-		{
-			if (subWeapons[i]->GetVisibility() == Visibility::Visible)
-			{
-				subWeapons[i]->Update(dt, coObjects);
-			}
-			else
-			{
-				SAFE_DELETE(subWeapons[i]);
-			}
-		}
-	}
-
 	if (state == SIMON_STATE_STAND_AND_THROW || state == SIMON_STATE_STAND_ON_STAIR_AND_THROW)
 	{
 		if (lastFrameShown == false && animationSet->at(GetAnimationToRender())->ReachLastFrame())
@@ -693,7 +663,8 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 			weapon->SetDirectionX(directionX);
 			weapon->SetPosition(directionX == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
 
-			subWeapons.emplace_back(weapon);
+			CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
+			CUnit* unit = new CUnit(grid, weapon, weapon->x, weapon->y);
 		}
 	}
 }
@@ -715,7 +686,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				{
 					HandleCollisionWithItems(object);
 				}
-				else if (object->isEnemy)
+				else if (dynamic_cast<CEnemy*>(object))
 				{
 					HandleCollisionWithEnemies(object);
 				}
@@ -728,13 +699,13 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 					countAtBottom++;
 				}
 			}
-			else if (dynamic_cast<CRedBat*>(object))
+			else if (dynamic_cast<CEnemy*>(object))
 			{
-				auto redBat = dynamic_cast<CRedBat*>(object);
+				auto enemy = dynamic_cast<CEnemy*>(object);
 
-				if (redBat->IsPlayerNearby(x, y, RED_BAT_NEARBY_RADIUS))
+				if (CEnemy::IsPlayerNearby(enemy->x, enemy->y, x, y, enemy->GetAreaRadius()))
 				{
-					redBat->SetState(RED_BAT_STATE_MOVE);
+					enemy->OnPlayerEnterArea();
 				}
 			}
 		}
@@ -752,16 +723,15 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	{
 		SetState(SIMON_STATE_DELAY);
 
-		whip->Upgrade();
-		playerData->SetWhipLevel(whip->GetLevel());
+		playerData->SetWhipLevel(playerData->GetWhipLevel() + 1);
 	}
 	else if (dynamic_cast<CBigHeart*>(item))
 	{
-		playerData->AddHearts(5);
+		playerData->AddHearts(BIG_HEART_HEARTS);
 	}
 	else if (dynamic_cast<CSmallHeart*>(item))
 	{
-		playerData->AddHearts(2);
+		playerData->AddHearts(SMALL_HEART_HEARTS);
 	}
 	else if (dynamic_cast<CDagger*>(item))
 	{
@@ -769,23 +739,23 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	}
 	else if (dynamic_cast<CMoneyBag*>(item))
 	{
-		playerData->AddScore(1000);
+		playerData->AddScore(MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CRedMoneyBag*>(item))
 	{
-		playerData->AddScore(100);
+		playerData->AddScore(RED_MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CPurpleMoneyBag*>(item))
 	{
-		playerData->AddScore(400);
+		playerData->AddScore(PURPLE_MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CWhiteMoneyBag*>(item))
 	{
-		playerData->AddScore(700);
+		playerData->AddScore(WHITE_MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CCrown*>(item))
 	{
-		playerData->AddScore(2000);
+		playerData->AddScore(CROWN_SCORE);
 	}
 	else if (dynamic_cast<CBoomerang*>(item))
 	{
@@ -872,21 +842,24 @@ void CSimon::HandleSwitchScene()
 	if (switchSceneTime != -1 && GetTickCount() > switchSceneTime)
 	{
 		switchSceneTime = -1;
-		game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+
+		if (state != SIMON_STATE_DIE)
+		{
+			game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+		}
+		else
+		{
+			game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetFirstSceneId());
+		}
 	}
 }
 
 void CSimon::HandleInvisibility()
 {
-	if (invisible && GetTickCount() >= invisibleTimeout)
+	if (invisible && invisibleTimeout != -1 && GetTickCount() >= invisibleTimeout)
 	{
 		invisible = false;
 		invisibleTimeout = -1;
-
-		if (state != SIMON_STATE_DIE)
-		{
-			SetState(SIMON_STATE_IDLE);
-		}
 	}
 }
 
@@ -895,22 +868,6 @@ void CSimon::RenderWhip()
 	if (whip && (state == SIMON_STATE_SIT_AND_ATTACK || state == SIMON_STATE_STAND_AND_ATTACK || state == SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK || state == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK))
 	{
 		whip->Render();
-	}
-}
-
-void CSimon::RenderSubWeapon()
-{
-	//if (subWeapon)
-	//{
-	//	subWeapon->Render();
-	//}
-
-	if (subWeapons.size() > 0)
-	{
-		for (int i = 0; i < subWeapons.size(); i++)
-		{
-			subWeapons[i]->Render();
-		}
 	}
 }
 

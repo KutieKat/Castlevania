@@ -30,7 +30,6 @@
 #include "Misc/Background.h"
 #include "Misc/IntroBat.h"
 #include "Misc/Ground.h"
-#include "Misc/Door.h"
 #include "Misc/BigCandle.h"
 #include "Misc/Bat.h"
 #include "Misc/Helicopter.h"

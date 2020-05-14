@@ -19,11 +19,11 @@ void CPlayerData::Init()
 
 void CPlayerData::Reset()
 {
-	score = 0;
-	hearts = 5;
-	lives = 3;
-	healthVolumes = 16;
-	whipLevel = 1;
+	score = SIMON_DEFAULT_SCORE;
+	hearts = SIMON_DEFAULT_HEARTS;
+	lives = SIMON_DEFAULT_LIVES;
+	healthVolumes = HEALTH_BAR_MAX_VOLUMES;
+	whipLevel = WHIP_LEVEL_1;
 	whipPower = WHIP_NORMAL_POWER;
 	subWeaponType = "";
 }
@@ -105,7 +105,10 @@ int CPlayerData::GetWhipPower()
 
 void CPlayerData::SetWhipLevel(int level)
 {
-	whipLevel = level;
+	if (level > 0 && level <= WHIP_LEVEL_3)
+	{
+		whipLevel = level;
+	}
 }
 
 int CPlayerData::GetWhipLevel()

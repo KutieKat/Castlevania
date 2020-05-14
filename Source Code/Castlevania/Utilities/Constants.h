@@ -66,6 +66,15 @@ enum HealthType
 
 // Game
 #define DEFAULT_GAME_TIME 300
+#define DEFAULT_WAITING_TIME 3000
+
+// Scenes
+#define INTRO_SCENE 0
+#define CUT_SCENE_1 1
+#define PLAY_SCENE_1 2
+#define CUT_SCENE_2 3
+#define PLAY_SCENE_2_1 4
+#define PLAY_SCENE_2_2 5
 
 // Input
 #define DIRECTINPUT_VERSION 0x0800
@@ -136,7 +145,11 @@ enum HealthType
 #define SIMON_ANI_DIE_RIGHT 29
 #define SIMON_ANI_WATCH 30
 
-#define SIMON_DELAY_TIMEOUT 900
+#define SIMON_INVISIBILITY_TIME 3000
+#define SIMON_DELAY_TIME 900
+#define SIMON_DEFAULT_LIVES 3
+#define SIMON_DEFAULT_HEARTS 5
+#define SIMON_DEFAULT_SCORE 0
 
 // Ground
 #define GROUND_BBOX_WIDTH 32
@@ -154,6 +167,8 @@ enum HealthType
 
 // Whip
 #define WHIP_LEVEL_1 1
+#define WHIP_LEVEL_2 2
+#define WHIP_LEVEL_3 3
 
 #define WHIP_ANI_LEVEL_1_LEFT 0
 #define WHIP_ANI_LEVEL_1_RIGHT 1
@@ -181,6 +196,7 @@ enum HealthType
 
 #define MONEY_BAG_BBOX_WIDTH 29
 #define MONEY_BAG_BBOX_HEIGHT 29
+#define MONEY_BAG_SCORE 1000
 
 // EasterEgg
 #define EASTER_EGG_BBOX_WIDTH 32
@@ -189,6 +205,7 @@ enum HealthType
 // BigHeart
 #define BIG_HEART_BBOX_WIDTH 24
 #define BIG_HEART_BBOX_HEIGHT 20
+#define BIG_HEART_HEARTS 5
 
 // Dagger
 #define DAGGER_BBOX_WIDTH 32
@@ -208,10 +225,6 @@ enum HealthType
 #define HEALTH_VOLUME_ANI_EMPTY 0
 #define HEALTH_VOLUME_ANI_PLAYER 1
 #define HEALTH_VOLUME_ANI_ENEMY 2
-
-// Door
-#define DOOR_BBOX_WIDTH 5
-#define DOOR_BBOX_HEIGHT 10
 
 // Bat
 #define BAT_STATE_FLY_RIGHT_CROSS 1
@@ -255,24 +268,30 @@ enum HealthType
 // RedMoneyBag
 #define RED_MONEY_BAG_BBOX_WIDTH 29
 #define RED_MONEY_BAG_BBOX_HEIGHT 29
+#define RED_MONEY_BAG_SCORE 100
 
 // PurpleMoneyBag
 #define PURPLE_MONEY_BAG_BBOX_WIDTH 29
 #define PURPLE_MONEY_BAG_BBOX_HEIGHT 29
+#define PURPLE_MONEY_BAG_SCORE 400
 
 // WhiteMoneyBag
 #define WHITE_MONEY_BAG_BBOX_WIDTH 29
 #define WHITE_MONEY_BAG_BBOX_HEIGHT 29
+#define WHITE_MONEY_BAG_SCORE 700
 
 // Crown
 #define CROWN_BBOX_WIDTH 29
 #define CROWN_BBOX_HEIGHT 31
+#define CROWN_SCORE 2000
 
 // SmallHeart
 #define SMALL_HEART_MOVE_SPEED 0.02f
 
 #define SMALL_HEART_BBOX_WIDTH 15
 #define SMALL_HEART_BBOX_HEIGHT 15
+
+#define SMALL_HEART_HEARTS 2
 
 // BigDoubleShot
 #define BIG_DOUBLE_SHOT_BBOX_WIDTH 41
@@ -294,12 +313,22 @@ enum HealthType
 #define BOOMERANG_BBOX_WIDTH 27
 #define BOOMERANG_BBOX_HEIGHT 27
 
+#define BOOMERANG_MOVABLE_AREA_WIDTH 200
+
 // BreakableBrick
 #define BREAKABLE_BRICK_BBOX_WIDTH 31
 #define BREAKABLE_BRICK_BBOX_HEIGHT 31
 
+// Breaking
+#define BREAKING_PIECES 4
+
+// Enemy
+#define ENEMY_DEFAULT_DAMAGES 1
+#define ENEMY_DEFAULT_ATTACKS 1
+#define ENEMY_DELAY_TIME 500
+
 // RedBat
-#define RED_BAT_NEARBY_RADIUS 100
+#define RED_BAT_AREA_RADIUS 100
 
 #define RED_BAT_STATE_STATIC 1
 #define RED_BAT_STATE_MOVE 2
@@ -313,6 +342,7 @@ enum HealthType
 
 #define RED_BAT_BBOX_WIDTH 31
 #define RED_BAT_BBOX_HEIGHT 31
+#define RED_BAT_SCORE 300
 
 // SpearKnight
 #define SPEAR_KNIGHT_WALK_SPEED 0.05f 
@@ -329,3 +359,6 @@ enum HealthType
 
 #define SPEAR_KNIGHT_BBOX_WIDTH 31
 #define SPEAR_KNIGHT_BBOX_HEIGHT 63
+
+#define SPEAR_KNIGHT_SCORE 400
+#define SPEAR_KNIGHT_ATTACKS 2

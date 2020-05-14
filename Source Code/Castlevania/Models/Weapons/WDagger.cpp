@@ -1,15 +1,17 @@
 #include "WDagger.h"
 #include "../../Game.h"
+#include "../Characters/Enemies/Enemy.h"
 
 WDagger::WDagger()
 {
 	SetAnimationSet("dagger");
-	this->vx = directionX == Direction::Right ? DAGGER_MOVE_SPEED : -DAGGER_MOVE_SPEED;
 }
 
 void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+
+	vx = directionX == Direction::Right ? DAGGER_MOVE_SPEED : -DAGGER_MOVE_SPEED;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -25,7 +27,7 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (x > CGame::GetInstance()->GetCamera()->GetRight())
 		{
-			SetVisibility(Visibility::Hidden);
+			removable = true;
 		}
 	}
 	else
@@ -43,13 +45,17 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (e->obj->isEnemy)
+			if (dynamic_cast<CEnemy*>(e->obj))
 			{
-				e->obj->Disappear();
+				auto enemy = dynamic_cast<CEnemy*>(e->obj);
+
+				enemy->TakeDamage();
+
+				if (e->nx != 0) x += dx;
 			}
 			else
 			{
-				vx = -vx;
+				if (e->nx != 0) x += dx;
 			}
 		}
 	}

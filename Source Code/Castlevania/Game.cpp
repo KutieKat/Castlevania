@@ -274,5 +274,6 @@ CGame* CGame::GetInstance()
 void CGame::Reset()
 {
 	playerData->Reset();
-	camera->SetPosition(0, 0);
+	sceneManager->ClearLoadedScenes();
+	timer->SetTime(DEFAULT_GAME_TIME);
 }

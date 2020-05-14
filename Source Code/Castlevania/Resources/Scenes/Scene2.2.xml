@@ -26,6 +26,7 @@
     <texture id="brick_piece" path="Resources\\Ground\\BrickPiece.png" r="255" g="0" b="255" />
     <texture id="red_bat" path="Resources\\Characters\\Enemies\\RedBat.png" r="255" g="0" b="255" />
     <texture id="spear_knight" path="Resources\\Characters\\Enemies\\SpearKnight.png" r="255" g="0" b="255" />
+    <texture id="paused" path="Resources\\Others\\Paused.png" r="255" g="0" b="255" />
   </textures>
 
   <sprites>
@@ -223,6 +224,9 @@
     <sprite id="spear_knight_right_2" textureId="spear_knight" left="64" top="64" right="95" bottom="127" />
     <sprite id="spear_knight_right_3" textureId="spear_knight" left="32" top="64" right="63" bottom="127" />
     <sprite id="spear_knight_right_4" textureId="spear_knight" left="0" top="64" right="31" bottom="127" />
+
+    <!-- Paused -->
+    <sprite id="paused" textureId="paused" left="0" top="0" right="246" bottom="40" />
   </sprites>
 
   <animations>
@@ -613,6 +617,11 @@
     <animation id="spear_knight_delay_right">
       <frame spriteId="spear_knight_right_1" duration="100" />
     </animation>
+
+    <!-- Paused -->
+    <animation id="paused">
+      <frame spriteId="paused" duration="100" />
+    </animation>
   </animations>
 
   <animationSets>
@@ -764,9 +773,13 @@
       <animationSetItem id="spear_knight_walk_right" animationId="spear_knight_walk_right" />
       <animationSetItem id="spear_knight_delay_right" animationId="spear_knight_delay_right" />
     </animationSet>
+
+    <animationSet id="paused">
+      <animationSetItem id="paused" animationId="paused" />
+    </animationSet>
   </animationSets>
 
-  <objects>
+  <objects gridWidth="1024" gridHeight="448" cellWidth="64" cellHeight="64">
     <object id="brick_1" type="brick" animationSetId="brick" x="0" y="81" />
     <object id="brick_2" type="brick" animationSetId="brick" x="0" y="113" />
     <object id="brick_3" type="brick" animationSetId="brick" x="0" y="145" />
@@ -854,11 +867,11 @@
     <object id="previous_scene_1" type="previous_scene" animationSetId="transparency" x="760" y="400" playerMustBeOnStair="true" sceneDirection="left" />
 
     <object id="big_heart_1" type="big_heart" animationSetId="big_heart" x="650" y="241" visible="false" />
-    <object id="spear_knight_1" type="spear_knight" animationSetId="spear_knight" x="650" y="241" leftBound="640" rightBound="663" endingEffect="flash" hiddenItemId="big_heart_1" value="400" />
+    <object id="spear_knight_1" type="spear_knight" animationSetId="spear_knight" x="650" y="241" leftBound="640" rightBound="663" endingEffect="flash" hiddenItemId="big_heart_1" />
 
     <object id="big_heart_2" type="big_heart" animationSetId="big_heart" x="206" y="80" visible="false" />
-    <object id="spear_knight_2" type="spear_knight" animationSetId="spear_knight" x="206" y="80" leftBound="200" rightBound="280" endingEffect="flash" hiddenItemId="big_heart_2" value="400" />
+    <object id="spear_knight_2" type="spear_knight" animationSetId="spear_knight" x="206" y="80" leftBound="200" rightBound="280" endingEffect="flash" hiddenItemId="big_heart_2" />
 
-    <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="64" y="241" playerMustBeOnStair="false" sceneDirection="left" />
+    <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="42" y="220" playerMustBeOnStair="false" sceneDirection="left" />
   </objects>
 </resources>

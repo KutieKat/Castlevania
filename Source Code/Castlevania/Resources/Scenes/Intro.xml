@@ -8,7 +8,7 @@
   
   <sprites>
     <!-- Background -->
-    <sprite id="background" textureId="background" left="17" top="0" right="514" bottom="450" />
+    <sprite id="background" textureId="background" left="0" top="0" right="514" bottom="450" />
     
     <!-- IntroBat -->
     <sprite id="intro_bat_1" textureId="intro_bat" left="0" top="0" right="157" bottom="122" />

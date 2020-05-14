@@ -1,4 +1,5 @@
 #include "MorningStar.h"
+#include "../Misc/BottomStair.h"
 
 CMorningStar::CMorningStar()
 {
@@ -35,8 +36,23 @@ void CMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CBottomStair*>(e->obj))
+			{
+				if (e->ny != 0) y += dy;
+			}
+			else if (e->obj->isItem)
+			{
+				if (e->ny != 0) y += dy;
+			}
+			else
+			{
+				if (e->ny != 0) vy = 0;
+			}
+		}
 	}
 
 	for (UINT i = 0; i < coEvents.size(); i++)

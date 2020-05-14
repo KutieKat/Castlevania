@@ -17,7 +17,7 @@ using namespace std;
 class CCutScene : public CScene
 {
 public:
-	CCutScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "");
+	CCutScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "", string requiredSceneId = "");
 
 	virtual bool Load();
 	virtual bool Reload();

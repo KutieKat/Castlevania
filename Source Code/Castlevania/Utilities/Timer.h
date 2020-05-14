@@ -8,7 +8,7 @@ public:
 	CTimer();
 	CTimer(DWORD time);
 
-	void Start();
+	void Resume();
 	void Pause();
 	void SetTime(DWORD time);
 	void Tick();
@@ -16,9 +16,9 @@ public:
 	DWORD GetRemainingTime();
 
 protected:
-	DWORD endTime;
 	DWORD remainingTime;
 
 	bool paused;
+	int counter;
 };
 

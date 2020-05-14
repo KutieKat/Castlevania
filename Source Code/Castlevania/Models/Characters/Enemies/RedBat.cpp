@@ -1,11 +1,11 @@
 #include "RedBat.h"
+#include "../../../Game.h"
 
 CRedBat::CRedBat()
 {
-	isEnemy = true;
+	mustInArea = true;
+	areaRadius = RED_BAT_AREA_RADIUS;
 	SetAnimationSet("red_bat");
-
-	directionX = Direction::Right;
 
 	SetState(RED_BAT_STATE_STATIC);
 }
@@ -40,41 +40,51 @@ void CRedBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CRedBat::Render()
 {
 	int ani;
-
+	
 	switch (state)
 	{
 	case RED_BAT_STATE_STATIC:
 		ani = directionX == Direction::Right ? RED_BAT_ANI_STATIC_RIGHT : RED_BAT_ANI_STATIC_LEFT;
 		break;
-
+	
 	case RED_BAT_STATE_MOVE:
 		ani = directionX == Direction::Right ? RED_BAT_ANI_MOVE_RIGHT : RED_BAT_ANI_MOVE_LEFT;
 		break;
 	}
-
+	
 	if (!showingEffect)
 	{
 		animationSet->at(ani)->Render(x, y);
 	}
 }
 
-void CRedBat::GetBoundingBox(float & l, float & t, float & r, float & b)
+void CRedBat::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	if (!showingEffect)
 	{
-		l = x;
-		t = y;
-		r = l + RED_BAT_BBOX_WIDTH;
-		b = t + RED_BAT_BBOX_HEIGHT;
+		left = x;
+		top = y;
+		right = left + RED_BAT_BBOX_WIDTH;
+		bottom = top + RED_BAT_BBOX_HEIGHT;
 	}
 }
 
-bool CRedBat::IsPlayerNearby(float playerX, float playerY, float radius)
+void CRedBat::TakeDamage(int damages)
 {
-	if (pow(playerX - x, 2) + pow(playerY - y, 2) <= pow(radius, 2))
-	{
-		return true;
-	}
+	CEnemy::TakeDamage(damages);
 
-	return false;
+	if (attacks <= 0)
+	{
+		Disappear();
+		CGame::GetInstance()->GetPlayerData()->AddScore(RED_BAT_SCORE);
+	}
+	else
+	{
+		SetState(SPEAR_KNIGHT_STATE_DELAY);
+	}
+}
+
+void CRedBat::OnPlayerEnterArea()
+{
+	SetState(RED_BAT_STATE_MOVE);
 }

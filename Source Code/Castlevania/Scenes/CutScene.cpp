@@ -160,7 +160,7 @@ void CCutScene::ParseObjects(TiXmlElement* element)
 	}
 }
 
-CCutScene::CCutScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId)
+CCutScene::CCutScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId, string requiredSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId)
 {
 	game = CGame::GetInstance();
 	keyHandler = new CCutSceneKeyHandler(this);
@@ -250,6 +250,47 @@ void CCutSceneKeyHandler::KeyState(BYTE* states)
 
 void CCutSceneKeyHandler::OnKeyDown(int keyCode)
 {
+	CGame* game = CGame::GetInstance();
+	CSceneManager* sceneManager = game->GetSceneManager();
+
+	switch (keyCode)
+	{
+	case DIK_F1:
+		game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+		break;
+
+	case DIK_F2:
+		game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_1);
+		break;
+
+	case DIK_F3:
+		game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_1);
+		break;
+
+	case DIK_F4:
+		game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_2);
+		break;
+
+	case DIK_F5:
+		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+		break;
+
+	case DIK_F6:
+		game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_1);
+		break;
+
+	case DIK_F7:
+		game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_2);
+		break;
+
+	case DIK_N:
+		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetNextSceneIndex());
+		break;
+
+	case DIK_P:
+		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetPreviousSceneIndex());
+		break;
+	}
 }
 
 void CCutSceneKeyHandler::OnKeyUp(int keyCode)

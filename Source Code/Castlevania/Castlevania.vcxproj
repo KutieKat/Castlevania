@@ -31,6 +31,7 @@
     <ClCompile Include="Libraries\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="Libraries\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Models\Characters\Enemies\Enemy.cpp" />
     <ClCompile Include="Models\Characters\Enemies\RedBat.cpp" />
     <ClCompile Include="Models\Characters\Enemies\SpearKnight.cpp" />
     <ClCompile Include="Models\Characters\Players\PlayerData.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="Models\Effects\SevenHundred.cpp" />
     <ClCompile Include="Models\Effects\TwoThousand.cpp" />
     <ClCompile Include="Models\GameObject.cpp" />
+    <ClCompile Include="Models\Grid.cpp" />
     <ClCompile Include="Models\Items\BigHeart.cpp" />
     <ClCompile Include="Models\Items\Boomerang.cpp" />
     <ClCompile Include="Models\Items\Crown.cpp" />
@@ -64,7 +66,6 @@
     <ClCompile Include="Models\Misc\BottomStair.cpp" />
     <ClCompile Include="Models\Misc\BreakableBrick.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
-    <ClCompile Include="Models\Misc\Door.cpp" />
     <ClCompile Include="Models\Misc\Ground.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
@@ -73,10 +74,12 @@
     <ClCompile Include="Models\Misc\MapPin.cpp" />
     <ClCompile Include="Models\Misc\MovingBar.cpp" />
     <ClCompile Include="Models\Misc\NextScene.cpp" />
+    <ClCompile Include="Models\Misc\PauseBadge.cpp" />
     <ClCompile Include="Models\Misc\PreviousScene.cpp" />
     <ClCompile Include="Models\Misc\SmallCandle.cpp" />
     <ClCompile Include="Models\Misc\TopStair.cpp" />
     <ClCompile Include="Models\ObjectFactory.cpp" />
+    <ClCompile Include="Models\Unit.cpp" />
     <ClCompile Include="Models\Weapons\WBoomerang.cpp" />
     <ClCompile Include="Models\Weapons\WDagger.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
@@ -106,6 +109,7 @@
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Libraries\TinyXML\tinystr.h" />
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
+    <ClInclude Include="Models\Characters\Enemies\Enemy.h" />
     <ClInclude Include="Models\Characters\Enemies\RedBat.h" />
     <ClInclude Include="Models\Characters\Enemies\SpearKnight.h" />
     <ClInclude Include="Models\Characters\Players\PlayerData.h" />
@@ -119,6 +123,7 @@
     <ClInclude Include="Models\Effects\SevenHundred.h" />
     <ClInclude Include="Models\Effects\TwoThousand.h" />
     <ClInclude Include="Models\GameObject.h" />
+    <ClInclude Include="Models\Grid.h" />
     <ClInclude Include="Models\Items\BigHeart.h" />
     <ClInclude Include="Models\Items\Boomerang.h" />
     <ClInclude Include="Models\Items\Crown.h" />
@@ -139,7 +144,6 @@
     <ClInclude Include="Models\Misc\BottomStair.h" />
     <ClInclude Include="Models\Misc\BreakableBrick.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
-    <ClInclude Include="Models\Misc\Door.h" />
     <ClInclude Include="Models\Misc\Ground.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />
     <ClInclude Include="Models\Misc\HealthVolume.h" />
@@ -148,10 +152,12 @@
     <ClInclude Include="Models\Misc\MapPin.h" />
     <ClInclude Include="Models\Misc\MovingBar.h" />
     <ClInclude Include="Models\Misc\NextScene.h" />
+    <ClInclude Include="Models\Misc\PauseBadge.h" />
     <ClInclude Include="Models\Misc\PreviousScene.h" />
     <ClInclude Include="Models\Misc\SmallCandle.h" />
     <ClInclude Include="Models\Misc\TopStair.h" />
     <ClInclude Include="Models\ObjectFactory.h" />
+    <ClInclude Include="Models\Unit.h" />
     <ClInclude Include="Models\Weapons\WBoomerang.h" />
     <ClInclude Include="Models\Weapons\WDagger.h" />
     <ClInclude Include="Models\Weapons\Whip.h" />

@@ -99,9 +99,20 @@ void CPlayScene::ParseAnimationSets(TiXmlElement* element)
 	}
 }
 
-void CPlayScene::ParseObjects(TiXmlElement* element)
+void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 {
+	TiXmlElement* root = element;
+	int gridWidth, gridHeight, cellWidth, cellHeight;
+
+	root->QueryIntAttribute("gridWidth", &gridWidth);
+	root->QueryIntAttribute("gridHeight", &gridHeight);
+	root->QueryIntAttribute("cellWidth", &cellWidth);
+	root->QueryIntAttribute("cellHeight", &cellHeight);
+
 	TiXmlElement* object = nullptr;
+	CUnit* unit = nullptr;
+
+	grid = new CGrid(gridWidth, gridHeight, cellWidth, cellHeight);
 
 	for (object = element->FirstChildElement(); object != nullptr; object = object->NextSiblingElement())
 	{
@@ -127,7 +138,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			player = new CSimon();
 			player->SetId(id);
 
-			if (!reloading)
+			if (!reloaded)
 			{
 				if (object->Attribute("state"))
 				{
@@ -146,7 +157,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 				player->SetPosition(x, y);
 				player->stairDirectionX = stairDirectionX == "right" ? Direction::Right : Direction::Left;
-				player->stairDirectionY = stairDirectionY == "up" ? Direction::Up : Direction::Down;
+				player->stairDirectionY = stairDirectionY == "" ? Direction::None : (stairDirectionY == "up" ? Direction::Up : Direction::Down);
 			}
 			else
 			{
@@ -172,16 +183,18 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 
 				player->SetPosition(reloadX, reloadY);
 				player->stairDirectionX = reloadStairDirectionX == "right" ? Direction::Right : Direction::Left;
-				player->stairDirectionY = reloadStairDirectionY == "up" ? Direction::Up : Direction::Down;
+				player->stairDirectionY = reloadStairDirectionY == "" ? Direction::None : (reloadStairDirectionY == "up" ? Direction::Up : Direction::Down);
 			}
 
-			if (state == "on_stair" || (reloading && reloadState == "on_stair"))
+			if (state == "on_stair" || (reloaded && reloadState == "on_stair"))
 			{
 				player->onStair = true;
+				player->SetDirectionX(player->stairDirectionX);
+				player->SetDirectionY(player->stairDirectionY);
 				player->SetState(SIMON_STATE_IDLE_ON_STAIR);
 			}
 
-			objects.emplace_back(player);
+			unit = new CUnit(grid, player, player->x, player->y);
 		}
 		else if (type == "brick")
 		{
@@ -193,7 +206,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			brick->SetPosition(x, y);
 			brick->isGround = isGround;
 
-			objects.emplace_back(brick);
+			unit = new CUnit(grid, brick, x, y);
 		}
 		else if (type == "breakable_brick")
 		{
@@ -213,12 +226,12 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			if (object->Attribute("endingEffect"))
 			{
 				CGameObject* effect = CObjectFactory::Construct(object->Attribute("endingEffect"), x, y);
-				objects.emplace_back(effect);
+				unit = new CUnit(grid, effect, x, y);
 
 				brick->SetEndingEffect(effect);
 			}
 
-			objects.emplace_back(brick);
+			unit = new CUnit(grid, brick, x, y);
 		}
 		else if (type == "top_stair")
 		{
@@ -231,7 +244,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			stair->directionX = directionX == "right" ? Direction::Right : Direction::Left;
 			stair->directionY = directionY == "up" ? Direction::Up : Direction::Down;
 
-			objects.emplace_back(stair);
+			unit = new CUnit(grid, stair, x, y);
 		}
 		else if (type == "bottom_stair")
 		{
@@ -244,7 +257,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			stair->directionX = directionX == "right" ? Direction::Right : Direction::Left;
 			stair->directionY = directionY == "up" ? Direction::Up : Direction::Down;
 			
-			objects.emplace_back(stair);
+			unit = new CUnit(grid, stair, x, y);
 		}
 		else if (type == "next_scene")
 		{
@@ -259,7 +272,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			scene->playerMustBeOnStair = playerMustBeOnStair;
 			scene->sceneDirection = sceneDirection == "right" ? Direction::Right : Direction::Left;
 
-			objects.emplace_back(scene);
+			unit = new CUnit(grid, scene, x, y);
 		}
 		else if (type == "previous_scene")
 		{
@@ -274,7 +287,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			scene->playerMustBeOnStair = playerMustBeOnStair;
 			scene->sceneDirection = sceneDirection == "right" ? Direction::Right : Direction::Left;
 
-			objects.emplace_back(scene);
+			unit = new CUnit(grid, scene, x, y);
 		}
 		else
 		{
@@ -298,13 +311,10 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			{
 				CGameObject* effect = CObjectFactory::Construct(object->Attribute("endingEffect"));
 				effect->SetPosition(x, y);
-				objects.emplace_back(effect);
+				unit = new CUnit(grid, effect, x, y);
 
 				gameObject->SetEndingEffect(effect);
 			}
-
-			object->QueryIntAttribute("value", &value);
-			gameObject->SetValue(value);
 
 			object->QueryIntAttribute("leftBound", &leftBound);
 			gameObject->SetLeftBound(leftBound);
@@ -318,30 +328,13 @@ void CPlayScene::ParseObjects(TiXmlElement* element)
 			object->QueryIntAttribute("bottomBound", &bottomBound);
 			gameObject->SetBottomBound(bottomBound);
 
-			objects.emplace_back(gameObject);
+			createdObjects.emplace_back(gameObject);
+			unit = new CUnit(grid, gameObject, x, y);
 		}
 	}
 }
 
-CGameObject* CPlayScene::FindObject(string id)
-{
-	for (int i = 0; i < objects.size(); i++)
-	{
-		if (objects[i]->GetId() == id)
-		{
-			return objects[i];
-		}
-	}
-}
-
-CPlayScene::CPlayScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId)
-{
-	game = CGame::GetInstance();
-	reloading = false;
-	keyHandler = new CPlaySceneKeyHandler(this);
-}
-
-bool CPlayScene::Load()
+bool CPlayScene::LoadResources(bool reloaded)
 {
 	TiXmlDocument doc(filePath.c_str());
 
@@ -364,61 +357,98 @@ bool CPlayScene::Load()
 	ParseSprites(sprites);
 	ParseAnimations(animations);
 	ParseAnimationSets(animationSets);
-	ParseObjects(objects);
+	ParseObjects(objects, reloaded);
 
 	blackboard = new CBlackboard();
 	blackboard->SetPlayer(player);
 	blackboard->SetTileMap(tileMap);
 
-	CGame::GetInstance()->GetTimer()->Start();
+	pauseBadge = new CPauseBadge();
 
 	return true;
 }
 
+CGameObject* CPlayScene::FindObject(string id)
+{
+	for (int i = 0; i < createdObjects.size(); i++)
+	{
+		if (createdObjects[i]->GetId() == id)
+		{
+			return createdObjects[i];
+		}
+	}
+}
+
+CPlayScene::CPlayScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId, string requiredSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId)
+{
+	game = CGame::GetInstance();
+	paused = false;
+	keyHandler = new CPlaySceneKeyHandler(this);
+}
+
+bool CPlayScene::Load()
+{
+	return LoadResources();
+}
+
 bool CPlayScene::Reload()
 {
-	reloading = true;
-
-	return Load();
+	return LoadResources(true);
 }
 
 void CPlayScene::Update(DWORD dt)
 {
+	if (paused)
+	{
+		return;
+	}
+
+	units.clear();
+	objects.clear();
 	coObjects.clear();
 
+	if (grid)
+	{
+		grid->Clean();
+		units = grid->Get(CGame::GetInstance()->GetCamera());
+	}
+
+	for (int i = 0; i < units.size(); i++)
+	{
+		CGameObject* object = units[i]->GetGameObject();
+		objects.push_back(object);
+
+		units[i]->Move(object->x, object->y);
+	}
+
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->GetVisibility() == Visibility::Visible && !objects[i]->isEffect)
+		if (objects[i]->isEffect)
 		{
-			if (dynamic_cast<CSimon*>(objects[i]))
-			{
-				continue;
-			}
-			else
-			{
-				coObjects.emplace_back(objects[i]);
-			}
+			continue;
+		}
+		else if (dynamic_cast<CSimon*>(objects[i]))
+		{
+			continue;
+		}
+		else
+		{
+			coObjects.emplace_back(objects[i]);
 		}
 	}
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->GetVisibility() == Visibility::Visible)
-		{
-			objects[i]->Update(dt, &coObjects);
-		}
+		objects[i]->Update(dt, &coObjects);
 	}
-
-	// Update timer
-	game->GetTimer()->Tick();
 
 	// Update camera to follow the player
 	float cx = 0, cy = 0;
 
 	if (player) player->GetPosition(cx, cy);
 
-	float currentPlayerX;
-	float currentPlayerY;
+	float currentPlayerX = 0;
+	float currentPlayerY = 0;
 
 	if (player) player->GetPosition(currentPlayerX, currentPlayerY);
 
@@ -440,8 +470,8 @@ void CPlayScene::Update(DWORD dt)
 
 			float playerBoundingBoxWidth = right - left;
 
-			if (currentPlayerX >= tileMap->GetWidth() - playerBoundingBoxWidth) {
-				currentPlayerX = tileMap->GetWidth() - playerBoundingBoxWidth;
+			if (currentPlayerX >= tileMap->GetWidth() - playerBoundingBoxWidth * 2) {
+				currentPlayerX = tileMap->GetWidth() - playerBoundingBoxWidth * 2;
 				player->SetPosition(currentPlayerX, currentPlayerY);
 			}
 		}
@@ -460,10 +490,18 @@ void CPlayScene::Update(DWORD dt)
 
 	// Update camera position
 	game->GetCamera()->SetPosition(cx, 0.0f);
+
+	// PauseBadge
+	if (pauseBadge)
+	{
+		pauseBadge->SetPosition(game->GetCamera()->GetLeft() + (SCREEN_WIDTH / 2) - 120, game->GetCamera()->GetTop() + (SCREEN_HEIGHT / 2) - 60);
+	}
 }
 
 void CPlayScene::Render()
 {
+	CGameObject* simon = nullptr;
+
 	// TileMap
 	if (tileMap)
 	{
@@ -472,16 +510,31 @@ void CPlayScene::Render()
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->GetVisibility() == Visibility::Visible)
+		if (dynamic_cast<CSimon*>(objects[i]))
+		{
+			simon = objects[i];
+		}
+		else
 		{
 			objects[i]->Render();
 		}
+	}
+
+	if (simon)
+	{
+		simon->Render();
 	}
 
 	// Blackboard
 	if (blackboard)
 	{
 		blackboard->Render();
+	}
+
+	// PauseBadge
+	if (paused && pauseBadge)
+	{
+		pauseBadge->Render();
 	}
 }
 
@@ -495,11 +548,17 @@ void CPlayScene::Unload()
 		SAFE_DELETE(objects[i]);
 	}
 
+	SAFE_DELETE(pauseBadge);
+
 	objects.clear();
 
 	coObjects.clear();
 
+	createdObjects.clear();
+
 	player = nullptr;
+
+	SAFE_DELETE(grid);
 }
 
 CSimon* CPlayScene::GetPlayer()
@@ -510,10 +569,11 @@ CSimon* CPlayScene::GetPlayer()
 void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
+	CScene* scene = game->GetSceneManager()->GetCurrentScene();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 	CPlayerData* playerData = game->GetPlayerData();
 
-	if (simon != nullptr)
+	if (simon != nullptr && !scene->Paused())
 	{
 		if (simon->GetState() == SIMON_STATE_STAND_ON_STAIR_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
@@ -634,120 +694,230 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 {
 	CGame* game = CGame::GetInstance();
+	CScene* scene = game->GetSceneManager()->GetCurrentScene();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 	CPlayerData* playerData = game->GetPlayerData();
 
 	if (simon != nullptr)
 	{
-		switch (keyCode)
+		if (!scene->Paused())
 		{
-		case DIK_Z:
-			if (simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+			switch (keyCode)
 			{
-				return;
-			}
+			case DIK_F1:
+				game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+				break;
 
-			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
-			{
-				return;
-			}
+			case DIK_F2:
+				game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_1);
+				break;
 
-			if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->sitting && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
-			{
-				return;
-			}
+			case DIK_F3:
+				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_1);
+				break;
 
-			if (simon->onStair)
-			{
-				if (simon->GetDirectionY() == Direction::Up)
+			case DIK_F4:
+				game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_2);
+				break;
+
+			case DIK_F5:
+				game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+				break;
+
+			case DIK_F6:
+				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_1);
+				break;
+
+			case DIK_F7:
+				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_2);
+				break;
+
+			case DIK_N:
+				game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetNextSceneIndex());
+				break;
+
+			case DIK_P:
+				game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetPreviousSceneIndex());
+				break;
+
+			case DIK_1:
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_2);
+				break;
+
+			case DIK_2:
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
+				break;
+
+			case DIK_3:
+				game->GetPlayerData()->SetWhipPower(WHIP_DOUBLE_POWER);
+				break;
+
+			case DIK_4:
+				// WhipTriplePower
+				break;
+
+			case DIK_5:
+				game->GetPlayerData()->SetSubWeaponType("dagger");
+				break;
+
+			case DIK_6:
+				game->GetPlayerData()->SetSubWeaponType("boomerang");
+				break;
+
+			case DIK_H:
+				game->GetPlayerData()->AddHealthVolumes(HEALTH_BAR_MAX_VOLUMES);
+				break;
+
+			case DIK_L:
+				game->GetPlayerData()->AddLives(10);
+				break;
+
+			case DIK_R:
+				game->GetPlayerData()->AddHearts(100);
+				break;
+
+			case DIK_W:
+				if (game->GetSceneManager()->GetCurrentScene()->Paused())
 				{
-					simon->SetState(SIMON_STATE_WALK_UPSTAIR_AND_ATTACK);
+					game->GetSceneManager()->GetCurrentScene()->Resume();
 				}
 				else
 				{
-					simon->SetState(SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK);
+					game->GetSceneManager()->GetCurrentScene()->Pause();
 				}
 
-				if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+				break;
+
+			case DIK_Z:
+				if (simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 				{
-					simon->SetState(SIMON_STATE_STAND_ON_STAIR_AND_THROW);
+					return;
 				}
-			}
-			else
-			{
-				if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+
+				if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 				{
-					simon->SetState(SIMON_STATE_STAND_AND_THROW);
+					return;
 				}
-			}
 
-			if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_WALK || simon->GetState() == SIMON_STATE_JUMP)
+				if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->sitting && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
+				{
+					return;
+				}
+
+				if (simon->onStair)
+				{
+					if (simon->GetDirectionY() == Direction::Up)
+					{
+						simon->SetState(SIMON_STATE_WALK_UPSTAIR_AND_ATTACK);
+					}
+					else
+					{
+						simon->SetState(SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK);
+					}
+
+					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+					{
+						simon->SetState(SIMON_STATE_STAND_ON_STAIR_AND_THROW);
+					}
+				}
+				else
+				{
+					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+					{
+						simon->SetState(SIMON_STATE_STAND_AND_THROW);
+					}
+				}
+
+				if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_WALK || simon->GetState() == SIMON_STATE_JUMP)
+				{
+					simon->SetState(SIMON_STATE_STAND_AND_ATTACK);
+				}
+				else if (simon->GetState() == SIMON_STATE_SIT)
+				{
+					simon->SetState(SIMON_STATE_SIT_AND_ATTACK);
+				}
+
+				break;
+
+			case DIK_X:
+				if (simon->onStair)
+				{
+					return;
+				}
+
+				if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->touchingGround && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+				{
+					return;
+				}
+
+				if (simon->sitting)
+				{
+					return;
+				}
+
+				simon->SetState(SIMON_STATE_JUMP);
+
+				break;
+
+			case DIK_UP:
+				simon->up = true;
+
+				if (simon->atBottomStair && simon->GetDirectionX() == simon->stairDirectionX)
+				{
+					simon->onStair = true;
+					simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+				}
+
+				break;
+
+			case DIK_DOWN:
+				if (simon->onStair)
+				{
+					return;
+				}
+
+				if (simon->atTopStair && simon->GetDirectionX() == simon->stairDirectionX)
+				{
+					simon->onStair = true;
+					simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+				}
+
+				break;
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (keyCode)
 			{
-				simon->SetState(SIMON_STATE_STAND_AND_ATTACK);
+			case DIK_W:
+				if (game->GetSceneManager()->GetCurrentScene()->Paused())
+				{
+					game->GetSceneManager()->GetCurrentScene()->Resume();
+				}
+				else
+				{
+					game->GetSceneManager()->GetCurrentScene()->Pause();
+				}
+
+				break;
+
+			default:
+				break;
 			}
-			else if (simon->GetState() == SIMON_STATE_SIT)
-			{
-				simon->SetState(SIMON_STATE_SIT_AND_ATTACK);
-			}
-
-			break;
-
-		case DIK_X:
-			if (simon->onStair)
-			{
-				return;
-			}
-
-			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->touchingGround && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
-			{
-				return;
-			}
-
-			if (simon->sitting)
-			{
-				return;
-			}
-
-			simon->SetState(SIMON_STATE_JUMP);
-
-			break;
-
-		case DIK_UP:
-			simon->up = true;
-
-			if (simon->atBottomStair && simon->GetDirectionX() == simon->stairDirectionX)
-			{
-				simon->onStair = true;
-				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
-			}
-
-			break;
-
-		case DIK_DOWN:
-			if (simon->onStair)
-			{
-				return;
-			}
-
-			if (simon->atTopStair && simon->GetDirectionX() == simon->stairDirectionX)
-			{
-				simon->onStair = true;
-				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
-			}
-
-			break;
-
-		default:
-			break;
 		}
 	}
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int keyCode)
 {
+	CGame* game = CGame::GetInstance();
+	CScene* scene = game->GetSceneManager()->GetCurrentScene();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 
-	if (simon != nullptr)
+	if (simon != nullptr && !scene->Paused())
 	{
 		switch (keyCode)
 		{
@@ -768,5 +938,4 @@ void CPlaySceneKeyHandler::OnKeyUp(int keyCode)
 			break;
 		}
 	}
-
 }

@@ -118,7 +118,7 @@ void CIntroScene::ParseObjects(TiXmlElement* element)
 	}
 }
 
-CIntroScene::CIntroScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId)
+CIntroScene::CIntroScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId, string requiredSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId)
 {
 	game = CGame::GetInstance();
 	keyHandler = new CIntroSceneKeyHandler(this);
@@ -147,7 +147,7 @@ bool CIntroScene::Load()
 	ParseAnimationSets(animationSets);
 	ParseObjects(objects);
 
-	startLabel = new CLabel("PUSH START KEY", 136, 270, 17);
+	startLabel = new CLabel("PUSH START KEY", 146, 270, 17);
 
 	return true;
 }

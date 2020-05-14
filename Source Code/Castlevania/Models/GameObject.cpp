@@ -13,15 +13,14 @@ CGameObject::CGameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
-	value = 0;
 	disappearingTime = -1;
+
 	directionX = Direction::Right;
 	directionY = Direction::None;
 
 	showingEffect = false;
 	isEffect = false;
 	isItem = false;
-	isEnemy = false;
 }
 
 void CGameObject::SetPosition(float x, float y)
@@ -74,11 +73,6 @@ void CGameObject::SetEndingEffect(CGameObject* effect)
 	endingEffect->visibility = Visibility::Hidden;
 }
 
-void CGameObject::SetValue(int value)
-{
-	this->value = value;
-}
-
 bool CGameObject::Over()
 {
 	return disappearingTime != -1 && GetTickCount() > disappearingTime;
@@ -93,7 +87,7 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (GetTickCount() > disappearingTime)
 	{
-		SetVisibility(Visibility::Hidden);
+		removable = true;
 	}
 
 	if (endingEffect && endingEffect->Over())
@@ -105,7 +99,7 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
 		}
 
-		visibility = Visibility::Hidden;
+		removable = true;
 	}
 }
 
@@ -134,7 +128,7 @@ void CGameObject::Disappear()
 	}
 	else
 	{
-		visibility = Visibility::Hidden;
+		removable = true;
 	}
 }
 
@@ -247,11 +241,6 @@ Visibility CGameObject::GetVisibility()
 int CGameObject::GetState()
 {
 	return state;
-}
-
-int CGameObject::GetValue()
-{
-	return value;
 }
 
 void CGameObject::RenderBoundingBox()

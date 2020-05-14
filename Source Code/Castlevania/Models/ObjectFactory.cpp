@@ -38,10 +38,6 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y)
 	{
 		return new CEasterEgg();
 	}
-	else if (type == "door")
-	{
-		return new CDoor();
-	}
 	else if (type == "helicopter")
 	{
 		return new CHelicopter();

@@ -4,12 +4,9 @@
 
 CSpearKnight::CSpearKnight()
 {
-	isEnemy = true;
 	SetAnimationSet("spear_knight");
 
-	directionX = Direction::Right;
-	remainingHits = 2;
-	delayTimeout = -1;
+	attacks = SPEAR_KNIGHT_ATTACKS;
 	SetState(SPEAR_KNIGHT_STATE_WALK);
 }
 
@@ -25,7 +22,7 @@ void CSpearKnight::SetState(int state)
 
 	case SPEAR_KNIGHT_STATE_DELAY:
 		vx = 0;
-		delayTimeout = GetTickCount() + 300;
+		delayTimeout = GetTickCount() + ENEMY_DELAY_TIME;
 		break;
 	}
 }
@@ -34,30 +31,13 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	if (x <= leftBound)
-	{
-		directionX = Direction::Right;
-		vx = -vx;
-	}
-	else if (x >= rightBound)
-	{
-		directionX = Direction::Left;
-		vx = -vx;
-	}
-
-	dx = vx * dt;
 	vy += SPEAR_KNIGHT_GRAVITY * dt;
-
-	if (remainingHits <= 0)
-	{
-		CGame::GetInstance()->GetPlayerData()->AddScore(400);
-
-		Disappear();
-		remainingHits = 2;
-	}
 
 	if (delayTimeout != -1 && GetTickCount() > delayTimeout)
 	{
+		delayTimeout = -1;
+		attacks = SPEAR_KNIGHT_ATTACKS;
+
 		SetState(SPEAR_KNIGHT_STATE_WALK);
 	}
 
@@ -72,6 +52,17 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		x += dx;
 		y += dy;
+
+		if (x <= leftBound)
+		{
+			directionX = Direction::Right;
+			vx = -vx;
+		}
+		else if (x >= rightBound)
+		{
+			directionX = Direction::Left;
+			vx = -vx;
+		}
 	}
 	else
 	{
@@ -129,9 +120,17 @@ void CSpearKnight::GetBoundingBox(float & l, float & t, float & r, float & b)
 	b = t + SPEAR_KNIGHT_BBOX_HEIGHT;
 }
 
-void CSpearKnight::TakeDamage(int volumes)
+void CSpearKnight::TakeDamage(int damages)
 {
-	remainingHits -= volumes;
+	CEnemy::TakeDamage(damages);
 
-	SetState(SPEAR_KNIGHT_STATE_DELAY);
+	if (attacks <= 0)
+	{
+		Disappear();
+		CGame::GetInstance()->GetPlayerData()->AddScore(SPEAR_KNIGHT_SCORE);
+	}
+	else
+	{
+		SetState(SPEAR_KNIGHT_STATE_DELAY);
+	}
 }

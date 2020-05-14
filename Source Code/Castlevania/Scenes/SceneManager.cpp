@@ -40,30 +40,33 @@ bool CSceneManager::Load(string filePath)
 
 		string id = scene->Attribute("id");
 		string type = scene->Attribute("type");
-		string path = scene->Attribute("path");
+		string filePath = scene->Attribute("path");
 		string stage = scene->Attribute("stage");
 		string previousSceneId = scene->Attribute("previousSceneId");
 		string nextSceneId = scene->Attribute("nextSceneId");
+		string requiredSceneId = scene->Attribute("requiredSceneId");
 
 		scene->QueryBoolAttribute("needReloading", &needReloading);
 
 		if (type == "play_scene")
 		{
-			sceneItem = new CPlayScene(id, path, stage, previousSceneId, nextSceneId);
+			sceneItem = new CPlayScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
 		}
 
 		if (type == "intro_scene")
 		{
-			sceneItem = new CIntroScene(id, path, stage, previousSceneId, nextSceneId);
+			sceneItem = new CIntroScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
 		}
 
 		if (type == "cut_scene")
 		{
-			sceneItem = new CCutScene(id, path, stage, previousSceneId, nextSceneId);
+			sceneItem = new CCutScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
 		}
 
 		sceneItem->needReloading = needReloading;
+
 		scenes[id] = sceneItem;
+		sceneIds.emplace_back(id);
 	}
 
 	SwitchScene(currentSceneId);
@@ -76,7 +79,7 @@ CScene* CSceneManager::GetCurrentScene()
 	return scenes[currentSceneId];
 }
 
-void CSceneManager::SwitchScene(string sceneId)
+void CSceneManager::SwitchScene(string sceneId, bool forced)
 {
 	CGame* game = CGame::GetInstance();
 
@@ -88,15 +91,31 @@ void CSceneManager::SwitchScene(string sceneId)
 	CAnimationSets::GetInstance()->Clear();
 
 	currentSceneId = sceneId;
+
 	CScene* scene = scenes[sceneId];
 	game->SetKeyHandler(scene->GetKeyEventHandler());
+	game->GetCamera()->SetPosition(0, 0);
+
+	if (CGame::GetInstance()->GetTimer()->GetRemainingTime() == -1)
+	{
+		CGame::GetInstance()->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+	}
 
 	if (dynamic_cast<CIntroScene*>(scene))
 	{
 		game->Reset();
 	}
 
-	if (scene->needReloading && IsSceneLoaded(sceneId))
+	if (dynamic_cast<CPlayScene*>(scene))
+	{
+		game->GetTimer()->Resume();
+	}
+	else
+	{
+		game->GetTimer()->Pause();
+	}
+
+	if (!forced && scene->needReloading && IsSceneLoaded(sceneId))
 	{
 		scene->Reload();
 	}
@@ -105,8 +124,31 @@ void CSceneManager::SwitchScene(string sceneId)
 		scene->Load();
 		AddLoadedScenes(sceneId);
 	}
+}
 
-	game->GetTimer()->SetTime(300);
+void CSceneManager::SwitchSceneByIndex(int index)
+{
+	if (CGame::GetInstance()->GetTimer()->GetRemainingTime() == -1)
+	{
+		CGame::GetInstance()->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+	}
+
+	ClearLoadedScenes();
+
+	CScene* scene = scenes[GetSceneIdByIndex(index)];
+	string requiredSceneId = scene->GetRequiredSceneId();
+
+	if (requiredSceneId != "")
+	{
+		AddLoadedScenes(requiredSceneId);
+	}
+
+	if (GetSceneIdByIndex(index) == requiredSceneId)
+	{
+		ClearLoadedScenes();
+	}
+
+	SwitchScene(GetSceneIdByIndex(index), true);
 }
 
 string CSceneManager::GetCurrentSceneId()
@@ -124,12 +166,29 @@ string CSceneManager::GetPreviousSceneId()
 	return GetCurrentScene()->GetPreviousSceneId();
 }
 
+string CSceneManager::GetFirstSceneId()
+{
+	return GetSceneIdByIndex(0);
+}
+
+string CSceneManager::GetSceneIdByIndex(int index)
+{
+	int newIndex = index > scenes.size() ? 0 : index;
+
+	return scenes[sceneIds[newIndex]]->GetId();
+}
+
 void CSceneManager::AddLoadedScenes(string sceneId)
 {
 	if (find(loadedScenes.begin(), loadedScenes.end(), sceneId) == loadedScenes.end())
 	{
 		loadedScenes.emplace_back(sceneId);
 	}
+}
+
+void CSceneManager::ClearLoadedScenes()
+{
+	loadedScenes.clear();
 }
 
 bool CSceneManager::IsSceneLoaded(string sceneId)

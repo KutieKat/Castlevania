@@ -17,8 +17,8 @@ public:
 
 	float x;
 	float y;
-	float dx;	// dx = vx*dt
-	float dy;	// dy = vy*dt
+	float dx;
+	float dy;
 	float vx;
 	float vy;
 
@@ -28,7 +28,7 @@ public:
 	Visibility visibility;
 
 	int state;
-	int value;
+	int counter;
 
 	int leftBound;
 	int topBound;
@@ -46,7 +46,9 @@ public:
 	bool showingEffect;
 	bool isEffect;
 	bool isItem;
-	bool isEnemy;
+	bool removable;
+
+	int remainingDisplayTime;
 
 public:
 	CGameObject();
@@ -69,7 +71,6 @@ public:
 	Visibility GetVisibility();
 
 	int GetState();
-	int GetValue();
 
 	void RenderBoundingBox();
 
@@ -98,7 +99,6 @@ public:
 	CGameObject* GetHiddenItem();
 
 	void SetEndingEffect(CGameObject* effect);
-	void SetValue(int value);
 
 	bool Over();
 

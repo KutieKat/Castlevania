@@ -38,13 +38,12 @@ public:
 
 	DWORD waitingTime;
 	DWORD invisibleTimeout;
-
+	
 	~CSimon();
 
 protected:
 	CWhip* whip;
 	CGameObject* subWeapon;
-	vector<CGameObject*> subWeapons;
 
 	DWORD delayEndTime;
 	DWORD switchSceneTime;
@@ -60,5 +59,4 @@ protected:
 	void HandleInvisibility();
 
 	void RenderWhip();
-	void RenderSubWeapon();
 };

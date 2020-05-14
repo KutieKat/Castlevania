@@ -130,7 +130,10 @@ int Run()
 		{
 			frameStart = now;
 
-			game->GetTimer()->Tick();
+			if (!game->GetSceneManager()->GetCurrentScene()->Paused())
+			{
+				game->GetTimer()->Tick();
+			}
 
 			if (dynamic_cast<CPlayScene*>(game->GetSceneManager()->GetCurrentScene()))
 			{

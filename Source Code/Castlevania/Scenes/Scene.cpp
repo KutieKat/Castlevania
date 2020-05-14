@@ -1,6 +1,7 @@
 #include "Scene.h"
+#include "../Game.h"
 
-CScene::CScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId)
+CScene::CScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId, string requiredSceneId)
 {
 	this->id = id;
 	this->filePath = filePath;
@@ -9,11 +10,27 @@ CScene::CScene(string id, string filePath, string stage, string previousSceneId,
 	this->stage = stage;
 	this->switchSceneTime = -1;
 	this->needReloading = false;
+	this->requiredSceneId = requiredSceneId;
 }
 
 IKeyEventHandler* CScene::GetKeyEventHandler()
 {
 	return keyHandler;
+}
+
+void CScene::Pause()
+{
+	paused = true;
+}
+
+void CScene::Resume()
+{
+	paused = false;
+}
+
+bool CScene::Paused()
+{
+	return paused;
 }
 
 string CScene::GetId()
@@ -34,4 +51,9 @@ string CScene::GetNextSceneId()
 string CScene::GetStage()
 {
 	return stage;
+}
+
+CGrid* CScene::GetGrid()
+{
+	return grid;
 }

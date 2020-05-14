@@ -76,15 +76,6 @@
     <Filter Include="Header Files\Models\Misc">
       <UniqueIdentifier>{5a57b84b-e7c7-4d96-bacb-6b07e96561c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Models\Characters">
-      <UniqueIdentifier>{977b5732-5e19-4ab1-af52-cfeacc36a209}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Models\Characters\Players">
-      <UniqueIdentifier>{f1340eb6-a07e-43aa-bb76-0b6e1f1c90e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Models\Characters\Enemies">
-      <UniqueIdentifier>{abdc5852-2433-4572-a667-1c8d1b3b99b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Models\Weapons">
       <UniqueIdentifier>{e29a22c6-23f5-4075-af79-301e2df084f2}</UniqueIdentifier>
     </Filter>
@@ -120,6 +111,15 @@
     </Filter>
     <Filter Include="Header Files\Scenes">
       <UniqueIdentifier>{2dbb7e45-62d8-4b59-984b-48b410347e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Characters">
+      <UniqueIdentifier>{977b5732-5e19-4ab1-af52-cfeacc36a209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Characters\Players">
+      <UniqueIdentifier>{f1340eb6-a07e-43aa-bb76-0b6e1f1c90e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models\Characters\Enemies">
+      <UniqueIdentifier>{abdc5852-2433-4572-a667-1c8d1b3b99b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +211,6 @@
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Models\Misc\HealthBar.cpp">
-      <Filter>Source Files\Models\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Misc\Door.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\Timer.cpp">
@@ -348,6 +345,18 @@
     <ClCompile Include="Models\Characters\Enemies\SpearKnight.cpp">
       <Filter>Source Files\Models\Characters\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Unit.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Grid.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\Enemy.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\PauseBadge.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -439,9 +448,6 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Misc\Door.h">
-      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\Timer.h">
       <Filter>Header Files\Utilities</Filter>
@@ -577,6 +583,18 @@
     </ClInclude>
     <ClInclude Include="Models\Characters\Enemies\SpearKnight.h">
       <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Grid.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Unit.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\Enemy.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\PauseBadge.h">
+      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
