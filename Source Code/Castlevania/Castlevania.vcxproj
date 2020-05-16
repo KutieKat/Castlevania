@@ -57,11 +57,13 @@
     <ClCompile Include="Models\Items\PurpleMoneyBag.cpp" />
     <ClCompile Include="Models\Items\RedMoneyBag.cpp" />
     <ClCompile Include="Models\Items\SmallHeart.cpp" />
+    <ClCompile Include="Models\Items\TripleShot.cpp" />
     <ClCompile Include="Models\Items\WhiteMoneyBag.cpp" />
     <ClCompile Include="Models\Misc\Background.cpp" />
     <ClCompile Include="Models\Misc\Bat.cpp" />
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\BigDoubleShot.cpp" />
+    <ClCompile Include="Models\Misc\BigTripleShot.cpp" />
     <ClCompile Include="Models\Misc\Blackboard.cpp" />
     <ClCompile Include="Models\Misc\BottomStair.cpp" />
     <ClCompile Include="Models\Misc\BreakableBrick.cpp" />
@@ -135,11 +137,13 @@
     <ClInclude Include="Models\Items\PurpleMoneyBag.h" />
     <ClInclude Include="Models\Items\RedMoneyBag.h" />
     <ClInclude Include="Models\Items\SmallHeart.h" />
+    <ClInclude Include="Models\Items\TripleShot.h" />
     <ClInclude Include="Models\Items\WhiteMoneyBag.h" />
     <ClInclude Include="Models\Misc\Background.h" />
     <ClInclude Include="Models\Misc\Bat.h" />
     <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\BigDoubleShot.h" />
+    <ClInclude Include="Models\Misc\BigTripleShot.h" />
     <ClInclude Include="Models\Misc\Blackboard.h" />
     <ClInclude Include="Models\Misc\BottomStair.h" />
     <ClInclude Include="Models\Misc\BreakableBrick.h" />

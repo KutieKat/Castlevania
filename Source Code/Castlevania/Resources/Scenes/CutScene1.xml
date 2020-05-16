@@ -8,6 +8,10 @@
     <texture id="health_volume" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
     <texture id="helicopter" path="Resources\\Others\\Helicopter.png" r="255" g="0" b="255" />
     <texture id="simon" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
+    <texture id="dagger" path="Resources\\Items\\Dagger.png" r="255" g="0" b="255" />
+    <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
+    <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
+    <texture id="big_triple_shot" path="Resources\\Others\\BigTripleShot.png" r="255" g="0" b="255" />
   </textures>
   
   <sprites>
@@ -85,6 +89,21 @@
     <sprite id="simon_deflect_right" textureId="simon" left="420" top="331" right="480" bottom="397" />
     <sprite id="simon_die_right" textureId="simon" left="180" top="463" right="240" bottom="529" />
     <sprite id="simon_watch" textureId="simon" left="60" top="66" right="120" bottom="132" />
+
+    <!-- Dagger -->
+    <sprite id="dagger_right" textureId="dagger" left="0" top="0" right="32" bottom="18" />
+    <sprite id="dagger_left" textureId="dagger" left="0" top="19" right="32" bottom="36" />
+
+    <!-- Boomerang -->
+    <sprite id="boomerang_1" textureId="boomerang" left="0" top="0" right="27" bottom="27" />
+    <sprite id="boomerang_2" textureId="boomerang" left="28" top="0" right="55" bottom="27" />
+    <sprite id="boomerang_3" textureId="boomerang" left="56" top="0" right="83" bottom="27" />
+
+    <!-- BigDoubleShot -->
+    <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+
+    <!-- BigTripleShot -->
+    <sprite id="big_triple_shot" textureId="big_triple_shot" left="0" top="0" right="41" bottom="41" />
   </sprites>
   
   <animations>
@@ -271,6 +290,36 @@
     <animation id="simon_watch">
       <frame spriteId="simon_watch" duration="100" />
     </animation>
+
+    <!-- Dagger -->
+    <animation id="dagger_right">
+      <frame spriteId="dagger_right" duration="100" />
+    </animation>
+
+    <animation id="dagger_left">
+      <frame spriteId="dagger_left" duration="100" />
+    </animation>
+
+    <!-- Boomerang -->
+    <animation id="boomerang_static">
+      <frame spriteId="boomerang_2" duration="100" />
+    </animation>
+
+    <animation id="boomerang_move">
+      <frame spriteId="boomerang_1" duration="100" />
+      <frame spriteId="boomerang_2" duration="100" />
+      <frame spriteId="boomerang_3" duration="100" />
+    </animation>
+
+    <!-- BigDoubleShot -->
+    <animation id="big_double_shot">
+      <frame spriteId="big_double_shot" duration="100" />
+    </animation>
+
+    <!-- BigTripleShot -->
+    <animation id="big_triple_shot">
+      <frame spriteId="big_triple_shot" duration="100" />
+    </animation>
   </animations>
   
   <animationSets>
@@ -328,6 +377,24 @@
       <animationSetItem id="simon_deflect_right" animationId="simon_deflect_right" />
       <animationSetItem id="simon_die_right" animationId="simon_die_right" />
       <animationSetItem id="simon_watch" animationId="simon_watch" />
+    </animationSet>
+
+    <animationSet id="dagger">
+      <animationSetItem id="dagger_right" animationId="dagger_right" />
+      <animationSetItem id="dagger_left" animationId="dagger_left" />
+    </animationSet>
+
+    <animationSet id="boomerang">
+      <animationSetItem id="boomerang_static" animationId="boomerang_static" />
+      <animationSetItem id="boomerang_move" animationId="boomerang_move" />
+    </animationSet>
+
+    <animationSet id="big_double_shot">
+      <animationSetItem id="big_double_shot" animationId="big_double_shot" />
+    </animationSet>
+
+    <animationSet id="big_triple_shot">
+      <animationSetItem id="big_triple_shot" animationId="big_triple_shot" />
     </animationSet>
   </animationSets>
   

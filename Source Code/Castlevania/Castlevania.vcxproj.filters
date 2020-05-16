@@ -357,6 +357,12 @@
     <ClCompile Include="Models\Misc\PauseBadge.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Items\TripleShot.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\BigTripleShot.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -594,6 +600,12 @@
       <Filter>Header Files\Models\Characters\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\PauseBadge.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\TripleShot.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\BigTripleShot.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>

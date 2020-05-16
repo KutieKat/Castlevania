@@ -17,6 +17,7 @@
 #include "Items/Crown.h"
 #include "Items/SmallHeart.h"
 #include "Items/DoubleShot.h"
+#include "Items/TripleShot.h"
 #include "Items/Boomerang.h"
 
 #include "Effects/Flash.h"
@@ -39,6 +40,7 @@
 #include "Misc/PreviousScene.h"
 #include "Misc/MovingBar.h"
 #include "Misc/BigDoubleShot.h"
+#include "Misc/BigTripleShot.h"
 #include "Misc/SmallCandle.h"
 #include "Misc/BreakableBrick.h"
 using namespace std;

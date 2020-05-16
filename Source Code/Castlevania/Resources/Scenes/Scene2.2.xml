@@ -20,6 +20,7 @@
     <texture id="small_heart" path="Resources\\Items\\SmallHeart.png" r="255" g="0" b="255" />
     <texture id="double_shot" path="Resources\\Items\\DoubleShot.png" r="255" g="0" b="255" />
     <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
+    <texture id="big_triple_shot" path="Resources\\Others\\BigTripleShot.png" r="255" g="0" b="255" />
     <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
     <texture id="breakable_brick" path="Resources\\Ground\\BreakableBrick.png" r="255" g="0" b="255" />
@@ -184,6 +185,9 @@
 
     <!-- BigDoubleShot -->
     <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+
+    <!-- BigTripleShot -->
+    <sprite id="big_triple_shot" textureId="big_triple_shot" left="0" top="0" right="41" bottom="41" />
 
     <!-- Boomerang -->
     <sprite id="boomerang_1" textureId="boomerang" left="0" top="0" right="27" bottom="27" />
@@ -543,6 +547,11 @@
       <frame spriteId="big_double_shot" duration="100" />
     </animation>
 
+    <!-- BigTripleShot -->
+    <animation id="big_triple_shot">
+      <frame spriteId="big_triple_shot" duration="100" />
+    </animation>
+
     <!-- Boomerang -->
     <animation id="boomerang_static">
       <frame spriteId="boomerang_2" duration="100" />
@@ -737,6 +746,10 @@
 
     <animationSet id="big_double_shot">
       <animationSetItem id="big_double_shot" animationId="big_double_shot" />
+    </animationSet>
+
+    <animationSet id="big_triple_shot">
+      <animationSetItem id="big_triple_shot" animationId="big_triple_shot" />
     </animationSet>
 
     <animationSet id="boomerang">

@@ -18,7 +18,6 @@
     <texture id="health_volume" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
     <texture id="crown" path="Resources\\Items\\Crown.png" r="255" g="0" b="255" />
     <texture id="small_heart" path="Resources\\Items\\SmallHeart.png" r="255" g="0" b="255" />
-    <texture id="double_shot" path="Resources\\Items\\DoubleShot.png" r="255" g="0" b="255" />
     <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
     <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
@@ -190,9 +189,6 @@
     
     <!-- SmallHeart -->
     <sprite id="small_heart" textureId="small_heart" left="0" top="0" right="15" bottom="15" />
-
-    <!-- DoubleShot -->
-    <sprite id="double_shot" textureId="double_shot" left="0" top="0" right="27" bottom="27" />
 
     <!-- BigDoubleShot -->
     <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
@@ -560,11 +556,6 @@
       <frame spriteId="small_heart" duration="100" />
     </animation>
     
-    <!-- DoubleShot -->
-    <animation id="double_shot">
-      <frame spriteId="double_shot" duration="100" />
-    </animation>
-
     <!-- BigDoubleShot -->
     <animation id="big_double_shot">
       <frame spriteId="big_double_shot" duration="100" />
@@ -763,10 +754,6 @@
 
     <animationSet id="small_heart">
       <animationSetItem id="small_heart" animationId="small_heart" />
-    </animationSet>
-
-    <animationSet id="double_shot">
-      <animationSetItem id="double_shot" animationId="double_shot" />
     </animationSet>
 
     <animationSet id="big_double_shot">

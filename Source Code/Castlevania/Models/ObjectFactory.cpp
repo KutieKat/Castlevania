@@ -114,9 +114,17 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y)
 	{
 		return new CDoubleShot();
 	}
+	else if (type == "triple_shot")
+	{
+		return new CTripleShot();
+	}
 	else if (type == "big_double_shot")
 	{
 		return new CBigDoubleShot();
+	}
+	else if (type == "big_triple_shot")
+	{
+		return new CBigTripleShot();
 	}
 	else if (type == "boomerang")
 	{

@@ -741,26 +741,34 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				break;
 
 			case DIK_1:
-				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_2);
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
 				break;
 
 			case DIK_2:
-				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_2);
 				break;
 
 			case DIK_3:
-				game->GetPlayerData()->SetWhipPower(WHIP_DOUBLE_POWER);
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
 				break;
 
 			case DIK_4:
-				// WhipTriplePower
+				game->GetPlayerData()->SetWhipPower(WHIP_NORMAL_POWER);
 				break;
 
 			case DIK_5:
-				game->GetPlayerData()->SetSubWeaponType("dagger");
+				game->GetPlayerData()->SetWhipPower(WHIP_DOUBLE_POWER);
 				break;
 
 			case DIK_6:
+				game->GetPlayerData()->SetWhipPower(WHIP_TRIPLE_POWER);
+				break;
+
+			case DIK_7:
+				game->GetPlayerData()->SetSubWeaponType("dagger");
+				break;
+
+			case DIK_8:
 				game->GetPlayerData()->SetSubWeaponType("boomerang");
 				break;
 

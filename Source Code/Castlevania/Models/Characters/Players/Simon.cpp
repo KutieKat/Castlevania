@@ -379,7 +379,12 @@ void CSimon::SetState(int state)
 
 	case SIMON_STATE_DELAY:
 		vx = 0;
-		delayEndTime = GetTickCount() + SIMON_DELAY_TIME;
+
+		if (delayEndTime == -1)
+		{
+			delayEndTime = GetTickCount() + SIMON_DELAY_TIME;
+		}
+
 		break;
 
 	case SIMON_STATE_IDLE:
@@ -442,7 +447,11 @@ void CSimon::SetState(int state)
 
 	case SIMON_STATE_DEFLECT:
 		invisible = true;
-		invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+
+		if (invisibleTimeout == -1)
+		{
+			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+		}
 
 		if (directionX == Direction::Right)
 		{

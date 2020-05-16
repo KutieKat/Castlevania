@@ -67,6 +67,9 @@ enum HealthType
 // Game
 #define DEFAULT_GAME_TIME 300
 #define DEFAULT_WAITING_TIME 3000
+#define ADDED_LIVES 10
+#define ADDED_HEARTS 100
+#define ADDED_SCORE 1000
 
 // Scenes
 #define INTRO_SCENE 0
@@ -300,6 +303,14 @@ enum HealthType
 // DoubleShot
 #define DOUBLE_SHOT_BBOX_WIDTH 31
 #define DOUBLE_SHOT_BBOX_HEIGHT 31
+
+// BigTripleShot
+#define BIG_TRIPLE_SHOT_BBOX_WIDTH 41
+#define BIG_TRIPLE_SHOT_BBOX_HEIGHT 41
+
+// TripleShot
+#define TRIPLE_SHOT_BBOX_WIDTH 31
+#define TRIPLE_SHOT_BBOX_HEIGHT 31
 
 // Boomerang
 #define BOOMERANG_STATE_STATIC 1
