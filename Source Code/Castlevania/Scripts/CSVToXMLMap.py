@@ -1,4 +1,6 @@
 import sys
+from lxml import etree
+from xml.dom import minidom
 
 # Constants
 MAP_FILE_ARG = 1
@@ -6,40 +8,47 @@ TILE_WIDTH_ARG = 2
 TILE_HEIGHT_ARG = 3
 TILESET_WIDTH_ARG = 4
 TILESET_HEIGHT_ARG = 5
+OUTPUT_FILENAME = 'Map.xml'
+ENCODING = 'utf-8'
+BLANK_SPACE = ' '
+DEFAULT_INDENT = BLANK_SPACE * 2
+SUPPOSED_INDENT = BLANK_SPACE * 3
 
-# Read value from arguments
-mapFile = sys.argv[MAP_FILE_ARG]
-tileWidth = sys.argv[TILE_WIDTH_ARG]
-tileHeight = sys.argv[TILE_HEIGHT_ARG]
-tilesetWidth = sys.argv[TILESET_WIDTH_ARG]
-tilesetHeight = sys.argv[TILESET_HEIGHT_ARG]
+def parse():
+    root = etree.Element("map")
 
-# Parse the map file and create xml file content
-xmlFileContent = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-xmlFileContent += "<map tileWidth=\"" + tileWidth + "\" tileHeight=\"" + tileHeight + "\" tilesetWidth=\"" + tilesetWidth + "\" tilesetHeight=\"" + tilesetHeight + "\">\n\t"
+    root.set('tileWidth', sys.argv[TILE_WIDTH_ARG])
+    root.set('tileHeight', sys.argv[TILE_HEIGHT_ARG])
+    root.set('tilesetWidth', sys.argv[TILESET_WIDTH_ARG])
+    root.set('tilesetHeight', sys.argv[TILESET_HEIGHT_ARG])
 
-with open(mapFile, "r") as filestream:
-	for row in filestream:
-		rowContent = "<row>\n\t"
+    with open(sys.argv[MAP_FILE_ARG], "r") as filestream:
+        for row in filestream:
+            rowElement = etree.SubElement(root, "row")
+            columns = row.split(" ")
 
-		columns = row.split(" ")
+            for column in range(0, len(columns)):
+                value = columns[column].replace(",", "").strip()
+                columnElement = etree.SubElement(rowElement, "column")
 
-		for column in range(0, len(columns)):
-			columnContent = "<column>"
-			value = str(columns[column]).strip()
+                columnElement.text = value
 
-			if "\n" not in value:
-				columnContent += value
+    with open(OUTPUT_FILENAME, 'wb') as f:
+        f.write(etree.tostring(etree.ElementTree(root), pretty_print=True, xml_declaration=True, encoding=ENCODING))
 
-			columnContent += "</column>"
-			rowContent += columnContent
+def reindent():
+    fileData = None
 
-		rowContent += "</row>"
-		xmlFileContent += rowContent
+    with open(OUTPUT_FILENAME, 'r') as file :
+        fileData = file.read()
 
-	xmlFileContent += "</map>"
+    fileData = fileData.replace(DEFAULT_INDENT, SUPPOSED_INDENT)
 
-# Save map file content into an xml file
-xmlFile = open("Map.xml","w+")
-xmlFile.writelines(xmlFileContent)
-xmlFile.close()
+    with open(OUTPUT_FILENAME, 'w') as file:
+        file.write(fileData)
+
+def main():
+    parse()
+    reindent()
+
+main()
