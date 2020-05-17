@@ -7,7 +7,7 @@ CSmallCandle::CSmallCandle()
 
 void CSmallCandle::Render()
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(0)->Render(x, y);
 	}
@@ -15,7 +15,7 @@ void CSmallCandle::Render()
 
 void CSmallCandle::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y + 10;

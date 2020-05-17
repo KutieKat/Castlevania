@@ -67,6 +67,7 @@ enum HealthType
 // Game
 #define DEFAULT_GAME_TIME 300
 #define DEFAULT_WAITING_TIME 3000
+#define DEFAULT_ELEVATION 1
 #define ADDED_LIVES 10
 #define ADDED_HEARTS 100
 #define ADDED_SCORE 1000
@@ -240,7 +241,8 @@ enum HealthType
 #define HELICOPTER_FLY_SPEED 0.01f
 
 // Effect
-#define EFFECT_DISPLAY_TIME 300
+#define EFFECT_DISPLAY_TIME 500
+#define ENDING_EFFECT_DISPLAY_TIME 300
 
 // Brick
 #define BRICK_BBOX_WIDTH 31

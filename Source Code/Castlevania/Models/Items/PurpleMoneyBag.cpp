@@ -9,7 +9,7 @@ CPurpleMoneyBag::CPurpleMoneyBag()
 
 void CPurpleMoneyBag::Render()
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(0)->Render(x, y);
 	}
@@ -71,7 +71,7 @@ void CPurpleMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CPurpleMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y;

@@ -14,11 +14,13 @@ CGameObject::CGameObject()
 	x = y = 0;
 	vx = vy = 0;
 	disappearingTime = -1;
+	elevation = DEFAULT_ELEVATION;
 
 	directionX = Direction::Right;
 	directionY = Direction::None;
 
 	showingEffect = false;
+	showingEndingEffect = false;
 	isEffect = false;
 	isItem = false;
 }
@@ -85,21 +87,34 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	dx = vx * dt;
 	dy = vy * dt;
 
-	if (GetTickCount() > disappearingTime)
+	if (!isEffect && disappearingTime != -1 && GetTickCount() > disappearingTime)
 	{
+		disappearingTime = -1;
 		removable = true;
 	}
 
 	if (endingEffect && endingEffect->Over())
 	{
-		if (hiddenItem)
+		if (showingEffect)
 		{
-			hiddenItem->SetVisibility(Visibility::Visible);
-			hiddenItem->SetPosition(x, y);
-			hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
-		}
+			showingEffect = false;
 
-		removable = true;
+			endingEffect->disappearingTime = -1;
+			endingEffect->visibility = Visibility::Hidden;
+		}
+		
+		if (showingEndingEffect)
+		{
+			if (hiddenItem)
+			{
+				hiddenItem->SetVisibility(Visibility::Visible);
+				hiddenItem->SetPosition(x, y);
+				hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+			}
+
+			endingEffect->removable = true;
+			removable = true;
+		}
 	}
 }
 
@@ -120,15 +135,29 @@ void CGameObject::Disappear()
 {
 	if (endingEffect)
 	{
-		showingEffect = true;
+		showingEndingEffect = true;
+		//showingEffect = false;
 
 		endingEffect->SetVisibility(Visibility::Visible);
 		endingEffect->SetPosition(x, y);
-		endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
+		endingEffect->SetDisplayTime(ENDING_EFFECT_DISPLAY_TIME);
 	}
 	else
 	{
 		removable = true;
+	}
+}
+
+void CGameObject::ShowEffect()
+{
+	if (endingEffect)
+	{
+		showingEffect = true;
+		//showingEndingEffect = false;
+
+		endingEffect->SetVisibility(Visibility::Visible);
+		endingEffect->SetPosition(x, y);
+		endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
 	}
 }
 
@@ -228,6 +257,11 @@ void CGameObject::FilterCollision(
 	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
+bool CGameObject::CompareElevation(CGameObject * a, CGameObject * b)
+{
+	return a->GetElevation() < b->GetElevation();
+}
+
 void CGameObject::SetVisibility(Visibility visibility)
 {
 	this->visibility = visibility;
@@ -241,6 +275,11 @@ Visibility CGameObject::GetVisibility()
 int CGameObject::GetState()
 {
 	return state;
+}
+
+int CGameObject::GetElevation()
+{
+	return elevation;
 }
 
 void CGameObject::RenderBoundingBox()

@@ -226,6 +226,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 			if (object->Attribute("endingEffect"))
 			{
 				CGameObject* effect = CObjectFactory::Construct(object->Attribute("endingEffect"), x, y);
+				effect->elevation = 2;
 				unit = new CUnit(grid, effect, x, y);
 
 				brick->SetEndingEffect(effect);
@@ -311,6 +312,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 			{
 				CGameObject* effect = CObjectFactory::Construct(object->Attribute("endingEffect"));
 				effect->SetPosition(x, y);
+				effect->elevation = 2;
 				unit = new CUnit(grid, effect, x, y);
 
 				gameObject->SetEndingEffect(effect);
@@ -500,29 +502,17 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	CGameObject* simon = nullptr;
-
 	// TileMap
 	if (tileMap)
 	{
 		tileMap->Render(game->GetCamera());
 	}
 
+	sort(objects.begin(), objects.end(), CGameObject::CompareElevation);
+
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (dynamic_cast<CSimon*>(objects[i]))
-		{
-			simon = objects[i];
-		}
-		else
-		{
-			objects[i]->Render();
-		}
-	}
-
-	if (simon)
-	{
-		simon->Render();
+		objects[i]->Render();
 	}
 
 	// Blackboard

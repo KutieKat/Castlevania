@@ -9,7 +9,7 @@ CBreakableBrick::CBreakableBrick()
 
 void CBreakableBrick::Render()
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(0)->Render(x, y);
 	}
@@ -17,7 +17,7 @@ void CBreakableBrick::Render()
 
 void CBreakableBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y;

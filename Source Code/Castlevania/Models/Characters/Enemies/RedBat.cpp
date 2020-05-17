@@ -52,7 +52,7 @@ void CRedBat::Render()
 		break;
 	}
 	
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(ani)->Render(x, y);
 	}
@@ -60,7 +60,7 @@ void CRedBat::Render()
 
 void CRedBat::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y;
@@ -80,7 +80,7 @@ void CRedBat::TakeDamage(int damages)
 	}
 	else
 	{
-		SetState(SPEAR_KNIGHT_STATE_DELAY);
+		ShowEffect();
 	}
 }
 

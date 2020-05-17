@@ -106,7 +106,7 @@ void CSpearKnight::Render()
 		break;
 	}
 
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(ani)->Render(x, y);
 	}
@@ -131,6 +131,7 @@ void CSpearKnight::TakeDamage(int damages)
 	}
 	else
 	{
+		ShowEffect();
 		SetState(SPEAR_KNIGHT_STATE_DELAY);
 	}
 }

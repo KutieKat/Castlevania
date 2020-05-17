@@ -29,11 +29,12 @@ public:
 
 	int state;
 	int counter;
-
 	int leftBound;
 	int topBound;
 	int rightBound;
 	int bottomBound;
+	int elevation;
+	int remainingDisplayTime;
 
 	DWORD dt;
 	DWORD disappearingTime;
@@ -44,11 +45,10 @@ public:
 	CGameObject* endingEffect;
 
 	bool showingEffect;
+	bool showingEndingEffect;
 	bool isEffect;
 	bool isItem;
 	bool removable;
-
-	int remainingDisplayTime;
 
 public:
 	CGameObject();
@@ -71,6 +71,7 @@ public:
 	Visibility GetVisibility();
 
 	int GetState();
+	int GetElevation();
 
 	void RenderBoundingBox();
 
@@ -92,6 +93,8 @@ public:
 		float &rdy
 	);
 
+	static bool CompareElevation(CGameObject* a, CGameObject* b);
+
 	void SetAnimationSet(string animationSetId);
 	void SetDisplayTime(DWORD time);
 	void SetHiddenItem(CGameObject* item);
@@ -99,6 +102,10 @@ public:
 	CGameObject* GetHiddenItem();
 
 	void SetEndingEffect(CGameObject* effect);
+	void SetElevation(int elevation)
+	{
+		this->elevation = elevation;
+	}
 
 	bool Over();
 
@@ -108,6 +115,7 @@ public:
 	virtual void SetState(int state);
 	virtual void ResetAnimations();
 	virtual void Disappear();
+	virtual void ShowEffect();
 	virtual void ShowHiddenItem();
 
 	~CGameObject();

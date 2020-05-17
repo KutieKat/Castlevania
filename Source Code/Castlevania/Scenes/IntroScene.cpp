@@ -199,6 +199,8 @@ void CIntroScene::Render()
 {
 	if (startLabel) startLabel->Render();
 
+	sort(objects.begin(), objects.end(), CGameObject::CompareElevation);
+
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Render();

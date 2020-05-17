@@ -9,7 +9,7 @@ CWhiteMoneyBag::CWhiteMoneyBag()
 
 void CWhiteMoneyBag::Render()
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(0)->Render(x, y);
 	}
@@ -71,7 +71,7 @@ void CWhiteMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CWhiteMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y;

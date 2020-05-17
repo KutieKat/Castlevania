@@ -9,7 +9,7 @@ CRedMoneyBag::CRedMoneyBag()
 
 void CRedMoneyBag::Render()
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(0)->Render(x, y);
 	}
@@ -71,7 +71,7 @@ void CRedMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CRedMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y;

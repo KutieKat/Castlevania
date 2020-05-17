@@ -39,6 +39,7 @@ CSimon::CSimon()
 	atBottomStair = false;
 	onBar = false;
 
+	elevation = 10;
 	delayEndTime = -1;
 	switchSceneTime = -1;
 	waitingTime = -1;

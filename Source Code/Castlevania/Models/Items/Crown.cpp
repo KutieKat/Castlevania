@@ -32,7 +32,7 @@ void CCrown::SetState(int state)
 
 void CCrown::Render()
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(0)->Render(x, y);
 	}
@@ -40,7 +40,7 @@ void CCrown::Render()
 
 void CCrown::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y;

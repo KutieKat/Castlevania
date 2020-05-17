@@ -33,7 +33,7 @@ void CMoneyBag::SetState(int state)
 
 void CMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		left = x;
 		top = y;
@@ -44,7 +44,7 @@ void CMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 void CMoneyBag::Render()
 {
-	if (!showingEffect)
+	if (!showingEndingEffect)
 	{
 		animationSet->at(0)->Render(x, y);
 	}
