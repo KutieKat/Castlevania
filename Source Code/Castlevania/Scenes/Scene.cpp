@@ -9,8 +9,11 @@ CScene::CScene(string id, string filePath, string stage, string previousSceneId,
 	this->nextSceneId = nextSceneId;
 	this->stage = stage;
 	this->switchSceneTime = -1;
+	this->softPauseTime = -1;
 	this->needReloading = false;
 	this->requiredSceneId = requiredSceneId;
+	this->softPaused = false;
+	this->hardPaused = false;
 }
 
 IKeyEventHandler* CScene::GetKeyEventHandler()
@@ -18,19 +21,39 @@ IKeyEventHandler* CScene::GetKeyEventHandler()
 	return keyHandler;
 }
 
-void CScene::Pause()
+void CScene::SoftPause(DWORD duration)
 {
-	paused = true;
+	softPaused = true;
+
+	if (duration != -1)
+	{
+		softPauseTime = GetTickCount() + CGame::GetInstance()->GetPauseDeltaTime() + duration;
+	}
 }
 
-void CScene::Resume()
+void CScene::HardPause()
 {
-	paused = false;
+	hardPaused = true;
 }
 
-bool CScene::Paused()
+void CScene::ResumeSoftPause()
 {
-	return paused;
+	softPaused = false;
+}
+
+void CScene::ResumeHardPause()
+{
+	hardPaused = false;
+}
+
+bool CScene::SoftPaused()
+{
+	return softPaused;
+}
+
+bool CScene::HardPaused()
+{
+	return hardPaused;
 }
 
 string CScene::GetId()

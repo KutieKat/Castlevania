@@ -146,6 +146,34 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y)
 	{
 		return new CSpearKnight();
 	}
+	else if (type == "pork_chop")
+	{
+		return new CPorkChop();
+	}
+	else if (type == "rosary")
+	{
+		return new CRosary();
+	}
+	else if (type == "axe")
+	{
+		return new CAxe();
+	}
+	else if (type == "holy_water")
+	{
+		return new CHolyWater();
+	}
+	else if (type == "stopwatch")
+	{
+		return new CStopwatch();
+	}
+	else if (type == "magic_crystal")
+	{
+		return new CMagicCrystal();
+	}
+	else if (type == "invisibility_potion")
+	{
+		return new CInvisibilityPotion();
+	}
 	else
 	{
 		return nullptr;

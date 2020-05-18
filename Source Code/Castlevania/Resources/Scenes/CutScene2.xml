@@ -12,6 +12,10 @@
     <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
     <texture id="big_triple_shot" path="Resources\\Others\\BigTripleShot.png" r="255" g="0" b="255" />
+    <texture id="axe" path="Resources\\Items\\Axe.png" r="255" g="0" b="255" />
+    <texture id="holy_water" path="Resources\\Items\\HolyWater.png" r="255" g="0" b="255" />
+    <texture id="holy_water_bottle" path="Resources\\Items\\HolyWaterBottle.png" r="255" g="0" b="255" />
+    <texture id="stopwatch" path="Resources\\Items\\Stopwatch.png" r="255" g="0" b="255" />
   </textures>
   
   <sprites>
@@ -101,10 +105,31 @@
     <sprite id="boomerang_3" textureId="boomerang" left="56" top="0" right="83" bottom="27" />
 
     <!-- BigDoubleShot -->
-    <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+    <sprite id="big_double_shot_1" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+    <sprite id="big_double_shot_2" textureId="big_double_shot" left="42" top="0" right="83" bottom="41" />
 
     <!-- BigTripleShot -->
-    <sprite id="big_triple_shot" textureId="big_triple_shot" left="0" top="0" right="41" bottom="41" />
+    <sprite id="big_triple_shot_1" textureId="big_triple_shot" left="0" top="0" right="41" bottom="41" />
+    <sprite id="big_triple_shot_2" textureId="big_triple_shot" left="42" top="0" right="83" bottom="41" />
+
+    <!-- Axe -->
+    <sprite id="axe_1" textureId="axe" left="0" top="0" right="29" bottom="27" />
+    <sprite id="axe_2" textureId="axe" left="30" top="0" right="59" bottom="27" />
+    <sprite id="axe_3" textureId="axe" left="60" top="0" right="89" bottom="27" />
+    <sprite id="axe_4" textureId="axe" left="90" top="0" right="119" bottom="27" />
+    
+    <!-- HolyWater -->
+    <sprite id="holy_water" textureId="holy_water" left="0" top="0" right="31" bottom="31" />
+
+    <!-- HolyWaterBottle -->
+    <sprite id="holy_water_bottle_right" textureId="holy_water_bottle" left="0" top="0" right="31" bottom="25" />
+    <sprite id="holy_water_bottle_left" textureId="holy_water_bottle" left="32" top="0" right="63" bottom="25" />
+    <sprite id="holy_water_bottle_flame_1" textureId="holy_water_bottle" left="64" top="0" right="95" bottom="25" />
+    <sprite id="holy_water_bottle_flame_2" textureId="holy_water_bottle" left="96" top="0" right="127" bottom="25" />
+    <sprite id="holy_water_bottle_flame_3" textureId="holy_water_bottle" left="128" top="0" right="159" bottom="25" />
+    
+    <!-- Stopwatch -->
+    <sprite id="stopwatch" textureId="stopwatch" left="0" top="0" right="29" bottom="31" />
   </sprites>
   
   <animations>
@@ -314,13 +339,76 @@
     </animation>
 
     <!-- BigDoubleShot -->
-    <animation id="big_double_shot">
-      <frame spriteId="big_double_shot" duration="100" />
+    <animation id="big_double_shot_blink">
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+    </animation>
+
+    <animation id="big_double_shot_idle">
+      <frame spriteId="big_double_shot_1" duration="100" />
     </animation>
 
     <!-- BigTripleShot -->
-    <animation id="big_triple_shot">
-      <frame spriteId="big_triple_shot" duration="100" />
+    <animation id="big_triple_shot_blink">
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+    </animation>
+
+    <animation id="big_triple_shot_idle">
+      <frame spriteId="big_triple_shot_1" duration="100" />
+    </animation>
+
+    <!-- Axe -->
+    <animation id="axe_static">
+      <frame spriteId="axe_2" duration="100" />
+    </animation>
+    
+    <animation id="axe_move">
+      <frame spriteId="axe_1" duration="100" />
+      <frame spriteId="axe_2" duration="100" />
+      <frame spriteId="axe_3" duration="100" />
+      <frame spriteId="axe_4" duration="100" />
+    </animation>
+    
+    <!-- HolyWater -->
+    <animation id="holy_water">
+      <frame spriteId="holy_water" duration="100" />
+    </animation>
+    
+    <!-- HolyWaterBottle -->
+    <animation id="holy_water_bottle_right">
+      <frame spriteId="holy_water_bottle_right" duration="100" />
+    </animation>
+
+    <animation id="holy_water_bottle_left">
+      <frame spriteId="holy_water_bottle_left" duration="100" />
+    </animation>
+
+    <animation id="holy_water_bottle_flame">
+      <frame spriteId="holy_water_bottle_flame_1" duration="100" />
+      <frame spriteId="holy_water_bottle_flame_2" duration="100" />
+      <frame spriteId="holy_water_bottle_flame_3" duration="100" />
+    </animation>
+    
+    <!-- Stopwatch -->
+    <animation id="stopwatch">
+      <frame spriteId="stopwatch" duration="100" />
     </animation>
   </animations>
   
@@ -392,11 +480,32 @@
     </animationSet>
 
     <animationSet id="big_double_shot">
-      <animationSetItem id="big_double_shot" animationId="big_double_shot" />
+      <animationSetItem id="big_double_shot_blink" animationId="big_double_shot_blink" />
+      <animationSetItem id="big_double_shot_idle" animationId="big_double_shot_idle" />
     </animationSet>
 
     <animationSet id="big_triple_shot">
-      <animationSetItem id="big_triple_shot" animationId="big_triple_shot" />
+      <animationSetItem id="big_triple_shot_blink" animationId="big_triple_shot_blink" />
+      <animationSetItem id="big_triple_shot_idle" animationId="big_triple_shot_idle" />
+    </animationSet>
+
+    <animationSet id="axe">
+      <animationSetItem id="axe_static" animationId="axe_static" />
+      <animationSetItem id="axe_move" animationId="axe_move" />
+    </animationSet>
+  
+    <animationSet id="holy_water">
+      <animationSetItem id="holy_water" animationId="holy_water" />
+    </animationSet>
+
+    <animationSet id="holy_water_bottle">
+      <animationSetItem id="holy_water_bottle_right" animationId="holy_water_bottle_right" />
+      <animationSetItem id="holy_water_bottle_left" animationId="holy_water_bottle_left" />
+      <animationSetItem id="holy_water_bottle_flame" animationId="holy_water_bottle_flame" />
+    </animationSet>
+
+    <animationSet id="stopwatch">
+      <animationSetItem id="stopwatch" animationId="stopwatch" />
     </animationSet>
   </animationSets>
   

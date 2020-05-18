@@ -1,6 +1,7 @@
 ﻿#include "Simon.h"
 #include "../../../Game.h"
 #include "../../Characters/Enemies/RedBat.h"
+#include "../../Effects/Flash.h"
 #include "../../Misc/Ground.h"
 #include "../../Misc/Brick.h"
 #include "../../Misc/TopStair.h"
@@ -21,15 +22,27 @@
 #include "../../Items/Boomerang.h"
 #include "../../Items/SmallHeart.h"
 #include "../../Items/DoubleShot.h"
+#include "../../Items/PorkChop.h"
+#include "../../Items/Rosary.h"
+#include "../../Items/HolyWater.h"
+#include "../../Items/Stopwatch.h"
+#include "../../Items/MagicCrystal.h"
+#include "../../Items/InvisibilityPotion.h"
 #include "../../Weapons/Whip.h"
 #include "../../Weapons/WDagger.h"
 #include "../../Weapons/WBoomerang.h"
+#include "../../Weapons/WAxe.h"
+#include "../../Weapons/HolyWaterBottle.h"
+#include "../../Weapons/WStopwatch.h"
+#include "../../Weapons/Bone.h"
+#include "../../Weapons/Fireball.h"
 #include "../../../Utilities/Debug.h"
 #include "../../../Utilities/SafeDelete.h"
 
 CSimon::CSimon()
 {
-	invisible = false;
+	partiallyInvisible = false;
+	fullyInvisible = false;
 	sitting = false;
 	touchingGround = false;
 	lastFrameShown = false;
@@ -313,7 +326,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CSimon::Render()
 {
-	animationSet->at(GetAnimationToRender())->Render(x, y, invisible ? 150 : 255);
+	int alpha;
+
+	if (partiallyInvisible)
+	{
+		alpha = 150;
+	}
+	else if (fullyInvisible)
+	{
+		alpha = 0;
+	}
+	else
+	{
+		alpha = 255;
+	}
+
+	animationSet->at(GetAnimationToRender())->Render(x, y, alpha);
 
 	RenderWhip();
 }
@@ -447,13 +475,6 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_DEFLECT:
-		invisible = true;
-
-		if (invisibleTimeout == -1)
-		{
-			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
-		}
-
 		if (directionX == Direction::Right)
 		{
 			vy = -SIMON_JUMP_SPEED;
@@ -669,6 +690,18 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 			{
 				weapon = new WBoomerang(this);
 			}
+			else if (type == "axe")
+			{
+				weapon = new WAxe();
+			}
+			else if (type == "holy_water")
+			{
+				weapon = new CHolyWaterBottle();
+			}
+			else if (type == "stopwatch")
+			{
+				weapon = new WStopwatch();
+			}
 
 			weapon->SetDirectionX(directionX);
 			weapon->SetPosition(directionX == Direction::Right ? x + 40.0f : x - 20.0f, y + 12.0f);
@@ -694,7 +727,22 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (object->isItem)
 				{
-					HandleCollisionWithItems(object);
+					if (dynamic_cast<CRosary*>(object))
+					{
+						for (int j = 0; j < coObjects->size(); j++)
+						{
+							if (dynamic_cast<CEnemy*>(coObjects->at(j)))
+							{
+								coObjects->at(j)->Disappear();
+							}
+						}
+
+						object->removable = true;
+					}
+					else
+					{
+						HandleCollisionWithItems(object);
+					}
 				}
 				else if (dynamic_cast<CEnemy*>(object))
 				{
@@ -775,6 +823,39 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	{
 		playerData->SetWhipPower(WHIP_DOUBLE_POWER);
 	}
+	else if (dynamic_cast<CPorkChop*>(item))
+	{
+		playerData->AddHealthVolumes(PORK_CHOP_HEALTHS);
+	}
+	else if (dynamic_cast<CHolyWater*>(item))
+	{
+		playerData->SetSubWeaponType("holy_water");
+	}
+	else if (dynamic_cast<CStopwatch*>(item))
+	{
+		playerData->SetSubWeaponType("stopwatch");
+	}
+	else if (dynamic_cast<CInvisibilityPotion*>(item))
+	{
+		fullyInvisible = true;
+
+		if (invisibleTimeout == -1)
+		{
+			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+		}
+	}
+	else if (dynamic_cast<WBone*>(item))
+	{
+		playerData->DecreaseHealthVolumes();
+	}
+	else if (dynamic_cast<WFireball*>(item))
+	{
+		playerData->DecreaseHealthVolumes();
+	}
+	else if (dynamic_cast<CMagicCrystal*>(item))
+	{
+		// Ends game
+	}
 
 	item->Disappear();
 }
@@ -783,10 +864,21 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 {
 	CPlayerData* playerData = CGame::GetInstance()->GetPlayerData();
 
-	if (!invisible)
+	if (!partiallyInvisible && !fullyInvisible)
 	{
-		playerData->DecreaseHealthVolumes(1);
-		SetState(SIMON_STATE_DEFLECT);
+		partiallyInvisible = true;
+
+		if (invisibleTimeout == -1)
+		{
+			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+		}
+
+		playerData->DecreaseHealthVolumes();
+
+		if (!onStair)
+		{
+			SetState(SIMON_STATE_DEFLECT);
+		}
 	}
 }
 
@@ -866,9 +958,10 @@ void CSimon::HandleSwitchScene()
 
 void CSimon::HandleInvisibility()
 {
-	if (invisible && invisibleTimeout != -1 && GetTickCount() >= invisibleTimeout)
+	if ((partiallyInvisible || fullyInvisible) && invisibleTimeout != -1 && GetTickCount() >= invisibleTimeout)
 	{
-		invisible = false;
+		partiallyInvisible = false;
+		fullyInvisible = false;
 		invisibleTimeout = -1;
 	}
 }

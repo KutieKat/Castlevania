@@ -19,6 +19,7 @@
     <texture id="crown" path="Resources\\Items\\Crown.png" r="255" g="0" b="255" />
     <texture id="small_heart" path="Resources\\Items\\SmallHeart.png" r="255" g="0" b="255" />
     <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
+    <texture id="big_triple_shot" path="Resources\\Others\\BigTripleShot.png" r="255" g="0" b="255" />
     <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
     <texture id="breakable_brick" path="Resources\\Ground\\BreakableBrick.png" r="255" g="0" b="255" />
@@ -26,6 +27,16 @@
     <texture id="red_bat" path="Resources\\Characters\\Enemies\\RedBat.png" r="255" g="0" b="255" />
     <texture id="spear_knight" path="Resources\\Characters\\Enemies\\SpearKnight.png" r="255" g="0" b="255" />
     <texture id="paused" path="Resources\\Others\\Paused.png" r="255" g="0" b="255" />
+    <texture id="axe" path="Resources\\Items\\Axe.png" r="255" g="0" b="255" />
+    <texture id="rosary" path="Resources\\Items\\Rosary.png" r="255" g="0" b="255" />
+    <texture id="pork_chop" path="Resources\\Items\\PorkChop.png" r="255" g="0" b="255" />
+    <texture id="holy_water" path="Resources\\Items\\HolyWater.png" r="255" g="0" b="255" />
+    <texture id="holy_water_bottle" path="Resources\\Items\\HolyWaterBottle.png" r="255" g="0" b="255" />
+    <texture id="stopwatch" path="Resources\\Items\\Stopwatch.png" r="255" g="0" b="255" />
+    <texture id="bone" path="Resources\\Items\\Bone.png" r="255" g="0" b="255" />
+    <texture id="magic_crystal" path="Resources\\Items\\MagicCrystal.png" r="255" g="0" b="255" />
+    <texture id="fireball" path="Resources\\Items\\Fireball.png" r="255" g="0" b="255" />
+    <texture id="invisibility_potion" path="Resources\\Items\\InvisibilityPotion.png" r="255" g="0" b="255" />
   </textures>
 
   <sprites>
@@ -98,15 +109,8 @@
     <sprite id="two_thousand_1" textureId="two_thousand" left="0" top="0" right="39" bottom="17" />
     <sprite id="two_thousand_2" textureId="two_thousand" left="40" top="0" right="79" bottom="17" />
 
-    <!-- BigCandle -->
-    <sprite id="big_candle_1" textureId="big_candle" left="0" top="0" right="31" bottom="63" />
-    <sprite id="big_candle_2" textureId="big_candle" left="32" top="0" right="63" bottom="63" />
-
     <!-- Brick -->
     <sprite id="brick" textureId="brick" left="0" top="0" right="32" bottom="32" />
-
-    <!-- DoorWall -->
-    <sprite id="door_wall" textureId="door_wall" left="0" top="0" right="128" bottom="163" />
 
     <!-- BigHeart -->
     <sprite id="big_heart" textureId="big_heart" left="0" top="0" right="24" bottom="20" />
@@ -191,7 +195,12 @@
     <sprite id="small_heart" textureId="small_heart" left="0" top="0" right="15" bottom="15" />
 
     <!-- BigDoubleShot -->
-    <sprite id="big_double_shot" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+    <sprite id="big_double_shot_1" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
+    <sprite id="big_double_shot_2" textureId="big_double_shot" left="42" top="0" right="83" bottom="41" />
+
+    <!-- BigTripleShot -->
+    <sprite id="big_triple_shot_1" textureId="big_triple_shot" left="0" top="0" right="41" bottom="41" />
+    <sprite id="big_triple_shot_2" textureId="big_triple_shot" left="42" top="0" right="83" bottom="41" />
     
     <!-- Boomerang -->
     <sprite id="boomerang_1" textureId="boomerang" left="0" top="0" right="27" bottom="27" />
@@ -232,6 +241,46 @@
 
     <!-- Paused -->
     <sprite id="paused" textureId="paused" left="0" top="0" right="246" bottom="40" />
+    
+    <!-- Axe -->
+    <sprite id="axe_1" textureId="axe" left="0" top="0" right="29" bottom="27" />
+    <sprite id="axe_2" textureId="axe" left="30" top="0" right="59" bottom="27" />
+    <sprite id="axe_3" textureId="axe" left="60" top="0" right="89" bottom="27" />
+    <sprite id="axe_4" textureId="axe" left="90" top="0" right="119" bottom="27" />
+    
+    <!-- Rosary -->
+    <sprite id="rosary" textureId="rosary" left="0" top="0" right="31" bottom="31" />
+    
+    <!-- PorkChop -->
+    <sprite id="pork_chop" textureId="pork_chop" left="0" top="0" right="31" bottom="25" />
+    
+    <!-- HolyWater -->
+    <sprite id="holy_water" textureId="holy_water" left="0" top="0" right="31" bottom="31" />
+
+    <!-- HolyWaterBottle -->
+    <sprite id="holy_water_bottle_right" textureId="holy_water_bottle" left="0" top="0" right="31" bottom="25" />
+    <sprite id="holy_water_bottle_left" textureId="holy_water_bottle" left="32" top="0" right="63" bottom="25" />
+    <sprite id="holy_water_bottle_flame_1" textureId="holy_water_bottle" left="64" top="0" right="95" bottom="25" />
+    <sprite id="holy_water_bottle_flame_2" textureId="holy_water_bottle" left="96" top="0" right="127" bottom="25" />
+    <sprite id="holy_water_bottle_flame_3" textureId="holy_water_bottle" left="128" top="0" right="159" bottom="25" />
+    
+    <!-- Stopwatch -->
+    <sprite id="stopwatch" textureId="stopwatch" left="0" top="0" right="29" bottom="31" />
+    
+    <!-- Bone -->
+    <sprite id="bone_1" textureId="bone" left="0" top="0" right="29" bottom="31" />
+    <sprite id="bone_2" textureId="bone" left="30" top="0" right="59" bottom="31" />
+    <sprite id="bone_3" textureId="bone" left="60" top="0" right="89" bottom="31" />
+    
+    <!-- MagicCrystal -->
+    <sprite id="magic_crystal_1" textureId="magic_crystal" left="0" top="0" right="27" bottom="31" />
+    <sprite id="magic_crystal_2" textureId="magic_crystal" left="28" top="0" right="55" bottom="31" />
+    
+    <!-- Fireball -->
+    <sprite id="fireball" textureId="fireball" left="0" top="0" right="9" bottom="11" />
+    
+    <!-- InvisibilityPotion -->
+    <sprite id="invisibility_potion" textureId="invisibility_potion" left="0" top="0" right="29" bottom="36" />
   </sprites>
 
   <animations>
@@ -408,20 +457,9 @@
       <frame spriteId="two_thousand_2" duration="100" />
     </animation>
 
-    <!-- BigCandle -->
-    <animation id="big_candle">
-      <frame spriteId="big_candle_1" duration="100" />
-      <frame spriteId="big_candle_2" duration="100" />
-    </animation>
-
     <!-- Brick -->
     <animation id="brick">
       <frame spriteId="brick" duration="100" />
-    </animation>
-
-    <!-- DoorWall -->
-    <animation id="door_wall">
-      <frame spriteId="door_wall" duration="100" />
     </animation>
 
     <!-- BigHeart -->
@@ -557,8 +595,39 @@
     </animation>
     
     <!-- BigDoubleShot -->
-    <animation id="big_double_shot">
-      <frame spriteId="big_double_shot" duration="100" />
+    <animation id="big_double_shot_blink">
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+      <frame spriteId="big_double_shot_1" duration="100" />
+      <frame spriteId="big_double_shot_2" duration="100" />
+    </animation>
+
+    <animation id="big_double_shot_idle">
+      <frame spriteId="big_double_shot_1" duration="100" />
+    </animation>
+
+    <!-- BigTripleShot -->
+    <animation id="big_triple_shot_blink">
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+      <frame spriteId="big_triple_shot_1" duration="100" />
+      <frame spriteId="big_triple_shot_2" duration="100" />
+    </animation>
+
+    <animation id="big_triple_shot_idle">
+      <frame spriteId="big_triple_shot_1" duration="100" />
     </animation>
 
     <!-- Boomerang -->
@@ -635,6 +704,76 @@
     <animation id="paused">
       <frame spriteId="paused" duration="100" />
     </animation>
+    
+    <!-- Axe -->
+    <animation id="axe_static">
+      <frame spriteId="axe_2" duration="100" />
+    </animation>
+    
+    <animation id="axe_move">
+      <frame spriteId="axe_1" duration="100" />
+      <frame spriteId="axe_2" duration="100" />
+      <frame spriteId="axe_3" duration="100" />
+      <frame spriteId="axe_4" duration="100" />
+    </animation>
+    
+    <!-- Rosary -->
+    <animation id="rosary">
+      <frame spriteId="rosary" duration="100" />
+    </animation>
+    
+    <!-- PorkChop -->
+    <animation id="pork_chop">
+      <frame spriteId="pork_chop" duration="100" />
+    </animation>
+    
+    <!-- HolyWater -->
+    <animation id="holy_water">
+      <frame spriteId="holy_water" duration="100" />
+    </animation>
+    
+    <!-- HolyWaterBottle -->
+    <animation id="holy_water_bottle_right">
+      <frame spriteId="holy_water_bottle_right" duration="100" />
+    </animation>
+
+    <animation id="holy_water_bottle_left">
+      <frame spriteId="holy_water_bottle_left" duration="100" />
+    </animation>
+
+    <animation id="holy_water_bottle_flame">
+      <frame spriteId="holy_water_bottle_flame_1" duration="100" />
+      <frame spriteId="holy_water_bottle_flame_2" duration="100" />
+      <frame spriteId="holy_water_bottle_flame_3" duration="100" />
+    </animation>
+    
+    <!-- Stopwatch -->
+    <animation id="stopwatch">
+      <frame spriteId="stopwatch" duration="100" />
+    </animation>
+    
+    <!-- Bone -->
+    <animation id="bone">
+      <frame spriteId="bone_1" duration="100" />
+      <frame spriteId="bone_2" duration="100" />
+      <frame spriteId="bone_3" duration="100" />
+    </animation>
+    
+    <!-- MagicCrystal -->
+    <animation id="magic_crystal">
+      <frame spriteId="magic_crystal_1" duration="100" />
+      <frame spriteId="magic_crystal_2" duration="100" />
+    </animation>
+    
+    <!-- Fireball -->
+    <animation id="fireball">
+      <frame spriteId="fireball" duration="100" />
+    </animation>
+    
+    <!-- InvisibilityPotion -->
+    <animation id="invisibility_potion">
+      <frame spriteId="invisibility_potion" duration="100" />
+    </animation>
   </animations>
 
   <animationSets>
@@ -684,16 +823,8 @@
       <animationSetItem id="two_thousand" animationId="two_thousand" />
     </animationSet>
 
-    <animationSet id="big_candle">
-      <animationSetItem id="big_candle" animationId="big_candle" />
-    </animationSet>
-
     <animationSet id="brick">
       <animationSetItem id="brick" animationId="brick" />
-    </animationSet>
-
-    <animationSet id="door_wall">
-      <animationSetItem id="door_wall" animationId="door_wall" />
     </animationSet>
 
     <animationSet id="big_heart">
@@ -757,7 +888,13 @@
     </animationSet>
 
     <animationSet id="big_double_shot">
-      <animationSetItem id="big_double_shot" animationId="big_double_shot" />
+      <animationSetItem id="big_double_shot_blink" animationId="big_double_shot_blink" />
+      <animationSetItem id="big_double_shot_idle" animationId="big_double_shot_idle" />
+    </animationSet>
+
+    <animationSet id="big_triple_shot">
+      <animationSetItem id="big_triple_shot_blink" animationId="big_triple_shot_blink" />
+      <animationSetItem id="big_triple_shot_idle" animationId="big_triple_shot_idle" />
     </animationSet>
 
     <animationSet id="boomerang">
@@ -793,6 +930,49 @@
 
     <animationSet id="paused">
       <animationSetItem id="paused" animationId="paused" />
+    </animationSet>
+
+    <animationSet id="axe">
+      <animationSetItem id="axe_static" animationId="axe_static" />
+      <animationSetItem id="axe_move" animationId="axe_move" />
+    </animationSet>
+
+    <animationSet id="rosary">
+      <animationSetItem id="rosary" animationId="rosary" />
+    </animationSet>
+
+    <animationSet id="pork_chop">
+      <animationSetItem id="pork_chop" animationId="pork_chop" />
+    </animationSet>
+  
+    <animationSet id="holy_water">
+      <animationSetItem id="holy_water" animationId="holy_water" />
+    </animationSet>
+
+    <animationSet id="holy_water_bottle">
+      <animationSetItem id="holy_water_bottle_right" animationId="holy_water_bottle_right" />
+      <animationSetItem id="holy_water_bottle_left" animationId="holy_water_bottle_left" />
+      <animationSetItem id="holy_water_bottle_flame" animationId="holy_water_bottle_flame" />
+    </animationSet>
+
+    <animationSet id="stopwatch">
+      <animationSetItem id="stopwatch" animationId="stopwatch" />
+    </animationSet>
+
+    <animationSet id="bone">
+      <animationSetItem id="bone" animationId="bone" />
+    </animationSet>
+
+    <animationSet id="magic_crystal">
+      <animationSetItem id="magic_crystal" animationId="magic_crystal" />
+    </animationSet>
+
+    <animationSet id="fireball">
+      <animationSetItem id="fireball" animationId="fireball" />
+    </animationSet>
+
+    <animationSet id="invisibility_potion">
+      <animationSetItem id="invisibility_potiono" animationId="invisibility_potion" />
     </animationSet>
   </animationSets>
 
@@ -874,7 +1054,7 @@
     <object id="red_bat_1" type="red_bat" animationSetId="red_bat" x="75" y="130" endingEffect="flash" hiddenItemId="big_heart_3" />
     
     <object id="simon" type="simon" animationSetId="simon" x="90" y="250" reloadX="220" reloadY="83" reloadState="on_stair" reloadStairDirectionX="left" reloadStairDirectionY="down" />
-
+    
     <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="154" y="228" />
     <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="238" y="110" playerMustBeOnStair="true" sceneDirection="right" />
     

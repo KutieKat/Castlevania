@@ -246,6 +246,8 @@ void CBlackboard::UpdateWhipPowerType()
 			SAFE_DELETE(whipPower);
 		}
 
+		currentWhipPower = playerData->GetWhipPower();
+
 		switch (game->GetPlayerData()->GetWhipPower())
 		{
 		case WHIP_DOUBLE_POWER:

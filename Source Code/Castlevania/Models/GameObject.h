@@ -102,10 +102,9 @@ public:
 	CGameObject* GetHiddenItem();
 
 	void SetEndingEffect(CGameObject* effect);
-	void SetElevation(int elevation)
-	{
-		this->elevation = elevation;
-	}
+	void SetElevation(int elevation);
+
+	void Pause();
 
 	bool Over();
 

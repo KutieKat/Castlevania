@@ -2,6 +2,8 @@
 #include "../../Utilities/Debug.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/Brick.h"
+#include "../Misc/BottomStair.h"
+#include "../../Game.h"
 
 WBoomerang::WBoomerang(CSimon* simon)
 {
@@ -12,7 +14,6 @@ WBoomerang::WBoomerang(CSimon* simon)
 	this->vx = simon->directionX == Direction::Right ? BOOMERANG_MOVE_SPEED : -BOOMERANG_MOVE_SPEED;
 	this->maxRight = simon->x + BOOMERANG_MOVABLE_AREA_WIDTH;
 	this->maxLeft = simon->x - BOOMERANG_MOVABLE_AREA_WIDTH;
-	this->hidden = false;
 }
 
 void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -21,8 +22,7 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if ((directionX == Direction::Right && x < simon->x + SIMON_BBOX_WIDTH) || (directionX == Direction::Left && x > simon->x))
 	{
-		hidden = true;
-		vx = 0;
+		removable = true;
 	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -65,6 +65,11 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				vx = -vx;
 			}
+			else if (dynamic_cast<CBottomStair*>(e->obj))
+			{
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
+			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				vx = -vx;
@@ -84,19 +89,13 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void WBoomerang::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
-	if (!hidden)
-	{
-		l = x;
-		t = y;
-		r = l + BOOMERANG_BBOX_WIDTH;
-		b = t + BOOMERANG_BBOX_HEIGHT;
-	}
+	l = x;
+	t = y;
+	r = l + BOOMERANG_BBOX_WIDTH;
+	b = t + BOOMERANG_BBOX_HEIGHT;
 }
 
 void WBoomerang::Render()
 {
-	if (!hidden)
-	{
-		animationSet->at(BOOMERANG_ANI_MOVE)->Render(x, y);
-	}
+	animationSet->at(BOOMERANG_ANI_MOVE)->Render(x, y);
 }

@@ -384,7 +384,6 @@ CGameObject* CPlayScene::FindObject(string id)
 CPlayScene::CPlayScene(string id, string filePath, string stage, string previousSceneId, string nextSceneId, string requiredSceneId) : CScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId)
 {
 	game = CGame::GetInstance();
-	paused = false;
 	keyHandler = new CPlaySceneKeyHandler(this);
 }
 
@@ -400,8 +399,30 @@ bool CPlayScene::Reload()
 
 void CPlayScene::Update(DWORD dt)
 {
-	if (paused)
+	if (softPauseTime != -1 && GetTickCount() > softPauseTime)
 	{
+		ResumeSoftPause();
+		softPauseTime = -1;
+	}
+
+	if (softPaused)
+	{
+		for (int i = 0; i < objects.size(); i++)
+		{
+			if (dynamic_cast<CEnemy*>(objects[i]))
+			{
+				objects[i]->Pause();
+			}
+		}
+	}
+
+	if (hardPaused)
+	{
+		for (int i = 0; i < objects.size(); i++)
+		{
+			objects[i]->Pause();
+		}
+
 		return;
 	}
 
@@ -522,7 +543,7 @@ void CPlayScene::Render()
 	}
 
 	// PauseBadge
-	if (paused && pauseBadge)
+	if (hardPaused && pauseBadge)
 	{
 		pauseBadge->Render();
 	}
@@ -563,7 +584,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 	CPlayerData* playerData = game->GetPlayerData();
 
-	if (simon != nullptr && !scene->Paused())
+	if (simon != nullptr && !scene->HardPaused())
 	{
 		if (simon->GetState() == SIMON_STATE_STAND_ON_STAIR_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
@@ -690,7 +711,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 
 	if (simon != nullptr)
 	{
-		if (!scene->Paused())
+		if (!scene->HardPaused())
 		{
 			switch (keyCode)
 			{
@@ -731,39 +752,119 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				break;
 
 			case DIK_1:
-				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
+				if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_2)
+				{
+					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
+				}
+				else
+				{
+					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_2);
+				}
+
 				break;
 
 			case DIK_2:
-				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_2);
+				if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_3)
+				{
+					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
+				}
+				else
+				{
+					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
+				}
 				break;
 
 			case DIK_3:
-				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
+				if (game->GetPlayerData()->GetWhipPower() == WHIP_DOUBLE_POWER)
+				{
+					game->GetPlayerData()->SetWhipPower(WHIP_NORMAL_POWER);
+				}
+				else
+				{
+					game->GetPlayerData()->SetWhipPower(WHIP_DOUBLE_POWER);
+				}
 				break;
 
 			case DIK_4:
-				game->GetPlayerData()->SetWhipPower(WHIP_NORMAL_POWER);
+				if (game->GetPlayerData()->GetWhipPower() == WHIP_TRIPLE_POWER)
+				{
+					game->GetPlayerData()->SetWhipPower(WHIP_NORMAL_POWER);
+				}
+				else
+				{
+					game->GetPlayerData()->SetWhipPower(WHIP_TRIPLE_POWER);
+				}
 				break;
 
 			case DIK_5:
-				game->GetPlayerData()->SetWhipPower(WHIP_DOUBLE_POWER);
+				if (game->GetPlayerData()->GetSubWeaponType() == "dagger")
+				{
+					game->GetPlayerData()->SetSubWeaponType("");
+				}
+				else
+				{
+					game->GetPlayerData()->SetSubWeaponType("dagger");
+				}
 				break;
 
 			case DIK_6:
-				game->GetPlayerData()->SetWhipPower(WHIP_TRIPLE_POWER);
+				if (game->GetPlayerData()->GetSubWeaponType() == "boomerang")
+				{
+					game->GetPlayerData()->SetSubWeaponType("");
+				}
+				else
+				{
+					game->GetPlayerData()->SetSubWeaponType("boomerang");
+				}
 				break;
 
 			case DIK_7:
-				game->GetPlayerData()->SetSubWeaponType("dagger");
+				if (game->GetPlayerData()->GetSubWeaponType() == "axe")
+				{
+					game->GetPlayerData()->SetSubWeaponType("");
+				}
+				else
+				{
+					game->GetPlayerData()->SetSubWeaponType("axe");
+				}
 				break;
 
 			case DIK_8:
-				game->GetPlayerData()->SetSubWeaponType("boomerang");
+				if (game->GetPlayerData()->GetSubWeaponType() == "holy_water")
+				{
+					game->GetPlayerData()->SetSubWeaponType("");
+				}
+				else
+				{
+					game->GetPlayerData()->SetSubWeaponType("holy_water");
+				}
+				break;
+
+			case DIK_9:
+				if (game->GetPlayerData()->GetSubWeaponType() == "stopwatch")
+				{
+					game->GetPlayerData()->SetSubWeaponType("");
+				}
+				else
+				{
+					game->GetPlayerData()->SetSubWeaponType("stopwatch");
+				}
+				break;
+
+			case DIK_0:
+				game->GetPlayerData()->ResetWeapons();
+				break;
+
+			case DIK_BACKSPACE:
+				game->GetPlayerData()->Reset();
 				break;
 
 			case DIK_H:
 				game->GetPlayerData()->AddHealthVolumes(HEALTH_BAR_MAX_VOLUMES);
+				break;
+
+			case DIK_I:
+				simon->fullyInvisible = !simon->fullyInvisible;
 				break;
 
 			case DIK_L:
@@ -775,15 +876,8 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				break;
 
 			case DIK_W:
-				if (game->GetSceneManager()->GetCurrentScene()->Paused())
-				{
-					game->GetSceneManager()->GetCurrentScene()->Resume();
-				}
-				else
-				{
-					game->GetSceneManager()->GetCurrentScene()->Pause();
-				}
-
+				game->SetPauseStartingTime(GetTickCount());
+				game->GetSceneManager()->GetCurrentScene()->HardPause();
 				break;
 
 			case DIK_Z:
@@ -891,15 +985,8 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			switch (keyCode)
 			{
 			case DIK_W:
-				if (game->GetSceneManager()->GetCurrentScene()->Paused())
-				{
-					game->GetSceneManager()->GetCurrentScene()->Resume();
-				}
-				else
-				{
-					game->GetSceneManager()->GetCurrentScene()->Pause();
-				}
-
+				game->SetPauseEndingTime(GetTickCount());
+				game->GetSceneManager()->GetCurrentScene()->ResumeHardPause();
 				break;
 
 			default:
@@ -915,7 +1002,7 @@ void CPlaySceneKeyHandler::OnKeyUp(int keyCode)
 	CScene* scene = game->GetSceneManager()->GetCurrentScene();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 
-	if (simon != nullptr && !scene->Paused())
+	if (simon != nullptr && !scene->HardPaused())
 	{
 		switch (keyCode)
 		{

@@ -19,7 +19,8 @@ public:
 
 	int GetAnimationToRender();
 
-	bool invisible;
+	bool partiallyInvisible;
+	bool fullyInvisible;
 	bool sitting;
 	bool touchingGround;
 	bool up;

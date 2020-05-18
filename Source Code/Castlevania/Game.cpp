@@ -114,6 +114,28 @@ bool CGame::HaveCollision(CGameObject* object1, CGameObject* object2)
 	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
 }
 
+void CGame::SetPauseStartingTime(DWORD time)
+{
+	pauseStartingTime = time;
+}
+
+void CGame::SetPauseEndingTime(DWORD time)
+{
+	pauseEndingTime = time;
+}
+
+DWORD CGame::GetPauseDeltaTime()
+{
+	DWORD deltaTime = pauseEndingTime - pauseStartingTime;
+
+	if (pauseEndingTime != -1 && pauseStartingTime != -1 && deltaTime < 0)
+	{
+		return 0;
+	}
+
+	return deltaTime;
+}
+
 CInputManager* CGame::GetInputManager()
 {
 	return this->inputManager;

@@ -9,6 +9,7 @@ public:
 	static CPlayerData* GetInstance();
 
 	void Init();
+	void ResetWeapons();
 	void Reset();
 
 	void AddScore(int score);
@@ -22,8 +23,8 @@ public:
 	void DecreaseLives();
 	int GetLives();
 
-	void AddHealthVolumes(int volumes);
-	void DecreaseHealthVolumes(int volumes);
+	void AddHealthVolumes(int damages);
+	void DecreaseHealthVolumes(int damages = SIMON_DEFAULT_DAMAGES);
 	int GetHealthVolumes();
 
 	void SetSubWeaponType(string type);

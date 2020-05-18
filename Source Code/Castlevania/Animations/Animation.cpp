@@ -74,6 +74,14 @@ void CAnimation::SetStartTime(DWORD start)
 	endTime = start + animationTime;
 }
 
+void CAnimation::Pause()
+{
+	DWORD now = GetTickCount();
+
+	currentFrame = currentFrame;
+	lastFrameTime = now;
+}
+
 bool CAnimation::Over()
 {
 	return GetTickCount() > endTime;

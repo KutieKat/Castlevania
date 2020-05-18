@@ -1,4 +1,5 @@
 #include "SmallCandle.h"
+#include "../../Game.h"
 
 CSmallCandle::CSmallCandle()
 {

@@ -17,6 +17,7 @@ Control(s) | Action  |
 `N` | Switches to next scene
 `P` | Switches to previous scene
 `H` | Resets Simon's health
+`I` | Toggles Simon's invisibility
 `L` | Adds 10 more lives
 `R` | Adds 100 more hearts
 `S` | Adds 1000 more score
@@ -27,14 +28,17 @@ Control(s) | Action  |
 `F5` | Resets current scene
 `F6` | Switches to scene 2.1
 `F7` | Switches to scene 2.2
-`1` | Uses whip level 1
-`2` | Uses whip level 2
-`3` | Uses whip level 3
-`4` | Uses normal powered whip
-`5` | Uses double powered whip
-`6` | Uses triple powered whip
-`7` | Uses dagger as sub weapon
-`8` | Uses boomerang as sub weapon
+`1` | Toggles whip level 2
+`2` | Toggles whip level 3
+`3` | Toggles double powered whip
+`4` | Toggles triple powered whip
+`5` | Toggles dagger as sub weapon
+`6` | Toggles boomerang as sub weapon
+`7` | Toggles axe as sub weapon
+`8` | Toggles holy water as sub weapon
+`9` | Toggles stopwatch as sub weapon
+`0` | Resets sub weapon and whip power
+`Backspace` | Resets player's data
 
 ## Programming Language
 - C++
@@ -43,6 +47,7 @@ Control(s) | Action  |
 ## Tools
 - Microsoft Visual Studio Enterprise 2017
 - MapWin
+- Paint
 
 ## Libraries
 - [DirectX 9.0 Software Development Kit](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
@@ -51,5 +56,6 @@ Control(s) | Action  |
 
 ## References
 - [Castlevania](https://strategywiki.org/wiki/Castlevania)
+- [The Spriters Resource - NES - Castlevania](https://www.spriters-resource.com/nes/cv)
 - [gamedev-intro-tutorials](https://github.com/dungdna2000)
 - [Game Programming Patterns - Spartial Partition](https://gameprogrammingpatterns.com/spatial-partition.html)

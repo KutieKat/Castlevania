@@ -13,6 +13,7 @@ public:
 	void Add(string spriteId, DWORD time = 0);
 	void Render(float x, float y, int alpha = 255);
 	void SetStartTime(DWORD start);
+	void Pause();
 	void Reset();
 
 	bool Over();

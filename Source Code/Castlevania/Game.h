@@ -29,11 +29,19 @@ class CGame
 	CPlayerData* playerData;
 	CSceneManager* sceneManager;
 
+	DWORD pauseStartingTime = -1;
+	DWORD pauseEndingTime = -1;
+
 public:
 	void Init(HWND hWnd);
 	void SetKeyHandler(IKeyEventHandler* keyHandler);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
 	bool HaveCollision(CGameObject* object1, CGameObject* object2);
+
+	void SetPauseStartingTime(DWORD time);
+	void SetPauseEndingTime(DWORD time);
+
+	DWORD GetPauseDeltaTime();
 
 	CInputManager* GetInputManager();
 

@@ -1,6 +1,7 @@
 #include "SpearKnight.h"
 #include "../../../Game.h"
 #include "../../Misc/BottomStair.h"
+#include "../../Weapons/HolyWaterBottle.h"
 
 CSpearKnight::CSpearKnight()
 {
@@ -33,13 +34,21 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vy += SPEAR_KNIGHT_GRAVITY * dt;
 
-	if (delayTimeout != -1 && GetTickCount() > delayTimeout)
+	if (state == SPEAR_KNIGHT_STATE_DELAY && delayTimeout != -1 && GetTickCount() > delayTimeout)
 	{
-		delayTimeout = -1;
-		attacks = SPEAR_KNIGHT_ATTACKS;
+		if (GetTickCount() > delayTimeout + ENEMY_DELAY_PLUS_TIME)
+		{
+			attacks = SPEAR_KNIGHT_ATTACKS;
+			delayTimeout = -1;
+		}
 
 		SetState(SPEAR_KNIGHT_STATE_WALK);
 	}
+
+	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
+
+	if (hiddenItem && !softPaused) hiddenItem->SetPosition(x, y - SPEAR_KNIGHT_BBOX_HEIGHT * 2);
+	if (softPaused) return;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -85,6 +94,7 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else
 			{
+				if (e->nx != 0) x += dx;
 				if (e->ny != 0) vy = 0;
 			}
 		}
@@ -114,10 +124,13 @@ void CSpearKnight::Render()
 
 void CSpearKnight::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
-	l = x;
-	t = y;
-	r = l + SPEAR_KNIGHT_BBOX_WIDTH;
-	b = t + SPEAR_KNIGHT_BBOX_HEIGHT;
+	if (!showingEndingEffect)
+	{
+		l = x;
+		t = y;
+		r = l + SPEAR_KNIGHT_BBOX_WIDTH;
+		b = t + SPEAR_KNIGHT_BBOX_HEIGHT;
+	}
 }
 
 void CSpearKnight::TakeDamage(int damages)

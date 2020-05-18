@@ -22,8 +22,10 @@ protected:
 	string requiredSceneId;
 
 	DWORD switchSceneTime;
+	DWORD softPauseTime;
 
-	bool paused;
+	bool softPaused;
+	bool hardPaused;
 
 public:
 	CScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "", string requiredSceneId = "");
@@ -36,10 +38,14 @@ public:
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 
-	void Pause();
-	void Resume();
+	void SoftPause(DWORD duration = -1);
+	void HardPause();
 
-	bool Paused();
+	void ResumeSoftPause();
+	void ResumeHardPause();
+
+	bool SoftPaused();
+	bool HardPaused();
 
 	string GetId();
 	string GetStage();

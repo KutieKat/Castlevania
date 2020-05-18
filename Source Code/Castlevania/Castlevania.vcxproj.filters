@@ -363,6 +363,42 @@
     <ClCompile Include="Models\Misc\BigTripleShot.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Items\Rosary.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\PorkChop.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\Axe.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Weapons\WAxe.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Weapons\HolyWaterBottle.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\HolyWater.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\Stopwatch.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Weapons\WStopwatch.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Weapons\Bone.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\MagicCrystal.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Weapons\Fireball.cpp">
+      <Filter>Source Files\Models\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Items\InvisibilityPotion.cpp">
+      <Filter>Source Files\Models\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -607,6 +643,42 @@
     </ClInclude>
     <ClInclude Include="Models\Misc\BigTripleShot.h">
       <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Axe.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\PorkChop.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Rosary.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\WAxe.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\HolyWaterBottle.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\HolyWater.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\Stopwatch.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\WStopwatch.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\Bone.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\MagicCrystal.h">
+      <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Weapons\Fireball.h">
+      <Filter>Header Files\Models\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Items\InvisibilityPotion.h">
+      <Filter>Header Files\Models\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

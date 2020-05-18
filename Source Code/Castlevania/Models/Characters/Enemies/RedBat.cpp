@@ -13,6 +13,7 @@ CRedBat::CRedBat()
 void CRedBat::SetState(int state)
 {
 	CGameObject::SetState(state);
+	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
 	switch (state)
 	{
@@ -29,6 +30,9 @@ void CRedBat::SetState(int state)
 void CRedBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
+
+	if (softPaused) return;
 
 	if (state == RED_BAT_STATE_MOVE)
 	{
@@ -86,5 +90,9 @@ void CRedBat::TakeDamage(int damages)
 
 void CRedBat::OnPlayerEnterArea()
 {
+	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
+	
+	if (softPaused) return;
+
 	SetState(RED_BAT_STATE_MOVE);
 }

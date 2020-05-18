@@ -19,6 +19,13 @@
 #include "Items/DoubleShot.h"
 #include "Items/TripleShot.h"
 #include "Items/Boomerang.h"
+#include "Items/PorkChop.h"
+#include "Items/Rosary.h"
+#include "Items/Axe.h"
+#include "Items/HolyWater.h"
+#include "Items/Stopwatch.h"
+#include "Items/MagicCrystal.h"
+#include "Items/InvisibilityPotion.h"
 
 #include "Effects/Flash.h"
 #include "Effects/OneHundred.h"

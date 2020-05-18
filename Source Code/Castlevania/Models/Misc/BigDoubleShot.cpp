@@ -1,19 +1,24 @@
 #include "BigDoubleShot.h"
+#include "../../Utilities/Debug.h"
 
 CBigDoubleShot::CBigDoubleShot()
 {
 	SetAnimationSet("big_double_shot");
+	animationSet->at(0)->SetStartTime(GetTickCount());
 }
 
 void CBigDoubleShot::Render()
 {
-	animationSet->at(0)->Render(x, y);
+	if (animationSet->at(0)->Over())
+	{
+		animationSet->at(1)->Render(x, y);
+	}
+	else
+	{
+		animationSet->at(0)->Render(x, y);
+	}
 }
 
 void CBigDoubleShot::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = left + BIG_DOUBLE_SHOT_BBOX_WIDTH;
-	bottom = top + BIG_DOUBLE_SHOT_BBOX_HEIGHT;
 }

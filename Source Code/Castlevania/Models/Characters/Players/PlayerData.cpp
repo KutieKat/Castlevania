@@ -17,6 +17,12 @@ void CPlayerData::Init()
 	Reset();
 }
 
+void CPlayerData::ResetWeapons()
+{
+	whipLevel = WHIP_LEVEL_1;
+	subWeaponType = "";
+}
+
 void CPlayerData::Reset()
 {
 	score = SIMON_DEFAULT_SCORE;
@@ -68,14 +74,14 @@ int CPlayerData::GetLives()
 	return lives;
 }
 
-void CPlayerData::AddHealthVolumes(int volumes)
+void CPlayerData::AddHealthVolumes(int damages)
 {
-	healthVolumes += volumes;
+	healthVolumes += damages;
 }
 
-void CPlayerData::DecreaseHealthVolumes(int volumes)
+void CPlayerData::DecreaseHealthVolumes(int damages)
 {
-	healthVolumes -= volumes;
+	healthVolumes -= damages;
 }
 
 int CPlayerData::GetHealthVolumes()

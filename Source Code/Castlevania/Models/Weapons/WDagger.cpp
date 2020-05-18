@@ -1,6 +1,9 @@
 #include "WDagger.h"
 #include "../../Game.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../Misc/Brick.h"
+#include "../Misc/Ground.h"
+#include "../Misc/BottomStair.h"
 
 WDagger::WDagger()
 {
@@ -50,8 +53,16 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				auto enemy = dynamic_cast<CEnemy*>(e->obj);
 
 				enemy->TakeDamage();
-
+				removable = true;
+			}
+			else if (dynamic_cast<CBrick*>(e->obj) || dynamic_cast<CGround*>(e->obj))
+			{
+				removable = true;
+			}
+			else if (dynamic_cast<CBottomStair*>(e->obj))
+			{
 				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else
 			{

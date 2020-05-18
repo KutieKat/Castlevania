@@ -130,7 +130,7 @@ int Run()
 		{
 			frameStart = now;
 
-			if (!game->GetSceneManager()->GetCurrentScene()->Paused())
+			if (!game->GetSceneManager()->GetCurrentScene()->HardPaused())
 			{
 				game->GetTimer()->Tick();
 			}

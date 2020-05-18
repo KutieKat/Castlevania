@@ -49,6 +49,14 @@ void CGameObject::GetSpeed(float & vx, float & vy)
 	vy = this->vy;
 }
 
+void CGameObject::Pause()
+{
+	for (int i = 0; i < animationSet->size(); i++)
+	{
+		animationSet->at(i)->Pause();
+	}
+}
+
 void CGameObject::SetDirectionX(Direction direction)
 {
 	this->directionX = direction;
@@ -75,6 +83,11 @@ void CGameObject::SetEndingEffect(CGameObject* effect)
 	endingEffect->visibility = Visibility::Hidden;
 }
 
+void CGameObject::SetElevation(int elevation)
+{
+	this->elevation = elevation;
+}
+
 bool CGameObject::Over()
 {
 	return disappearingTime != -1 && GetTickCount() > disappearingTime;
@@ -87,7 +100,7 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	dx = vx * dt;
 	dy = vy * dt;
 
-	if (!isEffect && disappearingTime != -1 && GetTickCount() > disappearingTime)
+	if (!isEffect && disappearingTime != -1 && GetTickCount() > CGame::GetInstance()->GetPauseDeltaTime() + disappearingTime)
 	{
 		disappearingTime = -1;
 		removable = true;
@@ -136,7 +149,6 @@ void CGameObject::Disappear()
 	if (endingEffect)
 	{
 		showingEndingEffect = true;
-		//showingEffect = false;
 
 		endingEffect->SetVisibility(Visibility::Visible);
 		endingEffect->SetPosition(x, y);
@@ -153,7 +165,6 @@ void CGameObject::ShowEffect()
 	if (endingEffect)
 	{
 		showingEffect = true;
-		//showingEndingEffect = false;
 
 		endingEffect->SetVisibility(Visibility::Visible);
 		endingEffect->SetPosition(x, y);

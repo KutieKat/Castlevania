@@ -1,5 +1,6 @@
 #include "WhiteMoneyBag.h"
 #include "../Misc/BottomStair.h"
+#include "../Weapons/HolyWaterBottle.h"
 
 CWhiteMoneyBag::CWhiteMoneyBag()
 {
@@ -53,6 +54,10 @@ void CWhiteMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) y += dy;
 			}
 			else if (e->obj->isItem)
+			{
+				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CHolyWaterBottle*>(e->obj))
 			{
 				if (e->ny != 0) y += dy;
 			}
