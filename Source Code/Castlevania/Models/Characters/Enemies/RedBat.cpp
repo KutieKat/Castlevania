@@ -5,15 +5,14 @@ CRedBat::CRedBat()
 {
 	mustInArea = true;
 	areaRadius = RED_BAT_AREA_RADIUS;
-	SetAnimationSet("red_bat");
 
+	SetAnimationSet("red_bat");
 	SetState(RED_BAT_STATE_STATIC);
 }
 
 void CRedBat::SetState(int state)
 {
 	CGameObject::SetState(state);
-	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
 	switch (state)
 	{

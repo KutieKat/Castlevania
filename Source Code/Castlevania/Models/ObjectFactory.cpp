@@ -1,6 +1,6 @@
 #include "ObjectFactory.h"
 
-CGameObject* CObjectFactory::Construct(string type, float x, float y)
+CGameObject* CObjectFactory::Construct(string type, float x, float y, CSimon* simon)
 {
 	if (type == "background")
 	{
@@ -173,6 +173,22 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y)
 	else if (type == "invisibility_potion")
 	{
 		return new CInvisibilityPotion();
+	}
+	else if (type == "ghost")
+	{
+		return new CGhost(simon);
+	}
+	else if (type == "fleamen")
+	{
+		return new CFleamen(simon);
+	}
+	else if (type == "white_skeleton")
+	{
+		return new CWhiteSkeleton(simon);
+	}
+	else if (type == "raven")
+	{
+		return new CRaven(simon);
 	}
 	else
 	{

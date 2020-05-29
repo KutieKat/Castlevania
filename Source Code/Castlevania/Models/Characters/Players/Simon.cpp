@@ -1,6 +1,7 @@
 ﻿#include "Simon.h"
 #include "../../../Game.h"
 #include "../../Characters/Enemies/RedBat.h"
+#include "../../Characters/Enemies/Fleamen.h"
 #include "../../Effects/Flash.h"
 #include "../../Misc/Ground.h"
 #include "../../Misc/Brick.h"
@@ -10,6 +11,7 @@
 #include "../../Misc/PreviousScene.h"
 #include "../../Misc/MovingBar.h"
 #include "../../Misc/BreakableBrick.h"
+#include "../../Misc/EnemySpawnerArea.h"
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
@@ -191,6 +193,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (e->ny > 0) y += dy;
 				}
+			}
+			else if (dynamic_cast<CEnemy*>(e->obj))
+			{
+				y -= min_ty * dy + ny * 0.4f;
+
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else if (dynamic_cast<CMovingBar*>(e->obj))
 			{
@@ -756,6 +765,33 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				{
 					countAtBottom++;
 				}
+				else if (dynamic_cast<CEnemySpawnerArea*>(object))
+				{
+					auto area = dynamic_cast<CEnemySpawnerArea*>(object);
+
+					area->SpawnEnemy();
+				}
+				else if (dynamic_cast<WFireball*>(object) || dynamic_cast<WBone*>(object))
+				{
+					if (!partiallyInvisible && !fullyInvisible)
+					{
+						partiallyInvisible = true;
+
+						if (invisibleTimeout == -1)
+						{
+							invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+						}
+
+						if (!onStair)
+						{
+							SetState(SIMON_STATE_DEFLECT);
+						}
+					}
+
+					CGame::GetInstance()->GetPlayerData()->DecreaseHealthVolumes();
+
+					object->removable = true;
+				}
 			}
 			else if (dynamic_cast<CEnemy*>(object))
 			{
@@ -844,18 +880,19 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
 		}
 	}
-	else if (dynamic_cast<WBone*>(item))
-	{
-		playerData->DecreaseHealthVolumes();
-	}
-	else if (dynamic_cast<WFireball*>(item))
-	{
-		playerData->DecreaseHealthVolumes();
-	}
-	else if (dynamic_cast<CMagicCrystal*>(item))
-	{
-		// Ends game
-	}
+	//else if (dynamic_cast<WBone*>(item))
+	//{
+	//	playerData->DecreaseHealthVolumes();
+	//}
+	//else if (dynamic_cast<WFireball*>(item))
+	//{
+	//	CDebug::Info("va cham roi ne!");
+	//	//playerData->DecreaseHealthVolumes();
+	//}
+	//else if (dynamic_cast<CMagicCrystal*>(item))
+	//{
+	//	// Ends game
+	//}
 
 	item->Disappear();
 }

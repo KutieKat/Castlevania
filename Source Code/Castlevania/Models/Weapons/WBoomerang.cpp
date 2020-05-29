@@ -41,6 +41,11 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			vx = -vx;
 		}
+
+		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
+		{
+			removable = true;
+		}
 	}
 	else
 	{

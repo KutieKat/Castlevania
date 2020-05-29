@@ -5,6 +5,10 @@
 
 #include "Characters/Enemies/RedBat.h"
 #include "Characters/Enemies/SpearKnight.h"
+#include "Characters/Enemies/Ghost.h"
+#include "Characters/Enemies/Fleamen.h"
+#include "Characters/Enemies/WhiteSkeleton.h"
+#include "Characters/Enemies/Raven.h"
 
 #include "Items/BigHeart.h"
 #include "Items/MoneyBag.h"
@@ -55,6 +59,6 @@ using namespace std;
 class CObjectFactory
 {
 public:
-	static CGameObject* Construct(string type, float x = 0, float y = 0);
+	static CGameObject* Construct(string type, float x = 0, float y = 0, CSimon* simon = nullptr);
 };
 

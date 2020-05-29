@@ -28,7 +28,7 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x > CGame::GetInstance()->GetCamera()->GetRight())
+		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
 			removable = true;
 		}

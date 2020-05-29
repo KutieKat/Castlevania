@@ -9,5 +9,12 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
 	void GetBoundingBox(float &l, float &t, float &r, float &b);
 	void Render();
+	void SetTarget(float x, float y);
+
+protected:
+	float targetX;
+	float targetY;
+
+	float rotation;
 };
 

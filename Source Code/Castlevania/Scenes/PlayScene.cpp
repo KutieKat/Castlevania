@@ -2,6 +2,7 @@
 #include "../Models/ObjectFactory.h"
 #include "../Models/Misc/TopStair.h"
 #include "../Models/Misc/BottomStair.h"
+#include "../Models/Misc/EnemySpawnerArea.h"
 #include "../Utilities/Debug.h"
 #include "../Utilities/SafeDelete.h"
 
@@ -290,9 +291,22 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 
 			unit = new CUnit(grid, scene, x, y);
 		}
+		else if (type == "enemy_spawner_area")
+		{
+			string enemyType = object->Attribute("enemyType");
+			string spawningPosition = object->Attribute("spawningPosition");
+
+			CEnemySpawnerArea* area = new CEnemySpawnerArea(player);
+			area->SetId(id);
+			area->SetPosition(x, y);
+			area->SetEnemyType(enemyType);
+			area->SetSpawningPosition(spawningPosition);
+
+			unit = new CUnit(grid, area, x, y);
+		}
 		else
 		{
-			gameObject = CObjectFactory::Construct(type, x, y);
+			gameObject = CObjectFactory::Construct(type, x, y, player);
 		}
 
 		if (gameObject)
@@ -881,6 +895,16 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				break;
 
 			case DIK_Z:
+				if (simon->GetState() == SIMON_STATE_STAND_ON_STAIR_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+				{
+					return;
+				}
+
+				if (simon->GetState() == SIMON_STATE_STAND_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+				{
+					return;
+				}
+
 				if (simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 				{
 					return;

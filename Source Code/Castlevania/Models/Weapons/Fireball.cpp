@@ -14,7 +14,10 @@ void WFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	vy += FIREBALL_GRAVITY * dt;
+	rotation = atan2(targetY - y, targetX - x);
+
+	dx = cos(rotation) * 0.1f * dt;
+	dy = sin(rotation) * 0.1f * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -43,25 +46,28 @@ void WFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CEnemy*>(e->obj))
+			if (dynamic_cast<CGround*>(e->obj))
 			{
-				auto enemy = dynamic_cast<CEnemy*>(e->obj);
+				removable = true;
+			}
+			else if (dynamic_cast<CBrick*>(e->obj))
+			{
+				auto brick = dynamic_cast<CBrick*>(e->obj);
 
-				enemy->TakeDamage();
-				removable = true;
-			}
-			else if (dynamic_cast<CBrick*>(e->obj) || dynamic_cast<CGround*>(e->obj))
-			{
-				removable = true;
-			}
-			else if (dynamic_cast<CBottomStair*>(e->obj))
-			{
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
+				if (brick->isGround)
+				{
+					removable = true;
+				}
+				else
+				{
+					if (e->nx != 0) x += dx;
+					if (e->ny != 0) y += dy;
+				}
 			}
 			else
 			{
 				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 		}
 	}
@@ -83,4 +89,10 @@ void WFireball::GetBoundingBox(float& left, float& top, float& right, float& bot
 void WFireball::Render()
 {
 	animationSet->at(0)->Render(x, y);
+}
+
+void WFireball::SetTarget(float x, float y)
+{
+	targetX = x;
+	targetY = y;
 }

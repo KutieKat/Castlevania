@@ -31,7 +31,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x > CGame::GetInstance()->GetCamera()->GetRight())
+		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
 			removable = true;
 		}
@@ -70,6 +70,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else
 			{
 				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 		}
 	}

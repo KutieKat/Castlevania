@@ -8,14 +8,15 @@
 WBone::WBone()
 {
 	SetAnimationSet("bone");
-	vy = -BONE_MOVE_SPEED;
+
+	vy = -BONE_MOVE_SPEED_Y;
 }
 
 void WBone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	vx = directionX == Direction::Right ? BONE_MOVE_SPEED : -BONE_MOVE_SPEED;
+	vx = directionX == Direction::Right ? BONE_MOVE_SPEED_X : -BONE_MOVE_SPEED_X;
 
 	vy += BONE_GRAVITY * dt;
 
@@ -51,25 +52,28 @@ void WBone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CEnemy*>(e->obj))
+			if (dynamic_cast<CGround*>(e->obj))
 			{
-				auto enemy = dynamic_cast<CEnemy*>(e->obj);
+				removable = true;
+			}
+			else if (dynamic_cast<CBrick*>(e->obj))
+			{
+				auto brick = dynamic_cast<CBrick*>(e->obj);
 
-				enemy->TakeDamage();
-				removable = true;
-			}
-			else if (dynamic_cast<CBrick*>(e->obj) || dynamic_cast<CGround*>(e->obj))
-			{
-				removable = true;
-			}
-			else if (dynamic_cast<CBottomStair*>(e->obj))
-			{
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
+				if (brick->isGround)
+				{
+					removable = true;
+				}
+				else
+				{
+					if (e->nx != 0) x += dx;
+					if (e->ny != 0) y += dy;
+				}
 			}
 			else
 			{
 				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 		}
 	}

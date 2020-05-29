@@ -399,6 +399,21 @@
     <ClCompile Include="Models\Items\InvisibilityPotion.cpp">
       <Filter>Source Files\Models\Items</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Misc\EnemySpawnerArea.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\Ghost.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\Fleamen.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\WhiteSkeleton.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\Raven.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -679,6 +694,21 @@
     </ClInclude>
     <ClInclude Include="Models\Items\InvisibilityPotion.h">
       <Filter>Header Files\Models\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\EnemySpawnerArea.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\Ghost.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\Fleamen.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\WhiteSkeleton.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\Raven.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

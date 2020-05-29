@@ -28,9 +28,19 @@
     <texture id="spear_knight" path="Resources\\Characters\\Enemies\\SpearKnight.png" r="255" g="0" b="255" />
     <texture id="paused" path="Resources\\Others\\Paused.png" r="255" g="0" b="255" />
     <texture id="axe" path="Resources\\Items\\Axe.png" r="255" g="0" b="255" />
+    <texture id="rosary" path="Resources\\Items\\Rosary.png" r="255" g="0" b="255" />
+    <texture id="pork_chop" path="Resources\\Items\\PorkChop.png" r="255" g="0" b="255" />
     <texture id="holy_water" path="Resources\\Items\\HolyWater.png" r="255" g="0" b="255" />
     <texture id="holy_water_bottle" path="Resources\\Items\\HolyWaterBottle.png" r="255" g="0" b="255" />
     <texture id="stopwatch" path="Resources\\Items\\Stopwatch.png" r="255" g="0" b="255" />
+    <texture id="bone" path="Resources\\Items\\Bone.png" r="255" g="0" b="255" />
+    <texture id="magic_crystal" path="Resources\\Items\\MagicCrystal.png" r="255" g="0" b="255" />
+    <texture id="fireball" path="Resources\\Items\\Fireball.png" r="255" g="0" b="255" />
+    <texture id="invisibility_potion" path="Resources\\Items\\InvisibilityPotion.png" r="255" g="0" b="255" />
+    <texture id="ghost" path="Resources\\Characters\\Enemies\\Ghost.png" r="255" g="0" b="255" />
+    <texture id="fleamen" path="Resources\\Characters\\Enemies\\Fleamen.png" r="255" g="0" b="255" />
+    <texture id="white_skeleton" path="Resources\\Characters\\Enemies\\WhiteSkeleton.png" r="255" g="0" b="255" />
+    <texture id="raven" path="Resources\\Characters\\Enemies\\Raven.png" r="255" g="0" b="255" />
   </textures>
 
   <sprites>
@@ -242,6 +252,12 @@
     <sprite id="axe_3" textureId="axe" left="60" top="0" right="89" bottom="27" />
     <sprite id="axe_4" textureId="axe" left="90" top="0" right="119" bottom="27" />
     
+    <!-- Rosary -->
+    <sprite id="rosary" textureId="rosary" left="0" top="0" right="31" bottom="31" />
+    
+    <!-- PorkChop -->
+    <sprite id="pork_chop" textureId="pork_chop" left="0" top="0" right="31" bottom="25" />
+    
     <!-- HolyWater -->
     <sprite id="holy_water" textureId="holy_water" left="0" top="0" right="31" bottom="31" />
 
@@ -254,6 +270,54 @@
     
     <!-- Stopwatch -->
     <sprite id="stopwatch" textureId="stopwatch" left="0" top="0" right="29" bottom="31" />
+    
+    <!-- Bone -->
+    <sprite id="bone_1" textureId="bone" left="0" top="0" right="29" bottom="31" />
+    <sprite id="bone_2" textureId="bone" left="30" top="0" right="59" bottom="31" />
+    <sprite id="bone_3" textureId="bone" left="60" top="0" right="89" bottom="31" />
+    
+    <!-- MagicCrystal -->
+    <sprite id="magic_crystal_1" textureId="magic_crystal" left="0" top="0" right="27" bottom="31" />
+    <sprite id="magic_crystal_2" textureId="magic_crystal" left="28" top="0" right="55" bottom="31" />
+    
+    <!-- Fireball -->
+    <sprite id="fireball" textureId="fireball" left="0" top="0" right="9" bottom="11" />
+    
+    <!-- InvisibilityPotion -->
+    <sprite id="invisibility_potion" textureId="invisibility_potion" left="0" top="0" right="29" bottom="36" />
+
+    <!-- Ghost -->
+    <sprite id="ghost_left_1" textureId="ghost" left="0" top="0" right="27" bottom="27" />
+    <sprite id="ghost_left_2" textureId="ghost" left="28" top="0" right="55" bottom="27" />
+    <sprite id="ghost_right_1" textureId="ghost" left="0" top="29" right="27" bottom="55" />
+    <sprite id="ghost_right_2" textureId="ghost" left="28" top="29" right="55" bottom="55" />
+
+    <!-- Fleamen -->
+    <sprite id="fleamen_left_1" textureId="fleamen" left="0" top="0" right="31" bottom="31" />
+    <sprite id="fleamen_left_2" textureId="fleamen" left="34" top="0" right="65" bottom="31" />
+    <sprite id="fleamen_right_1" textureId="fleamen" left="0" top="32" right="31" bottom="63" />
+    <sprite id="fleamen_right_2" textureId="fleamen" left="34" top="32" right="65" bottom="63" />
+
+    <!-- WhiteSkeleton -->
+    <sprite id="white_skeleton_left_1" textureId="white_skeleton" left="0" top="0" right="33" bottom="63" />
+    <sprite id="white_skeleton_left_2" textureId="white_skeleton" left="34" top="0" right="67" bottom="63" />
+    <sprite id="white_skeleton_left_3" textureId="white_skeleton" left="68" top="0" right="101" bottom="63" />
+    <sprite id="white_skeleton_left_4" textureId="white_skeleton" left="102" top="0" right="135" bottom="63" />
+
+    <sprite id="white_skeleton_right_1" textureId="white_skeleton" left="102" top="65" right="135" bottom="128" />
+    <sprite id="white_skeleton_right_2" textureId="white_skeleton" left="68" top="65" right="101" bottom="128" />
+    <sprite id="white_skeleton_right_3" textureId="white_skeleton" left="34" top="65" right="67" bottom="128" />
+    <sprite id="white_skeleton_right_4" textureId="white_skeleton" left="0" top="65" right="33" bottom="128" />
+    
+    <sprite id="raven_left_1" textureId="raven" left="0" top="0" right="31" bottom="31" />
+    <sprite id="raven_left_2" textureId="raven" left="34" top="0" right="65" bottom="31" />
+    <sprite id="raven_left_3" textureId="raven" left="68" top="0" right="99" bottom="31" />
+    <sprite id="raven_left_4" textureId="raven" left="102" top="0" right="131" bottom="31" />
+
+    <sprite id="raven_right_1" textureId="raven" left="102" top="32" right="131" bottom="63" />
+    <sprite id="raven_right_2" textureId="raven" left="68" top="32" right="99" bottom="63" />
+    <sprite id="raven_right_3" textureId="raven" left="34" top="32" right="65" bottom="63" />
+    <sprite id="raven_right_4" textureId="raven" left="0" top="32" right="31" bottom="63" />
   </sprites>
 
   <animations>
@@ -690,6 +754,16 @@
       <frame spriteId="axe_4" duration="100" />
     </animation>
     
+    <!-- Rosary -->
+    <animation id="rosary">
+      <frame spriteId="rosary" duration="100" />
+    </animation>
+    
+    <!-- PorkChop -->
+    <animation id="pork_chop">
+      <frame spriteId="pork_chop" duration="100" />
+    </animation>
+    
     <!-- HolyWater -->
     <animation id="holy_water">
       <frame spriteId="holy_water" duration="100" />
@@ -713,6 +787,111 @@
     <!-- Stopwatch -->
     <animation id="stopwatch">
       <frame spriteId="stopwatch" duration="100" />
+    </animation>
+    
+    <!-- Bone -->
+    <animation id="bone">
+      <frame spriteId="bone_1" duration="100" />
+      <frame spriteId="bone_2" duration="100" />
+      <frame spriteId="bone_3" duration="100" />
+    </animation>
+    
+    <!-- MagicCrystal -->
+    <animation id="magic_crystal">
+      <frame spriteId="magic_crystal_1" duration="100" />
+      <frame spriteId="magic_crystal_2" duration="100" />
+    </animation>
+    
+    <!-- Fireball -->
+    <animation id="fireball">
+      <frame spriteId="fireball" duration="100" />
+    </animation>
+    
+    <!-- InvisibilityPotion -->
+    <animation id="invisibility_potion">
+      <frame spriteId="invisibility_potion" duration="100" />
+    </animation>
+
+    <!-- Ghost -->
+    <animation id="ghost_left">
+      <frame spriteId="ghost_left_1" duration="100" />
+      <frame spriteId="ghost_left_2" duration="100" />
+    </animation>
+
+    <animation id="ghost_right">
+      <frame spriteId="ghost_right_1" duration="100" />
+      <frame spriteId="ghost_right_2" duration="100" />
+    </animation>
+
+    <!-- Fleamen -->
+    <animation id="fleamen_idle_left">
+      <frame spriteId="fleamen_left_1" duration="100" />
+    </animation>
+    
+    <animation id="fleamen_jump_left">
+      <frame spriteId="fleamen_left_1" duration="100" />
+      <frame spriteId="fleamen_left_2" duration="100" />
+    </animation>
+
+    <animation id="fleamen_idle_right">
+      <frame spriteId="fleamen_right_1" duration="100" />
+    </animation>
+
+    <animation id="fleamen_jump_right">
+      <frame spriteId="fleamen_right_1" duration="100" />
+      <frame spriteId="fleamen_right_2" duration="100" />
+    </animation>
+
+    <!-- WhiteSkeleton -->
+    <animation id="white_skeleton_idle_left">
+      <frame spriteId="white_skeleton_left_1" duration="100" />
+    </animation>
+
+    <animation id="white_skeleton_idle_right">
+      <frame spriteId="white_skeleton_right_1" duration="100" />
+    </animation>
+
+    <animation id="white_skeleton_jump_left">
+      <frame spriteId="white_skeleton_left_1" duration="100" />
+      <frame spriteId="white_skeleton_left_2" duration="100" />
+    </animation>
+
+    <animation id="white_skeleton_jump_right">
+      <frame spriteId="white_skeleton_right_1" duration="100" />
+      <frame spriteId="white_skeleton_right_2" duration="100" />
+    </animation>
+
+    <animation id="white_skeleton_die_left">
+      <frame spriteId="white_skeleton_left_2" duration="600" />
+      <frame spriteId="white_skeleton_left_3" duration="600" />
+      <frame spriteId="white_skeleton_left_4" duration="600" />
+    </animation>
+
+    <animation id="white_skeleton_die_right">
+      <frame spriteId="white_skeleton_right_2" duration="600" />
+      <frame spriteId="white_skeleton_right_3" duration="600" />
+      <frame spriteId="white_skeleton_right_4" duration="600" />
+    </animation>
+
+    <!-- Raven -->
+    <animation id="raven_idle_left">
+      <frame spriteId="raven_left_1" duration="100" />
+    </animation>
+
+    <animation id="raven_idle_right">
+      <frame spriteId="raven_right_1" duration="100" />
+    </animation>
+
+    <animation id="raven_fly_left">
+      <frame spriteId="raven_left_2" duration="100" />
+      <frame spriteId="raven_left_3" duration="100" />
+      <frame spriteId="raven_left_4" duration="100" />
+    </animation>
+
+    <animation id="raven_fly_right">
+      <frame spriteId="raven_right_2" duration="100" />
+      <frame spriteId="raven_right_3" duration="100" />
+      <frame spriteId="raven_right_4" duration="100" />
     </animation>
   </animations>
 
@@ -877,6 +1056,14 @@
       <animationSetItem id="axe_move" animationId="axe_move" />
     </animationSet>
 
+    <animationSet id="rosary">
+      <animationSetItem id="rosary" animationId="rosary" />
+    </animationSet>
+
+    <animationSet id="pork_chop">
+      <animationSetItem id="pork_chop" animationId="pork_chop" />
+    </animationSet>
+  
     <animationSet id="holy_water">
       <animationSetItem id="holy_water" animationId="holy_water" />
     </animationSet>
@@ -889,6 +1076,50 @@
 
     <animationSet id="stopwatch">
       <animationSetItem id="stopwatch" animationId="stopwatch" />
+    </animationSet>
+
+    <animationSet id="bone">
+      <animationSetItem id="bone" animationId="bone" />
+    </animationSet>
+
+    <animationSet id="magic_crystal">
+      <animationSetItem id="magic_crystal" animationId="magic_crystal" />
+    </animationSet>
+
+    <animationSet id="fireball">
+      <animationSetItem id="fireball" animationId="fireball" />
+    </animationSet>
+
+    <animationSet id="invisibility_potion">
+      <animationSetItem id="invisibility_potion" animationId="invisibility_potion" />
+    </animationSet>
+
+    <animationSet id="ghost">
+      <animationSetItem id="ghost_right" animationId="ghost_right" />
+      <animationSetItem id="ghost_left" animationId="ghost_left" />
+    </animationSet>
+
+    <animationSet id="fleamen">
+      <animationSetItem id="fleamen_idle_right" animationId="fleamen_idle_right" />
+      <animationSetItem id="fleamen_idle_left" animationId="fleamen_idle_left" />
+      <animationSetItem id="fleamen_jump_right" animationId="fleamen_jump_right" />
+      <animationSetItem id="fleamen_jump_left" animationId="fleamen_jump_left" />
+    </animationSet>
+
+    <animationSet id="white_skeleton">
+      <animationSetItem id="white_skeleton_idle_right" animationId="white_skeleton_idle_right" />
+      <animationSetItem id="white_skeleton_idle_left" animationId="white_skeleton_idle_left" />
+      <animationSetItem id="white_skeleton_jump_right" animationId="white_skeleton_jump_right" />
+      <animationSetItem id="white_skeleton_jump_left" animationId="white_skeleton_jump_left" />
+      <animationSetItem id="white_skeleton_die_right" animationId="white_skeleton_die_right" />
+      <animationSetItem id="white_skeleton_die_left" animationId="white_skeleton_die_left" />
+    </animationSet>
+
+    <animationSet id="raven">
+      <animationSetItem id="raven_idle_right" animationId="raven_idle_right" />
+      <animationSetItem id="raven_idle_left" animationId="raven_idle_left" />
+      <animationSetItem id="raven_fly_right" animationId="raven_fly_right" />
+      <animationSetItem id="raven_fly_left" animationId="raven_fly_left" />
     </animationSet>
   </animationSets>
 
@@ -903,14 +1134,14 @@
     <object id="brick_5" type="brick" animationSetId="brick" x="0" y="207" />
     <object id="brick_6" type="brick" animationSetId="brick" x="32" y="207" isGround="true" />
 
-    <object id="brick_7" type="brick" animationSetId="brick" x="64" y="238" isGround="true" />
+    <!-- <object id="brick_7" type="brick" animationSetId="brick" x="64" y="238" isGround="true" />
     <object id="brick_8" type="brick" animationSetId="brick" x="95" y="238" isGround="true" />
     <object id="brick_9" type="brick" animationSetId="brick" x="126" y="238" isGround="true" />
     <object id="brick_10" type="brick" animationSetId="brick" x="158" y="238" isGround="true" />
     <object id="brick_11" type="brick" animationSetId="brick" x="190" y="238" isGround="true" />
     <object id="brick_12" type="brick" animationSetId="brick" x="222" y="238" isGround="true" />
     <object id="brick_13" type="brick" animationSetId="brick" x="254" y="238" isGround="true" />
-    <object id="brick_14" type="brick" animationSetId="brick" x="286" y="238" isGround="true" />
+    <object id="brick_14" type="brick" animationSetId="brick" x="286" y="238" isGround="true" /> -->
 
     <object id="brick_15" type="brick" animationSetId="brick" x="32" y="270" />
     <object id="brick_16" type="brick" animationSetId="brick" x="32" y="302" />
@@ -941,11 +1172,11 @@
     <object id="brick_39" type="brick" animationSetId="brick" x="448" y="175" />
     <object id="brick_40" type="brick" animationSetId="brick" x="448" y="207" />
 
-    <object id="brick_42" type="brick" animationSetId="brick" x="320" y="303" isGround="true" />
+    <!-- <object id="brick_42" type="brick" animationSetId="brick" x="320" y="303" isGround="true" />
     <object id="brick_42" type="brick" animationSetId="brick" x="352" y="303" isGround="true" />
     <object id="brick_43" type="brick" animationSetId="brick" x="384" y="303" isGround="true" />
     <object id="brick_44" type="brick" animationSetId="brick" x="416" y="303" isGround="true" />
-    <object id="brick_45" type="brick" animationSetId="brick" x="448" y="303" isGround="true" />
+    <object id="brick_45" type="brick" animationSetId="brick" x="448" y="303" isGround="true" /> -->
 
     <object id="brick_46" type="brick" animationSetId="brick" x="480" y="239" />
     <object id="brick_47" type="brick" animationSetId="brick" x="480" y="271" />
@@ -957,19 +1188,20 @@
     <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="447" y="240" endingEffect="breaking" />
     <object id="breakable_brick_2" type="breakable_brick" animationSetId="breakable_brick" x="447" y="272" endingEffect="breaking" />
 
-    <object id="boomerang_1" type="boomerang" animationSetId="boomerang" x="175" y="308" visible="false" />
+    <!--<object id="boomerang_1" type="boomerang" animationSetId="boomerang" x="175" y="308" visible="false" />
     <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="154" y="308" endingEffect="flash" hiddenItemId="boomerang_1" />
 
     <object id="big_heart_2" type="big_heart" animationSetId="big_heart" x="387" y="308" visible="false" />
     <object id="small_candle_2" type="small_candle" animationSetId="small_candle" x="375" y="308" endingEffect="flash" hiddenItemId="big_heart_2" />
 
     <object id="red_money_bag_1" type="red_money_bag" animationSetId="red_money_bag" x="264" y="132" endingEffect="one_hundred" visible="false" />
-    <object id="small_candle_3" type="small_candle" animationSetId="small_candle" x="264" y="132" endingEffect="flash" hiddenItemId="red_money_bag_1" />
+    <object id="small_candle_3" type="small_candle" animationSetId="small_candle" x="264" y="132" endingEffect="flash" hiddenItemId="red_money_bag_1" />-->
 
-    <object id="big_heart_3" type="big_heart" animationSetId="big_heart" x="75" y="130" visible="false" />
-    <object id="red_bat_1" type="red_bat" animationSetId="red_bat" x="75" y="130" endingEffect="flash" hiddenItemId="big_heart_3" />
+    <!-- <object id="big_heart_3" type="big_heart" animationSetId="big_heart" x="75" y="130" visible="false" /> -->
+    <!-- <object id="red_bat_1" type="red_bat" animationSetId="red_bat" x="75" y="130" endingEffect="flash" hiddenItemId="big_heart_3" /> -->
     
-    <object id="simon" type="simon" animationSetId="simon" x="90" y="250" reloadX="220" reloadY="83" reloadState="on_stair" reloadStairDirectionX="left" reloadStairDirectionY="down" />
+    <object id="simon" type="simon" animationSetId="simon" x="65" y="250" reloadX="220" reloadY="83" reloadState="on_stair" reloadStairDirectionX="left" reloadStairDirectionY="down" />
+    <!--<object id="enemy_spawner_area" type="enemy_spawner_area" animationSetId="transparency" x="190" y="350" enemyType="ghost" spawningPosition="bottom_right" />-->
     
     <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="154" y="228" />
     <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="238" y="110" playerMustBeOnStair="true" sceneDirection="right" />
@@ -977,7 +1209,11 @@
     <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="218" y="420" />
     <object id="top_stair_2" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="320" y="218" />
 
-    <object id="big_heart_4" type="big_heart" animationSetId="big_heart" x="65" y="100" visible="false" />
-    <object id="spear_knight" type="spear_knight" animationSetId="spear_knight" x="72" y="80" leftBound="65" rightBound="280" endingEffect="flash" hiddenItemId="big_heart_4" />
+    <!--<object id="big_heart_4" type="big_heart" animationSetId="big_heart" x="65" y="100" visible="false" />-->
+
+    <!-- <object id="white_skeleton_1" type="white_skeleton" animationSetId="white_skeleton" endingEffect="flash" x="380" y="80" leftBound="65" rightBound="410" /> -->
+    <!-- <object id="spear_knight" type="spear_knight" animationSetId="spear_knight" x="72" y="80" leftBound="65" rightBound="280" endingEffect="flash" hiddenItemId="big_heart_4" /> -->
+    <!-- <object id="fleamen" type="fleamen" animationSetId="fleamen" x="380" y="80" endingEffect="flash" /> -->
+    <object id="raven" type="raven" animationSetId="raven" x="240" y="300" endingEffect="flash" leftBound="65" rightBound="410" />
   </objects>
 </resources>
