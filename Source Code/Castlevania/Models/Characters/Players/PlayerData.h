@@ -30,11 +30,15 @@ public:
 	void SetSubWeaponType(string type);
 	string GetSubWeaponType();
 
-	void SetWhipPower(int power);
-	int GetWhipPower();
+	void SetPower(int power);
+	int GetPower();
 
 	void SetWhipLevel(int level);
 	int GetWhipLevel();
+
+	void AddThrownSubWeapons();
+	void DecreaseThrownSubWeapons();
+	int GetThrownSubWeapons();
 
 protected:
 	int score;
@@ -42,10 +46,10 @@ protected:
 	int lives;
 	int healthVolumes;
 	int whipLevel;
-	int whipPower;
+	int power;
+	int thrownSubWeapons;
 
 	string subWeaponType;
-	string whipPowerType;
 
 	static CPlayerData* instance;
 };

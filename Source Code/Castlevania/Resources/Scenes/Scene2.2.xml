@@ -876,6 +876,8 @@
   </animationSets>
 
   <objects gridWidth="1024" gridHeight="448" cellWidth="64" cellHeight="64">
+    <object id="simon" type="simon" animationSetId="simon" x="760" y="370" state="on_stair" stairDirectionX="right" stairDirectionY="up" />
+    
     <object id="brick_1" type="brick" animationSetId="brick" x="0" y="81" />
     <object id="brick_2" type="brick" animationSetId="brick" x="0" y="113" />
     <object id="brick_3" type="brick" animationSetId="brick" x="0" y="145" />
@@ -939,6 +941,8 @@
 
     <object id="moving_bar_1" type="moving_bar" animationSetId="moving_bar" x="105" y="241" />
 
+    <object id="red_bat_1" type="red_bat" animationSetId="red_bat" x="590" y="116" endingEffect="flash" />
+
     <object id="small_heart_1" type="small_heart" animationSetId="small_heart" x="794" y="116" visible="false" />
     <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="794" y="116" endingEffect="flash" hiddenItemId="small_heart_1" />
 
@@ -956,8 +960,6 @@
 
     <object id="small_heart_6" type="small_heart" animationSetId="small_heart" x="154" y="116" visible="false" />
     <object id="small_candle_6" type="small_candle" animationSetId="small_candle" x="154" y="116" endingEffect="flash" hiddenItemId="small_heart_6" />
-    
-    <object id="simon" type="simon" animationSetId="simon" x="760" y="370" state="on_stair" stairDirectionX="right" stairDirectionY="up" />
     
     <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="896" y="220" />
     <object id="previous_scene_1" type="previous_scene" animationSetId="transparency" x="760" y="400" playerMustBeOnStair="true" sceneDirection="left" />

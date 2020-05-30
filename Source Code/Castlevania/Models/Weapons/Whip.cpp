@@ -45,7 +45,7 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto enemy = dynamic_cast<CEnemy*>(object);
 
-				enemy->TakeDamage(playerData->GetWhipPower());
+				enemy->TakeDamage(playerData->GetPower());
 			}
 		}
 	}

@@ -893,6 +893,8 @@
   </animationSets>
 
   <objects gridWidth="576" gridHeight="448" cellWidth="64" cellHeight="64">
+    <object id="simon" type="simon" animationSetId="simon" x="90" y="250" reloadX="220" reloadY="83" reloadState="on_stair" reloadStairDirectionX="left" reloadStairDirectionY="down" />
+    
     <object id="crown_1" type="crown" animationSetId="crown" x="240" y="420" endingEffect="two_thousand" visible="false" topBound="400" />
     <object id="easter_egg_1" type="easter_egg" animationSetId="transparency" x="448" y="271" hiddenItemId="crown_1" />
     
@@ -963,21 +965,19 @@
     <object id="big_heart_2" type="big_heart" animationSetId="big_heart" x="387" y="308" visible="false" />
     <object id="small_candle_2" type="small_candle" animationSetId="small_candle" x="375" y="308" endingEffect="flash" hiddenItemId="big_heart_2" />
 
-    <object id="red_money_bag_1" type="red_money_bag" animationSetId="red_money_bag" x="264" y="132" endingEffect="one_hundred" visible="false" />
-    <object id="small_candle_3" type="small_candle" animationSetId="small_candle" x="264" y="132" endingEffect="flash" hiddenItemId="red_money_bag_1" />
+    <object id="small_heart_1" type="small_heart" animationSetId="small_heart" x="264" y="132" visible="false" />
+    <object id="small_candle_3" type="small_candle" animationSetId="small_candle" x="264" y="132" endingEffect="flash" hiddenItemId="small_heart_1" />
 
-    <object id="big_heart_3" type="big_heart" animationSetId="big_heart" x="75" y="130" visible="false" />
-    <object id="red_bat_1" type="red_bat" animationSetId="red_bat" x="75" y="130" endingEffect="flash" hiddenItemId="big_heart_3" />
-    
-    <object id="simon" type="simon" animationSetId="simon" x="90" y="250" reloadX="220" reloadY="83" reloadState="on_stair" reloadStairDirectionX="left" reloadStairDirectionY="down" />
+    <object id="red_money_bag_1" type="red_money_bag" animationSetId="red_money_bag" x="75" y="130" visible="false" />
+    <object id="red_bat_1" type="red_bat" animationSetId="red_bat" x="75" y="130" endingEffect="flash" hiddenItemId="red_money_bag_1" />
+
+    <object id="big_heart_3" type="big_heart" animationSetId="big_heart" x="65" y="100" visible="false" />
+    <object id="spear_knight" type="spear_knight" animationSetId="spear_knight" x="72" y="80" leftBound="65" rightBound="280" endingEffect="flash" hiddenItemId="big_heart_3" />
     
     <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="154" y="228" />
     <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="238" y="110" playerMustBeOnStair="true" sceneDirection="right" />
     
     <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="218" y="420" />
     <object id="top_stair_2" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="320" y="218" />
-
-    <object id="big_heart_4" type="big_heart" animationSetId="big_heart" x="65" y="100" visible="false" />
-    <object id="spear_knight" type="spear_knight" animationSetId="spear_knight" x="72" y="80" leftBound="65" rightBound="280" endingEffect="flash" hiddenItemId="big_heart_4" />
   </objects>
 </resources>

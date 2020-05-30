@@ -7,7 +7,8 @@ CRaven::CRaven(CSimon* simon)
 {
 	this->mustInArea = true;
 	this->simon = simon;
-	this->areaRadius = RAVEN_AREA_RADIUS;
+	this->areaRadiusX = RAVEN_AREA_RADIUS_X;
+	this->areaRadiusY = RAVEN_AREA_RADIUS_Y;
 	this->flyingCounter = 0;
 	this->attackingCounter = 0;
 
@@ -172,9 +173,7 @@ void CRaven::Attack()
 
 void CRaven::OnPlayerEnterArea()
 {
-	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
-
-	if (softPaused) return;
+	CEnemy::OnPlayerEnterArea();
 
 	if (state == RAVEN_STATE_IDLE)
 	{

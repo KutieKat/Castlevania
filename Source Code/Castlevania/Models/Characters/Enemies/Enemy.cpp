@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "../../../Game.h"
 
 CEnemy::CEnemy()
 {
@@ -14,16 +15,24 @@ void CEnemy::TakeDamage(int damages)
 
 void CEnemy::OnPlayerEnterArea()
 {
+	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
+
+	if (softPaused) return;
 }
 
-int CEnemy::GetAreaRadius()
+int CEnemy::GetAreaRadiusX()
 {
-	return areaRadius;
+	return areaRadiusX;
 }
 
-bool CEnemy::IsPlayerNearby(float x, float y, float playerX, float playerY, float radius)
+int CEnemy::GetAreaRadiusY()
 {
-	if (pow(playerX - x, 2) + pow(playerY - y, 2) <= pow(radius, 2))
+	return areaRadiusY;
+}
+
+bool CEnemy::IsPlayerNearby(float x, float y, float playerX, float playerY, float radiusX, float radiusY)
+{
+	if (playerX >= x - radiusX && playerX <= x + radiusX && playerY >= y - radiusY && playerY <= y + radiusY)
 	{
 		return true;
 	}

@@ -16,6 +16,7 @@ protected:
 
 	int maxRight;
 	int maxLeft;
+	int collisionCount;
 
 	bool hidden;
 };

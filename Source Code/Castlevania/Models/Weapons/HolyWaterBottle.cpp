@@ -3,11 +3,12 @@
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/Brick.h"
 #include "../Misc/Ground.h"
-#include "../Misc/BottomStair.h"
 
 CHolyWaterBottle::CHolyWaterBottle()
 {
 	SetAnimationSet("holy_water_bottle");
+
+	elevation = 2;
 	vy = -HOLY_WATER_BOTTLE_MOVE_SPEED;
 
 	SetState(HOLY_WATER_BOTTLE_STATE_MOVE);
@@ -54,6 +55,8 @@ void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
+			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
 			removable = true;
 		}
 	}
@@ -91,11 +94,6 @@ void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (e->nx != 0) x += dx;
 				}
-			}
-			else if (dynamic_cast<CBottomStair*>(e->obj))
-			{
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
 			}
 			else
 			{

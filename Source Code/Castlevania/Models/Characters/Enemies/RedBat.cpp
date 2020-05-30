@@ -1,10 +1,13 @@
 #include "RedBat.h"
 #include "../../../Game.h"
 
-CRedBat::CRedBat()
+CRedBat::CRedBat(CSimon* simon)
 {
-	mustInArea = true;
-	areaRadius = RED_BAT_AREA_RADIUS;
+	this->simon = simon;
+	this->mustInArea = true;
+	this->areaRadiusX = RED_BAT_AREA_RADIUS_X;
+	this->areaRadiusY = RED_BAT_AREA_RADIUS_Y;
+	this->flyingCounter = 0;
 
 	SetAnimationSet("red_bat");
 	SetState(RED_BAT_STATE_STATIC);
@@ -21,7 +24,7 @@ void CRedBat::SetState(int state)
 		break;
 
 	case RED_BAT_STATE_MOVE:
-		vx = directionX == Direction::Right ? RED_BAT_MOVE_SPEED : -RED_BAT_MOVE_SPEED;
+		vx = directionX == Direction::Right ? RED_BAT_MOVE_SPEED_X : -RED_BAT_MOVE_SPEED_X;
 		break;
 	}
 }
@@ -35,8 +38,8 @@ void CRedBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == RED_BAT_STATE_MOVE)
 	{
-		x += vx * dt;
-		y += sin(x * PI / 180);
+		x += (directionX == Direction::Right ? vx : -vx) * dt;
+		y += (y < simon->y + 10 ? RED_BAT_MOVE_SPEED_Y : 0) * dt;
 	}
 }
 
@@ -89,9 +92,7 @@ void CRedBat::TakeDamage(int damages)
 
 void CRedBat::OnPlayerEnterArea()
 {
-	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
-	
-	if (softPaused) return;
+	CEnemy::OnPlayerEnterArea();
 
 	SetState(RED_BAT_STATE_MOVE);
 }

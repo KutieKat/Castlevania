@@ -1,13 +1,14 @@
 #include "WAxe.h"
 #include "../../Game.h"
 #include "../Characters/Enemies/Enemy.h"
-#include "../Misc/Brick.h"
-#include "../Misc/Ground.h"
-#include "../Misc/BottomStair.h"
+#include "../Misc/BigCandle.h"
+#include "../Misc/SmallCandle.h"
 
 WAxe::WAxe()
 {
 	SetAnimationSet("axe");
+
+	elevation = 2;
 	vy = -AXE_MOVE_SPEED;
 }
 
@@ -31,8 +32,10 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
+		if (x < CGame::GetInstance()->GetCamera()->GetTop() || x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft() || x > CGame::GetInstance()->GetCamera()->GetBottom())
 		{
+			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
 			removable = true;
 		}
 	}
@@ -55,17 +58,23 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto enemy = dynamic_cast<CEnemy*>(e->obj);
 
-				enemy->TakeDamage();
-				removable = true;
+				enemy->TakeDamage(AXE_DAMAGES);
 			}
-			else if (dynamic_cast<CBrick*>(e->obj) || dynamic_cast<CGround*>(e->obj))
+			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
-				removable = true;
-			}
-			else if (dynamic_cast<CBottomStair*>(e->obj))
-			{
+				auto candle = dynamic_cast<CBigCandle*>(e->obj);
+
+				candle->Disappear();
+
 				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CSmallCandle*>(e->obj))
+			{
+				auto candle = dynamic_cast<CSmallCandle*>(e->obj);
+
+				candle->Disappear();
+
+				if (e->nx != 0) x += dx;
 			}
 			else
 			{

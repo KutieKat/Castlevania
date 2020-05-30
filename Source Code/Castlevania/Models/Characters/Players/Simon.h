@@ -30,6 +30,10 @@ public:
 	bool atBottomStair;
 	bool atTopStair;
 	bool onBar;
+	bool deflecting;
+	bool switchSceneEnabled;
+
+	bool AbleToThrowSubWeapon();
 
 	string movingDirection;
 	string switchScenePosition;
@@ -48,6 +52,8 @@ protected:
 
 	DWORD delayEndTime;
 	DWORD switchSceneTime;
+
+	int sittingCounter;
 
 	void HandleGravity();
 	void HandleDelay();

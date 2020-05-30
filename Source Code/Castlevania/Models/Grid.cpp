@@ -97,8 +97,6 @@ void CGrid::Clean()
 
 				unit = unit->nextUnit;
 			}
-
-			SAFE_DELETE(unit);
 		}
 	}
 }

@@ -3,11 +3,12 @@
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/Brick.h"
 #include "../Misc/Ground.h"
-#include "../Misc/BottomStair.h"
 
 WStopwatch::WStopwatch()
 {
 	SetAnimationSet("stopwatch");
+
+	elevation = 2;
 	vy = -STOPWATCH_MOVE_SPEED;
 }
 
@@ -33,6 +34,8 @@ void WStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
+			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
 			removable = true;
 		}
 	}
@@ -55,11 +58,6 @@ void WStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPause(DEFAULT_SOFT_PAUSE_TIME);
 				removable = true;
-			}
-			else if (dynamic_cast<CBottomStair*>(e->obj))
-			{
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
 			}
 			else
 			{

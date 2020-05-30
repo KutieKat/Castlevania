@@ -2,10 +2,12 @@
 #include "Enemy.h"
 #include "../../../Utilities/Constants.h"
 
+class CSimon;
+
 class CRedBat : public CEnemy
 {
 public:
-	CRedBat();
+	CRedBat(CSimon* simon);
 
 	void SetState(int state);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);
@@ -13,4 +15,9 @@ public:
 	void GetBoundingBox(float & left, float & top, float & right, float & bottom);
 	void TakeDamage(int damages = ENEMY_DEFAULT_DAMAGES);
 	void OnPlayerEnterArea();
+
+protected:
+	CSimon* simon;
+
+	int flyingCounter;
 };

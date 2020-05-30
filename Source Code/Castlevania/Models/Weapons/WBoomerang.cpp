@@ -1,8 +1,8 @@
 #include "WBoomerang.h"
 #include "../../Utilities/Debug.h"
 #include "../Characters/Enemies/Enemy.h"
-#include "../Misc/Brick.h"
-#include "../Misc/BottomStair.h"
+#include "../Misc/BigCandle.h"
+#include "../Misc/SmallCandle.h"
 #include "../../Game.h"
 
 WBoomerang::WBoomerang(CSimon* simon)
@@ -10,6 +10,8 @@ WBoomerang::WBoomerang(CSimon* simon)
 	SetAnimationSet("boomerang");
 
 	this->simon = simon;
+	this->elevation = 2;
+	this->collisionCount = 0;
 	this->directionX = simon->directionX;
 	this->vx = simon->directionX == Direction::Right ? BOOMERANG_MOVE_SPEED : -BOOMERANG_MOVE_SPEED;
 	this->maxRight = simon->x + BOOMERANG_MOVABLE_AREA_WIDTH;
@@ -20,8 +22,17 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	if ((directionX == Direction::Right && x < simon->x + SIMON_BBOX_WIDTH) || (directionX == Direction::Left && x > simon->x))
+	if ((directionX == Direction::Right && x < simon->x + SIMON_BBOX_WIDTH && y > simon->y) || (directionX == Direction::Left && x > simon->x && y > simon->y))
 	{
+		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
+		removable = true;
+	}
+
+	if (collisionCount == 2)
+	{
+		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
 		removable = true;
 	}
 
@@ -37,13 +48,16 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x <= maxLeft || x >= maxRight)
+		if (x <= maxLeft || x <= CGame::GetInstance()->GetCamera()->GetLeft() + BOOMERANG_BBOX_WIDTH - 20 || x >= maxRight || x >= CGame::GetInstance()->GetCamera()->GetRight() - BOOMERANG_BBOX_WIDTH - 20)
 		{
 			vx = -vx;
+			collisionCount++;
 		}
 
 		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
+			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
 			removable = true;
 		}
 	}
@@ -66,18 +80,25 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto enemy = dynamic_cast<CEnemy*>(e->obj);
 
-				enemy->TakeDamage();
+				enemy->TakeDamage(BOOMERANG_DAMAGES);
 
-				vx = -vx;
-			}
-			else if (dynamic_cast<CBottomStair*>(e->obj))
-			{
 				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
 			}
-			else if (dynamic_cast<CBrick*>(e->obj))
+			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
-				vx = -vx;
+				auto candle = dynamic_cast<CBigCandle*>(e->obj);
+
+				candle->Disappear();
+
+				if (e->nx != 0) x += dx;
+			}
+			else if (dynamic_cast<CSmallCandle*>(e->obj))
+			{
+				auto candle = dynamic_cast<CSmallCandle*>(e->obj);
+
+				candle->Disappear();
+
+				if (e->nx != 0) x += dx;
 			}
 			else
 			{

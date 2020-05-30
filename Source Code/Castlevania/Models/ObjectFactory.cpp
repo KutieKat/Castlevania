@@ -140,7 +140,7 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y, CSimon* si
 	}
 	else if (type == "red_bat")
 	{
-		return new CRedBat();
+		return new CRedBat(simon);
 	}
 	else if (type == "spear_knight")
 	{

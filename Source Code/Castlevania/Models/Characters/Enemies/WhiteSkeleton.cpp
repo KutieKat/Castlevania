@@ -16,7 +16,8 @@ CWhiteSkeleton::CWhiteSkeleton(CSimon * simon)
 	this->simon = simon;
 	this->mustInArea = true;
 	this->touchingGround = false;
-	this->areaRadius = 250;
+	this->areaRadiusX = WHITE_SKELETON_AREA_RADIUS_X;
+	this->areaRadiusY = WHITE_SKELETON_AREA_RADIUS_Y;
 	this->jumpingCounter = 0;
 	this->attackingCounter = 0;
 	this->walkingCounter = 0;
@@ -278,9 +279,7 @@ void CWhiteSkeleton::TakeDamage(int damages)
 
 void CWhiteSkeleton::OnPlayerEnterArea()
 {
-	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
-
-	if (softPaused) return;
+	CEnemy::OnPlayerEnterArea();
 
 	if (state == WHITE_SKELETON_STATE_IDLE)
 	{

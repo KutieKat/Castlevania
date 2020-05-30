@@ -11,7 +11,8 @@ CFleamen::CFleamen(CSimon* simon)
 {
 	this->simon = simon;
 	this->mustInArea = true;
-	this->areaRadius = FLEAMEN_AREA_RADIUS;
+	this->areaRadiusX = FLEAMEN_AREA_RADIUS_X;
+	this->areaRadiusY = FLEAMEN_AREA_RADIUS_Y;
 	this->jumpingCounter = 0;
 	this->nextAttackingTime = GetTickCount() + FLEAMEN_ATTACKING_INTERVAL;
 
@@ -202,9 +203,7 @@ void CFleamen::TakeDamage(int damages)
 
 void CFleamen::OnPlayerEnterArea()
 {
-	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
-
-	if (softPaused) return;
+	CEnemy::OnPlayerEnterArea();
 
 	if (state == FLEAMEN_STATE_IDLE)
 	{

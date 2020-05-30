@@ -1,5 +1,6 @@
 #include "BigHeart.h"
 #include "../Misc/BottomStair.h"
+#include "../Misc/SmallCandle.h"
 #include "../Weapons/HolyWaterBottle.h"
 
 CBigHeart::CBigHeart()
@@ -46,6 +47,10 @@ void CBigHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny != 0) y += dy;
 			}
 			else if (e->obj->isItem)
+			{
+				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CSmallCandle*>(e->obj))
 			{
 				if (e->ny != 0) y += dy;
 			}

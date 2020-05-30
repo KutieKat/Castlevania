@@ -30,7 +30,7 @@ void CPlayerData::Reset()
 	lives = SIMON_DEFAULT_LIVES;
 	healthVolumes = HEALTH_BAR_MAX_VOLUMES;
 	whipLevel = WHIP_LEVEL_1;
-	whipPower = WHIP_NORMAL_POWER;
+	power = NORMAL_POWER;
 	subWeaponType = "";
 }
 
@@ -99,14 +99,14 @@ string CPlayerData::GetSubWeaponType()
 	return subWeaponType;
 }
 
-void CPlayerData::SetWhipPower(int power)
+void CPlayerData::SetPower(int power)
 {
-	whipPower = power;
+	this->power = power;
 }
 
-int CPlayerData::GetWhipPower()
+int CPlayerData::GetPower()
 {
-	return whipPower;
+	return power;
 }
 
 void CPlayerData::SetWhipLevel(int level)
@@ -120,4 +120,22 @@ void CPlayerData::SetWhipLevel(int level)
 int CPlayerData::GetWhipLevel()
 {
 	return whipLevel;
+}
+
+void CPlayerData::AddThrownSubWeapons()
+{
+	thrownSubWeapons += 1;
+}
+
+void CPlayerData::DecreaseThrownSubWeapons()
+{
+	if (thrownSubWeapons > 0)
+	{
+		thrownSubWeapons -= 1;
+	}
+}
+
+int CPlayerData::GetThrownSubWeapons()
+{
+	return thrownSubWeapons;
 }

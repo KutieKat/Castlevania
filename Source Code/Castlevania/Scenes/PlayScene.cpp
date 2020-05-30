@@ -789,24 +789,24 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				break;
 
 			case DIK_3:
-				if (game->GetPlayerData()->GetWhipPower() == WHIP_DOUBLE_POWER)
+				if (game->GetPlayerData()->GetPower() == DOUBLE_POWER)
 				{
-					game->GetPlayerData()->SetWhipPower(WHIP_NORMAL_POWER);
+					game->GetPlayerData()->SetPower(NORMAL_POWER);
 				}
 				else
 				{
-					game->GetPlayerData()->SetWhipPower(WHIP_DOUBLE_POWER);
+					game->GetPlayerData()->SetPower(DOUBLE_POWER);
 				}
 				break;
 
 			case DIK_4:
-				if (game->GetPlayerData()->GetWhipPower() == WHIP_TRIPLE_POWER)
+				if (game->GetPlayerData()->GetPower() == TRIPLE_POWER)
 				{
-					game->GetPlayerData()->SetWhipPower(WHIP_NORMAL_POWER);
+					game->GetPlayerData()->SetPower(NORMAL_POWER);
 				}
 				else
 				{
-					game->GetPlayerData()->SetWhipPower(WHIP_TRIPLE_POWER);
+					game->GetPlayerData()->SetPower(TRIPLE_POWER);
 				}
 				break;
 
@@ -931,14 +931,14 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 						simon->SetState(SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK);
 					}
 
-					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->AbleToThrowSubWeapon() && simon->up)
 					{
 						simon->SetState(SIMON_STATE_STAND_ON_STAIR_AND_THROW);
 					}
 				}
 				else
 				{
-					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->up)
+					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->AbleToThrowSubWeapon() && simon->up)
 					{
 						simon->SetState(SIMON_STATE_STAND_AND_THROW);
 					}

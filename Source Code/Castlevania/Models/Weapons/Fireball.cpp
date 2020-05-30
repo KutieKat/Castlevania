@@ -8,6 +8,8 @@
 WFireball::WFireball()
 {
 	SetAnimationSet("fireball");
+
+	elevation = 2;
 }
 
 void WFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -46,29 +48,29 @@ void WFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGround*>(e->obj))
-			{
-				removable = true;
-			}
-			else if (dynamic_cast<CBrick*>(e->obj))
-			{
-				auto brick = dynamic_cast<CBrick*>(e->obj);
+			//if (dynamic_cast<CGround*>(e->obj))
+			//{
+			//	removable = true;
+			//}
+			//else if (dynamic_cast<CBrick*>(e->obj))
+			//{
+			//	auto brick = dynamic_cast<CBrick*>(e->obj);
 
-				if (brick->isGround)
-				{
-					removable = true;
-				}
-				else
-				{
-					if (e->nx != 0) x += dx;
-					if (e->ny != 0) y += dy;
-				}
-			}
-			else
-			{
+			//	if (brick->isGround)
+			//	{
+			//		removable = true;
+			//	}
+			//	else
+			//	{
+			//		if (e->nx != 0) x += dx;
+			//		if (e->ny != 0) y += dy;
+			//	}
+			//}
+			//else
+			//{
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
-			}
+			//}
 		}
 	}
 
