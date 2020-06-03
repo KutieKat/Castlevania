@@ -18,6 +18,21 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (softPaused) return;
 
+	if (directionX == Direction::Left)
+	{
+		if (x < CGame::GetInstance()->GetCamera()->GetLeft())
+		{
+			removable = true;
+		}
+	}
+	else if (directionX == Direction::Right)
+	{
+		if (x > CGame::GetInstance()->GetCamera()->GetRight())
+		{
+			removable = true;
+		}
+	}
+
 	x += (directionX == Direction::Right ? GHOST_MOVE_SPEED : -GHOST_MOVE_SPEED) * dt;
 	y += (y < simon->y + 20 ? GHOST_MOVE_SPEED : -GHOST_MOVE_SPEED) * dt;
 }

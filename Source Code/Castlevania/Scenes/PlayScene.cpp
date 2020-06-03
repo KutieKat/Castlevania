@@ -1,4 +1,4 @@
-#include "PlayScene.h"
+﻿#include "PlayScene.h"
 #include "../Models/ObjectFactory.h"
 #include "../Models/Misc/TopStair.h"
 #include "../Models/Misc/BottomStair.h"
@@ -133,8 +133,8 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 
 		if (type == "simon")
 		{
-			string state, stairDirectionX, stairDirectionY;
-			string reloadState, reloadStairDirectionX, reloadStairDirectionY;
+			string state, stairDirectionX, stairDirectionY, directionX;
+			string reloadState, reloadStairDirectionX, reloadStairDirectionY, reloadDirectionX;
 
 			player = new CSimon();
 			player->SetId(id);
@@ -156,7 +156,13 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 					stairDirectionY = object->Attribute("stairDirectionY");
 				}
 
+				if (object->Attribute("directionX"))
+				{
+					directionX = object->Attribute("directionX");
+				}
+
 				player->SetPosition(x, y);
+				player->SetDirectionX(directionX == "left" ? Direction::Left : Direction::Right);
 				player->stairDirectionX = stairDirectionX == "right" ? Direction::Right : Direction::Left;
 				player->stairDirectionY = stairDirectionY == "" ? Direction::None : (stairDirectionY == "up" ? Direction::Up : Direction::Down);
 			}
@@ -182,7 +188,13 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 					reloadStairDirectionY = object->Attribute("reloadStairDirectionY");
 				}
 
+				if (object->Attribute("reloadDirectionX"))
+				{
+					reloadDirectionX = object->Attribute("reloadDirectionX");
+				}
+
 				player->SetPosition(reloadX, reloadY);
+				player->SetDirectionX(reloadDirectionX == "left" ? Direction::Left : Direction::Right);
 				player->stairDirectionX = reloadStairDirectionX == "right" ? Direction::Right : Direction::Left;
 				player->stairDirectionY = reloadStairDirectionY == "" ? Direction::None : (reloadStairDirectionY == "up" ? Direction::Up : Direction::Down);
 			}
@@ -660,32 +672,75 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 				simon->SetState(SIMON_STATE_IDLE);
 			}
 		}
-		if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
+		//
+		else if (game->GetInputManager()->IsKeyDown(DIK_RIGHT))
 		{
 			simon->SetDirectionX(Direction::Right);
 
-			if (!simon->sitting)
+			if (!simon->sitting && !simon->onStair)
 			{
 				simon->SetState(SIMON_STATE_WALK);
 			}
 
 			if (simon->onStair)
 			{
-				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+				if (simon->directionX == simon->stairDirectionX)
+				{
+					if (simon->stairDirectionY == Direction::Up)
+					{
+						simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+					}
+					else
+					{
+						simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+					}
+				}
+				else
+				{
+					if (simon->stairDirectionY == Direction::Up)
+					{
+						simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+					}
+					else
+					{
+						simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+					}
+				}
 			}
 		}
 		else if (game->GetInputManager()->IsKeyDown(DIK_LEFT))
 		{
 			simon->SetDirectionX(Direction::Left);
 
-			if (!simon->sitting)
+			if (!simon->sitting && !simon->onStair)
 			{
 				simon->SetState(SIMON_STATE_WALK);
 			}
 
 			if (simon->onStair)
 			{
-				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+				if (simon->directionX == simon->stairDirectionX)
+				{
+					if (simon->stairDirectionY == Direction::Up)
+					{
+						simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+					}
+					else
+					{
+						simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+					}
+				}
+				else
+				{
+					if (simon->stairDirectionY == Direction::Up)
+					{
+						simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+					}
+					else
+					{
+						simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+					}
+				}
 			}
 		}
 		else if (game->GetInputManager()->IsKeyDown(DIK_DOWN))
@@ -905,7 +960,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 					return;
 				}
 
-				if (simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+				if ((simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK || simon->GetState() == SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK) && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 				{
 					return;
 				}
@@ -970,7 +1025,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				{
 					return;
 				}
-
+				
 				simon->SetState(SIMON_STATE_JUMP);
 
 				break;

@@ -84,7 +84,16 @@ bool CWhip::HaveCollision(CGameObject* object)
 	GetBoundingBox(wl, wt, wr, wb);
 
 	scx = sl + (sr - sl) / 2;
-	wcy = wt + (wb - wt) / 3;
+
+	if (dynamic_cast<CBreakableBrick*>(object))
+	{
+		wcy = wt + (wb - wt) / 3;
+	}
+	else
+	{
+		wcy = wt + (wb - wt) / 2;
+	}
+
 	obcx = obl + (obr - obl) / 2;
 
 	if (CGame::GetInstance()->HaveCollision(this, object))

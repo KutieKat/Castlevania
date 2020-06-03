@@ -91,7 +91,7 @@ enum HealthType
 // Simon
 #define SIMON_WALK_SPEED 0.1f 
 #define SIMON_SLOW_WALK_SPEED 0.08f
-#define SIMON_JUMP_SPEED 0.55f
+#define SIMON_JUMP_SPEED 0.6f
 #define SIMON_GRAVITY 0.0025f
 
 #define SIMON_STATE_IDLE 1
@@ -447,7 +447,7 @@ enum HealthType
 #define GHOST_BBOX_HEIGHT 27
 #define GHOST_ANI_MOVE_RIGHT 0
 #define GHOST_ANI_MOVE_LEFT 1
-#define GHOST_MOVE_SPEED 0.05f
+#define GHOST_MOVE_SPEED 0.1f
 #define GHOST_SCORE 300
 
 // Fleamen

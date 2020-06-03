@@ -68,7 +68,7 @@ void CEnemySpawnerArea::CreateEnemy()
 
 		if (spawningPosition == "bottom_right")
 		{
-			spawnedEnemy->SetPosition(simon->x + 320, simon->y + 20);
+			spawnedEnemy->SetPosition(CGame::GetInstance()->GetCamera()->GetRight() - 10, simon->y + 20);
 			spawnedEnemy->SetDirectionX(Direction::Left);
 		}
 

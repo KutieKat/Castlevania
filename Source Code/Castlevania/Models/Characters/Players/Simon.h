@@ -18,6 +18,7 @@ public:
 	void ResetAnimations();
 
 	int GetAnimationToRender();
+	int jumpable;
 
 	bool partiallyInvisible;
 	bool fullyInvisible;

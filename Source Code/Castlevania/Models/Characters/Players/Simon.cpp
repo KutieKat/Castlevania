@@ -24,6 +24,7 @@
 #include "../../Items/Boomerang.h"
 #include "../../Items/SmallHeart.h"
 #include "../../Items/DoubleShot.h"
+#include "../../Items/TripleShot.h"
 #include "../../Items/PorkChop.h"
 #include "../../Items/Rosary.h"
 #include "../../Items/HolyWater.h"
@@ -43,6 +44,7 @@
 
 CSimon::CSimon()
 {
+	jumpable = false;
 	partiallyInvisible = false;
 	fullyInvisible = false;
 	sitting = false;
@@ -107,6 +109,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->ny < 0)
 				{
+					jumpable = true;
 					touchingGround = true;
 					onBar = false;
 				}
@@ -134,6 +137,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (e->ny < 0)
 						{
+							jumpable = true;
 							touchingGround = true;
 							onStair = false;
 							onBar = false;
@@ -167,6 +171,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (e->ny < 0)
 						{
+							jumpable = true;
 							touchingGround = true;
 							onStair = false;
 							onBar = false;
@@ -371,8 +376,13 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_JUMP:
 		if (touchingGround)
 		{
-			vy = -SIMON_JUMP_SPEED;
-			touchingGround = false;
+			if (jumpable)
+			{
+				jumpable = false;
+				touchingGround = false;
+
+				vy = -SIMON_JUMP_SPEED;
+			}
 		}
 
 		break;
@@ -890,6 +900,10 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	else if (dynamic_cast<CDoubleShot*>(item))
 	{
 		playerData->SetPower(DOUBLE_POWER);
+	}
+	else if (dynamic_cast<CTripleShot*>(item))
+	{
+		playerData->SetPower(TRIPLE_POWER);
 	}
 	else if (dynamic_cast<CPorkChop*>(item))
 	{
