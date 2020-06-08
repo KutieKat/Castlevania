@@ -25,11 +25,13 @@ public:
 	bool sitting;
 	bool touchingGround;
 	bool up;
+	bool down;
 	bool lastFrameShown;
 	bool standingToWatch;
 	bool onStair;
-	bool atBottomStair;
 	bool atTopStair;
+	bool atBottomStair;
+	bool atBiStair;
 	bool onBar;
 	bool deflecting;
 	bool switchSceneEnabled;
@@ -41,6 +43,11 @@ public:
 
 	Direction stairDirectionX;
 	Direction stairDirectionY;
+
+	Direction upsideDirectionX;
+	Direction upsideDirectionY;
+	Direction downsideDirectionX;
+	Direction downsideDirectionY;
 
 	DWORD waitingTime;
 	DWORD invisibleTimeout;

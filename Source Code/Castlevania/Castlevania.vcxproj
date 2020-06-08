@@ -75,10 +75,12 @@
     <ClCompile Include="Models\Misc\BigCandle.cpp" />
     <ClCompile Include="Models\Misc\BigDoubleShot.cpp" />
     <ClCompile Include="Models\Misc\BigTripleShot.cpp" />
+    <ClCompile Include="Models\Misc\BiStair.cpp" />
     <ClCompile Include="Models\Misc\Blackboard.cpp" />
     <ClCompile Include="Models\Misc\BottomStair.cpp" />
     <ClCompile Include="Models\Misc\BreakableBrick.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
+    <ClCompile Include="Models\Misc\CameraLocker.cpp" />
     <ClCompile Include="Models\Misc\EnemySpawnerArea.cpp" />
     <ClCompile Include="Models\Misc\Ground.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
@@ -172,10 +174,12 @@
     <ClInclude Include="Models\Misc\BigCandle.h" />
     <ClInclude Include="Models\Misc\BigDoubleShot.h" />
     <ClInclude Include="Models\Misc\BigTripleShot.h" />
+    <ClInclude Include="Models\Misc\BiStair.h" />
     <ClInclude Include="Models\Misc\Blackboard.h" />
     <ClInclude Include="Models\Misc\BottomStair.h" />
     <ClInclude Include="Models\Misc\BreakableBrick.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
+    <ClInclude Include="Models\Misc\CameraLocker.h" />
     <ClInclude Include="Models\Misc\EnemySpawnerArea.h" />
     <ClInclude Include="Models\Misc\Ground.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />

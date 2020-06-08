@@ -34,10 +34,6 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y, CSimon* si
 	{
 		return new CMoneyBag();
 	}
-	else if (type == "easter_egg")
-	{
-		return new CEasterEgg();
-	}
 	else if (type == "helicopter")
 	{
 		return new CHelicopter();
@@ -189,6 +185,10 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y, CSimon* si
 	else if (type == "raven")
 	{
 		return new CRaven(simon);
+	}
+	else if (type == "camera_locker")
+	{
+		return new CCameraLocker();
 	}
 	else
 	{

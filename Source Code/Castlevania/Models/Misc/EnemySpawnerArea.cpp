@@ -1,6 +1,7 @@
 #include "EnemySpawnerArea.h"
 #include "../../Game.h"
 #include "../Characters/Enemies/Ghost.h"
+#include "../Effects/Flash.h"
 #include "../Unit.h"
 
 CEnemySpawnerArea::CEnemySpawnerArea(CSimon* simon)
@@ -62,17 +63,18 @@ void CEnemySpawnerArea::SpawnEnemy()
 
 void CEnemySpawnerArea::CreateEnemy()
 {
+	CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
+
 	if (enemyType == "ghost")
 	{
 		spawnedEnemy = new CGhost(simon);
-
-		if (spawningPosition == "bottom_right")
-		{
-			spawnedEnemy->SetPosition(CGame::GetInstance()->GetCamera()->GetRight() - 10, simon->y + 20);
-			spawnedEnemy->SetDirectionX(Direction::Left);
-		}
-
-		CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
-		CUnit* unit = new CUnit(grid, spawnedEnemy, spawnedEnemy->x, spawnedEnemy->y);
 	}
+
+	if (spawningPosition == "bottom_right")
+	{
+		spawnedEnemy->SetPosition(CGame::GetInstance()->GetCamera()->GetRight() - 10, simon->y + 20);
+		spawnedEnemy->SetDirectionX(Direction::Left);
+	}
+
+	CUnit* unit = new CUnit(grid, spawnedEnemy, spawnedEnemy->x, spawnedEnemy->y);
 }

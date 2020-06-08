@@ -7,7 +7,9 @@
 
   <scene id="cut_scene_2" type="cut_scene" path="Resources\\Scenes\\CutScene2.xml" stage="02" previousSceneId="play_scene_1" nextSceneId="play_scene_2_1" requiredSceneId="" />
   <scene id="play_scene_2_1" type="play_scene" path="Resources\\Scenes\\Scene2.1.xml" stage="02" previousSceneId="cut_scene_2" nextSceneId="play_scene_2_2" needReloading="true" requiredSceneId="" />
-  <scene id="play_scene_2_2" type="play_scene" path="Resources\\Scenes\\Scene2.2.xml" stage="02" previousSceneId="play_scene_2_1" nextSceneId="play_scene_3_1" requiredSceneId="play_scene_2_1" />
+  <scene id="play_scene_2_2" type="play_scene" path="Resources\\Scenes\\Scene2.2.xml" stage="02" previousSceneId="play_scene_2_1" nextSceneId="cut_scene_3" requiredSceneId="play_scene_2_1" />
 
-  <scene id="play_scene_3_1" type="play_scene" path="Resources\\Scenes\\Scene3.1.xml" stage="03" previousSceneId="play_scene_2_2" nextSceneId="intro_scene" requiredSceneId="" />
+  <scene id="cut_scene_3" type="cut_scene" path="Resources\\Scenes\\CutScene3.xml" stage="03" previousSceneId="play_scene_2_2" nextSceneId="play_scene_3_1" requiredSceneId="" />
+  <scene id="play_scene_3_1" type="play_scene" path="Resources\\Scenes\\Scene3.1.xml" stage="03" previousSceneId="cut_scene_3" nextSceneId="play_scene_3_2" needReloading="true" requiredSceneId="" />
+  <scene id="play_scene_3_2" type="play_scene" path="Resources\\Scenes\\Scene3.2.xml" stage="03" previousSceneId="play_scene_3_1" nextSceneId="intro_scene" requiredSceneId="play_scene_3_1" />
 </scenes>

@@ -9,7 +9,7 @@ WBone::WBone()
 {
 	SetAnimationSet("bone");
 
-	elevation = 2;
+	elevation = WEAPON_DEFAULT_ELEVATION;
 	vy = -BONE_MOVE_SPEED_Y;
 }
 

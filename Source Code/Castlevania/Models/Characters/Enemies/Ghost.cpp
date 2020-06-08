@@ -33,8 +33,12 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	x += (directionX == Direction::Right ? GHOST_MOVE_SPEED : -GHOST_MOVE_SPEED) * dt;
-	y += (y < simon->y + 20 ? GHOST_MOVE_SPEED : -GHOST_MOVE_SPEED) * dt;
+	x += (directionX == Direction::Right) ? GHOST_MOVE_SPEED_X : -GHOST_MOVE_SPEED_X * dt;
+
+	if (x > simon->x - 60)
+	{
+		y += (y < ceil(simon->y) + 20) ? GHOST_MOVE_SPEED_Y : -GHOST_MOVE_SPEED_Y * dt;
+	}
 }
 
 void CGhost::Render()

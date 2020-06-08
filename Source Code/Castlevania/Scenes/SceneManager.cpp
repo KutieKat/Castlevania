@@ -121,6 +121,11 @@ void CSceneManager::SwitchScene(string sceneId, bool forced)
 	}
 	else
 	{
+		if (scene->GetPreviousSceneId() != "")
+		{
+			AddLoadedScenes(scene->GetPreviousSceneId());
+		}
+
 		scene->Load();
 		AddLoadedScenes(sceneId);
 	}

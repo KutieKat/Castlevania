@@ -8,7 +8,7 @@ WDagger::WDagger()
 {
 	SetAnimationSet("dagger");
 
-	elevation = 2;
+	elevation = WEAPON_DEFAULT_ELEVATION;
 }
 
 void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

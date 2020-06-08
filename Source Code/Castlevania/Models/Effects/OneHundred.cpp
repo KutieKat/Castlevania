@@ -4,6 +4,7 @@ COneHundred::COneHundred()
 {
 	isEffect = true;
 	SetAnimationSet("one_hundred");
+	elevation = EFFECT_DEFAULT_ELEVATION;
 }
 
 void COneHundred::GetBoundingBox(float & left, float & top, float & right, float & bottom)

@@ -25,6 +25,7 @@ public:
 
 	void AddHealthVolumes(int damages);
 	void DecreaseHealthVolumes(int damages = SIMON_DEFAULT_DAMAGES);
+	void ResetHealthVolumes();
 	int GetHealthVolumes();
 
 	void SetSubWeaponType(string type);

@@ -414,6 +414,12 @@
     <ClCompile Include="Models\Characters\Enemies\Raven.cpp">
       <Filter>Source Files\Models\Characters\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Models\Misc\BiStair.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Misc\CameraLocker.cpp">
+      <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations\AnimationManager.h">
@@ -709,6 +715,12 @@
     </ClInclude>
     <ClInclude Include="Models\Characters\Enemies\Raven.h">
       <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\BiStair.h">
+      <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Misc\CameraLocker.h">
+      <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

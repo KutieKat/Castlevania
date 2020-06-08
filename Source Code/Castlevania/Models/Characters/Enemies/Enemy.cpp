@@ -1,16 +1,27 @@
 #include "Enemy.h"
 #include "../../../Game.h"
+#include "../../Effects/Flash.h"
 
 CEnemy::CEnemy()
 {
 	mustInArea = false;
 	attacks = ENEMY_DEFAULT_ATTACKS;
 	delayTimeout = -1;
+	elevation = ENEMY_DEFAULT_ELEVATION;
 }
 
 void CEnemy::TakeDamage(int damages)
 {
 	attacks -= damages;
+
+	if (endingEffect == nullptr)
+	{
+		endingEffect = new CFlash();
+		endingEffect->SetPosition(x, y);
+
+		CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
+		CUnit* unit = new CUnit(grid, endingEffect, x, y);
+	}
 }
 
 void CEnemy::OnPlayerEnterArea()

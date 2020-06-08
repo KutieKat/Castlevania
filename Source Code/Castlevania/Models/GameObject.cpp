@@ -67,6 +67,16 @@ Direction CGameObject::GetDirectionX()
 	return directionX;
 }
 
+void CGameObject::SetDirectionY(Direction direction)
+{
+	directionY = direction;
+}
+
+Direction CGameObject::GetDirectionY()
+{
+	return directionY;
+}
+
 void CGameObject::SetId(string id)
 {
 	this->id = id;

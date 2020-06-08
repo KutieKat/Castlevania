@@ -8,7 +8,7 @@ CHolyWaterBottle::CHolyWaterBottle()
 {
 	SetAnimationSet("holy_water_bottle");
 
-	elevation = 2;
+	elevation = WEAPON_DEFAULT_ELEVATION;
 	vy = -HOLY_WATER_BOTTLE_MOVE_SPEED;
 
 	SetState(HOLY_WATER_BOTTLE_STATE_MOVE);

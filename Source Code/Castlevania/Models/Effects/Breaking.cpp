@@ -53,6 +53,10 @@ void CBreaking::GetBoundingBox(float & left, float & top, float & right, float &
 
 void CBreaking::Render()
 {
+	for (int i = 0; i < pieces.size(); i++)
+	{
+		pieces[i]->Render();
+	}
 }
 
 void CBreaking::GetPieceSpeed(int index, float & speedX, float & speedY)

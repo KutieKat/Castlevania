@@ -59,5 +59,9 @@ public:
 	virtual void KeyState(BYTE* states);
 	virtual void OnKeyDown(int keyCode);
 	virtual void OnKeyUp(int keyCode);
+
+	void OnHoldLeftKey();
+	void OnHoldRightKey();
+
 	CPlaySceneKeyHandler(CScene* s) : CSceneKeyHandler(s) {};
 };

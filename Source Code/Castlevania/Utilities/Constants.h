@@ -68,7 +68,6 @@ enum HealthType
 #define DEFAULT_GAME_TIME 300
 #define DEFAULT_WAITING_TIME 3000
 #define DEFAULT_SOFT_PAUSE_TIME 3000
-#define DEFAULT_ELEVATION 1
 #define ADDED_LIVES 10
 #define ADDED_HEARTS 100
 #define ADDED_SCORE 1000
@@ -80,6 +79,9 @@ enum HealthType
 #define CUT_SCENE_2 3
 #define PLAY_SCENE_2_1 4
 #define PLAY_SCENE_2_2 5
+#define CUT_SCENE_3 6
+#define PLAY_SCENE_3_1 7
+#define PLAY_SCENE_3_2 8
 
 // Input
 #define DIRECTINPUT_VERSION 0x0800
@@ -87,6 +89,14 @@ enum HealthType
 
 // Blackboard
 #define BLACKBOARD_HEIGHT 80
+
+// Elevation
+#define DEFAULT_ELEVATION 1
+#define ENEMY_DEFAULT_ELEVATION 2
+#define EFFECT_DEFAULT_ELEVATION 3
+#define WEAPON_DEFAULT_ELEVATION 4
+#define SIMON_DEFAULT_ELEVATION 10
+
 
 // Simon
 #define SIMON_WALK_SPEED 0.1f 
@@ -447,7 +457,8 @@ enum HealthType
 #define GHOST_BBOX_HEIGHT 27
 #define GHOST_ANI_MOVE_RIGHT 0
 #define GHOST_ANI_MOVE_LEFT 1
-#define GHOST_MOVE_SPEED 0.1f
+#define GHOST_MOVE_SPEED_X 0.1f
+#define GHOST_MOVE_SPEED_Y 0.05f
 #define GHOST_SCORE 300
 
 // Fleamen
@@ -464,7 +475,7 @@ enum HealthType
 #define FLEAMEN_ANI_IDLE_LEFT 1
 #define FLEAMEN_ANI_JUMP_RIGHT 2
 #define FLEAMEN_ANI_JUMP_LEFT 3
-#define FLEAMEN_SCORE 300
+#define FLEAMEN_SCORE 500
 #define FLEAMEN_ATTACKING_INTERVAL 3000
 
 // WhiteSkeleton
@@ -507,6 +518,14 @@ enum HealthType
 #define RAVEN_ATTACK_SPEED_Y 0.25f
 #define RAVEN_TO_SIMON_DISTANCE_X 120
 #define RAVEN_TO_SIMON_DISTANCE_Y 60
-#define RAVEN_AREA_RADIUS_X 100
-#define RAVEN_AREA_RADIUS_Y 100
+#define RAVEN_AREA_RADIUS_X 200
+#define RAVEN_AREA_RADIUS_Y 200
 #define RAVEN_SCORE 300
+
+// BiStair
+#define BI_STAIR_BBOX_WIDTH 12
+#define BI_STAIR_BBOX_HEIGHT 12
+
+// CameraLocker
+#define CAMERA_LOCKER_BBOX_WIDTH 32
+#define CAMERA_LOCKER_BBOX_HEIGHT 300

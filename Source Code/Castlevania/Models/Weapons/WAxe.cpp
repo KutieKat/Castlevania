@@ -8,7 +8,7 @@ WAxe::WAxe()
 {
 	SetAnimationSet("axe");
 
-	elevation = 2;
+	elevation = WEAPON_DEFAULT_ELEVATION;
 	vy = -AXE_MOVE_SPEED;
 }
 
@@ -32,7 +32,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x < CGame::GetInstance()->GetCamera()->GetTop() || x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft() || x > CGame::GetInstance()->GetCamera()->GetBottom())
+		if (y < CGame::GetInstance()->GetCamera()->GetTop() || y > CGame::GetInstance()->GetCamera()->GetBottom() || x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
 			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
 

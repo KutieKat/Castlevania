@@ -4,17 +4,13 @@
   
   <textures>
     <texture id="simon" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
-    <texture id="big_candle" path="Resources\\Ground\\BigCandle.png" r="255" g="0" b="255" />
-    <texture id="ground" path="Resources\\Ground\\Ground.png" r="255" g="0" b="255" />
     <texture id="whip" path="Resources\\Weapons\\Whip.png" r="255" g="0" b="255" />
     <texture id="one_hundred" path="Resources\\Effects\\OneHundred.png" r="255" g="0" b="255" />
     <texture id="seven_hundred" path="Resources\\Effects\\SevenHundred.png" r="255" g="0" b="255" />
-    <texture id="one_thousand" path="Resources\\Effects\\OneThousand.png" r="255" g="0" b="255" />
     <texture id="flash" path="Resources\\Effects\\Flash.png" r="255" g="0" b="255" />
     <texture id="big_heart" path="Resources\\Items\\BigHeart.png" r="255" g="0" b="255" />
     <texture id="dagger" path="Resources\\Items\\Dagger.png" r="255" g="0" b="255" />
     <texture id="money_bag" path="Resources\\Items\\MoneyBag.png" r="255" g="0" b="255" />
-    <texture id="morning_star" path="Resources\\Items\\MorningStar.png" r="255" g="0" b="255" />
     <texture id="blackboard" path="Resources\\Others\\Blackboard.png" r="0" g="0" b="0" />
     <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
     <texture id="transparency" path="Resources\\Others\\Transparency.png" r="255" g="0" b="255" />
@@ -36,7 +32,7 @@
     <texture id="bone" path="Resources\\Items\\Bone.png" r="255" g="0" b="255" />
     <texture id="triple_shot" path="Resources\\Items\\TripleShot.png" r="255" g="0" b="255" />
     <texture id="pork_chop" path="Resources\\Items\\PorkChop.png" r="255" g="0" b="255" />
-    <texture id="breakable_brick" path="Resources\\Ground\\BreakableBrick2.png" r="255" g="0" b="255" />
+    <texture id="breakable_brick" path="Resources\\Ground\\Brick2.png" r="255" g="0" b="255" />
     <texture id="brick_piece" path="Resources\\Ground\\BrickPiece.png" r="255" g="0" b="255" />
   </textures>
   
@@ -102,17 +98,6 @@
     <sprite id="flash_1" textureId="flash" left="0" top="0" right="15" bottom="19" />
     <sprite id="flash_2" textureId="flash" left="16" top="0" right="31" bottom="19" />
     
-    <!-- OneThousand -->
-    <sprite id="one_thousand_1" textureId="one_thousand" left="0" top="0" right="38" bottom="18" />
-    <sprite id="one_thousand_2" textureId="one_thousand" left="39" top="0" right="76" bottom="18" />
-    
-    <!-- BigCandle -->
-    <sprite id="big_candle_1" textureId="big_candle" left="0" top="0" right="31" bottom="63" />
-    <sprite id="big_candle_2" textureId="big_candle" left="32" top="0" right="63" bottom="63" />
-
-    <!-- Brick -->
-    <sprite id="brick" textureId="brick" left="0" top="0" right="32" bottom="32" />
-    
     <!-- BigHeart -->
     <sprite id="big_heart" textureId="big_heart" left="0" top="0" right="24" bottom="20" />
     
@@ -124,9 +109,6 @@
     <sprite id="money_bag_1" textureId="money_bag" left="0" top="0" right="29" bottom="29" />
     <sprite id="money_bag_2" textureId="money_bag" left="30" top="0" right="59" bottom="29" />
     <sprite id="money_bag_3" textureId="money_bag" left="60" top="0" right="89" bottom="29" />
-    
-    <!-- MorningStar -->
-    <sprite id="morning_star" textureId="morning_star" left="0" top="0" right="32" bottom="32" />
     
     <!-- Blackboard -->
     <sprite id="blackboard" textureId="blackboard" left="0" top="0" right="512" bottom="80" />
@@ -228,14 +210,14 @@
     <!-- Ghost -->
     <sprite id="ghost_left_1" textureId="ghost" left="0" top="0" right="27" bottom="27" />
     <sprite id="ghost_left_2" textureId="ghost" left="28" top="0" right="55" bottom="27" />
-    <sprite id="ghost_right_1" textureId="ghost" left="0" top="29" right="27" bottom="55" />
-    <sprite id="ghost_right_2" textureId="ghost" left="28" top="29" right="55" bottom="55" />
+    <sprite id="ghost_right_1" textureId="ghost" left="28" top="29" right="55" bottom="55" />
+    <sprite id="ghost_right_2" textureId="ghost" left="0" top="29" right="27" bottom="55" />
 
     <!-- Fleamen -->
     <sprite id="fleamen_left_1" textureId="fleamen" left="0" top="0" right="31" bottom="31" />
     <sprite id="fleamen_left_2" textureId="fleamen" left="34" top="0" right="65" bottom="31" />
-    <sprite id="fleamen_right_1" textureId="fleamen" left="0" top="32" right="31" bottom="63" />
-    <sprite id="fleamen_right_2" textureId="fleamen" left="34" top="32" right="65" bottom="63" />
+    <sprite id="fleamen_right_1" textureId="fleamen" left="34" top="32" right="65" bottom="63" />
+    <sprite id="fleamen_right_2" textureId="fleamen" left="0" top="32" right="31" bottom="63" />
 
     <!-- Fireball -->
     <sprite id="fireball" textureId="fireball" left="0" top="0" right="9" bottom="11" />
@@ -438,24 +420,7 @@
       <frame spriteId="flash_1" duration="100" />
       <frame spriteId="flash_2" duration="100" />
     </animation>
-    
-    <!-- OneThousand -->
-    <animation id="one_thousand">
-      <frame spriteId="one_thousand_1" duration="100" />
-      <frame spriteId="one_thousand_2" duration="100" />
-    </animation>
-    
-    <!-- BigCandle -->
-    <animation id="big_candle">
-      <frame spriteId="big_candle_1" duration="100" />
-      <frame spriteId="big_candle_2" duration="100" />
-    </animation>
 
-    <!-- Brick -->
-    <animation id="brick">
-      <frame spriteId="brick" duration="100" />
-    </animation>
-    
     <!-- BigHeart -->
     <animation id="big_heart">
       <frame spriteId="big_heart" duration="100" />
@@ -475,11 +440,6 @@
       <frame spriteId="money_bag_1" duration="100" />
       <frame spriteId="money_bag_2" duration="100" />
       <frame spriteId="money_bag_3" duration="100" />
-    </animation>
-    
-    <!-- MorningStar -->
-    <animation id="morning_star">
-      <frame spriteId="morning_star" duration="100" />
     </animation>
     
     <!-- Blackboard -->
@@ -814,18 +774,6 @@
       <animationSetItem id="flash" animationId="flash" />
     </animationSet>
     
-    <animationSet id="one_thousand">
-      <animationSetItem id="one_thousand" animationId="one_thousand" />
-    </animationSet>
-    
-    <animationSet id="big_candle">
-      <animationSetItem id="big_candle" animationId="big_candle" />
-    </animationSet>
-
-    <animationSet id="brick">
-      <animationSetItem id="brick" animationId="brick" />
-    </animationSet>
-    
     <animationSet id="big_heart">
       <animationSetItem id="big_heart" animationId="big_heart" />
     </animationSet>
@@ -837,10 +785,6 @@
     
     <animationSet id="money_bag">
       <animationSetItem id="money_bag" animationId="money_bag" />
-    </animationSet>
-    
-    <animationSet id="morning_star">
-      <animationSetItem id="morning_star" animationId="morning_star" />
     </animationSet>
     
     <animationSet id="blackboard">
@@ -975,7 +919,7 @@
   </animationSets>
 
   <objects gridWidth="1536" gridHeight="448" cellWidth="64" cellHeight="64">
-    <object id="simon" type="simon" animationSetId="simon" x="100" y="100" directionX="left" />
+    <object id="simon" type="simon" animationSetId="simon" x="1400" y="100" directionX="left" reloadX="160" reloadY="78" reloadState="on_stair" reloadStairDirectionX="right" reloadStairDirectionY="down" />
 
     <object id="brick_1" type="brick" animationSetId="transparency" x="32" y="174" />
     <object id="brick_2" type="brick" animationSetId="transparency" x="32" y="206" />

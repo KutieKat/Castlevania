@@ -142,8 +142,6 @@ void CFleamen::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
-
-				//if (e->ny != 0) vy = 0;
 			}
 		}
 	}
@@ -193,7 +191,7 @@ void CFleamen::TakeDamage(int damages)
 	if (attacks <= 0)
 	{
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(FLEAMEN_SCORE); // 500
+		CGame::GetInstance()->GetPlayerData()->AddScore(FLEAMEN_SCORE);
 	}
 	else
 	{

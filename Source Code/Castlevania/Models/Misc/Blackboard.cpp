@@ -163,17 +163,24 @@ void CBlackboard::UpdatePosition()
 {
 	if (tileMap)
 	{
-		if (simon->x < SCREEN_WIDTH / 2)
+		if (tileMap->GetWidth() < SCREEN_WIDTH)
 		{
 			x = 0;
 		}
-		else if (simon->x + SCREEN_WIDTH / 2 >= tileMap->GetWidth())
-		{
-			x = tileMap->GetWidth() > SCREEN_WIDTH + 50 ? tileMap->GetWidth() - SCREEN_WIDTH : 0;
-		}
 		else
 		{
-			x = simon->x - SCREEN_WIDTH / 2;
+			if (simon->x < SCREEN_WIDTH / 2 - SIMON_BBOX_WIDTH)
+			{
+				x = 0;
+			}
+			else if (simon->x >= tileMap->GetWidth() - SCREEN_WIDTH / 2 - SIMON_BBOX_WIDTH)
+			{
+				x = tileMap->GetWidth() - SCREEN_WIDTH;
+			}
+			else
+			{
+				x = simon->x + SIMON_BBOX_WIDTH - SCREEN_WIDTH / 2;
+			}
 		}
 	}
 }
@@ -262,8 +269,8 @@ void CBlackboard::UpdateWhipPowerType()
 
 	if (whipPower)
 	{
-		float whipPowerX = x + 438;
-		float whipPowerY = y + 30;
+		float whipPowerX = ceil(x) + 438;
+		float whipPowerY = ceil(y) + 30;
 
 		whipPower->SetPosition(whipPowerX, whipPowerY);
 	}

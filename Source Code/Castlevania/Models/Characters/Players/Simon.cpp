@@ -2,16 +2,19 @@
 #include "../../../Game.h"
 #include "../../Characters/Enemies/RedBat.h"
 #include "../../Characters/Enemies/Fleamen.h"
+#include "../../Characters/Enemies/WhiteSkeleton.h"
 #include "../../Effects/Flash.h"
 #include "../../Misc/Ground.h"
 #include "../../Misc/Brick.h"
 #include "../../Misc/TopStair.h"
 #include "../../Misc/BottomStair.h"
+#include "../../Misc/BiStair.h"
 #include "../../Misc/NextScene.h"
 #include "../../Misc/PreviousScene.h"
 #include "../../Misc/MovingBar.h"
 #include "../../Misc/BreakableBrick.h"
 #include "../../Misc/EnemySpawnerArea.h"
+#include "../../Misc/CameraLocker.h"
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
 #include "../../Items/EasterEgg.h"
@@ -49,17 +52,20 @@ CSimon::CSimon()
 	fullyInvisible = false;
 	sitting = false;
 	touchingGround = false;
+	up = false;
+	down = false;
 	lastFrameShown = false;
 	standingToWatch = false;
 	onStair = false;
 	atTopStair = false;
 	atBottomStair = false;
+	atBiStair = false;
 	onBar = false;
 	deflecting = false;
 	switchSceneEnabled = false;
 
 	sittingCounter = 0;
-	elevation = 10;
+	elevation = SIMON_DEFAULT_ELEVATION;
 	delayEndTime = -1;
 	switchSceneTime = -1;
 	waitingTime = -1;
@@ -202,6 +208,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny > 0) y += dy;
 				}
 			}
+			else if (dynamic_cast<CEasterEgg*>(e->obj))
+			{
+				if (e->nx != 0) x += dx;
+			}
 			else if (dynamic_cast<CEnemy*>(e->obj))
 			{
 				y -= min_ty * dy + ny * 0.4f;
@@ -213,20 +223,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->ny < 0)
 				{
+					jumpable = true;
 					touchingGround = true;
 					onBar = true;
 
 					vx = e->obj->vx;
 				}
-			}
-			else if (dynamic_cast<CEasterEgg*>(e->obj))
-			{
-				auto easterEgg = dynamic_cast<CEasterEgg*>(e->obj);
-
-				easterEgg->ShowHiddenItem();
-				easterEgg->removable = true;
-
-				x += dx;
 			}
 			else if (dynamic_cast<CNextScene*>(e->obj))
 			{
@@ -288,34 +290,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					y += dy;
 				}
 			}
-			else if (dynamic_cast<CBottomStair*>(e->obj))
+			else if (dynamic_cast<CCameraLocker*>(e->obj))
 			{
-				auto stair = dynamic_cast<CBottomStair*>(e->obj);
-
-				if (onStair)
-				{
-					onStair = false;
-					SetState(SIMON_STATE_IDLE);
-				}
-
-				stairDirectionX = stair->directionX;
-				stairDirectionY = stair->directionY;
-
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
-			}
-			else if (dynamic_cast<CTopStair*>(e->obj))
-			{
-				auto stair = dynamic_cast<CTopStair*>(e->obj);
-
-				if (onStair)
-				{
-					onStair = false;
-					SetState(SIMON_STATE_IDLE);
-				}
-
-				stairDirectionX = stair->directionX;
-				stairDirectionY = stair->directionY;
+				CGame::GetInstance()->GetCamera()->Lock();
 
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
@@ -351,7 +328,14 @@ void CSimon::Render()
 	}
 	else if (fullyInvisible)
 	{
-		alpha = 0;
+		if (invisibleTimeout != -1 && GetTickCount() <= invisibleTimeout - 2000)
+		{
+			alpha = 0;
+		}
+		else
+		{
+			alpha = 100;
+		}
 	}
 	else
 	{
@@ -483,6 +467,7 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_IDLE_ON_STAIR:
 		vx = 0;
 		vy = 0;
+
 		break;
 
 	case SIMON_STATE_WALK_DOWNSTAIR:
@@ -766,7 +751,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 
 	if (coObjects && state != SIMON_STATE_DIE)
 	{
-		int countAtBottom = 0, countAtTop = 0;
+		int countAtBottom = 0, countAtTop = 0, countAtBi = 0;
 		CGame* game = CGame::GetInstance();
 
 		for (int i = 0; i < coObjects->size(); i++)
@@ -798,13 +783,114 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				{
 					HandleCollisionWithEnemies(object);
 				}
+				else if (dynamic_cast<CEasterEgg*>(object))
+				{
+					auto easterEgg = dynamic_cast<CEasterEgg*>(object);
+
+					if (!easterEgg->MustSit() || (easterEgg->MustSit() && sitting == true))
+					{
+						easterEgg->ShowHiddenItem();
+						easterEgg->removable = true;
+					}
+				}
 				else if (dynamic_cast<CTopStair*>(object))
 				{
 					countAtTop++;
+
+					auto stair = dynamic_cast<CTopStair*>(object);
+
+					if (!onStair)
+					{
+						directionY = stair->directionY;
+						stairDirectionX = stair->directionX;
+						stairDirectionY = stair->directionY;
+					}
+					else
+					{
+						bool reversedDirectionX = (stair->directionX == Direction::Right && directionX == Direction::Left) || (stair->directionX == Direction::Left && directionX == Direction::Right);
+						bool reversedDirectionY = stair->directionY == Direction::Down && directionY == Direction::Up;
+
+						if (reversedDirectionX && reversedDirectionY)
+						{
+							onStair = false;
+							SetState(SIMON_STATE_IDLE);
+						}
+					}
 				}
 				else if (dynamic_cast<CBottomStair*>(object))
 				{
 					countAtBottom++;
+
+					auto stair = dynamic_cast<CBottomStair*>(object);
+
+					if (!onStair)
+					{
+						directionY = stair->directionY;
+						stairDirectionX = stair->directionX;
+						stairDirectionY = stair->directionY;
+					}
+					else
+					{
+						bool reversedDirectionX = (stair->directionX == Direction::Right && directionX == Direction::Left) || (stair->directionX == Direction::Left && directionX == Direction::Right);
+						bool reversedDirectionY = stair->directionY == Direction::Up && directionY == Direction::Down;
+
+						if (reversedDirectionX && reversedDirectionY)
+						{
+							onStair = false;
+							SetState(SIMON_STATE_IDLE);
+						}
+					}
+				}
+				else if (dynamic_cast<CBiStair*>(object))
+				{
+					countAtBi++;
+
+					auto stair = dynamic_cast<CBiStair*>(object);
+
+					upsideDirectionX = stair->upsideDirectionX;
+					upsideDirectionY = stair->upsideDirectionY;
+					downsideDirectionX = stair->downsideDirectionX;
+					downsideDirectionY = stair->downsideDirectionY;
+
+					if (!onStair)
+					{
+						if (up)
+						{
+							directionY = stair->upsideDirectionY;
+							stairDirectionX = stair->upsideDirectionX;
+							stairDirectionY = stair->upsideDirectionY;
+
+							if (directionX == stairDirectionX)
+							{
+								onStair = true;
+								SetState(SIMON_STATE_WALK_UPSTAIR);
+							}
+						}
+						
+						if (down)
+						{
+							directionY = stair->downsideDirectionY;
+							stairDirectionX = stair->downsideDirectionX;
+							stairDirectionY = stair->downsideDirectionY;
+
+							if (directionX == stairDirectionX)
+							{
+								onStair = true;
+								SetState(SIMON_STATE_WALK_DOWNSTAIR);
+							}
+						}
+					}
+					else
+					{
+						bool reversedDirectionX = (downsideDirectionX == Direction::Right && directionX == Direction::Left) || (upsideDirectionX == Direction::Right && directionX == Direction::Left);
+						bool reversedDirectionY = (downsideDirectionY == Direction::Down && directionY == Direction::Up) || (upsideDirectionY == Direction::Up && directionY == Direction::Down);
+						
+						if (reversedDirectionX && reversedDirectionY && y + SIMON_BBOX_HEIGHT <= stair->y + 12)
+						{
+							onStair = false;
+							SetState(SIMON_STATE_IDLE);
+						}
+					}
 				}
 				else if (dynamic_cast<CEnemySpawnerArea*>(object))
 				{
@@ -848,6 +934,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 
 		atTopStair = touchingGround && countAtTop > 0;
 		atBottomStair = touchingGround && countAtBottom > 0;
+		atBiStair = touchingGround && countAtBi > 0;
 	}
 }
 
@@ -943,7 +1030,19 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
 		}
 
-		playerData->DecreaseHealthVolumes();
+		if (dynamic_cast<CWhiteSkeleton*>(item))
+		{
+			auto whiteSkeleton = dynamic_cast<CWhiteSkeleton*>(item);
+
+			if (whiteSkeleton->GetState() != WHITE_SKELETON_STATE_DIE)
+			{
+				playerData->DecreaseHealthVolumes();
+			}
+		}
+		else
+		{
+			playerData->DecreaseHealthVolumes();
+		}
 
 		if (!onStair)
 		{

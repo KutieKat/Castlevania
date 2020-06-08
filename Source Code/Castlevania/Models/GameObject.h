@@ -61,8 +61,8 @@ public:
 	void SetDirectionX(Direction direction);
 	Direction GetDirectionX();
 
-	void SetDirectionY(Direction direction) { directionY = direction; }
-	Direction GetDirectionY() { return directionY; };
+	void SetDirectionY(Direction direction);
+	Direction GetDirectionY();
 
 	void SetId(string id);
 	string GetId();
@@ -103,7 +103,6 @@ public:
 
 	void SetEndingEffect(CGameObject* effect);
 	void SetElevation(int elevation);
-
 	void Pause();
 
 	bool Over();

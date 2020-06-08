@@ -5,6 +5,8 @@
 CEasterEgg::CEasterEgg()
 {
 	SetAnimationSet("transparency");
+
+	mustSit = false;
 }
 
 void CEasterEgg::ShowHiddenItem()
@@ -20,6 +22,16 @@ void CEasterEgg::GetBoundingBox(float& left, float& top, float& right, float& bo
 	top = y;
 	right = left + EASTER_EGG_BBOX_WIDTH;
 	bottom = top + EASTER_EGG_BBOX_HEIGHT;
+}
+
+void CEasterEgg::SetMustSit(bool mustSit)
+{
+	this->mustSit = mustSit;
+}
+
+bool CEasterEgg::MustSit()
+{
+	return mustSit;
 }
 
 void CEasterEgg::Render()

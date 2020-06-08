@@ -8,7 +8,7 @@ WStopwatch::WStopwatch()
 {
 	SetAnimationSet("stopwatch");
 
-	elevation = 2;
+	elevation = WEAPON_DEFAULT_ELEVATION;
 	vy = -STOPWATCH_MOVE_SPEED;
 }
 

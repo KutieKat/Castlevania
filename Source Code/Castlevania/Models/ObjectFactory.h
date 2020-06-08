@@ -13,7 +13,6 @@
 #include "Items/BigHeart.h"
 #include "Items/MoneyBag.h"
 #include "Items/MorningStar.h"
-#include "Items/EasterEgg.h"
 #include "Items/Dagger.h"
 #include "Items/RedMoneyBag.h"
 #include "Items/PurpleMoneyBag.h"
@@ -54,6 +53,7 @@
 #include "Misc/BigTripleShot.h"
 #include "Misc/SmallCandle.h"
 #include "Misc/BreakableBrick.h"
+#include "Misc/CameraLocker.h"
 using namespace std;
 
 class CObjectFactory

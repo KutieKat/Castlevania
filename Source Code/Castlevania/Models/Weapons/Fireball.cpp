@@ -1,15 +1,12 @@
 #include "Fireball.h"
 #include "../../Game.h"
 #include "../Characters/Enemies/Enemy.h"
-#include "../Misc/Brick.h"
-#include "../Misc/Ground.h"
-#include "../Misc/BottomStair.h"
 
 WFireball::WFireball()
 {
 	SetAnimationSet("fireball");
 
-	elevation = 2;
+	elevation = WEAPON_DEFAULT_ELEVATION;
 }
 
 void WFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -18,66 +15,8 @@ void WFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	rotation = atan2(targetY - y, targetX - x);
 
-	dx = cos(rotation) * 0.1f * dt;
-	dy = sin(rotation) * 0.1f * dt;
-
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-
-	if (coObjects) CalcPotentialCollisions(coObjects, coEvents);
-
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
-
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-
-			//if (dynamic_cast<CGround*>(e->obj))
-			//{
-			//	removable = true;
-			//}
-			//else if (dynamic_cast<CBrick*>(e->obj))
-			//{
-			//	auto brick = dynamic_cast<CBrick*>(e->obj);
-
-			//	if (brick->isGround)
-			//	{
-			//		removable = true;
-			//	}
-			//	else
-			//	{
-			//		if (e->nx != 0) x += dx;
-			//		if (e->ny != 0) y += dy;
-			//	}
-			//}
-			//else
-			//{
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
-			//}
-		}
-	}
-
-	for (UINT i = 0; i < coEvents.size(); i++)
-	{
-		delete coEvents[i];
-	}
+	x += cos(rotation) * 0.1f * dt;
+	y += sin(rotation) * 0.1f * dt;
 }
 
 void WFireball::GetBoundingBox(float& left, float& top, float& right, float& bottom)

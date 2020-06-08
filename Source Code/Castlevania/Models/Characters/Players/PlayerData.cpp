@@ -84,6 +84,11 @@ void CPlayerData::DecreaseHealthVolumes(int damages)
 	healthVolumes -= damages;
 }
 
+void CPlayerData::ResetHealthVolumes()
+{
+	healthVolumes = HEALTH_BAR_MAX_VOLUMES;
+}
+
 int CPlayerData::GetHealthVolumes()
 {
 	return healthVolumes;

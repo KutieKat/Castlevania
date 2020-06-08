@@ -10,7 +10,7 @@ WBoomerang::WBoomerang(CSimon* simon)
 	SetAnimationSet("boomerang");
 
 	this->simon = simon;
-	this->elevation = 2;
+	this->elevation = WEAPON_DEFAULT_ELEVATION;
 	this->collisionCount = 0;
 	this->directionX = simon->directionX;
 	this->vx = simon->directionX == Direction::Right ? BOOMERANG_MOVE_SPEED : -BOOMERANG_MOVE_SPEED;
