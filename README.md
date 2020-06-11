@@ -1,9 +1,44 @@
 # Castlevania
 My clone of Castlevania (NES) - Introduction to Game Programming Course (SE102)
+![Logo](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Logo.png?raw=true)
 
 ## Introduction
 - **Castlevania**, known in Japan as *Akumajou Dracula* (translated as "Demon Castle Dracula"), is a game developed and published by Konami for the Famicom Disk System in Japan in September of 1986. In May 1987 it was ported to cartridge format and released in North America for the NES followed by a European release in 1988, and then once again in Japan in 1993. It is the first game in the Castlevania franchise, but the seventh chronological installment of the franchise in the current canon.
 - This project is my clone of **Castlevania** which serves as the final project for the course Introduction to Game Programming Course (SE102). It consists of some scenes that were picked from the original game by the lecturer.
+
+## Full Map
+![Full Map](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/FullMap.png?raw=true)
+
+## Screenshots
+### Intro Scene
+![Intro Scene](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/IntroScene.png?raw=true)
+
+### Cut Scene 1
+![Cut Scene 1](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/CutScene1.png?raw=true)
+
+### Scene 1
+![Scene 1](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Scene1.png?raw=true)
+
+### Cut Scene 2
+![Cut Scene 2](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/CutScene2.png?raw=true)
+
+### Scene 2.1
+![Scene 2.1](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Scene2.1.png?raw=true)
+
+### Scene 2.2
+![Scene 2.2](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Scene2.2.png?raw=true)
+
+### Cut Scene 3
+![Cut Scene 3](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/CutScene3.png?raw=true)
+
+### Scene 3.1
+![Scene 3.1](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Scene3.1.png?raw=true)
+
+### Scene 3.2
+![Scene 3.2](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Scene3.2.png?raw=true)
+
+### Scene 4
+![Scene 4](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Scene4.png?raw=true)
 
 ## Controls
 Control(s) | Action  |
@@ -28,6 +63,10 @@ Control(s) | Action  |
 `F5` | Resets current scene
 `F6` | Switches to scene 2.1
 `F7` | Switches to scene 2.2
+`F8` | Switches to cut scene 3
+`F9` | Switches to scene 3.1
+`F10` | Switches to scene 3.2
+`F11` | Switches to scene 4
 `1` | Toggles whip level 2
 `2` | Toggles whip level 3
 `3` | Toggles double powered whip
