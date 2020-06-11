@@ -8,7 +8,7 @@
   
   <sprites>
     <!-- Background -->
-    <sprite id="background" textureId="background" left="0" top="0" right="514" bottom="450" />
+    <sprite id="background" textureId="background" left="0" top="0" right="528" bottom="528" />
     
     <!-- IntroBat -->
     <sprite id="intro_bat_1" textureId="intro_bat" left="0" top="0" right="157" bottom="122" />
@@ -71,6 +71,6 @@
   
   <objects>
     <object id="background" type="background" animationSetId="background" x="0" y="0" />
-    <object id="intro_bat" type="intro_bat" animationSetId="intro_bat" x="360" y="202" />
+    <object id="intro_bat" type="intro_bat" animationSetId="intro_bat" x="360" y="206" />
   </objects>
 </resources>

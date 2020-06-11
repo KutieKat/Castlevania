@@ -2,7 +2,7 @@
 
 CGround::CGround()
 {
-	SetAnimationSet("ground");
+	SetAnimationSet("transparency");
 }
 
 void CGround::Render()
@@ -14,6 +14,16 @@ void CGround::GetBoundingBox(float& left, float& top, float& right, float& botto
 {
 	left = x;
 	top = y;
-	right = left + GROUND_BBOX_WIDTH;
-	bottom = top + GROUND_BBOX_HEIGHT;
+	right = left + width;
+	bottom = top + height;
+}
+
+void CGround::SetWidth(float width)
+{
+	this->width = width;
+}
+
+void CGround::SetHeight(float height)
+{
+	this->height = height;
 }

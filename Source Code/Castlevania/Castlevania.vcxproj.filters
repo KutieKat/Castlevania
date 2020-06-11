@@ -121,6 +121,12 @@
     <Filter Include="Source Files\Models\Characters\Enemies">
       <UniqueIdentifier>{abdc5852-2433-4572-a667-1c8d1b3b99b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Models\Characters\Bosses">
+      <UniqueIdentifier>{8d727918-6f40-4896-ac46-9427e4543b15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models\Characters\Bosses">
+      <UniqueIdentifier>{b6d00775-4262-4f33-b1fb-139fddc091dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprites\SpriteManager.cpp">
@@ -419,6 +425,15 @@
     </ClCompile>
     <ClCompile Include="Models\Misc\CameraLocker.cpp">
       <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Enemies\Ghoul.cpp">
+      <Filter>Source Files\Models\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Bosses\PhantomBat.cpp">
+      <Filter>Source Files\Models\Characters\Bosses</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Characters\Bosses\BossData.cpp">
+      <Filter>Source Files\Models\Characters\Bosses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -721,6 +736,15 @@
     </ClInclude>
     <ClInclude Include="Models\Misc\CameraLocker.h">
       <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Enemies\Ghoul.h">
+      <Filter>Header Files\Models\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Bosses\PhantomBat.h">
+      <Filter>Header Files\Models\Characters\Bosses</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Characters\Bosses\BossData.h">
+      <Filter>Header Files\Models\Characters\Bosses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

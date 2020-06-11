@@ -12,9 +12,8 @@ public:
 	void SetTarget(float x, float y);
 
 protected:
+	float angle;
 	float targetX;
 	float targetY;
-
-	float rotation;
 };
 

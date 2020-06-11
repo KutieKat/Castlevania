@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <tileMap mapPath="Resources\\Maps\\Scene2.2.Map.xml" tilesetPath="Resources\\Maps\\Scene2.2.png" />
-
+  <tileMap mapPath="Resources\\Maps\\Scene4.Map.xml" tilesetPath="Resources\\Maps\\Scene4.png" />
+  
   <textures>
     <texture id="simon" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
     <texture id="whip" path="Resources\\Weapons\\Whip.png" r="255" g="0" b="255" />
-    <texture id="seven_hundred" path="Resources\\Effects\\SevenHundred.png" r="255" g="0" b="255" />
+    <texture id="one_hundred" path="Resources\\Effects\\OneHundred.png" r="255" g="0" b="255" />
+    <texture id="one_thousand" path="Resources\\Effects\\OneThousand.png" r="255" g="0" b="255" />
     <texture id="flash" path="Resources\\Effects\\Flash.png" r="255" g="0" b="255" />
     <texture id="big_heart" path="Resources\\Items\\BigHeart.png" r="255" g="0" b="255" />
     <texture id="dagger" path="Resources\\Items\\Dagger.png" r="255" g="0" b="255" />
     <texture id="money_bag" path="Resources\\Items\\MoneyBag.png" r="255" g="0" b="255" />
+    <texture id="morning_star" path="Resources\\Items\\MorningStar.png" r="255" g="0" b="255" />
     <texture id="blackboard" path="Resources\\Others\\Blackboard.png" r="0" g="0" b="0" />
     <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
     <texture id="transparency" path="Resources\\Others\\Transparency.png" r="255" g="0" b="255" />
     <texture id="health_volume" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
-    <texture id="moving_bar" path="Resources\\Ground\\MovingBar.png" r="255" g="0" b="255" />
-    <texture id="small_heart" path="Resources\\Items\\SmallHeart.png" r="255" g="0" b="255" />
-    <texture id="double_shot" path="Resources\\Items\\DoubleShot.png" r="255" g="0" b="255" />
+    <texture id="paused" path="Resources\\Others\\Paused.png" r="255" g="0" b="255" />
+    <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
     <texture id="big_triple_shot" path="Resources\\Others\\BigTripleShot.png" r="255" g="0" b="255" />
-    <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
-    <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
-    <texture id="breakable_brick" path="Resources\\Ground\\Brick1.png" r="255" g="0" b="255" />
-    <texture id="brick_piece" path="Resources\\Ground\\BrickPiece.png" r="255" g="0" b="255" />
-    <texture id="red_bat" path="Resources\\Characters\\Enemies\\RedBat.png" r="255" g="0" b="255" />
-    <texture id="spear_knight" path="Resources\\Characters\\Enemies\\SpearKnight.png" r="255" g="0" b="255" />
-    <texture id="paused" path="Resources\\Others\\Paused.png" r="255" g="0" b="255" />
     <texture id="axe" path="Resources\\Items\\Axe.png" r="255" g="0" b="255" />
     <texture id="holy_water" path="Resources\\Items\\HolyWater.png" r="255" g="0" b="255" />
     <texture id="holy_water_bottle" path="Resources\\Items\\HolyWaterBottle.png" r="255" g="0" b="255" />
     <texture id="stopwatch" path="Resources\\Items\\Stopwatch.png" r="255" g="0" b="255" />
+    <texture id="ghoul" path="Resources\\Characters\\Enemies\\Ghoul.png" r="255" g="0" b="255" />
+    <texture id="phantom_bat" path="Resources\\Characters\\Bosses\\PhantomBat.png" r="255" g="0" b="255" />
+    <texture id="magic_crystal" path="Resources\\Items\\MagicCrystal.png" r="255" g="0" b="255" />
+    <texture id="double_shot" path="Resources\\Items\\DoubleShot.png" r="255" g="0" b="255" />
+    <texture id="breakable_brick" path="Resources\\Ground\\Brick3.png" r="255" g="0" b="255" />
+    <texture id="brick_piece" path="Resources\\Ground\\BrickPiece.png" r="255" g="0" b="255" />
+    <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
+    <texture id="small_heart" path="Resources\\Items\\SmallHeart.png" r="255" g="0" b="255" />
+    <texture id="invisibility_potion" path="Resources\\Items\\InvisibilityPotion.png" r="255" g="0" b="255" />
   </textures>
-
+  
   <sprites>
     <!-- Simon -->
     <sprite id="simon_idle_left" textureId="simon" left="0" top="0" right="60" bottom="66" />
@@ -89,38 +92,45 @@
     <sprite id="simon_deflect_right" textureId="simon" left="420" top="331" right="480" bottom="397" />
     <sprite id="simon_die_right" textureId="simon" left="180" top="463" right="240" bottom="529" />
     <sprite id="simon_watch" textureId="simon" left="60" top="66" right="120" bottom="132" />
-
+    
     <!-- Flash -->
     <sprite id="flash_1" textureId="flash" left="0" top="0" right="15" bottom="19" />
     <sprite id="flash_2" textureId="flash" left="16" top="0" right="31" bottom="19" />
 
-    <!-- SevenHundred -->
-    <sprite id="seven_hundred_1" textureId="seven_hundred" left="0" top="0" right="31" bottom="17" />
-    <sprite id="seven_hundred_2" textureId="seven_hundred" left="32" top="0" right="63" bottom="17" />
-
+    <!-- OneHundred -->
+    <sprite id="one_hundred_1" textureId="one_hundred" left="0" top="0" right="31" bottom="17" />
+    <sprite id="one_hundred_2" textureId="one_hundred" left="32" top="0" right="63" bottom="17" />
+    
+    <!-- OneThousand -->
+    <sprite id="one_thousand_1" textureId="one_thousand" left="0" top="0" right="38" bottom="18" />
+    <sprite id="one_thousand_2" textureId="one_thousand" left="39" top="0" right="76" bottom="18" />
+    
     <!-- BigHeart -->
     <sprite id="big_heart" textureId="big_heart" left="0" top="0" right="24" bottom="20" />
-
+    
     <!-- Dagger -->
     <sprite id="dagger_right" textureId="dagger" left="0" top="0" right="32" bottom="18" />
     <sprite id="dagger_left" textureId="dagger" left="0" top="19" right="32" bottom="36" />
-
+    
     <!-- MoneyBag -->
     <sprite id="money_bag_1" textureId="money_bag" left="0" top="0" right="29" bottom="29" />
     <sprite id="money_bag_2" textureId="money_bag" left="30" top="0" right="59" bottom="29" />
     <sprite id="money_bag_3" textureId="money_bag" left="60" top="0" right="89" bottom="29" />
-
+    
+    <!-- MorningStar -->
+    <sprite id="morning_star" textureId="morning_star" left="0" top="0" right="32" bottom="32" />
+    
     <!-- Blackboard -->
     <sprite id="blackboard" textureId="blackboard" left="0" top="0" right="512" bottom="80" />
-
+    
     <!-- HealthVolume -->
     <sprite id="health_volume_player" textureId="health_volume" left="0" top="0" right="10" bottom="17" />
     <sprite id="health_volume_empty" textureId="health_volume" left="11" top="0" right="21" bottom="17" />
     <sprite id="health_volume_enemy" textureId="health_volume" left="22" top="0" right="32" bottom="17" />
-
+    
     <!-- Transparency -->
     <sprite id="transparency" textureId="transparency" left="0" top="0" right="32" bottom="32" />
-
+    
     <!-- Whip -->
     <sprite id="whip_level_1_left_1" textureId="whip" left="50" top="0" right="165" bottom="66" />
     <sprite id="whip_level_1_left_2" textureId="whip" left="290" top="0" right="405" bottom="66" />
@@ -159,14 +169,8 @@
     <sprite id="whip_level_3_right_11" textureId="whip" left="315" top="727" right="455" bottom="793" />
     <sprite id="whip_level_3_right_12" textureId="whip" left="75" top="727" right="215" bottom="793" />
     
-    <!-- MovingBar -->
-    <sprite id="moving_bar" textureId="moving_bar" left="0" top="0" right="63" bottom="15" />
-
-    <!-- SmallHeart -->
-    <sprite id="small_heart" textureId="small_heart" left="0" top="0" right="15" bottom="15" />
-
-    <!-- DoubleShot -->
-    <sprite id="double_shot" textureId="double_shot" left="0" top="0" right="31" bottom="31" />
+    <!-- Paused -->
+    <sprite id="paused" textureId="paused" left="0" top="0" right="246" bottom="40" />
 
     <!-- BigDoubleShot -->
     <sprite id="big_double_shot_1" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
@@ -180,44 +184,6 @@
     <sprite id="boomerang_1" textureId="boomerang" left="0" top="0" right="27" bottom="27" />
     <sprite id="boomerang_2" textureId="boomerang" left="28" top="0" right="55" bottom="27" />
     <sprite id="boomerang_3" textureId="boomerang" left="56" top="0" right="83" bottom="27" />
-
-    <!-- SmallCandle -->
-    <sprite id="small_candle_1" textureId="small_candle" left="0" top="0" right="15" bottom="31" />
-    <sprite id="small_candle_2" textureId="small_candle" left="16" top="0" right="31" bottom="31" />
-
-    <!-- WhiteMoneyBag -->
-    <sprite id="white_money_bag" textureId="money_bag" left="30" top="0" right="59" bottom="29" />
-
-    <!-- BreakableBrick -->
-    <sprite id="breakable_brick" textureId="breakable_brick" left="0" top="0" right="31" bottom="31" />
-
-    <!-- BrickPiece -->
-    <sprite id="brick_piece" textureId="brick_piece" left="0" top="0" right="18" bottom="22" />
-
-    <!-- RedBat -->
-    <sprite id="red_bat_left_1" textureId="red_bat" left="0" top="0" right="31" bottom="31" />
-    <sprite id="red_bat_left_2" textureId="red_bat" left="32" top="0" right="63" bottom="31" />
-    <sprite id="red_bat_left_3" textureId="red_bat" left="64" top="0" right="95" bottom="31" />
-    <sprite id="red_bat_left_4" textureId="red_bat" left="96" top="0" right="127" bottom="31" />
-
-    <sprite id="red_bat_right_1" textureId="red_bat" left="96" top="32" right="127" bottom="63" />
-    <sprite id="red_bat_right_2" textureId="red_bat" left="64" top="32" right="95" bottom="63" />
-    <sprite id="red_bat_right_3" textureId="red_bat" left="32" top="32" right="63" bottom="63" />
-    <sprite id="red_bat_right_4" textureId="red_bat" left="0" top="32" right="31" bottom="63" />
-
-    <!-- SpearKnight -->
-    <sprite id="spear_knight_left_1" textureId="spear_knight" left="0" top="0" right="31" bottom="63" />
-    <sprite id="spear_knight_left_2" textureId="spear_knight" left="32" top="0" right="63" bottom="63" />
-    <sprite id="spear_knight_left_3" textureId="spear_knight" left="64" top="0" right="95" bottom="63" />
-    <sprite id="spear_knight_left_4" textureId="spear_knight" left="96" top="0" right="127" bottom="63" />
-
-    <sprite id="spear_knight_right_1" textureId="spear_knight" left="96" top="64" right="127" bottom="127" />
-    <sprite id="spear_knight_right_2" textureId="spear_knight" left="64" top="64" right="95" bottom="127" />
-    <sprite id="spear_knight_right_3" textureId="spear_knight" left="32" top="64" right="63" bottom="127" />
-    <sprite id="spear_knight_right_4" textureId="spear_knight" left="0" top="64" right="31" bottom="127" />
-
-    <!-- Paused -->
-    <sprite id="paused" textureId="paused" left="0" top="0" right="246" bottom="40" />
 
     <!-- Axe -->
     <sprite id="axe_1" textureId="axe" left="0" top="0" right="29" bottom="27" />
@@ -237,8 +203,45 @@
     
     <!-- Stopwatch -->
     <sprite id="stopwatch" textureId="stopwatch" left="0" top="0" right="29" bottom="31" />
-  </sprites>
 
+    <!-- Ghoul -->
+    <sprite id="ghoul_left_1" textureId="ghoul" left="0" top="0" right="33" bottom="63" />
+    <sprite id="ghoul_left_2" textureId="ghoul" left="34" top="0" right="67" bottom="63" />
+    <sprite id="ghoul_right_1" textureId="ghoul" left="34" top="64" right="67" bottom="127" />
+    <sprite id="ghoul_right_2" textureId="ghoul" left="0" top="64" right="27" bottom="127" />
+
+    <!-- PhantomBat -->
+    <sprite id="phantom_bat_1" textureId="phantom_bat" left="0" top="0" right="95" bottom="45" />
+    <sprite id="phantom_bat_2" textureId="phantom_bat" left="96" top="0" right="192" bottom="45" />
+    <sprite id="phantom_bat_3" textureId="phantom_bat" left="193" top="0" right="287" bottom="45" />
+    
+    <!-- MagicCrystal -->
+    <sprite id="magic_crystal_1" textureId="magic_crystal" left="0" top="0" right="27" bottom="31" />
+    <sprite id="magic_crystal_2" textureId="magic_crystal" left="28" top="0" right="55" bottom="31" />
+
+    <!-- DoubleShot -->
+    <sprite id="double_shot" textureId="double_shot" left="0" top="0" right="31" bottom="31" />
+
+    <!-- BreakableBrick -->
+    <sprite id="breakable_brick" textureId="breakable_brick" left="0" top="0" right="31" bottom="29" />
+
+    <!-- BrickPiece -->
+    <sprite id="brick_piece" textureId="brick_piece" left="0" top="0" right="18" bottom="22" />
+
+    <!-- SmallCandle -->
+    <sprite id="small_candle_1" textureId="small_candle" left="0" top="0" right="15" bottom="31" />
+    <sprite id="small_candle_2" textureId="small_candle" left="16" top="0" right="31" bottom="31" />
+
+    <!-- SmallHeart -->
+    <sprite id="small_heart" textureId="small_heart" left="0" top="0" right="15" bottom="15" />
+
+    <!-- InvisibilityPotion -->
+    <sprite id="invisibility_potion" textureId="invisibility_potion" left="0" top="0" right="29" bottom="36" />
+
+    <!-- RedMoneyBag -->
+    <sprite id="red_money_bag" textureId="money_bag" left="0" top="0" right="29" bottom="29" />
+  </sprites>
+  
   <animations>
     <!-- Simon -->
     <animation id="simon_idle_left">
@@ -394,88 +397,99 @@
     <animation id="simon_watch">
       <frame spriteId="simon_watch" duration="100" />
     </animation>
-
+    
     <!-- Flash -->
     <animation id="flash">
       <frame spriteId="flash_1" duration="100" />
       <frame spriteId="flash_2" duration="100" />
     </animation>
 
-    <!-- SevenHundred -->
-    <animation id="seven_hundred">
-      <frame spriteId="seven_hundred_1" duration="100" />
-      <frame spriteId="seven_hundred_2" duration="100" />
+    <!-- OneHundred -->
+    <animation id="one_hundred">
+      <frame spriteId="one_hundred_1" duration="100" />
+      <frame spriteId="one_hundred_2" duration="100" />
     </animation>
-
+    
+    <!-- OneThousand -->
+    <animation id="one_thousand">
+      <frame spriteId="one_thousand_1" duration="100" />
+      <frame spriteId="one_thousand_2" duration="100" />
+    </animation>
+    
     <!-- BigHeart -->
     <animation id="big_heart">
       <frame spriteId="big_heart" duration="100" />
     </animation>
-
+    
     <!-- Dagger -->
     <animation id="dagger_right">
       <frame spriteId="dagger_right" duration="100" />
     </animation>
-
+    
     <animation id="dagger_left">
       <frame spriteId="dagger_left" duration="100" />
     </animation>
-
+    
     <!-- MoneyBag -->
     <animation id="money_bag">
       <frame spriteId="money_bag_1" duration="100" />
       <frame spriteId="money_bag_2" duration="100" />
       <frame spriteId="money_bag_3" duration="100" />
     </animation>
-
+    
+    <!-- MorningStar -->
+    <animation id="morning_star">
+      <frame spriteId="morning_star" duration="100" />
+    </animation>
+    
     <!-- Blackboard -->
     <animation id="blackboard">
       <frame spriteId="blackboard" duration="100" />
     </animation>
-
+    
     <!-- HealthVolume -->
     <animation id="health_volume_empty">
       <frame spriteId="health_volume_empty" duration="100" />
     </animation>
-
+    
     <animation id="health_volume_player">
       <frame spriteId="health_volume_player" duration="100" />
     </animation>
-
+    
     <animation id="health_volume_enemy">
       <frame spriteId="health_volume_enemy" duration="100" />
     </animation>
-
+    
     <!-- Transparency -->
     <animation id="transparency">
       <frame spriteId="transparency" duration="100" />
     </animation>
-
+    
     <!-- Whip -->
     <animation id="whip_level_1_left">
       <frame spriteId="whip_level_1_left_1" duration="100" />
       <frame spriteId="whip_level_1_left_2" duration="100" />
       <frame spriteId="whip_level_1_left_3" duration="100" />
     </animation>
-
+    
     <animation id="whip_level_1_right">
       <frame spriteId="whip_level_1_right_1" duration="100" />
       <frame spriteId="whip_level_1_right_2" duration="100" />
       <frame spriteId="whip_level_1_right_3" duration="100" />
     </animation>
-
+    
     <animation id="whip_level_2_left">
       <frame spriteId="whip_level_2_left_1" duration="100" />
       <frame spriteId="whip_level_2_left_2" duration="100" />
       <frame spriteId="whip_level_2_left_3" duration="100" />
     </animation>
-
+    
     <animation id="whip_level_2_right">
       <frame spriteId="whip_level_2_right_1" duration="100" />
       <frame spriteId="whip_level_2_right_2" duration="100" />
       <frame spriteId="whip_level_2_right_3" duration="100" />
     </animation>
-
+    
     <animation id="whip_level_3_left">
       <frame spriteId="whip_level_3_left_1" duration="25" />
       <frame spriteId="whip_level_3_left_2" duration="25" />
@@ -490,7 +504,7 @@
       <frame spriteId="whip_level_3_left_11" duration="25" />
       <frame spriteId="whip_level_3_left_12" duration="25" />
     </animation>
-
+    
     <animation id="whip_level_3_right">
       <frame spriteId="whip_level_3_right_1" duration="25" />
       <frame spriteId="whip_level_3_right_2" duration="25" />
@@ -506,19 +520,20 @@
       <frame spriteId="whip_level_3_right_12" duration="25" />
     </animation>
     
-    <!-- MovingBar -->
-    <animation id="moving_bar">
-      <frame spriteId="moving_bar" duration="100" />
+    <!-- Paused -->
+    <animation id="paused">
+      <frame spriteId="paused" duration="100" />
     </animation>
 
-    <!-- SmallHeart -->
-    <animation id="small_heart">
-      <frame spriteId="small_heart" duration="100" />
+    <!-- Boomerang -->
+    <animation id="boomerang_static">
+      <frame spriteId="boomerang_2" duration="100" />
     </animation>
 
-    <!-- DoubleShot -->
-    <animation id="double_shot">
-      <frame spriteId="double_shot" duration="100" />
+    <animation id="boomerang_move">
+      <frame spriteId="boomerang_1" duration="100" />
+      <frame spriteId="boomerang_2" duration="100" />
+      <frame spriteId="boomerang_3" duration="100" />
     </animation>
 
     <!-- BigDoubleShot -->
@@ -557,86 +572,6 @@
       <frame spriteId="big_triple_shot_1" duration="100" />
     </animation>
 
-    <!-- Boomerang -->
-    <animation id="boomerang_static">
-      <frame spriteId="boomerang_2" duration="100" />
-    </animation>
-
-    <animation id="boomerang_move">
-      <frame spriteId="boomerang_1" duration="100" />
-      <frame spriteId="boomerang_2" duration="100" />
-      <frame spriteId="boomerang_3" duration="100" />
-    </animation>
-
-    <!-- SmallCandle -->
-    <animation id="small_candle">
-      <frame spriteId="small_candle_1" duration="100" />
-      <frame spriteId="small_candle_2" duration="100" />
-    </animation>
-
-    <!-- WhiteMoneyBag -->
-    <animation id="white_money_bag">
-      <frame spriteId="white_money_bag" duration="100" />
-    </animation>
-
-    <!-- BreakableBrick -->
-    <animation id="breakable_brick">
-      <frame spriteId="breakable_brick" duration="100" />
-    </animation>
-
-    <animation id="brick_piece">
-      <frame spriteId="brick_piece" duration="100" />
-    </animation>
-
-    <!-- RedBat -->
-    <animation id="red_bat_static_left">
-      <frame spriteId="red_bat_left_1" duration="100" />
-    </animation>
-
-    <animation id="red_bat_move_left">
-      <frame spriteId="red_bat_left_2" duration="100" />
-      <frame spriteId="red_bat_left_3" duration="100" />
-      <frame spriteId="red_bat_left_4" duration="100" />
-    </animation>
-
-    <animation id="red_bat_static_right">
-      <frame spriteId="red_bat_right_1" duration="100" />
-    </animation>
-
-    <animation id="red_bat_move_right">
-      <frame spriteId="red_bat_right_2" duration="100" />
-      <frame spriteId="red_bat_right_3" duration="100" />
-      <frame spriteId="red_bat_right_4" duration="100" />
-    </animation>
-
-    <!-- SpearKnight -->
-    <animation id="spear_knight_walk_left">
-      <frame spriteId="spear_knight_left_1" duration="100" />
-      <frame spriteId="spear_knight_left_2" duration="100" />
-      <frame spriteId="spear_knight_left_3" duration="100" />
-      <frame spriteId="spear_knight_left_4" duration="100" />
-    </animation>
-
-    <animation id="spear_knight_delay_left">
-      <frame spriteId="spear_knight_left_1" duration="100" />
-    </animation>
-
-    <animation id="spear_knight_walk_right">
-      <frame spriteId="spear_knight_right_1" duration="100" />
-      <frame spriteId="spear_knight_right_2" duration="100" />
-      <frame spriteId="spear_knight_right_3" duration="100" />
-      <frame spriteId="spear_knight_right_4" duration="100" />
-    </animation>
-
-    <animation id="spear_knight_delay_right">
-      <frame spriteId="spear_knight_right_1" duration="100" />
-    </animation>
-
-    <!-- Paused -->
-    <animation id="paused">
-      <frame spriteId="paused" duration="100" />
-    </animation>
-
     <!-- Axe -->
     <animation id="axe_static">
       <frame spriteId="axe_2" duration="100" />
@@ -673,8 +608,74 @@
     <animation id="stopwatch">
       <frame spriteId="stopwatch" duration="100" />
     </animation>
-  </animations>
 
+    <!-- Ghoul -->
+    <animation id="ghoul_left">
+      <frame spriteId="ghoul_left_1" duration="100" />
+      <frame spriteId="ghoul_left_2" duration="100" />
+    </animation>
+
+    <animation id="ghoul_right">
+      <frame spriteId="ghoul_right_1" duration="100" />
+      <frame spriteId="ghoul_right_2" duration="100" />
+    </animation>
+
+    <!-- PhantomBat -->
+    <animation id="phantom_bat_static">
+      <frame spriteId="phantom_bat_1" duration="100" />
+    </animation>
+
+    <animation id="phantom_bat_move">
+      <frame spriteId="phantom_bat_2" duration="100" />
+      <frame spriteId="phantom_bat_3" duration="100" />
+    </animation>
+
+    <animation id="phantom_bat_delay">
+      <frame spriteId="phantom_bat_2" duration="100" />
+    </animation>
+
+    <!-- MagicCrystal -->
+    <animation id="magic_crystal">
+      <frame spriteId="magic_crystal_1" duration="100" />
+      <frame spriteId="magic_crystal_2" duration="100" />
+    </animation>
+
+    <!-- DoubleShot -->
+    <animation id="double_shot">
+      <frame spriteId="double_shot" duration="100" />
+    </animation>
+
+    <!-- BreakableBrick -->
+    <animation id="breakable_brick">
+      <frame spriteId="breakable_brick" duration="100" />
+    </animation>
+
+    <animation id="brick_piece">
+      <frame spriteId="brick_piece" duration="100" />
+    </animation>
+
+    <!-- SmallCandle -->
+    <animation id="small_candle">
+      <frame spriteId="small_candle_1" duration="100" />
+      <frame spriteId="small_candle_2" duration="100" />
+    </animation>
+
+    <!-- SmallHeart -->
+    <animation id="small_heart">
+      <frame spriteId="small_heart" duration="100" />
+    </animation>
+
+    <!-- InvisibilityPotion -->
+    <animation id="invisibility_potion">
+      <frame spriteId="invisibility_potion" duration="100" />
+    </animation>
+
+    <!-- RedMoneyBag -->
+    <animation id="red_money_bag">
+      <frame spriteId="red_money_bag" duration="100" />
+    </animation>
+  </animations>
+  
   <animationSets>
     <animationSet id="simon">
       <animationSetItem id="simon_idle_left" animationId="simon_idle_left" />
@@ -709,42 +710,50 @@
       <animationSetItem id="simon_die_right" animationId="simon_die_right" />
       <animationSetItem id="simon_watch" animationId="simon_watch" />
     </animationSet>
-
+    
     <animationSet id="flash">
       <animationSetItem id="flash" animationId="flash" />
     </animationSet>
 
-    <animationSet id="seven_hundred">
-      <animationSetItem id="seven_hundred" animationId="seven_hundred" />
+    <animationSet id="one_hundred">
+      <animationSetItem id="one_hundred" animationId="one_hundred" />
     </animationSet>
-
+    
+    <animationSet id="one_thousand">
+      <animationSetItem id="one_thousand" animationId="one_thousand" />
+    </animationSet>
+    
     <animationSet id="big_heart">
       <animationSetItem id="big_heart" animationId="big_heart" />
     </animationSet>
-
+    
     <animationSet id="dagger">
       <animationSetItem id="dagger_right" animationId="dagger_right" />
       <animationSetItem id="dagger_left" animationId="dagger_left" />
     </animationSet>
-
+    
     <animationSet id="money_bag">
       <animationSetItem id="money_bag" animationId="money_bag" />
     </animationSet>
-
+    
+    <animationSet id="morning_star">
+      <animationSetItem id="morning_star" animationId="morning_star" />
+    </animationSet>
+    
     <animationSet id="blackboard">
       <animationSetItem id="blackboard" animationId="blackboard" />
     </animationSet>
-
+    
     <animationSet id="health_volume">
       <animationSetItem id="health_volume_empty" animationId="health_volume_empty" />
       <animationSetItem id="health_volume_player" animationId="health_volume_player" />
       <animationSetItem id="health_volume_enemy" animationId="health_volume_enemy" />
     </animationSet>
-
+    
     <animationSet id="transparency">
       <animationSetItem id="transparency" animationId="transparency" />
     </animationSet>
-
+    
     <animationSet id="whip">
       <animationSetItem id="whip_level_1_left" animationId="whip_level_1_left" />
       <animationSetItem id="whip_level_1_right" animationId="whip_level_1_right" />
@@ -754,16 +763,13 @@
       <animationSetItem id="whip_level_3_right" animationId="whip_level_3_right" />
     </animationSet>
 
-    <animationSet id="moving_bar">
-      <animationSetItem id="moving_bar" animationId="moving_bar" />
+    <animationSet id="paused">
+      <animationSetItem id="paused" animationId="paused" />
     </animationSet>
 
-    <animationSet id="small_heart">
-      <animationSetItem id="small_heart" animationId="small_heart" />
-    </animationSet>
-
-    <animationSet id="double_shot">
-      <animationSetItem id="double_shot" animationId="double_shot" />
+    <animationSet id="boomerang">
+      <animationSetItem id="boomerang_static" animationId="boomerang_static" />
+      <animationSetItem id="boomerang_move" animationId="boomerang_move" />
     </animationSet>
 
     <animationSet id="big_double_shot">
@@ -774,45 +780,6 @@
     <animationSet id="big_triple_shot">
       <animationSetItem id="big_triple_shot_blink" animationId="big_triple_shot_blink" />
       <animationSetItem id="big_triple_shot_idle" animationId="big_triple_shot_idle" />
-    </animationSet>
-
-    <animationSet id="boomerang">
-      <animationSetItem id="boomerang_static" animationId="boomerang_static" />
-      <animationSetItem id="boomerang_move" animationId="boomerang_move" />
-    </animationSet>
-
-    <animationSet id="small_candle">
-      <animationSetItem id="small_candle" animationId="small_candle" />
-    </animationSet>
-
-    <animationSet id="white_money_bag">
-      <animationSetItem id="white_money_bag" animationId="white_money_bag" />
-    </animationSet>
-
-    <animationSet id="breakable_brick">
-      <animationSetItem id="breakable_brick" animationId="breakable_brick" />
-    </animationSet>
-
-    <animationSet id="brick_piece">
-      <animationSetItem id="brick_piece" animationId="brick_piece" />
-    </animationSet>
-
-    <animationSet id="red_bat">
-      <animationSetItem id="red_bat_static_left" animationId="red_bat_static_left" />
-      <animationSetItem id="red_bat_move_left" animationId="red_bat_move_left" />
-      <animationSetItem id="red_bat_static_right" animationId="red_bat_static_right" />
-      <animationSetItem id="red_bat_move_right" animationId="red_bat_move_right" />
-    </animationSet>
-
-    <animationSet id="spear_knight">
-      <animationSetItem id="spear_knight_walk_left" animationId="spear_knight_walk_left" />
-      <animationSetItem id="spear_knight_delay_left" animationId="spear_knight_delay_left" />
-      <animationSetItem id="spear_knight_walk_right" animationId="spear_knight_walk_right" />
-      <animationSetItem id="spear_knight_delay_right" animationId="spear_knight_delay_right" />
-    </animationSet>
-
-    <animationSet id="paused">
-      <animationSetItem id="paused" animationId="paused" />
     </animationSet>
 
     <animationSet id="axe">
@@ -833,58 +800,116 @@
     <animationSet id="stopwatch">
       <animationSetItem id="stopwatch" animationId="stopwatch" />
     </animationSet>
+
+    <animationSet id="ghoul">
+      <animationSetItem id="ghoul_right" animationId="ghoul_right" />
+      <animationSetItem id="ghoul_left" animationId="ghoul_left" />
+    </animationSet>
+
+    <animationSet id="phantom_bat">
+      <animationSetItem id="phantom_bat_static" animationId="phantom_bat_static" />
+      <animationSetItem id="phantom_bat_move" animationId="phantom_bat_move" />
+      <animationSetItem id="phantom_bat_delay" animationId="phantom_bat_delay" />
+    </animationSet>
+
+    <animationSet id="magic_crystal">
+      <animationSetItem id="magic_crystal" animationId="magic_crystal" />
+    </animationSet>
+
+    <animationSet id="double_shot">
+      <animationSetItem id="double_shot" animationId="double_shot" />
+    </animationSet>
+
+    <animationSet id="breakable_brick">
+      <animationSetItem id="breakable_brick" animationId="breakable_brick" />
+    </animationSet>
+
+    <animationSet id="brick_piece">
+      <animationSetItem id="brick_piece" animationId="brick_piece" />
+    </animationSet>
+
+    <animationSet id="small_candle">
+      <animationSetItem id="small_candle" animationId="small_candle" />
+    </animationSet>
+
+    <animationSet id="small_heart">
+      <animationSetItem id="small_heart" animationId="small_heart" />
+    </animationSet>
+
+    <animationSet id="invisibility_potion">
+      <animationSetItem id="invisibility_potion" animationId="invisibility_potion" />
+    </animationSet>
+
+    <animationSet id="red_money_bag">
+      <animationSetItem id="red_money_bag" animationId="red_money_bag" />
+    </animationSet>
   </animationSets>
 
-  <objects gridWidth="1024" gridHeight="448" cellWidth="64" cellHeight="64">
-    <object id="simon" type="simon" animationSetId="simon" x="760" y="370" state="on_stair" stairDirectionX="right" stairDirectionY="up" />
+  <objects gridWidth="1536" gridHeight="448" cellWidth="64" cellHeight="64">
+    <object id="simon" type="simon" animationSetId="simon" x="65" y="100" />
 
-    <object id="brick_1" type="brick" animationSetId="transparency" x="0" y="81" width="31" height="160" />
-    <object id="brick_2" type="brick" animationSetId="transparency" x="0" y="241" width="64" height="31" />
-    <object id="brick_3" type="brick" animationSetId="transparency" x="128" y="305" width="64" height="31" />
-    <object id="brick_4" type="brick" animationSetId="transparency" x="192" y="241" width="128" height="31" />
-    <object id="brick_5" type="brick" animationSetId="transparency" x="288" y="272" width="31" height="192" />
-    <object id="brick_6" type="brick" animationSetId="transparency" x="384" y="241" width="192" height="31" />
-    <object id="brick_7" type="brick" animationSetId="transparency" x="576" y="305" width="64" height="31" />
-    <object id="brick_8" type="brick" animationSetId="transparency" x="640" y="369" width="64" height="31" />
-    <object id="brick_9" type="brick" animationSetId="transparency" x="705" y="273" width="31" height="128" />
-    <object id="brick_10" type="brick" animationSetId="transparency" x="736" y="241" width="160" height="31" />
-    <object id="brick_11" type="brick" animationSetId="transparency" x="960" y="81" width="31" height="255" />
-    <object id="brick_12" type="brick" animationSetId="transparency" x="896" y="305" width="64" height="31" />
+    <object id="brick_1" type="brick" animationSetId="transparency" x="0" y="240" width="226" height="31" />
+    <object id="brick_2" type="brick" animationSetId="transparency" x="260" y="302" width="350" height="31" />
+    <object id="brick_3" type="brick" animationSetId="transparency" x="1440" y="306" width="100" height="31" />
+    <object id="brick_4" type="brick" animationSetId="transparency" x="1344" y="370" width="31" height="31" />
+    <object id="brick_5" type="brick" animationSetId="transparency" x="0" y="432" width="1536" height="31" />
 
-    <object id="double_shot_1" type="double_shot" animationSetId="double_shot" x="704" y="241" />
-    <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="704" y="241" endingEffect="breaking" hiddenItemId="double_shot_1" isGround="true" />
+    <object id="double_shot_1" type="double_shot" animationSetId="double_shot" x="1375" y="370" visible="false" />
+    <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="1375" y="370" endingEffect="breaking" hiddenItemId="double_shot_1" isGround="true" />
 
-    <object id="moving_bar_1" type="moving_bar" animationSetId="moving_bar" x="105" y="241" />
+    <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="right" x="200" y="156" />
+    <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="left" x="276" y="289" />
 
-    <object id="red_bat_1" type="red_bat" animationSetId="red_bat" x="590" y="116" endingEffect="flash" />
+    <object id="top_stair_2" type="top_stair" animationSetId="transparency" directionY="down" directionX="right" x="586" y="220" />
+    <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="left" x="720" y="419" />
 
-    <object id="small_heart_1" type="small_heart" animationSetId="small_heart" x="794" y="116" visible="false" />
-    <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="794" y="116" endingEffect="flash" hiddenItemId="small_heart_1" />
+    <object id="top_stair_3" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="1440" y="220" />
+    <object id="bottom_stair_3" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="1376" y="357" />
 
-    <object id="small_heart_2" type="small_heart" animationSetId="small_heart" x="920" y="116" visible="false" />
-    <object id="small_candle_2" type="small_candle" animationSetId="small_candle" x="920" y="116" endingEffect="flash" hiddenItemId="small_heart_2" />
+    <object id="enemy_spawner_area_1" type="enemy_spawner_area" animationSetId="transparency" x="200" y="180" enemyType="ghoul" spawningPosition="top_right" />
+    <object id="enemy_spawner_area_2" type="enemy_spawner_area" animationSetId="transparency" x="200" y="200" enemyType="ghoul" spawningPosition="bottom_right" />
+    <object id="enemy_spawner_area_3" type="enemy_spawner_area" animationSetId="transparency" x="800" y="370" enemyType="ghoul" spawningPosition="bottom_left" />
+    <object id="enemy_spawner_area_4" type="enemy_spawner_area" animationSetId="transparency" x="800" y="400" enemyType="ghoul" spawningPosition="bottom_right" />
 
-    <object id="small_heart_3" type="small_heart" animationSetId="small_heart" x="664" y="116" visible="false" />
-    <object id="small_candle_3" type="small_candle" animationSetId="small_candle" x="664" y="116" endingEffect="flash" hiddenItemId="small_heart_3" />
+    <object id="camera_locker" type="camera_locker" animationSetId="transparency" x="1300" y="132" />
 
-    <object id="small_heart_4" type="small_heart" animationSetId="small_heart" x="530" y="116" visible="false" />
-    <object id="small_candle_4" type="small_candle" animationSetId="small_candle" x="530" y="116" endingEffect="flash" hiddenItemId="small_heart_4" />
+    <object id="magic_crystal_1" type="magic_crystal" animationSetId="magic_crystal" x="1200" y="132" visible="false" />
+    <object id="phantom_bat_1" type="phantom_bat" animationSetId="phantom_bat" x="1200" y="132" endingEffect="flash" hiddenItemId="magic_crystal_1" />
 
-    <object id="white_money_bag_1" type="white_money_bag" animationSetId="white_money_bag" x="284" y="116" endingEffect="seven_hundred" visible="false" />
-    <object id="small_candle_5" type="small_candle" animationSetId="small_candle" x="284" y="116" endingEffect="flash" hiddenItemId="white_money_bag_1" />
+    <object id="small_heart_1" type="small_heart" animationSetId="small_heart" x="55" y="306" visible="false" />
+    <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="55" y="306" endingEffect="flash" hiddenItemId="small_heart_1" />
 
-    <object id="small_heart_6" type="small_heart" animationSetId="small_heart" x="154" y="116" visible="false" />
-    <object id="small_candle_6" type="small_candle" animationSetId="small_candle" x="154" y="116" endingEffect="flash" hiddenItemId="small_heart_6" />
-    
-    <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="896" y="220" />
-    <object id="previous_scene_1" type="previous_scene" animationSetId="transparency" x="760" y="400" playerMustBeOnStair="true" sceneDirection="left" />
+    <object id="red_money_bag_1" type="red_money_bag" animationSetId="red_money_bag" x="182" y="180" visible="false" />
+    <object id="small_candle_2" type="small_candle" animationSetId="small_candle" x="182" y="180" endingEffect="one_hundred" hiddenItemId="red_money_bag_1" />
 
-    <object id="big_heart_1" type="big_heart" animationSetId="big_heart" x="650" y="241" visible="false" />
-    <object id="spear_knight_1" type="spear_knight" animationSetId="spear_knight" x="650" y="241" leftBound="640" rightBound="663" endingEffect="flash" hiddenItemId="big_heart_1" />
+    <object id="small_heart_2" type="small_heart" animationSetId="small_heart" x="316" y="242" visible="false" />
+    <object id="small_candle_3" type="small_candle" animationSetId="small_candle" x="316" y="242" endingEffect="flash" hiddenItemId="small_heart_2" />
 
-    <object id="big_heart_2" type="big_heart" animationSetId="big_heart" x="206" y="80" visible="false" />
-    <object id="spear_knight_2" type="spear_knight" animationSetId="spear_knight" x="206" y="80" leftBound="200" rightBound="280" endingEffect="flash" hiddenItemId="big_heart_2" />
+    <object id="invisibility_potion_1" type="invisibility_potion" animationSetId="invisibility_potion" x="440" y="180" visible="false" />
+    <object id="small_candle_4" type="small_candle" animationSetId="small_candle" x="440" y="180" endingEffect="flash" hiddenItemId="invisibility_potion_1" />
 
-    <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="42" y="220" playerMustBeOnStair="false" sceneDirection="left" />
+    <object id="small_heart_3" type="small_heart" animationSetId="small_heart" x="570" y="370" visible="false" />
+    <object id="small_candle_5" type="small_candle" animationSetId="small_candle" x="570" y="370" endingEffect="flash" hiddenItemId="small_heart_3" />
+
+    <object id="axe_1" type="axe" animationSetId="axe" x="700" y="304" visible="false" />
+    <object id="small_candle_6" type="small_candle" animationSetId="small_candle" x="700" y="304" endingEffect="flash" hiddenItemId="axe_1" />
+
+    <object id="small_heart_4" type="small_heart" animationSetId="small_heart" x="820" y="370" visible="false" />
+    <object id="small_candle_7" type="small_candle" animationSetId="small_candle" x="820" y="370" endingEffect="flash" hiddenItemId="small_heart_4" />
+
+    <object id="small_heart_5" type="small_heart" animationSetId="small_heart" x="952" y="370" visible="false" />
+    <object id="small_candle_8" type="small_candle" animationSetId="small_candle" x="952" y="370" endingEffect="flash" hiddenItemId="small_heart_5" />
+
+    <object id="big_heart_1" type="big_heart" animationSetId="big_heart" x="1080" y="304" visible="false" />
+    <object id="small_candle_9" type="small_candle" animationSetId="small_candle" x="1080" y="304" endingEffect="flash" hiddenItemId="big_heart_1" />
+
+    <object id="small_heart_6" type="small_heart" animationSetId="small_heart" x="1208" y="370" visible="false" />
+    <object id="small_candle_10" type="small_candle" animationSetId="small_candle" x="1208" y="370" endingEffect="flash" hiddenItemId="small_heart_6" />
+
+    <object id="red_money_bag_2" type="red_money_bag" animationSetId="red_money_bag" x="1336" y="304" visible="false" />
+    <object id="small_candle_11" type="small_candle" animationSetId="small_candle" x="1336" y="304" endingEffect="one_hundred" hiddenItemId="red_money_bag_2" />
+
+    <object id="big_heart_2" type="big_heart" animationSetId="big_heart" x="1464" y="304" visible="false" />
+    <object id="small_candle_12" type="small_candle" animationSetId="small_candle" x="1464" y="304" endingEffect="flash" hiddenItemId="big_heart_2" />
   </objects>
 </resources>

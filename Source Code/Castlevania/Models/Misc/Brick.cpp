@@ -2,7 +2,7 @@
 
 CBrick::CBrick()
 {
-	isGround = false;
+	//isGround = false;
 	SetAnimationSet("transparency");
 }
 
@@ -15,6 +15,16 @@ void CBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom
 {
 	left = x;
 	top = y;
-	right = left + BRICK_BBOX_WIDTH;
-	bottom = top + BRICK_BBOX_HEIGHT;
+	right = left + width;
+	bottom = top + height;
+}
+
+void CBrick::SetWidth(float width)
+{
+	this->width = width;
+}
+
+void CBrick::SetHeight(float height)
+{
+	this->height = height;
 }

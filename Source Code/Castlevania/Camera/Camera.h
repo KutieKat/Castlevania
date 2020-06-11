@@ -12,6 +12,8 @@ public:
 	void Lock();
 	void Unlock();
 
+	void Reset();
+
 	bool Locked();
 
 	float GetTop();

@@ -12,6 +12,7 @@ public:
 	void Pause();
 	void SetTime(DWORD time);
 	void Tick();
+	void Decrease();
 
 	DWORD GetRemainingTime();
 

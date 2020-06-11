@@ -26,6 +26,7 @@ protected:
 
 	bool softPaused;
 	bool hardPaused;
+	bool showingPauseBadge;
 
 public:
 	CScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "", string requiredSceneId = "");
@@ -39,13 +40,14 @@ public:
 	virtual void Render() = 0;
 
 	void SoftPause(DWORD duration = -1);
-	void HardPause();
+	void HardPause(bool showingLabel = true);
 
 	void ResumeSoftPause();
 	void ResumeHardPause();
 
 	bool SoftPaused();
 	bool HardPaused();
+	bool ShowingPauseBadge();
 
 	string GetId();
 	string GetStage();

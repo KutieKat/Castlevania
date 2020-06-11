@@ -1,7 +1,6 @@
 #include "Fleamen.h"
 #include "../../../Game.h"
 #include "../../Misc/Brick.h"
-#include "../../Misc/Ground.h"
 #include "../../Misc/TopStair.h"
 #include "../../Misc/BottomStair.h"
 #include "../../Misc/BreakableBrick.h"
@@ -27,8 +26,7 @@ void CFleamen::SetState(int state)
 	switch (state)
 	{
 	case FLEAMEN_STATE_IDLE:
-		vx = 0;
-		vy = 0;
+		vx = vy = 0;
 		break;
 
 	case FLEAMEN_STATE_JUMP_AROUND:
@@ -91,23 +89,12 @@ void CFleamen::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGround*>(e->obj))
-			{
-				if (state == FLEAMEN_STATE_JUMP_AROUND)
-				{
-					if (e->ny != 0 && rdy < 25) vx = 0;
-				}
-				else
-				{
-					if (e->ny != 0) vy = 0;
-				}
-			}
-			else if (dynamic_cast<CBrick*>(e->obj))
+			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				auto brick = dynamic_cast<CBrick*>(e->obj);
 
-				if (brick->isGround)
-				{
+				//if (brick->isGround)
+				//{
 					if (state == FLEAMEN_STATE_JUMP_AROUND)
 					{
 						if (e->ny != 0 && rdy < 25) vx = 0;
@@ -116,11 +103,11 @@ void CFleamen::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (e->ny != 0) vy = 0;
 					}
-				}
-				else
-				{
+				//}
+				//else
+				//{
 					if (e->nx != 0) vx = -vx;
-				}
+				//}
 			}
 			else if (dynamic_cast<CTopStair*>(e->obj))
 			{
@@ -218,20 +205,7 @@ void CFleamen::Attack()
 
 		WFireball* fireball = new WFireball();
 		fireball->SetPosition(x, y);
-		fireball->SetDisplayTime(FIREBALL_DISPLAY_TIME);
-
-		if (x > simon->x)
-		{
-			fireball->SetTarget(sl, sb);
-		}
-		else if (x < simon->x)
-		{
-			fireball->SetTarget(sr, sb);
-		}
-		else
-		{
-			fireball->SetTarget(sl + (sr - sl) / 2, sb);
-		}
+		fireball->SetTarget(simon->x, simon->y);
 
 		CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
 		CUnit* unit = new CUnit(grid, fireball, fireball->x, fireball->y);

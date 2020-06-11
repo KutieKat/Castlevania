@@ -31,9 +31,10 @@ void CScene::SoftPause(DWORD duration)
 	}
 }
 
-void CScene::HardPause()
+void CScene::HardPause(bool showingPauseBadge)
 {
-	hardPaused = true;
+	this->hardPaused = true;
+	this->showingPauseBadge = showingPauseBadge;
 }
 
 void CScene::ResumeSoftPause()
@@ -54,6 +55,11 @@ bool CScene::SoftPaused()
 bool CScene::HardPaused()
 {
 	return hardPaused;
+}
+
+bool CScene::ShowingPauseBadge()
+{
+	return showingPauseBadge;
 }
 
 string CScene::GetId()

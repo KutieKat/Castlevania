@@ -68,8 +68,15 @@ void CGame::Init(HWND hWnd)
 	playerData = CPlayerData::GetInstance();
 	playerData->Init();
 
+	// Boss data
+	bossData = CBossData::GetInstance();
+	bossData->Init();
+
 	// Scene manager
 	sceneManager = CSceneManager::GetInstance();
+
+	// Game ending
+	ended = false;
 
 	CDebug::Info("Initialize game successfully!", "Game.cpp");
 }
@@ -114,6 +121,11 @@ bool CGame::HaveCollision(CGameObject* object1, CGameObject* object2)
 	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
 }
 
+bool CGame::Ended()
+{
+	return ended;
+}
+
 void CGame::SetPauseStartingTime(DWORD time)
 {
 	pauseStartingTime = time;
@@ -122,6 +134,11 @@ void CGame::SetPauseStartingTime(DWORD time)
 void CGame::SetPauseEndingTime(DWORD time)
 {
 	pauseEndingTime = time;
+}
+
+void CGame::End()
+{
+	ended = true;
 }
 
 DWORD CGame::GetPauseDeltaTime()
@@ -278,6 +295,11 @@ CPlayerData* CGame::GetPlayerData()
 	return playerData;
 }
 
+CBossData* CGame::GetBossData()
+{
+	return bossData;
+}
+
 CSceneManager* CGame::GetSceneManager()
 {
 	return sceneManager;
@@ -295,7 +317,8 @@ CGame* CGame::GetInstance()
 
 void CGame::Reset()
 {
+	ended = false;
 	playerData->Reset();
-	sceneManager->ClearLoadedScenes();
+	sceneManager->Reset();
 	timer->SetTime(DEFAULT_GAME_TIME);
 }

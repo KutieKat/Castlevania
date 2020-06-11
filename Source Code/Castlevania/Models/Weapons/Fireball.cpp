@@ -13,10 +13,18 @@ void WFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	rotation = atan2(targetY - y, targetX - x);
+	if (y < targetY)
+	{
+		angle = atan2(targetY - y, targetX - x);
 
-	x += cos(rotation) * 0.1f * dt;
-	y += sin(rotation) * 0.1f * dt;
+		x += cos(angle) * FIREBALL_MOVE_SPEED_X * dt;
+		y += sin(angle) * FIREBALL_MOVE_SPEED_Y * dt;
+	}
+	else
+	{
+		x += cos(angle) * FIREBALL_MOVE_SPEED_X * dt;
+		y += FIREBALL_MOVE_SPEED_Y * dt;
+	}
 }
 
 void WFireball::GetBoundingBox(float& left, float& top, float& right, float& bottom)

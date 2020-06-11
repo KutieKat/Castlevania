@@ -631,14 +631,22 @@
     </animation>
 
     <!-- Ghost -->
-    <animation id="ghost_left">
+    <animation id="ghost_move_left">
       <frame spriteId="ghost_left_1" duration="100" />
       <frame spriteId="ghost_left_2" duration="100" />
     </animation>
 
-    <animation id="ghost_right">
+    <animation id="ghost_move_right">
       <frame spriteId="ghost_right_1" duration="100" />
       <frame spriteId="ghost_right_2" duration="100" />
+    </animation>
+
+    <animation id="ghost_delay_left">
+      <frame spriteId="ghost_left_1" duration="100" />
+    </animation>
+
+    <animation id="ghost_delay_right">
+      <frame spriteId="ghost_right_1" duration="100" />
     </animation>
 
     <!-- Fleamen -->
@@ -865,8 +873,10 @@
     </animationSet>
 
     <animationSet id="ghost">
-      <animationSetItem id="ghost_right" animationId="ghost_right" />
-      <animationSetItem id="ghost_left" animationId="ghost_left" />
+      <animationSetItem id="ghost_move_right" animationId="ghost_move_right" />
+      <animationSetItem id="ghost_move_left" animationId="ghost_move_left" />
+      <animationSetItem id="ghost_delay_right" animationId="ghost_delay_right" />
+      <animationSetItem id="ghost_delay_left" animationId="ghost_delay_left" />
     </animationSet>
 
     <animationSet id="fleamen">
@@ -921,89 +931,21 @@
   <objects gridWidth="1536" gridHeight="448" cellWidth="64" cellHeight="64">
     <object id="simon" type="simon" animationSetId="simon" x="1400" y="100" directionX="left" reloadX="160" reloadY="78" reloadState="on_stair" reloadStairDirectionX="right" reloadStairDirectionY="down" />
 
-    <object id="brick_1" type="brick" animationSetId="transparency" x="32" y="174" />
-    <object id="brick_2" type="brick" animationSetId="transparency" x="32" y="206" />
-    <object id="brick_3" type="brick" animationSetId="transparency" x="32" y="238" />
-    <object id="brick_4" type="brick" animationSetId="transparency" x="32" y="270" />
-    <object id="brick_5" type="brick" animationSetId="transparency" x="32" y="302" />
-    
-    <object id="brick_6" type="brick" animationSetId="transparency" x="64" y="335" isGround="true" />
-    <object id="brick_7" type="brick" animationSetId="transparency" x="96" y="335" isGround="true" />
-
-    <object id="brick_8" type="brick" animationSetId="transparency" x="128" y="400" isGround="true" />
-    <object id="brick_9" type="brick" animationSetId="transparency" x="160" y="400" isGround="true" />
-    <object id="brick_10" type="brick" animationSetId="transparency" x="192" y="400" isGround="true" />
-    <object id="brick_11" type="brick" animationSetId="transparency" x="224" y="400" isGround="true" />
-
-    <object id="brick_12" type="brick" animationSetId="transparency" x="192" y="270" isGround="true" />
-    <object id="brick_13" type="brick" animationSetId="transparency" x="224" y="270" isGround="true" />
-    <object id="brick_14" type="brick" animationSetId="transparency" x="256" y="270" isGround="true" />
-    <object id="brick_15" type="brick" animationSetId="transparency" x="288" y="270" isGround="true" />
-    <object id="brick_16" type="brick" animationSetId="transparency" x="320" y="270" isGround="true" />
-    <object id="brick_17" type="brick" animationSetId="transparency" x="352" y="270" isGround="true" />
+    <object id="brick_1" type="brick" animationSetId="transparency" x="32" y="81" width="31" height="286" />
+    <object id="brick_2" type="brick" animationSetId="transparency" x="64" y="335" width="64" height="31" />
+    <object id="brick_3" type="brick" animationSetId="transparency" x="128" y="400" width="128" height="31" />
+    <object id="brick_4" type="brick" animationSetId="transparency" x="192" y="270" width="192" height="31" />
+    <object id="brick_5" type="brick" animationSetId="transparency" x="256" y="430" width="1122" height="31" />
+    <object id="brick_6" type="brick" animationSetId="transparency" x="608" y="335" width="31" height="31" />
+    <object id="brick_7" type="brick" animationSetId="transparency" x="832" y="335" width="64" height="31" />
+    <object id="brick_8" type="brick" animationSetId="transparency" x="1344" y="400" width="186" height="31" />
+    <object id="brick_9" type="brick" animationSetId="transparency" x="1472" y="270" width="64" height="31" />
 
     <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="left" x="310" y="260" />
     <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="200" y="100" playerMustBeOnStair="true" sceneDirection="left" />
 
-    <object id="brick_18" type="brick" animationSetId="transparency" x="256" y="430" isGround="true" />
-    <object id="brick_19" type="brick" animationSetId="transparency" x="288" y="430" isGround="true" />
-    <object id="brick_20" type="brick" animationSetId="transparency" x="320" y="430" isGround="true" />
-    <object id="brick_21" type="brick" animationSetId="transparency" x="352" y="430" isGround="true" />
-    <object id="brick_22" type="brick" animationSetId="transparency" x="384" y="430" isGround="true" />
-    <object id="brick_23" type="brick" animationSetId="transparency" x="416" y="430" isGround="true" />
-    <object id="brick_24" type="brick" animationSetId="transparency" x="448" y="430" isGround="true" />
-    <object id="brick_25" type="brick" animationSetId="transparency" x="480" y="430" isGround="true" />
-    <object id="brick_26" type="brick" animationSetId="transparency" x="512" y="430" isGround="true" />
-    <object id="brick_27" type="brick" animationSetId="transparency" x="544" y="430" isGround="true" />
-    <object id="brick_28" type="brick" animationSetId="transparency" x="576" y="430" isGround="true" />
-
     <object id="pork_chop_1" type="pork_chop" animationSetId="pork_chop" x="576" y="335" visible="false" />
     <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="576" y="335" endingEffect="breaking" hiddenItemId="pork_chop_1" isGround="true" />
-    <object id="brick_29" type="brick" animationSetId="transparency" x="608" y="335" isGround="true" />
-    
-    <object id="brick_30" type="brick" animationSetId="transparency" x="608" y="430" isGround="true" />
-    <object id="brick_31" type="brick" animationSetId="transparency" x="640" y="430" isGround="true" />
-    <object id="brick_32" type="brick" animationSetId="transparency" x="672" y="430" isGround="true" />
-    <object id="brick_33" type="brick" animationSetId="transparency" x="704" y="430" isGround="true" />
-    <object id="brick_34" type="brick" animationSetId="transparency" x="736" y="430" isGround="true" />
-    <object id="brick_35" type="brick" animationSetId="transparency" x="768" y="430" isGround="true" />
-    <object id="brick_36" type="brick" animationSetId="transparency" x="800" y="430" isGround="true" />
-    <object id="brick_37" type="brick" animationSetId="transparency" x="832" y="430" isGround="true" />
-    <object id="brick_38" type="brick" animationSetId="transparency" x="864" y="430" isGround="true" />
-
-    <object id="brick_39" type="brick" animationSetId="transparency" x="832" y="335" isGround="true" />
-    <object id="brick_40" type="brick" animationSetId="transparency" x="864" y="335" isGround="true" />
-
-    <object id="brick_41" type="brick" animationSetId="transparency" x="896" y="430" isGround="true" />
-    <object id="brick_42" type="brick" animationSetId="transparency" x="928" y="430" isGround="true" />
-    <object id="brick_43" type="brick" animationSetId="transparency" x="960" y="430" isGround="true" />
-    <object id="brick_44" type="brick" animationSetId="transparency" x="992" y="430" isGround="true" />
-    <object id="brick_45" type="brick" animationSetId="transparency" x="1024" y="430" isGround="true" />
-    <object id="brick_46" type="brick" animationSetId="transparency" x="1056" y="430" isGround="true" />
-    <object id="brick_47" type="brick" animationSetId="transparency" x="1088" y="430" isGround="true" />
-    <object id="brick_48" type="brick" animationSetId="transparency" x="1120" y="430" isGround="true" />
-    <object id="brick_49" type="brick" animationSetId="transparency" x="1152" y="430" isGround="true" />
-    <object id="brick_50" type="brick" animationSetId="transparency" x="1184" y="430" isGround="true" />
-    <object id="brick_51" type="brick" animationSetId="transparency" x="1216" y="430" isGround="true" />
-    <object id="brick_52" type="brick" animationSetId="transparency" x="1248" y="430" isGround="true" />
-    <object id="brick_53" type="brick" animationSetId="transparency" x="1280" y="430" isGround="true" />
-    <object id="brick_54" type="brick" animationSetId="transparency" x="1312" y="430" isGround="true" />
-    <object id="brick_55" type="brick" animationSetId="transparency" x="1344" y="430" isGround="true" />
-    <object id="brick_56" type="brick" animationSetId="transparency" x="1376" y="430" isGround="true" />
-    <object id="brick_57" type="brick" animationSetId="transparency" x="1408" y="430" isGround="true" />
-    <object id="brick_58" type="brick" animationSetId="transparency" x="1440" y="430" isGround="true" />
-    <object id="brick_59" type="brick" animationSetId="transparency" x="1472" y="430" isGround="true" />
-    <object id="brick_60" type="brick" animationSetId="transparency" x="1504" y="430" isGround="true" />
-
-    <object id="brick_61" type="brick" animationSetId="transparency" x="1344" y="400" isGround="true" />
-    <object id="brick_62" type="brick" animationSetId="transparency" x="1376" y="400" isGround="true" />
-    <object id="brick_63" type="brick" animationSetId="transparency" x="1408" y="400" isGround="true" />
-    <object id="brick_64" type="brick" animationSetId="transparency" x="1440" y="400" isGround="true" />
-    <object id="brick_65" type="brick" animationSetId="transparency" x="1472" y="400" isGround="true" />
-    <object id="brick_66" type="brick" animationSetId="transparency" x="1504" y="400" isGround="true" />
-
-    <object id="brick_67" type="brick" animationSetId="transparency" x="1472" y="270" isGround="true" />
-    <object id="brick_68" type="brick" animationSetId="transparency" x="1504" y="270" isGround="true" />
 
     <object id="white_money_bag_1" type="white_money_bag" animationSetId="white_money_bag" x="1464" y="338" visible="false" endingEffect="seven_hundred" />
     <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="1464" y="338" endingEffect="flash" hiddenItemId="white_money_bag_1" />

@@ -2,7 +2,6 @@
 #include "../../Game.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/Brick.h"
-#include "../Misc/Ground.h"
 #include "../Misc/BottomStair.h"
 
 WBone::WBone()
@@ -33,7 +32,7 @@ void WBone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x > CGame::GetInstance()->GetCamera()->GetRight())
+		if (y < CGame::GetInstance()->GetCamera()->GetTop() || y > CGame::GetInstance()->GetCamera()->GetBottom() || x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
 			removable = true;
 		}

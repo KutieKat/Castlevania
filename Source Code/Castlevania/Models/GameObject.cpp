@@ -8,6 +8,7 @@
 #include "../Sprites/SpriteManager.h"
 #include "../Animations/AnimationSets.h"
 #include "../Utilities/SafeDelete.h"
+#include "../Models/Items/MagicCrystal.h"
 
 CGameObject::CGameObject()
 {
@@ -132,7 +133,15 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				hiddenItem->SetVisibility(Visibility::Visible);
 				hiddenItem->SetPosition(x, y);
-				hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+
+				if (dynamic_cast<CMagicCrystal*>(hiddenItem))
+				{
+					// Do nothing
+				}
+				else
+				{
+					hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+				}
 			}
 
 			endingEffect->removable = true;
@@ -158,10 +167,16 @@ void CGameObject::Disappear()
 {
 	if (endingEffect)
 	{
+		float ol, ot, or , ob;
+		GetBoundingBox(ol, ot, or , ob);
+
+		float el, et, er, eb;
+		endingEffect->GetBoundingBox(el, et, er, eb);
+
 		showingEndingEffect = true;
 
 		endingEffect->SetVisibility(Visibility::Visible);
-		endingEffect->SetPosition(x, y);
+		endingEffect->SetPosition(ol + ((or - ol) - (er - el)) / 2 - 10, ot + ((ob - ot) - (eb - et)) / 2 - 10);
 		endingEffect->SetDisplayTime(ENDING_EFFECT_DISPLAY_TIME);
 	}
 	else
@@ -174,10 +189,16 @@ void CGameObject::ShowEffect()
 {
 	if (endingEffect)
 	{
+		float ol, ot, or , ob;
+		GetBoundingBox(ol, ot, or , ob);
+
+		float el, et, er, eb;
+		endingEffect->GetBoundingBox(el, et, er, eb);
+
 		showingEffect = true;
 
 		endingEffect->SetVisibility(Visibility::Visible);
-		endingEffect->SetPosition(x, y);
+		endingEffect->SetPosition(ol + ((or -ol) - (er - el)) / 2 - 10, ot + ((ob - ot) - (eb - et)) / 2 - 10);
 		endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
 	}
 }

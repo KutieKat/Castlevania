@@ -10,7 +10,6 @@
 #include "../Models/Items/BigHeart.h"
 #include "../Models/Items/MorningStar.h"
 #include "../Models/Misc/BigCandle.h"
-#include "../Models/Misc/Ground.h"
 #include "../Models/Misc/PauseBadge.h"
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Animations/AnimationSets.h"
@@ -35,6 +34,7 @@ protected:
 	vector<LPGAMEOBJECT> createdObjects;
 	vector<LPGAMEOBJECT> coObjects;
 	vector<CUnit*> units;
+	vector<LPGAMEOBJECT> grounds;
 
 	CGame* game;
 	CBlackboard* blackboard;

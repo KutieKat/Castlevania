@@ -47,6 +47,13 @@ void CCamera::Unlock()
 	locked = false;
 }
 
+void CCamera::Reset()
+{
+	x = 0.0f;
+	y = 0.0f;
+	locked = false;
+}
+
 bool CCamera::Locked()
 {
 	return locked;

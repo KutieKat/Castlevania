@@ -1,13 +1,13 @@
 #pragma once
-#include "Enemy.h"
+#include "../Enemies/Enemy.h"
 #include "../../../Utilities/Constants.h"
 
 class CSimon;
 
-class CRaven : public CEnemy
+class CPhantomBat : public CEnemy
 {
 public:
-	CRaven(CSimon* simon);
+	CPhantomBat(CSimon* simon);
 
 	void SetState(int state);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr);

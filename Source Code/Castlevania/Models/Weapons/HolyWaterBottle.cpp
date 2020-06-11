@@ -2,7 +2,6 @@
 #include "../../Game.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/Brick.h"
-#include "../Misc/Ground.h"
 
 CHolyWaterBottle::CHolyWaterBottle()
 {
@@ -75,7 +74,7 @@ void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CBrick*>(e->obj) || dynamic_cast<CGround*>(e->obj))
+			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				if (e->nx != 0) vx = 0;
 				if (e->ny != 0) vy = 0;

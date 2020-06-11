@@ -101,9 +101,10 @@ void CBlackboard::InitLabels()
 void CBlackboard::InitHealthBars()
 {
 	CPlayerData* playerData = game->GetPlayerData();
+	CBossData* bossData = game->GetBossData();
 
 	simonHealthBar = new CHealthBar(HealthType::Player, HEALTH_BAR_MAX_VOLUMES, playerData->GetHealthVolumes());
-	enemyHealthBar = new CHealthBar(HealthType::Enemy, HEALTH_BAR_MAX_VOLUMES, HEALTH_BAR_MAX_VOLUMES);
+	enemyHealthBar = new CHealthBar(HealthType::Enemy, HEALTH_BAR_MAX_VOLUMES, bossData->GetHealthVolumes());
 }
 
 void CBlackboard::InitSubWeapon()
@@ -179,7 +180,14 @@ void CBlackboard::UpdatePosition()
 			}
 			else
 			{
-				x = simon->x + SIMON_BBOX_WIDTH - SCREEN_WIDTH / 2;
+				if (game->GetCamera()->Locked())
+				{
+					x = tileMap->GetWidth() - SCREEN_WIDTH;
+				}
+				else
+				{
+					x = simon->x + SIMON_BBOX_WIDTH - SCREEN_WIDTH / 2;
+				}
 			}
 		}
 	}
@@ -201,11 +209,13 @@ void CBlackboard::UpdateLabels()
 void CBlackboard::UpdateHealthBars()
 {
 	CPlayerData* playerData = game->GetPlayerData();
+	CBossData* bossData = game->GetBossData();
 
 	simonHealthBar->SetValue(playerData->GetHealthVolumes());
 	simonHealthBar->SetPosition(x + 110, y + 32);
 	simonHealthBar->Update();
 
+	enemyHealthBar->SetValue(bossData->GetHealthVolumes());
 	enemyHealthBar->SetPosition(x + 110, y + 50);
 	enemyHealthBar->Update();
 }

@@ -10,7 +10,6 @@ CRaven::CRaven(CSimon* simon)
 	this->areaRadiusX = RAVEN_AREA_RADIUS_X;
 	this->areaRadiusY = RAVEN_AREA_RADIUS_Y;
 	this->flyingCounter = 0;
-	this->attackingCounter = 0;
 
 	SetAnimationSet("raven");
 	SetState(RAVEN_STATE_IDLE);
@@ -23,14 +22,23 @@ void CRaven::SetState(int state)
 	switch (state)
 	{
 	case RAVEN_STATE_IDLE:
-		vx = 0;
-		vy = 0;
 		break;
 
 	case RAVEN_STATE_FLY:
+		GenerateTarget();
 		break;
 
 	case RAVEN_STATE_ATTACK:
+		if (x <= simon->x)
+		{
+			targetX = simon->x + SIMON_BBOX_WIDTH;
+		}
+		else
+		{
+			targetX = simon->x;
+		}
+
+		targetY = simon->y + 10;
 		break;
 	}
 }
@@ -43,79 +51,51 @@ void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (softPaused) return;
 
-	directionX = x >= simon->x ? Direction::Left : Direction::Right;
-
-	if (state == RAVEN_STATE_ATTACK)
-	{
-		float sl, st, sr, sb;
-		simon->GetBoundingBox(sl, st, sr, sb);
-
-		rotation = atan2(simon->y + 30 - y, (x > simon->x ? sl : sr) - 30 - x);
-
-		dx = cos(rotation) * RAVEN_ATTACK_SPEED_X * dt;
-		dy = sin(rotation) * RAVEN_ATTACK_SPEED_Y * dt;
-
-		if (y > simon->y && ((directionX == Direction::Left && x < sl) || (directionX == Direction::Right && x > sr)))
-		{
-			SetState(RAVEN_STATE_FLY);
-		}
-	}
+	angle = atan2(targetY - y, targetX - x);
 
 	if (state == RAVEN_STATE_FLY)
 	{
-		attackingCounter += 1;
-		flyingCounter += 1;
-
-		if (attackingCounter % 300 == 0)
+		if (ReachedTarget())
 		{
-			Attack();
-		}
+			directionX = x <= simon->x ? Direction::Right : Direction::Left;
 
-		if (flyingCounter % 30 == 0)
-		{
-			if (x < simon->x)
-			{
-				if (x < simon->x - RAVEN_TO_SIMON_DISTANCE_X)
-				{
-					vx = RAVEN_FLY_SPEED_X;
-				}
-				else
-				{
-					vx = 0;
-				}
-			}
-			else
-			{
-				if (x > simon->x + SIMON_BBOX_WIDTH + RAVEN_TO_SIMON_DISTANCE_X)
-				{
-					vx = -RAVEN_FLY_SPEED_X;
-				}
-				else
-				{
-					vx = 0;
-				}
-			}
+			flyingCounter += 1;
 
-			if (y == simon->y - RAVEN_TO_SIMON_DISTANCE_Y)
+			if (flyingCounter % 30 == 0)
 			{
-				vy = 0;
-			}
-			else if (y < simon->y - RAVEN_TO_SIMON_DISTANCE_Y)
-			{
-				vy = RAVEN_FLY_SPEED_Y;
-			}
-			else
-			{
-				vy = -RAVEN_FLY_SPEED_Y;
+				Attack();
+				flyingCounter = 0;
 			}
 		}
+		else
+		{
+			directionX = x <= targetX ? Direction::Right : Direction::Left;
 
-		dx = vx * dt;
-		dy = vy * dt;
+			vx = RAVEN_ATTACK_SPEED_X;
+			vy = RAVEN_ATTACK_SPEED_Y;
+
+			x += vx * cos(angle) * dt;
+			y += vy * sin(angle) * dt;
+		}
 	}
 
-	x += dx;
-	y += dy;
+	if (state == RAVEN_STATE_ATTACK)
+	{
+		if (ReachedTarget())
+		{
+			SetState(RAVEN_STATE_FLY);
+		}
+		else
+		{
+			directionX = x <= targetX ? Direction::Right : Direction::Left;
+
+			vx = RAVEN_ATTACK_SPEED_X;
+			vy = RAVEN_ATTACK_SPEED_Y;
+
+			x += vx * cos(angle) * dt;
+			y += vy * sin(angle) * dt;
+		}
+	}
 }
 
 void CRaven::Render()
@@ -177,6 +157,55 @@ void CRaven::OnPlayerEnterArea()
 
 	if (state == RAVEN_STATE_IDLE)
 	{
-		SetState(RAVEN_STATE_FLY);
+		SetState(RAVEN_STATE_ATTACK);
+	}
+}
+
+bool CRaven::ReachedTarget()
+{
+	float distance = sqrt(pow(x - targetX, 2) + pow(y - targetY, 2));
+
+	if (distance <= 10)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void CRaven::GenerateTarget()
+{
+	float cameraLeft = CGame::GetInstance()->GetCamera()->GetLeft();
+	float cameraRight = CGame::GetInstance()->GetCamera()->GetRight();
+
+	if (y >= simon->y - 50)
+	{
+		targetX = directionX == Direction::Right ? x + 160 : x - 160;
+		targetY = y - 140;
+
+		if (targetX < cameraLeft + 20)
+		{
+			targetX = cameraLeft + 20;
+		}
+
+		if (targetX > cameraRight - RAVEN_BBOX_WIDTH - 20)
+		{
+			targetX = cameraRight - RAVEN_BBOX_WIDTH - 20;
+		}
+	}
+	else
+	{
+		targetX = x <= targetX ? x + 160 : x - 160;
+		targetY = y + 50;
+
+		if (targetX < cameraLeft + 20)
+		{
+			targetX = cameraLeft + 20;
+		}
+
+		if (targetX > cameraRight - RAVEN_BBOX_WIDTH - 20)
+		{
+			targetX = cameraRight - RAVEN_BBOX_WIDTH - 20;
+		}
 	}
 }

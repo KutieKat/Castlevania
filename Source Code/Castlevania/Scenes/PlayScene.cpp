@@ -212,15 +212,17 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 		}
 		else if (type == "brick")
 		{
-			bool isGround = false;
-			object->QueryBoolAttribute("isGround", &isGround);
+			int width, height;
+			object->QueryIntAttribute("width", &width);
+			object->QueryIntAttribute("height", &height);
 
 			CBrick* brick = new CBrick();
 			brick->SetId(id);
 			brick->SetPosition(x, y);
-			brick->isGround = isGround;
+			brick->SetWidth(width);
+			brick->SetHeight(height);
 
-			unit = new CUnit(grid, brick, x, y);
+			grounds.emplace_back(brick);
 		}
 		else if (type == "breakable_brick")
 		{
@@ -482,7 +484,10 @@ void CPlayScene::Update(DWORD dt)
 			objects[i]->Pause();
 		}
 
-		return;
+		if (showingPauseBadge)
+		{
+			return;
+		}
 	}
 
 	units.clear();
@@ -517,6 +522,11 @@ void CPlayScene::Update(DWORD dt)
 		{
 			coObjects.emplace_back(objects[i]);
 		}
+	}
+
+	for (int i = 0; i < grounds.size(); i++)
+	{
+		coObjects.emplace_back(grounds[i]);
 	}
 
 	for (int i = 0; i < objects.size(); i++)
@@ -621,6 +631,13 @@ void CPlayScene::Render()
 		tileMap->Render(game->GetCamera());
 	}
 
+	// Grounds
+	for (int i = 0; i < grounds.size(); i++)
+	{
+		grounds[i]->Render();
+	}
+
+	// Game objects
 	sort(objects.begin(), objects.end(), CGameObject::CompareElevation);
 
 	for (int i = 0; i < objects.size(); i++)
@@ -635,7 +652,7 @@ void CPlayScene::Render()
 	}
 
 	// PauseBadge
-	if (hardPaused && pauseBadge)
+	if (hardPaused && showingPauseBadge && pauseBadge)
 	{
 		pauseBadge->Render();
 	}
@@ -646,12 +663,19 @@ void CPlayScene::Unload()
 	SAFE_DELETE(blackboard);
 	SAFE_DELETE(tileMap);
 
+	for (int i = 0; i < grounds.size(); i++)
+	{
+		SAFE_DELETE(grounds[i]);
+	}
+
 	for (int i = 0; i < objects.size(); i++)
 	{
 		SAFE_DELETE(objects[i]);
 	}
 
 	SAFE_DELETE(pauseBadge);
+
+	grounds.clear();
 
 	objects.clear();
 
@@ -810,7 +834,25 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		}
 		else
 		{
-			if (game->GetTimer()->GetRemainingTime() > 0 && playerData->GetHealthVolumes() > 0)
+			if (!game->Ended())
+			{
+				if (game->GetTimer()->GetRemainingTime() > 0 && playerData->GetHealthVolumes() > 0)
+				{
+					if (simon->onStair)
+					{
+						simon->SetState(SIMON_STATE_IDLE_ON_STAIR);
+					}
+					else
+					{
+						simon->SetState(SIMON_STATE_IDLE);
+					}
+				}
+				else
+				{
+					simon->SetState(SIMON_STATE_DIE);
+				}
+			}
+			else
 			{
 				if (simon->onStair)
 				{
@@ -820,10 +862,6 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 				{
 					simon->SetState(SIMON_STATE_IDLE);
 				}
-			}
-			else
-			{
-				simon->SetState(SIMON_STATE_DIE);
 			}
 		}
 	}
@@ -881,6 +919,10 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 
 			case DIK_F10:
 				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_2);
+				break;
+
+			case DIK_F11:
+				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_4);
 				break;
 
 			case DIK_N:
@@ -1129,15 +1171,18 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 		}
 		else
 		{
-			switch (keyCode)
+			if (!game->Ended())
 			{
-			case DIK_W:
-				game->SetPauseEndingTime(GetTickCount());
-				game->GetSceneManager()->GetCurrentScene()->ResumeHardPause();
-				break;
+				switch (keyCode)
+				{
+				case DIK_W:
+					game->SetPauseEndingTime(GetTickCount());
+					game->GetSceneManager()->GetCurrentScene()->ResumeHardPause();
+					break;
 
-			default:
-				break;
+				default:
+					break;
+				}
 			}
 		}
 	}

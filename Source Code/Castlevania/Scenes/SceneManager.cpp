@@ -94,7 +94,7 @@ void CSceneManager::SwitchScene(string sceneId, bool forced)
 
 	CScene* scene = scenes[sceneId];
 	game->SetKeyHandler(scene->GetKeyEventHandler());
-	game->GetCamera()->SetPosition(0, 0);
+	game->GetCamera()->Reset();
 
 	if (CGame::GetInstance()->GetTimer()->GetRemainingTime() == -1)
 	{
@@ -194,6 +194,11 @@ void CSceneManager::AddLoadedScenes(string sceneId)
 void CSceneManager::ClearLoadedScenes()
 {
 	loadedScenes.clear();
+}
+
+void CSceneManager::Reset()
+{
+	ClearLoadedScenes();
 }
 
 bool CSceneManager::IsSceneLoaded(string sceneId)

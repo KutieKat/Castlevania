@@ -11,5 +11,7 @@
 
   <scene id="cut_scene_3" type="cut_scene" path="Resources\\Scenes\\CutScene3.xml" stage="03" previousSceneId="play_scene_2_2" nextSceneId="play_scene_3_1" requiredSceneId="" />
   <scene id="play_scene_3_1" type="play_scene" path="Resources\\Scenes\\Scene3.1.xml" stage="03" previousSceneId="cut_scene_3" nextSceneId="play_scene_3_2" needReloading="true" requiredSceneId="" />
-  <scene id="play_scene_3_2" type="play_scene" path="Resources\\Scenes\\Scene3.2.xml" stage="03" previousSceneId="play_scene_3_1" nextSceneId="intro_scene" requiredSceneId="play_scene_3_1" />
+  <scene id="play_scene_3_2" type="play_scene" path="Resources\\Scenes\\Scene3.2.xml" stage="03" previousSceneId="play_scene_3_1" nextSceneId="play_scene_4" requiredSceneId="play_scene_3_1" />
+
+  <scene id="play_scene_4" type="play_scene" path="Resources\\Scenes\\Scene4.xml" stage="04" previousSceneId="play_scene_3_2" nextSceneId="intro_scene" requiredSceneId="" />
 </scenes>

@@ -31,9 +31,12 @@
     <ClCompile Include="Libraries\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="Libraries\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Models\Characters\Bosses\BossData.cpp" />
+    <ClCompile Include="Models\Characters\Bosses\PhantomBat.cpp" />
     <ClCompile Include="Models\Characters\Enemies\Enemy.cpp" />
     <ClCompile Include="Models\Characters\Enemies\Fleamen.cpp" />
     <ClCompile Include="Models\Characters\Enemies\Ghost.cpp" />
+    <ClCompile Include="Models\Characters\Enemies\Ghoul.cpp" />
     <ClCompile Include="Models\Characters\Enemies\Raven.cpp" />
     <ClCompile Include="Models\Characters\Enemies\RedBat.cpp" />
     <ClCompile Include="Models\Characters\Enemies\SpearKnight.cpp" />
@@ -130,9 +133,12 @@
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Libraries\TinyXML\tinystr.h" />
     <ClInclude Include="Libraries\TinyXML\tinyxml.h" />
+    <ClInclude Include="Models\Characters\Bosses\BossData.h" />
+    <ClInclude Include="Models\Characters\Bosses\PhantomBat.h" />
     <ClInclude Include="Models\Characters\Enemies\Enemy.h" />
     <ClInclude Include="Models\Characters\Enemies\Fleamen.h" />
     <ClInclude Include="Models\Characters\Enemies\Ghost.h" />
+    <ClInclude Include="Models\Characters\Enemies\Ghoul.h" />
     <ClInclude Include="Models\Characters\Enemies\Raven.h" />
     <ClInclude Include="Models\Characters\Enemies\RedBat.h" />
     <ClInclude Include="Models\Characters\Enemies\SpearKnight.h" />

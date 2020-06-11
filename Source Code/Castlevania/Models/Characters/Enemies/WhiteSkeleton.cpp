@@ -1,7 +1,6 @@
 #include "WhiteSkeleton.h"
 #include "../../../Game.h"
 #include "../../Misc/Brick.h"
-#include "../../Misc/Ground.h"
 #include "../../Misc/TopStair.h"
 #include "../../Misc/BottomStair.h"
 #include "../../Misc/BreakableBrick.h"
@@ -34,15 +33,16 @@ void CWhiteSkeleton::SetState(int state)
 	switch (state)
 	{
 	case WHITE_SKELETON_STATE_IDLE:
-		vx = 0;
-		vy = 0;
+		vx = vy = 0;
 		break;
 
 	case WHITE_SKELETON_STATE_WALK_AROUND:
+		attackingCounter = 0;
 		vy = 0;
 		break;
 
 	case WHITE_SKELETON_STATE_JUMP_AROUND:
+		attackingCounter = 0;
 		touchingGround = false;
 
 		vx = directionX == Direction::Right ? WHITE_SKELETON_JUMP_SPEED_X : -WHITE_SKELETON_JUMP_SPEED_X;
@@ -50,8 +50,7 @@ void CWhiteSkeleton::SetState(int state)
 		break;
 
 	case WHITE_SKELETON_STATE_DIE:
-		vx = 0;
-		vy = 0;
+		vx = vy = 0;
 		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
 		break;
 	}
@@ -120,6 +119,16 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
+	if (state == WHITE_SKELETON_STATE_JUMP_AROUND)
+	{
+		attackingCounter += 1;
+
+		if (attackingCounter % 200 == 0)
+		{
+			Attack();
+		}
+	}
+
 	if (state != WHITE_SKELETON_STATE_IDLE && state != WHITE_SKELETON_STATE_DIE)
 	{
 		if ((int)(y + WHITE_SKELETON_BBOX_HEIGHT) < (int)(simon->y + SIMON_BBOX_HEIGHT))
@@ -173,23 +182,12 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGround*>(e->obj))
-			{
-				if (state == WHITE_SKELETON_STATE_JUMP_AROUND)
-				{
-					if (e->ny != 0 && rdy < 15) vx = 0;
-				}
-				else
-				{
-					if (e->ny != 0) vy = 0;
-				}
-			}
-			else if (dynamic_cast<CBrick*>(e->obj))
+			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				auto brick = dynamic_cast<CBrick*>(e->obj);
 
-				if (brick->isGround)
-				{
+				//if (brick->isGround)
+				//{
 					touchingGround = true;
 
 					if (state == WHITE_SKELETON_STATE_JUMP_AROUND)
@@ -201,11 +199,11 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						if (e->nx != 0) vx = -vx;
 						if (e->ny != 0) vy = 0;
 					}
-				}
-				else
-				{
+				//}
+				//else
+				//{
 					if (e->nx != 0) vx = -vx;
-				}
+				//}
 			}
 			else if (dynamic_cast<CTopStair*>(e->obj))
 			{

@@ -5,7 +5,6 @@
   <textures>
     <texture id="simon" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
     <texture id="big_candle" path="Resources\\Ground\\BigCandle.png" r="255" g="0" b="255" />
-    <texture id="ground" path="Resources\\Ground\\Ground.png" r="255" g="0" b="255" />
     <texture id="whip" path="Resources\\Weapons\\Whip.png" r="255" g="0" b="255" />
     <texture id="one_thousand" path="Resources\\Effects\\OneThousand.png" r="255" g="0" b="255" />
     <texture id="flash" path="Resources\\Effects\\Flash.png" r="255" g="0" b="255" />
@@ -96,9 +95,6 @@
     <!-- BigCandle -->
     <sprite id="big_candle_1" textureId="big_candle" left="0" top="0" right="31" bottom="63" />
     <sprite id="big_candle_2" textureId="big_candle" left="32" top="0" right="63" bottom="63" />
-    
-    <!-- Ground -->
-    <sprite id="ground" textureId="ground" left="0" top="0" right="32" bottom="32" />
     
     <!-- BigHeart -->
     <sprite id="big_heart" textureId="big_heart" left="0" top="0" right="24" bottom="20" />
@@ -374,11 +370,6 @@
       <frame spriteId="big_candle_2" duration="100" />
     </animation>
     
-    <!-- Brick -->
-    <animation id="ground">
-      <frame spriteId="ground" duration="100" />
-    </animation>
-    
     <!-- BigHeart -->
     <animation id="big_heart">
       <frame spriteId="big_heart" duration="100" />
@@ -620,10 +611,6 @@
       <animationSetItem id="big_candle" animationId="big_candle" />
     </animationSet>
     
-    <animationSet id="ground">
-      <animationSetItem id="ground" animationId="ground" />
-    </animationSet>
-    
     <animationSet id="big_heart">
       <animationSetItem id="big_heart" animationId="big_heart" />
     </animationSet>
@@ -704,67 +691,28 @@
   </animationSets>
 
   <objects gridWidth="1536" gridHeight="448" cellWidth="64" cellHeight="64">
+    <object id="simon" type="simon" animationSetId="simon" x="65" y="100" />
+    
     <object id="money_bag_1" type="money_bag" animationSetId="money_bag" x="1256" y="367" endingEffect="one_thousand" visible="false" topBound="337" />
     <object id="easter_egg_1" type="easter_egg" animationSetId="transparency" x="1420" y="334" hiddenItemId="money_bag_1" />
-    <object id="ground_1" type="ground" animationSetId="ground" x="0" y="366" />
-    <object id="ground_2" type="ground" animationSetId="ground" x="32" y="366" />
-    <object id="ground_3" type="ground" animationSetId="ground" x="64" y="366" />
-    <object id="ground_4" type="ground" animationSetId="ground" x="96" y="366" />
-    <object id="ground_5" type="ground" animationSetId="ground" x="128" y="366" />
-    <object id="ground_6" type="ground" animationSetId="ground" x="160" y="366" />
-    <object id="ground_7" type="ground" animationSetId="ground" x="192" y="366" />
-    <object id="ground_8" type="ground" animationSetId="ground" x="224" y="366" />
-    <object id="ground_9" type="ground" animationSetId="ground" x="256" y="366" />
-    <object id="ground_10" type="ground" animationSetId="ground" x="288" y="366" />
-    <object id="ground_11" type="ground" animationSetId="ground" x="320" y="366" />
-    <object id="ground_12" type="ground" animationSetId="ground" x="352" y="366" />
-    <object id="ground_13" type="ground" animationSetId="ground" x="384" y="366" />
-    <object id="ground_14" type="ground" animationSetId="ground" x="416" y="366" />
-    <object id="ground_15" type="ground" animationSetId="ground" x="448" y="366" />
-    <object id="ground_16" type="ground" animationSetId="ground" x="480" y="366" />
-    <object id="ground_17" type="ground" animationSetId="ground" x="512" y="366" />
-    <object id="ground_18" type="ground" animationSetId="ground" x="544" y="366" />
-    <object id="ground_19" type="ground" animationSetId="ground" x="576" y="366" />
-    <object id="ground_20" type="ground" animationSetId="ground" x="608" y="366" />
-    <object id="ground_21" type="ground" animationSetId="ground" x="640" y="366" />
-    <object id="ground_22" type="ground" animationSetId="ground" x="672" y="366" />
-    <object id="ground_23" type="ground" animationSetId="ground" x="704" y="366" />
-    <object id="ground_24" type="ground" animationSetId="ground" x="736" y="366" />
-    <object id="ground_25" type="ground" animationSetId="ground" x="768" y="366" />
-    <object id="ground_26" type="ground" animationSetId="ground" x="800" y="366" />
-    <object id="ground_27" type="ground" animationSetId="ground" x="832" y="366" />
-    <object id="ground_28" type="ground" animationSetId="ground" x="864" y="366" />
-    <object id="ground_29" type="ground" animationSetId="ground" x="896" y="366" />
-    <object id="ground_30" type="ground" animationSetId="ground" x="928" y="366" />
-    <object id="ground_31" type="ground" animationSetId="ground" x="960" y="366" />
-    <object id="ground_32" type="ground" animationSetId="ground" x="992" y="366" />
-    <object id="ground_33" type="ground" animationSetId="ground" x="1024" y="366" />
-    <object id="ground_34" type="ground" animationSetId="ground" x="1056" y="366" />
-    <object id="ground_35" type="ground" animationSetId="ground" x="1088" y="366" />
-    <object id="ground_36" type="ground" animationSetId="ground" x="1120" y="366" />
-    <object id="ground_37" type="ground" animationSetId="ground" x="1152" y="366" />
-    <object id="ground_38" type="ground" animationSetId="ground" x="1184" y="366" />
-    <object id="ground_39" type="ground" animationSetId="ground" x="1216" y="366" />
-    <object id="ground_40" type="ground" animationSetId="ground" x="1248" y="366" />
-    <object id="ground_41" type="ground" animationSetId="ground" x="1280" y="366" />
-    <object id="ground_42" type="ground" animationSetId="ground" x="1312" y="366" />
-    <object id="ground_43" type="ground" animationSetId="ground" x="1344" y="366" />
-    <object id="ground_44" type="ground" animationSetId="ground" x="1376" y="366" />
-    <object id="ground_45" type="ground" animationSetId="ground" x="1408" y="366" />
-    <object id="ground_46" type="ground" animationSetId="ground" x="1440" y="366" />
-    <object id="ground_47" type="ground" animationSetId="ground" x="1472" y="366" />
-    <object id="ground_48" type="ground" animationSetId="ground" x="1504" y="366" />
+    
+    <object id="brick_1" type="brick" animationSetId="transparency" x="0" y="366" width="1536" height="31" />
+   
     <object id="big_heart_1" type="big_heart" animationSetId="big_heart" x="180" y="302" visible="false" />
     <object id="big_candle_1" type="big_candle" animationSetId="big_candle" x="180" y="302" endingEffect="flash" hiddenItemId="big_heart_1" />
+    
     <object id="morning_star_1" type="morning_star" animationSetId="morning_star" x="430" y="302" visible="false" />
     <object id="big_candle_2" type="big_candle" animationSetId="big_candle" x="430" y="302" endingEffect="flash" hiddenItemId="morning_star_1" />
+    
     <object id="morning_star_2" type="morning_star" animationSetId="morning_star" x="690" y="302" visible="false" />
     <object id="big_candle_3" type="big_candle" animationSetId="big_candle" x="690" y="302" endingEffect="flash" hiddenItemId="morning_star_2" />
+    
     <object id="big_heart_2" type="big_heart" animationSetId="big_heart" x="950" y="302" visible="false" />
     <object id="big_candle_4" type="big_candle" animationSetId="big_candle" x="950" y="302" endingEffect="flash" hiddenItemId="big_heart_2" />
+   
     <object id="dagger_1" type="dagger" animationSetId="dagger" x="1200" y="302" visible="false" />
     <object id="big_candle_5" type="big_candle" animationSetId="big_candle" x="1200" y="302" endingEffect="flash" hiddenItemId="dagger_1" />
-    <object id="simon" type="simon" animationSetId="simon" x="65" y="100" />
+    
     <object id="next_scene_1" type="next_scene" animationSetId="transparency" x="1376" y="350" playerMustBeOnStair="false" sceneDirection="right" />
   </objects>
 </resources>

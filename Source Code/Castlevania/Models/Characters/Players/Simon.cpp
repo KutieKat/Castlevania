@@ -3,8 +3,9 @@
 #include "../../Characters/Enemies/RedBat.h"
 #include "../../Characters/Enemies/Fleamen.h"
 #include "../../Characters/Enemies/WhiteSkeleton.h"
+#include "../../Characters/Bosses/PhantomBat.h"
+#include "../../Characters/Enemies/Raven.h"
 #include "../../Effects/Flash.h"
-#include "../../Misc/Ground.h"
 #include "../../Misc/Brick.h"
 #include "../../Misc/TopStair.h"
 #include "../../Misc/BottomStair.h"
@@ -65,6 +66,9 @@ CSimon::CSimon()
 	switchSceneEnabled = false;
 
 	sittingCounter = 0;
+	healingCounter = 0;
+	timeScoreCounter = 0;
+	heartsScoreCounter = 0;
 	elevation = SIMON_DEFAULT_ELEVATION;
 	delayEndTime = -1;
 	switchSceneTime = -1;
@@ -111,24 +115,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGround*>(e->obj))
-			{
-				if (e->ny < 0)
-				{
-					jumpable = true;
-					touchingGround = true;
-					onBar = false;
-				}
-
-				if (state == SIMON_STATE_STAND_AND_ATTACK)
-				{
-					vx = 0;
-				}
-
-				if (e->nx != 0) vx = 0;
-				if (e->ny != 0) vy = 0;
-			}
-			else if (dynamic_cast<CBrick*>(e->obj))
+			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				auto brick = dynamic_cast<CBrick*>(e->obj);
 
@@ -139,8 +126,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				else
 				{
-					if (brick->isGround)
-					{
+					//if (brick->isGround)
+					//{
 						if (e->ny < 0)
 						{
 							jumpable = true;
@@ -149,17 +136,18 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							onBar = false;
 						}
 
-						if (state == SIMON_STATE_STAND_AND_ATTACK)
-						{
-							vx = 0;
-						}
+						//if (state == SIMON_STATE_STAND_AND_ATTACK)
+						//{
+						//	vx = 0;
+						//}
 
+						//if (e->nx != 0) vx = 0; // New
 						if (e->ny != 0) vy = 0;
-					}
-					else
-					{
-						if (e->nx != 0) vx = 0;
-					}
+					//}
+					//else
+					//{
+						//if (e->nx != 0) vx = 0;
+					//}
 				}
 			}
 			else if (dynamic_cast<CBreakableBrick*>(e->obj))
@@ -217,7 +205,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y -= min_ty * dy + ny * 0.4f;
 
 				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
+				if (e->ny < 0) y += dy;
 			}
 			else if (dynamic_cast<CMovingBar*>(e->obj))
 			{
@@ -311,6 +299,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	HandleCollisionObjects(coObjects);
 	HandleSwitchScene();
 	HandleInvisibility();
+	HandleEndingGame();
 
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
@@ -328,13 +317,20 @@ void CSimon::Render()
 	}
 	else if (fullyInvisible)
 	{
-		if (invisibleTimeout != -1 && GetTickCount() <= invisibleTimeout - 2000)
+		if (invisibleTimeout == -1)
 		{
 			alpha = 0;
 		}
 		else
 		{
-			alpha = 100;
+			if (GetTickCount() <= invisibleTimeout - 2000)
+			{
+				alpha = 0;
+			}
+			else
+			{
+				alpha = 100;
+			}
 		}
 	}
 	else
@@ -514,7 +510,6 @@ void CSimon::SetState(int state)
 
 		break;
 
-	case SIMON_STATE_DIE:
 	case SIMON_STATE_WATCH:
 		vx = 0;
 		switchSceneEnabled = true;
@@ -522,6 +517,25 @@ void CSimon::SetState(int state)
 		if (switchSceneTime == -1)
 		{
 			switchSceneTime = GetTickCount() + waitingTime;
+		}
+
+		break;
+
+	case SIMON_STATE_DIE:
+		if (CGame::GetInstance()->GetPlayerData()->GetLives() > 0)
+		{
+			CGame::GetInstance()->GetPlayerData()->DecreaseLives();
+			CGame::GetInstance()->GetSceneManager()->SwitchScene(CGame::GetInstance()->GetSceneManager()->GetCurrentSceneId());
+		}
+		else
+		{
+			vx = 0;
+			switchSceneEnabled = true;
+
+			if (switchSceneTime == -1)
+			{
+				switchSceneTime = GetTickCount() + waitingTime;
+			}
 		}
 
 		break;
@@ -741,7 +755,7 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 
 void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 {
-	if (sittingCounter != 0 && sittingCounter % 30 == 0)
+	if (sittingCounter != 0 && sittingCounter % 20 == 0)
 	{
 		deflecting = false;
 		sittingCounter = 0;
@@ -914,11 +928,11 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 							deflecting = true;
 							SetState(SIMON_STATE_DEFLECT);
 						}
+
+						CGame::GetInstance()->GetPlayerData()->DecreaseHealthVolumes();
+
+						object->removable = true;
 					}
-
-					CGame::GetInstance()->GetPlayerData()->DecreaseHealthVolumes();
-
-					object->removable = true;
 				}
 			}
 			else if (dynamic_cast<CEnemy*>(object))
@@ -1013,6 +1027,10 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
 		}
 	}
+	else if (dynamic_cast<CMagicCrystal*>(item))
+	{
+		CGame::GetInstance()->End();
+	}
 
 	item->Disappear();
 }
@@ -1038,6 +1056,11 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 			{
 				playerData->DecreaseHealthVolumes();
 			}
+		}
+		else if (dynamic_cast<CRaven*>(item))
+		{
+			item->Disappear();
+			playerData->DecreaseHealthVolumes();
 		}
 		else
 		{
@@ -1121,13 +1144,20 @@ void CSimon::HandleSwitchScene()
 	{
 		switchSceneTime = -1;
 
-		if (state != SIMON_STATE_DIE)
+		if (game->Ended())
 		{
 			game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
 		}
 		else
 		{
-			game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetFirstSceneId());
+			if (state != SIMON_STATE_DIE)
+			{
+				game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+			}
+			else
+			{
+				game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetFirstSceneId());
+			}
 		}
 	}
 }
@@ -1139,6 +1169,64 @@ void CSimon::HandleInvisibility()
 		partiallyInvisible = false;
 		fullyInvisible = false;
 		invisibleTimeout = -1;
+	}
+}
+
+void CSimon::HandleEndingGame()
+{
+	CGame* game = CGame::GetInstance();
+	CPlayerData* playerData = game->GetPlayerData();
+	CTimer* timer = game->GetTimer();
+	CSceneManager* sceneManager = game->GetSceneManager();
+
+	if (game->Ended())
+	{
+		sceneManager->GetCurrentScene()->HardPause(false);
+		vx = vy = 0;
+
+		if (playerData->GetHealthVolumes() != HEALTH_BAR_MAX_VOLUMES)
+		{
+			healingCounter += 1;
+
+			if (healingCounter % 10 == 0)
+			{
+				playerData->AddHealthVolumes(1);
+			}
+		}
+		else
+		{
+			timeScoreCounter += 1;
+
+			if (timer->GetRemainingTime() != 0)
+			{
+				if (timeScoreCounter % 3 == 0)
+				{
+					timer->Decrease();
+					playerData->AddScore(TIME_SCORE);
+				}
+			}
+			else
+			{
+				heartsScoreCounter += 1;
+
+				if (playerData->GetHearts() > 0)
+				{
+					if (heartsScoreCounter % 3 == 0)
+					{
+						playerData->DecreaseHearts(1);
+						playerData->AddScore(HEART_SCORE);
+					}
+				}
+				else
+				{
+					if (switchSceneTime == -1)
+					{
+						switchSceneEnabled = true;
+						switchSceneTime = GetTickCount() + 3000;
+					}
+				}
+			}
+		}
 	}
 }
 

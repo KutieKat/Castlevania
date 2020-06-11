@@ -2,7 +2,6 @@
 #include "../../Game.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/Brick.h"
-#include "../Misc/Ground.h"
 
 WStopwatch::WStopwatch()
 {
@@ -54,7 +53,7 @@ void WStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CBrick*>(e->obj) || dynamic_cast<CGround*>(e->obj))
+			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPause(DEFAULT_SOFT_PAUSE_TIME);
 				removable = true;

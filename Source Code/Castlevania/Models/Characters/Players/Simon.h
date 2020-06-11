@@ -18,8 +18,11 @@ public:
 	void ResetAnimations();
 
 	int GetAnimationToRender();
-	int jumpable;
+	int healingCounter;
+	int timeScoreCounter;
+	int heartsScoreCounter;
 
+	bool jumpable;
 	bool partiallyInvisible;
 	bool fullyInvisible;
 	bool sitting;
@@ -35,7 +38,6 @@ public:
 	bool onBar;
 	bool deflecting;
 	bool switchSceneEnabled;
-
 	bool AbleToThrowSubWeapon();
 
 	string movingDirection;
@@ -72,6 +74,7 @@ protected:
 	void HandleCollisionWithEnemies(CGameObject* item);
 	void HandleSwitchScene();
 	void HandleInvisibility();
+	void HandleEndingGame();
 
 	void RenderWhip();
 };

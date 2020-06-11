@@ -1,6 +1,7 @@
 #include "WAxe.h"
 #include "../../Game.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../Characters/Bosses/PhantomBat.h"
 #include "../Misc/BigCandle.h"
 #include "../Misc/SmallCandle.h"
 
@@ -9,14 +10,15 @@ WAxe::WAxe()
 	SetAnimationSet("axe");
 
 	elevation = WEAPON_DEFAULT_ELEVATION;
-	vy = -AXE_MOVE_SPEED;
+	vy = -AXE_MOVE_SPEED_Y;
+	hasBoundingBox = true;
 }
 
 void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	vx = directionX == Direction::Right ? AXE_MOVE_SPEED : -AXE_MOVE_SPEED;
+	vx = directionX == Direction::Right ? AXE_MOVE_SPEED_X : -AXE_MOVE_SPEED_X;
 
 	vy += AXE_GRAVITY * dt;
 
@@ -59,6 +61,14 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				auto enemy = dynamic_cast<CEnemy*>(e->obj);
 
 				enemy->TakeDamage(AXE_DAMAGES);
+
+				if (dynamic_cast<CPhantomBat*>(e->obj))
+				{
+					hasBoundingBox = false;
+				}
+
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
@@ -67,6 +77,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else if (dynamic_cast<CSmallCandle*>(e->obj))
 			{
@@ -75,6 +86,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else
 			{
@@ -92,10 +104,13 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void WAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
-	right = left + AXE_BBOX_WIDTH;
-	bottom = top + AXE_BBOX_HEIGHT;
+	if (hasBoundingBox)
+	{
+		left = x;
+		top = y;
+		right = left + AXE_BBOX_WIDTH;
+		bottom = top + AXE_BBOX_HEIGHT;
+	}
 }
 
 void WAxe::Render()

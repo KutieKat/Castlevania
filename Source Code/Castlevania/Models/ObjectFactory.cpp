@@ -10,10 +10,6 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y, CSimon* si
 	{
 		return new CIntroBat();
 	}
-	else if (type == "ground")
-	{
-		return new CGround();
-	}
 	else if (type == "big_heart")
 	{
 		return new CBigHeart();
@@ -189,6 +185,10 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y, CSimon* si
 	else if (type == "camera_locker")
 	{
 		return new CCameraLocker();
+	}
+	else if (type == "phantom_bat")
+	{
+		return new CPhantomBat(simon);
 	}
 	else
 	{

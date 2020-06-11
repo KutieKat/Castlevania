@@ -1,6 +1,7 @@
 #include "EnemySpawnerArea.h"
 #include "../../Game.h"
 #include "../Characters/Enemies/Ghost.h"
+#include "../Characters/Enemies/Ghoul.h"
 #include "../Effects/Flash.h"
 #include "../Unit.h"
 
@@ -63,17 +64,42 @@ void CEnemySpawnerArea::SpawnEnemy()
 
 void CEnemySpawnerArea::CreateEnemy()
 {
+	CCamera* camera = CGame::GetInstance()->GetCamera();
 	CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
+
+	float cameraRight = camera->GetRight();
+	float cameraLeft = camera->GetLeft();
+	float cameraTop = camera->GetTop();
+	float cameraBottom = camera->GetBottom();
 
 	if (enemyType == "ghost")
 	{
 		spawnedEnemy = new CGhost(simon);
 	}
-
-	if (spawningPosition == "bottom_right")
+	else if (enemyType == "ghoul")
 	{
-		spawnedEnemy->SetPosition(CGame::GetInstance()->GetCamera()->GetRight() - 10, simon->y + 20);
+		spawnedEnemy = new CGhoul(simon);
+	}
+
+	if (spawningPosition == "top_right")
+	{
+		spawnedEnemy->SetPosition(cameraRight - 10, cameraTop + 150);
 		spawnedEnemy->SetDirectionX(Direction::Left);
+	}
+	else if (spawningPosition == "bottom_right")
+	{
+		spawnedEnemy->SetPosition(cameraRight - 10, enemyType == "ghost" ? simon->y + 20 : cameraBottom - 200);
+		spawnedEnemy->SetDirectionX(Direction::Left);
+	}
+	else if (spawningPosition == "top_left")
+	{
+		spawnedEnemy->SetPosition(cameraLeft + 10, cameraTop + 150);
+		spawnedEnemy->SetDirectionX(Direction::Right);
+	}
+	else if (spawningPosition == "bottom_left")
+	{
+		spawnedEnemy->SetPosition(cameraLeft + 10, cameraBottom - 200);
+		spawnedEnemy->SetDirectionX(Direction::Right);
 	}
 
 	CUnit* unit = new CUnit(grid, spawnedEnemy, spawnedEnemy->x, spawnedEnemy->y);

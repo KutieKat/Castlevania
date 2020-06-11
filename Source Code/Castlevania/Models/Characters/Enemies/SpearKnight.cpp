@@ -2,7 +2,6 @@
 #include "../../../Game.h"
 #include "../../Misc/BottomStair.h"
 #include "../../Misc/Brick.h"
-#include "../../Misc/Ground.h"
 #include "../../Weapons/HolyWaterBottle.h"
 
 CSpearKnight::CSpearKnight()
@@ -21,7 +20,6 @@ void CSpearKnight::SetState(int state)
 	{
 	case SPEAR_KNIGHT_STATE_WALK:
 		vx = directionX == Direction::Right ? SPEAR_KNIGHT_WALK_SPEED : -SPEAR_KNIGHT_WALK_SPEED;
-		vy = 0;
 		break;
 
 	case SPEAR_KNIGHT_STATE_DELAY:
@@ -91,22 +89,22 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGround*>(e->obj))
-			{
-				if (e->ny != 0) vy = 0;
-			}
-			else if (dynamic_cast<CBrick*>(e->obj))
+			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				auto brick = dynamic_cast<CBrick*>(e->obj);
 
-				if (brick->isGround)
-				{
+				//if (brick->isGround)
+				//{
 					if (e->ny != 0) vy = 0;
-				}
-				else
-				{
-					if (e->nx != 0) vx = -vx;
-				}
+				//}
+				//else
+				//{
+					if (e->nx != 0)
+					{
+						directionX = directionX == Direction::Left ? Direction::Right : Direction::Left;
+						vx = -vx;
+					}
+				//}
 			}
 			else if (dynamic_cast<CBottomStair*>(e->obj))
 			{
@@ -117,14 +115,11 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y -= min_ty * dy + ny * 0.4f;
 
 				if (e->nx != 0) x += dx;
-				//if (e->ny != 0) y += dy;
 			}
 			else
 			{
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
-
-				//if (e->ny != 0) vy = 0;
 			}
 		}
 	}

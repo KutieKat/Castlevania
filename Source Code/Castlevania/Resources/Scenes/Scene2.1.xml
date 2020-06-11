@@ -872,68 +872,19 @@
     
     <object id="crown_1" type="crown" animationSetId="crown" x="240" y="420" endingEffect="two_thousand" visible="false" topBound="400" />
     <object id="easter_egg_1" type="easter_egg" animationSetId="transparency" x="448" y="271" hiddenItemId="crown_1" />
+
+    <object id="brick_1" type="brick" animationSetId="transparency" x="0" y="81" width="31" height="352" />
+    <object id="brick_2" type="brick" animationSetId="transparency" x="32" y="207" width="31" height="126" />
+    <object id="brick_3" type="brick" animationSetId="transparency" x="64" y="238" width="256" height="31" />
+    <object id="brick_4" type="brick" animationSetId="transparency" x="448" y="81" width="31" height="158" />
+    <object id="brick_5" type="brick" animationSetId="transparency" x="448" y="335" width="31" height="98" />
+    <object id="brick_6" type="brick" animationSetId="transparency" x="320" y="303" width="192" height="31" />
+    <object id="brick_7" type="brick" animationSetId="transparency" x="480" y="207" width="31" height="96" />
+    <object id="brick_8" type="brick" animationSetId="transparency" x="0" y="432" width="512" height="31" />
     
-    <object id="brick_1" type="brick" animationSetId="transparency" x="0" y="81" />
-    <object id="brick_2" type="brick" animationSetId="transparency" x="0" y="113" />
-    <object id="brick_3" type="brick" animationSetId="transparency" x="0" y="144" />
-    <object id="brick_4" type="brick" animationSetId="transparency" x="0" y="175" />
-    <object id="brick_5" type="brick" animationSetId="transparency" x="0" y="207" />
-    <object id="brick_6" type="brick" animationSetId="transparency" x="32" y="207" isGround="true" />
-
-    <object id="brick_7" type="brick" animationSetId="transparency" x="64" y="238" isGround="true" />
-    <object id="brick_8" type="brick" animationSetId="transparency" x="95" y="238" isGround="true" />
-    <object id="brick_9" type="brick" animationSetId="transparency" x="126" y="238" isGround="true" />
-    <object id="brick_10" type="brick" animationSetId="transparency" x="158" y="238" isGround="true" />
-    <object id="brick_11" type="brick" animationSetId="transparency" x="190" y="238" isGround="true" />
-    <object id="brick_12" type="brick" animationSetId="transparency" x="222" y="238" isGround="true" />
-    <object id="brick_13" type="brick" animationSetId="transparency" x="254" y="238" isGround="true" />
-    <object id="brick_14" type="brick" animationSetId="transparency" x="286" y="238" isGround="true" />
-
-    <object id="brick_15" type="brick" animationSetId="transparency" x="32" y="270" />
-    <object id="brick_16" type="brick" animationSetId="transparency" x="32" y="302" />
-    <object id="brick_17" type="brick" animationSetId="transparency" x="0" y="302" />
-    <object id="brick_18" type="brick" animationSetId="transparency" x="0" y="334" />
-    <object id="brick_19" type="brick" animationSetId="transparency" x="0" y="366" />
-    <object id="brick_20" type="brick" animationSetId="transparency" x="0" y="398" />
-
-    <object id="brick_21" type="brick" animationSetId="transparency" x="0" y="432" isGround="true" />
-    <object id="brick_22" type="brick" animationSetId="transparency" x="32" y="432" isGround="true" />
-    <object id="brick_23" type="brick" animationSetId="transparency" x="64" y="432" isGround="true" />
-    <object id="brick_24" type="brick" animationSetId="transparency" x="96" y="432" isGround="true" />
-    <object id="brick_25" type="brick" animationSetId="transparency" x="128" y="432" isGround="true" />
-    <object id="brick_26" type="brick" animationSetId="transparency" x="160" y="432" isGround="true" />
-    <object id="brick_27" type="brick" animationSetId="transparency" x="192" y="432" isGround="true" />
-    <object id="brick_28" type="brick" animationSetId="transparency" x="224" y="432" isGround="true" />
-    <object id="brick_29" type="brick" animationSetId="transparency" x="256" y="432" isGround="true" />
-    <object id="brick_30" type="brick" animationSetId="transparency" x="288" y="432" isGround="true" />
-    <object id="brick_31" type="brick" animationSetId="transparency" x="320" y="432" isGround="true" />
-    <object id="brick_32" type="brick" animationSetId="transparency" x="352" y="432" isGround="true" />
-    <object id="brick_33" type="brick" animationSetId="transparency" x="384" y="432" isGround="true" />
-    <object id="brick_34" type="brick" animationSetId="transparency" x="416" y="432" isGround="true" />
-    <object id="brick_35" type="brick" animationSetId="transparency" x="448" y="432" isGround="true" />
-
-    <object id="brick_36" type="brick" animationSetId="transparency" x="448" y="81" />
-    <object id="brick_37" type="brick" animationSetId="transparency" x="448" y="113" />
-    <object id="brick_38" type="brick" animationSetId="transparency" x="448" y="144" />
-    <object id="brick_39" type="brick" animationSetId="transparency" x="448" y="175" />
-    <object id="brick_40" type="brick" animationSetId="transparency" x="448" y="207" />
-
-    <object id="brick_42" type="brick" animationSetId="transparency" x="320" y="303" isGround="true" />
-    <object id="brick_42" type="brick" animationSetId="transparency" x="352" y="303" isGround="true" />
-    <object id="brick_43" type="brick" animationSetId="transparency" x="384" y="303" isGround="true" />
-    <object id="brick_44" type="brick" animationSetId="transparency" x="416" y="303" isGround="true" />
-    <object id="brick_45" type="brick" animationSetId="transparency" x="448" y="303" isGround="true" />
-
-    <object id="brick_46" type="brick" animationSetId="transparency" x="480" y="239" />
-    <object id="brick_47" type="brick" animationSetId="transparency" x="480" y="271" />
-
-    <object id="brick_48" type="brick" animationSetId="transparency" x="448" y="335" />
-    <object id="brick_49" type="brick" animationSetId="transparency" x="448" y="367" />
-    <object id="brick_50" type="brick" animationSetId="transparency" x="448" y="399" />
-
     <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="447" y="240" endingEffect="breaking" />
     <object id="breakable_brick_2" type="breakable_brick" animationSetId="breakable_brick" x="447" y="272" endingEffect="breaking" />
-
+    
     <object id="boomerang_1" type="boomerang" animationSetId="boomerang" x="175" y="308" visible="false" />
     <object id="small_candle_1" type="small_candle" animationSetId="small_candle" x="154" y="308" endingEffect="flash" hiddenItemId="boomerang_1" />
 

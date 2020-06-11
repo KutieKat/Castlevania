@@ -41,6 +41,11 @@ void CTimer::Tick()
 	}
 }
 
+void CTimer::Decrease()
+{
+	remainingTime -= 1;
+}
+
 DWORD CTimer::GetRemainingTime()
 {
 	return remainingTime;

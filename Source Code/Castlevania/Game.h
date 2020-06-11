@@ -10,6 +10,7 @@
 #include "Scenes/Scene.h"
 #include "Textures/TextureManager.h"
 #include "Models/Characters/Players/PlayerData.h"
+#include "Models/Characters/Bosses/BossData.h"
 #include "Scenes/SceneManager.h"
 
 class CGame
@@ -27,19 +28,25 @@ class CGame
 	CTimer* timer;
 	CCamera* camera;
 	CPlayerData* playerData;
+	CBossData* bossData;
 	CSceneManager* sceneManager;
 
 	DWORD pauseStartingTime = -1;
 	DWORD pauseEndingTime = -1;
 
+	bool ended;
+
 public:
 	void Init(HWND hWnd);
 	void SetKeyHandler(IKeyEventHandler* keyHandler);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
+
 	bool HaveCollision(CGameObject* object1, CGameObject* object2);
+	bool Ended();
 
 	void SetPauseStartingTime(DWORD time);
 	void SetPauseEndingTime(DWORD time);
+	void End();
 
 	DWORD GetPauseDeltaTime();
 
@@ -67,6 +74,7 @@ public:
 	CTimer* GetTimer();
 	CCamera* GetCamera();
 	CPlayerData* GetPlayerData();
+	CBossData* GetBossData();
 	CSceneManager* GetSceneManager();
 
 	static CGame* GetInstance();

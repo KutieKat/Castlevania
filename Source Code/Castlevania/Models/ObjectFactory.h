@@ -9,6 +9,7 @@
 #include "Characters/Enemies/Fleamen.h"
 #include "Characters/Enemies/WhiteSkeleton.h"
 #include "Characters/Enemies/Raven.h"
+#include "Characters/Bosses/PhantomBat.h"
 
 #include "Items/BigHeart.h"
 #include "Items/MoneyBag.h"
@@ -40,7 +41,6 @@
 
 #include "Misc/Background.h"
 #include "Misc/IntroBat.h"
-#include "Misc/Ground.h"
 #include "Misc/BigCandle.h"
 #include "Misc/Bat.h"
 #include "Misc/Helicopter.h"

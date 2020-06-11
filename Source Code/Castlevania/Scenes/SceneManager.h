@@ -54,6 +54,8 @@ public:
 	void AddLoadedScenes(string sceneId);
 	void ClearLoadedScenes();
 
+	void Reset();
+
 	bool IsSceneLoaded(string sceneId);
 
 protected:
