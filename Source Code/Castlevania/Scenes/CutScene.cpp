@@ -2,6 +2,31 @@
 #include "../Models/ObjectFactory.h"
 #include "../Utilities/SafeDelete.h"
 
+void CCutScene::ParseSounds(TiXmlElement * element)
+{
+	TiXmlElement* sound = nullptr;
+
+	for (sound = element->FirstChildElement(); sound != nullptr; sound = sound->NextSiblingElement())
+	{
+		string id = sound->Attribute("id");
+		string path = sound->Attribute("path");
+
+		bool loop = false;
+		sound->QueryBoolAttribute("loop", &loop);
+
+		bool retained = false;
+		sound->QueryBoolAttribute("retained", &retained);
+
+		bool isBackground = false;
+		sound->QueryBoolAttribute("isBackground", &isBackground);
+
+		if (path != "")
+		{
+			CGameSoundManager::GetInstance()->Add(id, path, loop, retained, isBackground);
+		}
+	}
+}
+
 void CCutScene::ParseTextures(TiXmlElement* element)
 {
 	TiXmlElement* texture = nullptr;
@@ -177,12 +202,14 @@ bool CCutScene::Load()
 	}
 
 	TiXmlElement* root = doc.RootElement();
-	TiXmlElement* textures = root->FirstChildElement();
+	TiXmlElement* sounds = root->FirstChildElement();
+	TiXmlElement* textures = sounds->NextSiblingElement();
 	TiXmlElement* sprites = textures->NextSiblingElement();
 	TiXmlElement* animations = sprites->NextSiblingElement();
 	TiXmlElement* animationSets = animations->NextSiblingElement();
 	TiXmlElement* objects = animationSets->NextSiblingElement();
 
+	ParseSounds(sounds);
 	ParseTextures(textures);
 	ParseSprites(sprites);
 	ParseAnimations(animations);
@@ -190,6 +217,8 @@ bool CCutScene::Load()
 	ParseObjects(objects);
 
 	blackboard = new CBlackboard();
+
+	CGame::GetInstance()->GetSoundManager()->PlayBackgroundSounds();
 
 	return true;
 }

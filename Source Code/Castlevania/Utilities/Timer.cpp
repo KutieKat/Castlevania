@@ -1,5 +1,5 @@
 #include "Timer.h"
-#include "../Utilities/Debug.h"
+#include "../Game.h"
 
 CTimer::CTimer()
 {
@@ -36,6 +36,15 @@ void CTimer::Tick()
 
 		if (counter % 70 == 0)
 		{
+			if (remainingTime <= 10)
+			{
+				CGame::GetInstance()->GetSoundManager()->Play("ticking");
+			}
+			else
+			{
+				CGame::GetInstance()->GetSoundManager()->Stop("ticking");
+			}
+
 			remainingTime -= 1;
 		}
 	}

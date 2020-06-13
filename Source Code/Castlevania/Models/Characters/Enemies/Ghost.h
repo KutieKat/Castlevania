@@ -17,4 +17,6 @@ public:
 
 protected:
 	CSimon* simon;
+
+	int RandomizeDistance();
 };

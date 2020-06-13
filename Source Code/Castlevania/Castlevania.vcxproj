@@ -84,13 +84,18 @@
     <ClCompile Include="Models\Misc\BreakableBrick.cpp" />
     <ClCompile Include="Models\Misc\Brick.cpp" />
     <ClCompile Include="Models\Misc\CameraLocker.cpp" />
+    <ClCompile Include="Models\Misc\Castle.cpp" />
+    <ClCompile Include="Models\Misc\CreditText.cpp" />
+    <ClCompile Include="Models\Misc\Cursor.cpp" />
     <ClCompile Include="Models\Misc\EnemySpawnerArea.cpp" />
+    <ClCompile Include="Models\Misc\GameOverBoard.cpp" />
     <ClCompile Include="Models\Misc\Ground.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
     <ClCompile Include="Models\Misc\Helicopter.cpp" />
     <ClCompile Include="Models\Misc\IntroBat.cpp" />
     <ClCompile Include="Models\Misc\MapPin.cpp" />
+    <ClCompile Include="Models\Misc\Mountain.cpp" />
     <ClCompile Include="Models\Misc\MovingBar.cpp" />
     <ClCompile Include="Models\Misc\NextScene.cpp" />
     <ClCompile Include="Models\Misc\PauseBadge.cpp" />
@@ -107,11 +112,14 @@
     <ClCompile Include="Models\Weapons\WDagger.cpp" />
     <ClCompile Include="Models\Weapons\Whip.cpp" />
     <ClCompile Include="Models\Weapons\WStopwatch.cpp" />
+    <ClCompile Include="Scenes\CreditsScene.cpp" />
     <ClCompile Include="Scenes\CutScene.cpp" />
     <ClCompile Include="Scenes\IntroScene.cpp" />
     <ClCompile Include="Scenes\PlayScene.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneManager.cpp" />
+    <ClCompile Include="Sounds\GameSound.cpp" />
+    <ClCompile Include="Sounds\GameSoundManager.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
     <ClCompile Include="Sprites\SpriteManager.cpp" />
     <ClCompile Include="Textures\TextureManager.cpp" />
@@ -119,6 +127,7 @@
     <ClCompile Include="Utilities\Color.cpp" />
     <ClCompile Include="Utilities\Convert.cpp" />
     <ClCompile Include="Utilities\Debug.cpp" />
+    <ClCompile Include="Utilities\DSUtil.cpp" />
     <ClCompile Include="Utilities\Label.cpp" />
     <ClCompile Include="Utilities\Timer.cpp" />
   </ItemGroup>
@@ -186,13 +195,18 @@
     <ClInclude Include="Models\Misc\BreakableBrick.h" />
     <ClInclude Include="Models\Misc\Brick.h" />
     <ClInclude Include="Models\Misc\CameraLocker.h" />
+    <ClInclude Include="Models\Misc\Castle.h" />
+    <ClInclude Include="Models\Misc\CreditText.h" />
+    <ClInclude Include="Models\Misc\Cursor.h" />
     <ClInclude Include="Models\Misc\EnemySpawnerArea.h" />
+    <ClInclude Include="Models\Misc\GameOverBoard.h" />
     <ClInclude Include="Models\Misc\Ground.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />
     <ClInclude Include="Models\Misc\HealthVolume.h" />
     <ClInclude Include="Models\Misc\Helicopter.h" />
     <ClInclude Include="Models\Misc\IntroBat.h" />
     <ClInclude Include="Models\Misc\MapPin.h" />
+    <ClInclude Include="Models\Misc\Mountain.h" />
     <ClInclude Include="Models\Misc\MovingBar.h" />
     <ClInclude Include="Models\Misc\NextScene.h" />
     <ClInclude Include="Models\Misc\PauseBadge.h" />
@@ -210,11 +224,14 @@
     <ClInclude Include="Models\Weapons\Whip.h" />
     <ClInclude Include="Models\Weapons\WStopwatch.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scenes\CreditsScene.h" />
     <ClInclude Include="Scenes\CutScene.h" />
     <ClInclude Include="Scenes\IntroScene.h" />
     <ClInclude Include="Scenes\PlayScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneManager.h" />
+    <ClInclude Include="Sounds\GameSound.h" />
+    <ClInclude Include="Sounds\GameSoundManager.h" />
     <ClInclude Include="Sprites\Sprite.h" />
     <ClInclude Include="Sprites\SpriteManager.h" />
     <ClInclude Include="Textures\TextureManager.h" />
@@ -223,6 +240,7 @@
     <ClInclude Include="Utilities\Constants.h" />
     <ClInclude Include="Utilities\Convert.h" />
     <ClInclude Include="Utilities\Debug.h" />
+    <ClInclude Include="Utilities\DSUtil.h" />
     <ClInclude Include="Utilities\Label.h" />
     <ClInclude Include="Utilities\SafeDelete.h" />
     <ClInclude Include="Utilities\Timer.h" />
@@ -305,9 +323,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;dsound.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

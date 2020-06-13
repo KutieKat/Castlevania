@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <sounds>
+    <sound id="background_music" path="Resources\\Musics\\Stage1.wav" retained="true" isBackground="true" />
+    <sound id="boss_background_music" path="Resources\\Musics\\PhantomBat.wav" isBackground="true" />
+    <sound id="using_whip" path="Resources\\Sounds\\UsingWhip.wav" />
+    <sound id="collecting_item" path="Resources\\Sounds\\CollectingItem.wav" />
+    <sound id="collecting_weapon_item" path="Resources\\Sounds\\CollectingWeaponItem.wav" />
+    <sound id="taking_damage" path="Resources\\Sounds\\TakingDamage.wav" />
+    <sound id="throwing_dagger" path="Resources\\Sounds\\ThrowingDagger.wav" />
+    <sound id="showing_bonus" path="Resources\\Sounds\\ShowingBonus.wav" />
+    <sound id="pausing" path="Resources\\Sounds\\Pausing.wav" />
+    <sound id="broken_brick" path="Resources\\Sounds\\BrokenBrick.wav" />
+    <sound id="throwing_boomerang" path="Resources\\Sounds\\ThrowingBoomerang.wav" loop="true" />
+    <sound id="throwing_axe" path="Resources\\Sounds\\ThrowingAxe.wav" />
+    <sound id="holy_water_breaking" path="Resources\\Sounds\\HolyWaterBreaking.wav" />
+    <sound id="stopwatch_ticking" path="Resources\\Sounds\\StopwatchTicking.wav" />
+    <sound id="deflecting" path="Resources\\Sounds\\Deflecting.wav" />
+    <sound id="ticking" path="Resources\\Sounds\\Ticking.wav" />
+    <sound id="starting_invisibility" path="Resources\\Sounds\\StartingInvisibility.wav" />
+    <sound id="ending_invisibility" path="Resources\\Sounds\\EndingInvisibility.wav" />
+    <sound id="dying" path="Resources\\Sounds\\Dying.wav" />
+    <sound id="clearing_all_stages" path="Resources\\Musics\\ClearingAllStages.wav" />
+    <sound id="adding_time_score" path="Resources\\Sounds\\AddingTimeScore.wav" />
+    <sound id="adding_hearts_score" path="Resources\\Sounds\\AddingHeartsScore.wav" />
+    <sound id="selecting" path="Resources\\Sounds\\Selecting.wav" />
+  </sounds>
+  
   <tileMap mapPath="Resources\\Maps\\Scene4.Map.xml" tilesetPath="Resources\\Maps\\Scene4.png" />
   
   <textures>
@@ -847,7 +873,7 @@
 
   <objects gridWidth="1536" gridHeight="448" cellWidth="64" cellHeight="64">
     <object id="simon" type="simon" animationSetId="simon" x="65" y="100" />
-
+    
     <object id="brick_1" type="brick" animationSetId="transparency" x="0" y="240" width="226" height="31" />
     <object id="brick_2" type="brick" animationSetId="transparency" x="260" y="302" width="350" height="31" />
     <object id="brick_3" type="brick" animationSetId="transparency" x="1440" y="306" width="100" height="31" />

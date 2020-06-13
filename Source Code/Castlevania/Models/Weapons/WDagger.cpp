@@ -58,6 +58,8 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				enemy->TakeDamage();
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
@@ -66,6 +68,8 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CSmallCandle*>(e->obj))
 			{
@@ -74,6 +78,8 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else
 			{

@@ -69,6 +69,8 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
@@ -78,6 +80,8 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CSmallCandle*>(e->obj))
 			{
@@ -87,6 +91,8 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else
 			{

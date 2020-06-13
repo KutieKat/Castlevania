@@ -16,11 +16,10 @@ public:
 	void SetState(int state);
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void ResetAnimations();
+	void Pause();
 
 	int GetAnimationToRender();
-	int healingCounter;
-	int timeScoreCounter;
-	int heartsScoreCounter;
+	int endingCounter;
 
 	bool jumpable;
 	bool partiallyInvisible;
@@ -38,6 +37,7 @@ public:
 	bool onBar;
 	bool deflecting;
 	bool switchSceneEnabled;
+	bool startingEndingCounter;
 	bool AbleToThrowSubWeapon();
 
 	string movingDirection;
@@ -75,6 +75,7 @@ protected:
 	void HandleSwitchScene();
 	void HandleInvisibility();
 	void HandleEndingGame();
+	void HandleJumpingOutOfWorld();
 
 	void RenderWhip();
 };

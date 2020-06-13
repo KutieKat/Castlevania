@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <sounds>
+    <sound id="background_music" path="Resources\\Musics\\StartGame.wav" isBackground="true" />
+  </sounds>
+  
   <textures>
     <texture id="background" path="Resources\\Others\\CutScene1.png" r="0" g="0" b="0" />
     <texture id="bat" path="Resources\\Others\\Bat.png" r="255" g="0" b="255" />
@@ -512,6 +516,6 @@
     <object id="bat_01" type="bat" animationSetId="bat" x="80" y="240" trajectory="right_cross" />
     <object id="bat_02" type="bat" animationSetId="bat" x="298" y="118" trajectory="oval" />
     <object id="helicopter" type="helicopter" animationSetId="helicopter" x="460" y="130" />
-    <object id="simon" type="simon" animationSetId="simon" x="520" y="338" standingToWatch="true" movingDirection="leftward" switchScenePosition="center" waitingTime="3000" />
+    <object id="simon" type="simon" animationSetId="simon" x="520" y="338" standingToWatch="true" movingDirection="leftward" switchScenePosition="center" waitingTime="4500" />
   </objects>
 </resources>

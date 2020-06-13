@@ -7,6 +7,32 @@
 #include "../Utilities/Debug.h"
 #include "../Utilities/SafeDelete.h"
 
+void CPlayScene::ParseSounds(TiXmlElement* element)
+{
+	CGameSoundManager* soundManager = CGameSoundManager::GetInstance();
+	TiXmlElement* sound = nullptr;
+
+	for (sound = element->FirstChildElement(); sound != nullptr; sound = sound->NextSiblingElement())
+	{
+		string id = sound->Attribute("id");
+		string path = sound->Attribute("path");
+
+		bool loop = false;
+		sound->QueryBoolAttribute("loop", &loop);
+
+		bool retained = false;
+		sound->QueryBoolAttribute("retained", &retained);
+
+		bool isBackground = false;
+		sound->QueryBoolAttribute("isBackground", &isBackground);
+
+		if (path != "")
+		{
+			soundManager->Add(id, path, loop, retained, isBackground);
+		}
+	}
+}
+
 void CPlayScene::ParseTileMap(TiXmlElement* element)
 {
 	tileMap = new CTileMap(element->Attribute("mapPath"), element->Attribute("tilesetPath"));
@@ -408,13 +434,15 @@ bool CPlayScene::LoadResources(bool reloaded)
 	}
 
 	TiXmlElement* root = doc.RootElement();
-	TiXmlElement* tileMap1 = root->FirstChildElement();
+	TiXmlElement* sounds = root->FirstChildElement();
+	TiXmlElement* tileMap1 = sounds->NextSiblingElement();
 	TiXmlElement* textures = tileMap1->NextSiblingElement();
 	TiXmlElement* sprites = textures->NextSiblingElement();
 	TiXmlElement* animations = sprites->NextSiblingElement();
 	TiXmlElement* animationSets = animations->NextSiblingElement();
 	TiXmlElement* objects = animationSets->NextSiblingElement();
 
+	ParseSounds(sounds);
 	ParseTileMap(tileMap1);
 	ParseTextures(textures);
 	ParseSprites(sprites);
@@ -427,6 +455,9 @@ bool CPlayScene::LoadResources(bool reloaded)
 	blackboard->SetTileMap(tileMap);
 
 	pauseBadge = new CPauseBadge();
+	gameOverBoard = new CGameOverBoard();
+
+	CGame::GetInstance()->GetSoundManager()->PlayBackgroundSounds();
 
 	return true;
 }
@@ -446,6 +477,28 @@ CPlayScene::CPlayScene(string id, string filePath, string stage, string previous
 {
 	game = CGame::GetInstance();
 	keyHandler = new CPlaySceneKeyHandler(this);
+
+	showingGameOverBoard = false;
+}
+
+void CPlayScene::ShowGameOverBoard()
+{
+	showingGameOverBoard = true;
+}
+
+void CPlayScene::HideGameOverBoard()
+{
+	showingGameOverBoard = false;
+}
+
+bool CPlayScene::ShowingGameOverBoard()
+{
+	return showingGameOverBoard;
+}
+
+CGameOverBoard* CPlayScene::GetGameOverBoard()
+{
+	return gameOverBoard;
 }
 
 bool CPlayScene::Load()
@@ -479,132 +532,140 @@ void CPlayScene::Update(DWORD dt)
 
 	if (hardPaused)
 	{
+		player->Pause();
+
 		for (int i = 0; i < objects.size(); i++)
 		{
 			objects[i]->Pause();
 		}
+	}
+	else
+	{
+		units.clear();
+		objects.clear();
+		coObjects.clear();
 
-		if (showingPauseBadge)
+		if (grid)
 		{
-			return;
+			grid->Clean();
+			units = grid->Get(CGame::GetInstance()->GetCamera());
 		}
-	}
 
-	units.clear();
-	objects.clear();
-	coObjects.clear();
-
-	if (grid)
-	{
-		grid->Clean();
-		units = grid->Get(CGame::GetInstance()->GetCamera());
-	}
-
-	for (int i = 0; i < units.size(); i++)
-	{
-		CGameObject* object = units[i]->GetGameObject();
-		objects.push_back(object);
-
-		units[i]->Move(object->x, object->y);
-	}
-
-	for (int i = 0; i < objects.size(); i++)
-	{
-		if (objects[i]->isEffect)
+		for (int i = 0; i < units.size(); i++)
 		{
-			continue;
+			CGameObject* object = units[i]->GetGameObject();
+			objects.push_back(object);
+
+			units[i]->Move(object->x, object->y);
 		}
-		else if (dynamic_cast<CSimon*>(objects[i]))
+
+		for (int i = 0; i < objects.size(); i++)
 		{
-			continue;
-		}
-		else
-		{
-			coObjects.emplace_back(objects[i]);
-		}
-	}
-
-	for (int i = 0; i < grounds.size(); i++)
-	{
-		coObjects.emplace_back(grounds[i]);
-	}
-
-	for (int i = 0; i < objects.size(); i++)
-	{
-		objects[i]->Update(dt, &coObjects);
-	}
-
-	// Update camera to follow the player
-	float cx = 0, cy = 0;
-
-	if (player) player->GetPosition(cx, cy);
-
-	float currentPlayerX = 0;
-	float currentPlayerY = 0;
-
-	if (player) player->GetPosition(currentPlayerX, currentPlayerY);
-
-	if (tileMap)
-	{
-		float left, top, right, bottom, leftEdge, rightEdge;
-
-		player->GetBoundingBox(left, top, right, bottom);
-
-		float playerBoundingBoxWidth = right - left;
-
-		if (tileMap->GetWidth() < SCREEN_WIDTH)
-		{
-			cx = 0;
-
-			leftEdge = 0.0f;
-			rightEdge = tileMap->GetWidth() - playerBoundingBoxWidth * 2;
-
-			if (currentPlayerX >= rightEdge) {
-				player->SetPosition(rightEdge, currentPlayerY);
-			}
-
-			if (currentPlayerX <= leftEdge) {
-				player->SetPosition(leftEdge, currentPlayerY);
-			}
-		}
-		else
-		{
-			if (currentPlayerX < SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
+			if (objects[i]->isEffect)
 			{
-				cx = 0.0f;
+				continue;
+			}
+			else if (dynamic_cast<CSimon*>(objects[i]))
+			{
+				continue;
+			}
+			else
+			{
+				coObjects.emplace_back(objects[i]);
+			}
+		}
+
+		for (int i = 0; i < grounds.size(); i++)
+		{
+			coObjects.emplace_back(grounds[i]);
+		}
+
+		for (int i = 0; i < objects.size(); i++)
+		{
+			objects[i]->Update(dt, &coObjects);
+		}
+
+		// Update camera to follow the player
+		float cx = 0, cy = 0;
+
+		if (player) player->GetPosition(cx, cy);
+
+		float currentPlayerX = 0;
+		float currentPlayerY = 0;
+
+		if (player) player->GetPosition(currentPlayerX, currentPlayerY);
+
+		if (tileMap)
+		{
+			float left, top, right, bottom, leftEdge, rightEdge;
+
+			player->GetBoundingBox(left, top, right, bottom);
+
+			float playerBoundingBoxWidth = right - left;
+
+			if (tileMap->GetWidth() < SCREEN_WIDTH)
+			{
+				cx = 0;
+
 				leftEdge = 0.0f;
-
-				if (currentPlayerX <= leftEdge) {
-					player->SetPosition(leftEdge, currentPlayerY);
-				}
-			}
-			else if (currentPlayerX >= tileMap->GetWidth() - SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
-			{
-				cx = tileMap->GetWidth() - SCREEN_WIDTH;
-
 				rightEdge = tileMap->GetWidth() - playerBoundingBoxWidth * 2;
 
 				if (currentPlayerX >= rightEdge) {
 					player->SetPosition(rightEdge, currentPlayerY);
 				}
-			}
-			else
-			{
-				cx = currentPlayerX + playerBoundingBoxWidth - SCREEN_WIDTH / 2;
-				rightEdge = CGame::GetInstance()->GetCamera()->GetRight() - playerBoundingBoxWidth * 2;
-				leftEdge = CGame::GetInstance()->GetCamera()->GetLeft();
-
-				if (currentPlayerX >= rightEdge) {
-					player->SetPosition(rightEdge, currentPlayerY);
-				}
 
 				if (currentPlayerX <= leftEdge) {
 					player->SetPosition(leftEdge, currentPlayerY);
 				}
 			}
+			else
+			{
+				if (currentPlayerX < SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
+				{
+					cx = 0.0f;
+					leftEdge = 0.0f;
+
+					if (currentPlayerX <= leftEdge) {
+						player->SetPosition(leftEdge, currentPlayerY);
+					}
+				}
+				else if (currentPlayerX >= tileMap->GetWidth() - SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
+				{
+					cx = tileMap->GetWidth() - SCREEN_WIDTH;
+
+					rightEdge = tileMap->GetWidth() - playerBoundingBoxWidth * 2;
+
+					if (currentPlayerX >= rightEdge) {
+						player->SetPosition(rightEdge, currentPlayerY);
+					}
+				}
+				else
+				{
+					cx = currentPlayerX + playerBoundingBoxWidth - SCREEN_WIDTH / 2;
+					rightEdge = CGame::GetInstance()->GetCamera()->GetRight() - playerBoundingBoxWidth * 2;
+					leftEdge = CGame::GetInstance()->GetCamera()->GetLeft();
+
+					if (currentPlayerX >= rightEdge) {
+						player->SetPosition(rightEdge, currentPlayerY);
+					}
+
+					if (currentPlayerX <= leftEdge) {
+						player->SetPosition(leftEdge, currentPlayerY);
+					}
+				}
+			}
+
+			cy = 0.0f;
 		}
 
-		cy = 0.0f;
+		// Update camera position
+		game->GetCamera()->SetPosition(cx, cy);
+
+		// PauseBadge
+		if (pauseBadge)
+		{
+			pauseBadge->SetPosition(game->GetCamera()->GetLeft() + (SCREEN_WIDTH / 2) - 120, game->GetCamera()->GetTop() + (SCREEN_HEIGHT / 2) - 60);
+		}
 	}
 
 	// Update blackboard position
@@ -613,36 +674,39 @@ void CPlayScene::Update(DWORD dt)
 		blackboard->Update();
 	}
 
-	// Update camera position
-	game->GetCamera()->SetPosition(cx, cy);
-
-	// PauseBadge
-	if (pauseBadge)
+	// Update game over board
+	if (gameOverBoard)
 	{
-		pauseBadge->SetPosition(game->GetCamera()->GetLeft() + (SCREEN_WIDTH / 2) - 120, game->GetCamera()->GetTop() + (SCREEN_HEIGHT / 2) - 60);
+		gameOverBoard->Update();
 	}
 }
 
 void CPlayScene::Render()
 {
 	// TileMap
-	if (tileMap)
+	if (tileMap && !showingGameOverBoard)
 	{
 		tileMap->Render(game->GetCamera());
 	}
 
 	// Grounds
-	for (int i = 0; i < grounds.size(); i++)
+	if (!showingGameOverBoard)
 	{
-		grounds[i]->Render();
+		for (int i = 0; i < grounds.size(); i++)
+		{
+			grounds[i]->Render();
+		}
 	}
 
 	// Game objects
 	sort(objects.begin(), objects.end(), CGameObject::CompareElevation);
 
-	for (int i = 0; i < objects.size(); i++)
+	if (!showingGameOverBoard)
 	{
-		objects[i]->Render();
+		for (int i = 0; i < objects.size(); i++)
+		{
+			objects[i]->Render();
+		}
 	}
 
 	// Blackboard
@@ -655,6 +719,12 @@ void CPlayScene::Render()
 	if (hardPaused && showingPauseBadge && pauseBadge)
 	{
 		pauseBadge->Render();
+	}
+
+	// RetryBoard
+	if (showingGameOverBoard && gameOverBoard)
+	{
+		gameOverBoard->Render();
 	}
 }
 
@@ -674,6 +744,8 @@ void CPlayScene::Unload()
 	}
 
 	SAFE_DELETE(pauseBadge);
+
+	SAFE_DELETE(gameOverBoard);
 
 	grounds.clear();
 
@@ -700,7 +772,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 	CPlayerData* playerData = game->GetPlayerData();
 
-	if (simon != nullptr && !scene->HardPaused())
+	if (simon != nullptr && !scene->HardPaused() && !((CPlayScene*)scene)->ShowingGameOverBoard())
 	{
 		if (simon->GetState() == SIMON_STATE_STAND_ON_STAIR_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
 		{
@@ -874,315 +946,361 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 	CPlayerData* playerData = game->GetPlayerData();
 
-	if (simon != nullptr)
+	if (simon != nullptr && !scene->HardPaused() && !((CPlayScene*)scene)->ShowingGameOverBoard())
 	{
-		if (!scene->HardPaused())
+		switch (keyCode)
+		{
+		case DIK_SPACE:
+			game->GetTimer()->Pause();
+			game->GetSoundManager()->StopBackgroundSounds();
+			game->GetSoundManager()->Play("game_over_background_music");
+			dynamic_cast<CPlayScene*>(game->GetSceneManager()->GetCurrentScene())->ShowGameOverBoard();
+			break;
+
+		case DIK_F1:
+			game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+			break;
+
+		case DIK_F2:
+			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_1);
+			break;
+
+		case DIK_F3:
+			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_1);
+			break;
+
+		case DIK_F4:
+			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_2);
+			break;
+
+		case DIK_F5:
+			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+			game->GetPlayerData()->Reset();
+			break;
+
+		case DIK_F6:
+			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_1);
+			break;
+
+		case DIK_F7:
+			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_2);
+			break;
+
+		case DIK_F8:
+			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_3);
+			break;
+
+		case DIK_F9:
+			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_1);
+			break;
+
+		case DIK_F10:
+			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_2);
+			break;
+
+		case DIK_F11:
+			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_4);
+			break;
+
+		case DIK_F12:
+			game->GetSceneManager()->SwitchSceneByIndex(CREDITS_SCENE);
+			break;
+
+		case DIK_N:
+			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetNextSceneIndex());
+			break;
+
+		case DIK_P:
+			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetPreviousSceneIndex());
+			break;
+
+		case DIK_1:
+			if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_2)
+			{
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
+			}
+			else
+			{
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_2);
+			}
+
+			break;
+
+		case DIK_2:
+			if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_3)
+			{
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
+			}
+			else
+			{
+				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
+			}
+			break;
+
+		case DIK_3:
+			if (game->GetPlayerData()->GetPower() == DOUBLE_POWER)
+			{
+				game->GetPlayerData()->SetPower(NORMAL_POWER);
+			}
+			else
+			{
+				game->GetSoundManager()->Play("collecting_weapon_item");
+				game->GetPlayerData()->SetPower(DOUBLE_POWER);
+			}
+			break;
+
+		case DIK_4:
+			if (game->GetPlayerData()->GetPower() == TRIPLE_POWER)
+			{
+				game->GetPlayerData()->SetPower(NORMAL_POWER);
+			}
+			else
+			{
+				game->GetSoundManager()->Play("collecting_weapon_item");
+				game->GetPlayerData()->SetPower(TRIPLE_POWER);
+			}
+			break;
+
+		case DIK_5:
+			if (game->GetPlayerData()->GetSubWeaponType() == "dagger")
+			{
+				game->GetPlayerData()->SetSubWeaponType("");
+			}
+			else
+			{
+				game->GetSoundManager()->Play("collecting_weapon_item");
+				game->GetPlayerData()->SetSubWeaponType("dagger");
+			}
+			break;
+
+		case DIK_6:
+			if (game->GetPlayerData()->GetSubWeaponType() == "boomerang")
+			{
+				game->GetPlayerData()->SetSubWeaponType("");
+			}
+			else
+			{
+				game->GetSoundManager()->Play("collecting_weapon_item");
+				game->GetPlayerData()->SetSubWeaponType("boomerang");
+			}
+			break;
+
+		case DIK_7:
+			if (game->GetPlayerData()->GetSubWeaponType() == "axe")
+			{
+				game->GetPlayerData()->SetSubWeaponType("");
+			}
+			else
+			{
+				game->GetSoundManager()->Play("collecting_weapon_item");
+				game->GetPlayerData()->SetSubWeaponType("axe");
+			}
+			break;
+
+		case DIK_8:
+			if (game->GetPlayerData()->GetSubWeaponType() == "holy_water")
+			{
+				game->GetPlayerData()->SetSubWeaponType("");
+			}
+			else
+			{
+				game->GetSoundManager()->Play("collecting_weapon_item");
+				game->GetPlayerData()->SetSubWeaponType("holy_water");
+			}
+			break;
+
+		case DIK_9:
+			if (game->GetPlayerData()->GetSubWeaponType() == "stopwatch")
+			{
+				game->GetPlayerData()->SetSubWeaponType("");
+			}
+			else
+			{
+				game->GetSoundManager()->Play("collecting_weapon_item");
+				game->GetPlayerData()->SetSubWeaponType("stopwatch");
+			}
+			break;
+
+		case DIK_0:
+			game->GetPlayerData()->ResetWeapons();
+			break;
+
+		case DIK_BACKSPACE:
+			game->GetPlayerData()->Reset();
+			break;
+
+		case DIK_H:
+			game->GetPlayerData()->ResetHealthVolumes();
+			break;
+
+		case DIK_I:
+			if (!simon->fullyInvisible)
+			{
+				game->GetSoundManager()->Play("starting_invisibility");
+			}
+			else
+			{
+				game->GetSoundManager()->Play("ending_invisibility");
+			}
+
+			simon->fullyInvisible = !simon->fullyInvisible;
+			break;
+
+		case DIK_L:
+			game->GetPlayerData()->AddLives(10);
+			break;
+
+		case DIK_R:
+			game->GetPlayerData()->AddHearts(100);
+			break;
+
+		case DIK_W:
+			game->SetPauseStartingTime(GetTickCount());
+			game->GetSceneManager()->GetCurrentScene()->HardPause();
+			game->GetSoundManager()->StopBackgroundSounds();
+			game->GetSoundManager()->Play("pausing");
+			break;
+
+		case DIK_Z:
+			if (simon->GetState() == SIMON_STATE_STAND_ON_STAIR_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+			{
+				return;
+			}
+
+			if (simon->GetState() == SIMON_STATE_STAND_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+			{
+				return;
+			}
+
+			if ((simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK || simon->GetState() == SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK) && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+			{
+				return;
+			}
+
+			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+			{
+				return;
+			}
+
+			if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->sitting && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
+			{
+				return;
+			}
+
+			if (simon->onStair)
+			{
+				if (simon->GetDirectionY() == Direction::Up)
+				{
+					simon->SetState(SIMON_STATE_WALK_UPSTAIR_AND_ATTACK);
+				}
+				else
+				{
+					simon->SetState(SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK);
+				}
+
+				if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->AbleToThrowSubWeapon() && simon->up)
+				{
+					simon->SetState(SIMON_STATE_STAND_ON_STAIR_AND_THROW);
+				}
+			}
+			else
+			{
+				if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->AbleToThrowSubWeapon() && simon->up)
+				{
+					simon->SetState(SIMON_STATE_STAND_AND_THROW);
+				}
+			}
+
+			if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_WALK || simon->GetState() == SIMON_STATE_JUMP)
+			{
+				simon->SetState(SIMON_STATE_STAND_AND_ATTACK);
+			}
+			else if (simon->GetState() == SIMON_STATE_SIT)
+			{
+				simon->SetState(SIMON_STATE_SIT_AND_ATTACK);
+			}
+
+			break;
+
+		case DIK_X:
+			if (simon->onStair)
+			{
+				return;
+			}
+
+			if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->touchingGround && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
+			{
+				return;
+			}
+
+			if (simon->sitting)
+			{
+				return;
+			}
+
+			simon->SetState(SIMON_STATE_JUMP);
+
+			break;
+
+		case DIK_UP:
+			simon->up = true;
+
+			if (simon->atBottomStair && simon->GetDirectionX() == simon->stairDirectionX)
+			{
+				simon->onStair = true;
+				simon->SetState(SIMON_STATE_WALK_UPSTAIR);
+			}
+
+			break;
+
+		case DIK_DOWN:
+			simon->down = true;
+
+			if (simon->atTopStair && simon->GetDirectionX() == simon->stairDirectionX)
+			{
+				simon->onStair = true;
+				simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
+			}
+
+			break;
+
+		default:
+			break;
+		}
+	}
+	else
+	{
+		if (!game->Ended())
 		{
 			switch (keyCode)
 			{
-			case DIK_F1:
-				game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
-				break;
-
-			case DIK_F2:
-				game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_1);
-				break;
-
-			case DIK_F3:
-				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_1);
-				break;
-
-			case DIK_F4:
-				game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_2);
-				break;
-
-			case DIK_F5:
-				game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
-				game->GetPlayerData()->Reset();
-				break;
-
-			case DIK_F6:
-				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_1);
-				break;
-
-			case DIK_F7:
-				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_2);
-				break;
-
-			case DIK_F8:
-				game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_3);
-				break;
-
-			case DIK_F9:
-				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_1);
-				break;
-
-			case DIK_F10:
-				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_2);
-				break;
-
-			case DIK_F11:
-				game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_4);
-				break;
-
-			case DIK_N:
-				game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetNextSceneIndex());
-				break;
-
-			case DIK_P:
-				game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetPreviousSceneIndex());
-				break;
-
-			case DIK_1:
-				if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_2)
-				{
-					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
-				}
-				else
-				{
-					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_2);
-				}
-
-				break;
-
-			case DIK_2:
-				if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_3)
-				{
-					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
-				}
-				else
-				{
-					game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
-				}
-				break;
-
-			case DIK_3:
-				if (game->GetPlayerData()->GetPower() == DOUBLE_POWER)
-				{
-					game->GetPlayerData()->SetPower(NORMAL_POWER);
-				}
-				else
-				{
-					game->GetPlayerData()->SetPower(DOUBLE_POWER);
-				}
-				break;
-
-			case DIK_4:
-				if (game->GetPlayerData()->GetPower() == TRIPLE_POWER)
-				{
-					game->GetPlayerData()->SetPower(NORMAL_POWER);
-				}
-				else
-				{
-					game->GetPlayerData()->SetPower(TRIPLE_POWER);
-				}
-				break;
-
-			case DIK_5:
-				if (game->GetPlayerData()->GetSubWeaponType() == "dagger")
-				{
-					game->GetPlayerData()->SetSubWeaponType("");
-				}
-				else
-				{
-					game->GetPlayerData()->SetSubWeaponType("dagger");
-				}
-				break;
-
-			case DIK_6:
-				if (game->GetPlayerData()->GetSubWeaponType() == "boomerang")
-				{
-					game->GetPlayerData()->SetSubWeaponType("");
-				}
-				else
-				{
-					game->GetPlayerData()->SetSubWeaponType("boomerang");
-				}
-				break;
-
-			case DIK_7:
-				if (game->GetPlayerData()->GetSubWeaponType() == "axe")
-				{
-					game->GetPlayerData()->SetSubWeaponType("");
-				}
-				else
-				{
-					game->GetPlayerData()->SetSubWeaponType("axe");
-				}
-				break;
-
-			case DIK_8:
-				if (game->GetPlayerData()->GetSubWeaponType() == "holy_water")
-				{
-					game->GetPlayerData()->SetSubWeaponType("");
-				}
-				else
-				{
-					game->GetPlayerData()->SetSubWeaponType("holy_water");
-				}
-				break;
-
-			case DIK_9:
-				if (game->GetPlayerData()->GetSubWeaponType() == "stopwatch")
-				{
-					game->GetPlayerData()->SetSubWeaponType("");
-				}
-				else
-				{
-					game->GetPlayerData()->SetSubWeaponType("stopwatch");
-				}
-				break;
-
-			case DIK_0:
-				game->GetPlayerData()->ResetWeapons();
-				break;
-
-			case DIK_BACKSPACE:
-				game->GetPlayerData()->Reset();
-				break;
-
-			case DIK_H:
-				game->GetPlayerData()->ResetHealthVolumes();
-				break;
-
-			case DIK_I:
-				simon->fullyInvisible = !simon->fullyInvisible;
-				break;
-
-			case DIK_L:
-				game->GetPlayerData()->AddLives(10);
-				break;
-
-			case DIK_R:
-				game->GetPlayerData()->AddHearts(100);
-				break;
-
 			case DIK_W:
-				game->SetPauseStartingTime(GetTickCount());
-				game->GetSceneManager()->GetCurrentScene()->HardPause();
-				break;
-
-			case DIK_Z:
-				if (simon->GetState() == SIMON_STATE_STAND_ON_STAIR_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
-				{
-					return;
-				}
-
-				if (simon->GetState() == SIMON_STATE_STAND_AND_THROW && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
-				{
-					return;
-				}
-
-				if ((simon->GetState() == SIMON_STATE_WALK_UPSTAIR_AND_ATTACK || simon->GetState() == SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK) && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
-				{
-					return;
-				}
-
-				if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
-				{
-					return;
-				}
-
-				if (simon->GetState() == SIMON_STATE_SIT_AND_ATTACK || (simon->sitting && simon->GetState() == SIMON_STATE_SIT_AND_ATTACK))
-				{
-					return;
-				}
-
-				if (simon->onStair)
-				{
-					if (simon->GetDirectionY() == Direction::Up)
-					{
-						simon->SetState(SIMON_STATE_WALK_UPSTAIR_AND_ATTACK);
-					}
-					else
-					{
-						simon->SetState(SIMON_STATE_WALK_DOWNSTAIR_AND_ATTACK);
-					}
-
-					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->AbleToThrowSubWeapon() && simon->up)
-					{
-						simon->SetState(SIMON_STATE_STAND_ON_STAIR_AND_THROW);
-					}
-				}
-				else
-				{
-					if (playerData->GetSubWeaponType() != "" && playerData->GetHearts() > 0 && simon->AbleToThrowSubWeapon() && simon->up)
-					{
-						simon->SetState(SIMON_STATE_STAND_AND_THROW);
-					}
-				}
-
-				if (simon->GetState() == SIMON_STATE_IDLE || simon->GetState() == SIMON_STATE_WALK || simon->GetState() == SIMON_STATE_JUMP)
-				{
-					simon->SetState(SIMON_STATE_STAND_AND_ATTACK);
-				}
-				else if (simon->GetState() == SIMON_STATE_SIT)
-				{
-					simon->SetState(SIMON_STATE_SIT_AND_ATTACK);
-				}
-
-				break;
-
-			case DIK_X:
-				if (simon->onStair)
-				{
-					return;
-				}
-
-				if (simon->GetState() == SIMON_STATE_STAND_AND_ATTACK && !simon->touchingGround && !simon->animationSet->at(simon->GetAnimationToRender())->Over())
-				{
-					return;
-				}
-
-				if (simon->sitting)
-				{
-					return;
-				}
-				
-				simon->SetState(SIMON_STATE_JUMP);
-
-				break;
-
-			case DIK_UP:
-				simon->up = true;
-
-				if (simon->atBottomStair && simon->GetDirectionX() == simon->stairDirectionX)
-				{
-						simon->onStair = true;
-						simon->SetState(SIMON_STATE_WALK_UPSTAIR);
-				}
-
-				break;
-
-			case DIK_DOWN:
-				simon->down = true;
-
-				if (simon->atTopStair && simon->GetDirectionX() == simon->stairDirectionX)
-				{
-					simon->onStair = true;
-					simon->SetState(SIMON_STATE_WALK_DOWNSTAIR);
-				}
-
+				game->SetPauseEndingTime(GetTickCount());
+				game->GetSceneManager()->GetCurrentScene()->ResumeHardPause();
+				game->GetSoundManager()->PlayBackgroundSounds();
 				break;
 
 			default:
 				break;
 			}
 		}
-		else
-		{
-			if (!game->Ended())
-			{
-				switch (keyCode)
-				{
-				case DIK_W:
-					game->SetPauseEndingTime(GetTickCount());
-					game->GetSceneManager()->GetCurrentScene()->ResumeHardPause();
-					break;
 
-				default:
-					break;
-				}
+		if (((CPlayScene*)scene)->ShowingGameOverBoard())
+		{
+			switch (keyCode)
+			{
+			case DIK_UP:
+				((CPlayScene*)scene)->GetGameOverBoard()->Up();
+				break;
+
+			case DIK_DOWN:
+				((CPlayScene*)scene)->GetGameOverBoard()->Down();
+				break;
+
+			case DIK_RETURN:
+			case DIK_W:
+				((CPlayScene*)scene)->GetGameOverBoard()->Select();
+				break;
 			}
 		}
 	}
@@ -1194,8 +1312,10 @@ void CPlaySceneKeyHandler::OnKeyUp(int keyCode)
 	CScene* scene = game->GetSceneManager()->GetCurrentScene();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 
-	switch (keyCode)
+	if (simon != nullptr && !scene->HardPaused() && !((CPlayScene*)scene)->ShowingGameOverBoard())
 	{
+		switch (keyCode)
+		{
 		case DIK_UP:
 			simon->up = false;
 			break;
@@ -1203,6 +1323,7 @@ void CPlaySceneKeyHandler::OnKeyUp(int keyCode)
 		case DIK_DOWN:
 			simon->down = false;
 			break;
+		}
 	}
 }
 

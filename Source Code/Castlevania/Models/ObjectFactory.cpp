@@ -190,6 +190,18 @@ CGameObject* CObjectFactory::Construct(string type, float x, float y, CSimon* si
 	{
 		return new CPhantomBat(simon);
 	}
+	else if (type == "mountain")
+	{
+		return new CMountain();
+	}
+	else if (type == "credit_text")
+	{
+		return new CCreditText();
+	}
+	else if (type == "castle")
+	{
+		return new CCastle();
+	}
 	else
 	{
 		return nullptr;

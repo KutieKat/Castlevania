@@ -20,12 +20,11 @@ public:
 protected:
 	CSimon* simon;
 
-	DWORD nextAttackingTime;
-
 	bool touchingGround;
 
 	int jumpingCounter;
 	int attackingCounter;
 	int walkingCounter;
 	int GetAnimationToRender();
+	int RandomizeInterval();
 };

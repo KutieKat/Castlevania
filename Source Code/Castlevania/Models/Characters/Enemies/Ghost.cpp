@@ -1,4 +1,7 @@
 #include "Ghost.h"
+#include <cstdlib>
+#include <time.h>
+
 #include "../../../Game.h"
 #include "../../Misc/BottomStair.h"
 #include "../../Weapons/HolyWaterBottle.h"
@@ -10,6 +13,8 @@ CGhost::CGhost(CSimon* simon)
 
 	SetAnimationSet("ghost");
 	SetState(GHOST_STATE_MOVE);
+
+	srand(time(NULL));
 }
 
 void CGhost::SetState(int state)
@@ -48,41 +53,36 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(GHOST_STATE_MOVE);
 	}
 
-	if (directionX == Direction::Left)
+	if (directionX == Direction::Right)
 	{
-		if (x < CGame::GetInstance()->GetCamera()->GetLeft())
-		{
-			removable = true;
-		}
-	}
-	else if (directionX == Direction::Right)
-	{
-		if (x > CGame::GetInstance()->GetCamera()->GetRight())
-		{
-			removable = true;
-		}
-	}
+		x += vx * dt;
 
-	x += (directionX == Direction::Right) ? vx : -vx * dt;
-
-	if (x > simon->x)
-	{
-		if (y < simon->y + 20)
+		if (x > simon->x + RandomizeDistance())
 		{
-			y += ceil(vy * dt);
-		}
-		else
-		{
-			y -= ceil(vy * dt);
+			directionX = Direction::Left;
 		}
 	}
 	else
 	{
-		if (y < simon->y + 20)
+		x -= vx * dt;
+
+		if (x < simon->x - RandomizeDistance())
 		{
-			y += ceil(vy * dt);
+			directionX = Direction::Right;
 		}
 	}
+
+	if (y < simon->y + 20)
+	{
+		y += ceil(vy * dt);
+	}
+	else
+	{
+		y -= ceil(vy * dt);
+	}
+
+	//x += ceil(vx * dt);
+	//y += ceil(vy * dt);
 }
 
 void CGhost::Render()
@@ -131,4 +131,9 @@ void CGhost::TakeDamage(int damages)
 		ShowEffect();
 		SetState(GHOST_STATE_DELAY);
 	}
+}
+
+int CGhost::RandomizeDistance()
+{
+	return rand() % (100 + 1 - 50) + 50;
 }

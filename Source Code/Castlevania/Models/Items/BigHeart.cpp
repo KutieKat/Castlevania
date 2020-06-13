@@ -1,7 +1,14 @@
 #include "BigHeart.h"
-#include "../Misc/BottomStair.h"
 #include "../Misc/SmallCandle.h"
+#include "../Misc/BottomStair.h"
+#include "../Weapons/Bone.h"
+#include "../Weapons/Fireball.h"
 #include "../Weapons/HolyWaterBottle.h"
+#include "../Weapons/WAxe.h"
+#include "../Weapons/WBoomerang.h"
+#include "../Weapons/WDagger.h"
+#include "../Weapons/WStopwatch.h"
+#include "../Characters/Enemies/Enemy.h"
 
 CBigHeart::CBigHeart()
 {
@@ -48,14 +55,24 @@ void CBigHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (e->obj->isItem)
 			{
+				y -= min_ty * dy + ny * 0.4f;
+
 				if (e->ny != 0) y += dy;
 			}
 			else if (dynamic_cast<CSmallCandle*>(e->obj))
 			{
 				if (e->ny != 0) y += dy;
 			}
-			else if (dynamic_cast<CHolyWaterBottle*>(e->obj))
+			else if (dynamic_cast<WBone*>(e->obj) || dynamic_cast<WFireball*>(e->obj) || dynamic_cast<CHolyWaterBottle*>(e->obj) || dynamic_cast<WAxe*>(e->obj) || dynamic_cast<WBoomerang*>(e->obj) || dynamic_cast<WDagger*>(e->obj) || dynamic_cast<WStopwatch*>(e->obj))
 			{
+				y -= min_ty * dy + ny * 0.4f;
+
+				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CEnemy*>(e->obj))
+			{
+				y -= min_ty * dy + ny * 0.4f;
+
 				if (e->ny != 0) y += dy;
 			}
 			else

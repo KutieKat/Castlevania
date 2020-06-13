@@ -32,20 +32,24 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CBigCandle*>(object))
 			{
 				object->Disappear();
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CSmallCandle*>(object))
 			{
 				object->Disappear();
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CBreakableBrick*>(object))
 			{
 				object->Disappear();
+				CGame::GetInstance()->GetSoundManager()->Play("broken_brick");
 			}
 			else if (dynamic_cast<CEnemy*>(object))
 			{
 				auto enemy = dynamic_cast<CEnemy*>(object);
 
 				enemy->TakeDamage(playerData->GetPower());
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 		}
 	}

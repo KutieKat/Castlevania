@@ -2,6 +2,7 @@
 #include "CutScene.h"
 #include "IntroScene.h"
 #include "PlayScene.h"
+#include "CreditsScene.h"
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Utilities/Debug.h"
 
@@ -63,6 +64,11 @@ bool CSceneManager::Load(string filePath)
 			sceneItem = new CCutScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
 		}
 
+		if (type == "credits_scene")
+		{
+			sceneItem = new CCreditsScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
+		}
+
 		sceneItem->needReloading = needReloading;
 
 		scenes[id] = sceneItem;
@@ -89,6 +95,7 @@ void CSceneManager::SwitchScene(string sceneId, bool forced)
 	CSpriteManager::GetInstance()->Clear();
 	CAnimationManager::GetInstance()->Clear();
 	CAnimationSets::GetInstance()->Clear();
+	CGameSoundManager::GetInstance()->Clear(forced);
 
 	currentSceneId = sceneId;
 

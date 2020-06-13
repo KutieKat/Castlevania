@@ -152,7 +152,7 @@ void CPhantomBat::TakeDamage(int damages)
 {
 	CEnemy::TakeDamage(damages);
 
-	if (CGame::GetInstance()->GetBossData()->GetHealthVolumes() == 0)
+	if (CGame::GetInstance()->GetBossData()->GetHealthVolumes() <= 0)
 	{
 		Disappear();
 		CGame::GetInstance()->GetPlayerData()->AddScore(PHANTOM_BAT_SCORE);

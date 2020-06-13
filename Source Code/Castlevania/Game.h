@@ -12,6 +12,7 @@
 #include "Models/Characters/Players/PlayerData.h"
 #include "Models/Characters/Bosses/BossData.h"
 #include "Scenes/SceneManager.h"
+#include "Sounds/GameSoundManager.h"
 
 class CGame
 {
@@ -30,9 +31,15 @@ class CGame
 	CPlayerData* playerData;
 	CBossData* bossData;
 	CSceneManager* sceneManager;
+	CGameSoundManager* soundManager;
 
 	DWORD pauseStartingTime = -1;
 	DWORD pauseEndingTime = -1;
+
+	int healingCounter;
+	int timeScoreCounter;
+	int heartsScoreCounter;
+	int switchSceneCounter;
 
 	bool ended;
 
@@ -47,6 +54,7 @@ public:
 	void SetPauseStartingTime(DWORD time);
 	void SetPauseEndingTime(DWORD time);
 	void End();
+	void HandleEnding();
 
 	DWORD GetPauseDeltaTime();
 
@@ -71,11 +79,14 @@ public:
 	LPDIRECT3DSURFACE9 GetBackBuffer();
 	LPD3DXSPRITE GetSpriteHandler();
 
+	HWND GetHandler();
+
 	CTimer* GetTimer();
 	CCamera* GetCamera();
 	CPlayerData* GetPlayerData();
 	CBossData* GetBossData();
 	CSceneManager* GetSceneManager();
+	CGameSoundManager* GetSoundManager();
 
 	static CGame* GetInstance();
 
@@ -83,5 +94,3 @@ public:
 
 	~CGame();
 };
-
-

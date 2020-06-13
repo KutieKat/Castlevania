@@ -11,6 +11,7 @@
 #include "../Models/Items/MorningStar.h"
 #include "../Models/Misc/BigCandle.h"
 #include "../Models/Misc/PauseBadge.h"
+#include "../Models/Misc/GameOverBoard.h"
 #include "../Libraries/TinyXML/tinyxml.h"
 #include "../Animations/AnimationSets.h"
 
@@ -18,6 +19,12 @@ class CPlayScene : public CScene
 {
 public:
 	CPlayScene(string id, string filePath, string stage = "", string previousSceneId = "", string nextSceneId = "", string requiredSceneId = "");
+
+	void ShowGameOverBoard();
+	void HideGameOverBoard();
+	bool ShowingGameOverBoard();
+
+	CGameOverBoard* GetGameOverBoard();
 
 	virtual bool Load();
 	virtual bool Reload();
@@ -36,11 +43,15 @@ protected:
 	vector<CUnit*> units;
 	vector<LPGAMEOBJECT> grounds;
 
+	bool showingGameOverBoard;
+
 	CGame* game;
 	CBlackboard* blackboard;
 	CTileMap* tileMap;
 	CPauseBadge* pauseBadge;
+	CGameOverBoard* gameOverBoard;
 
+	void ParseSounds(TiXmlElement* element);
 	void ParseTileMap(TiXmlElement* element);
 	void ParseTextures(TiXmlElement* element);
 	void ParseSprites(TiXmlElement* element);

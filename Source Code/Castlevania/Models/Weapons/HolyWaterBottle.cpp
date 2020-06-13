@@ -23,9 +23,11 @@ void CHolyWaterBottle::SetState(int state)
 		break;
 
 	case HOLY_WATER_BOTTLE_STATE_BURN:
-		vy = 0;
-		vx = 0;
+		vx = vy = 0;
 		SetDisplayTime(HOLY_WATER_BOTTLE_BURNING_TIME);
+
+		CGame::GetInstance()->GetSoundManager()->Play("holy_water_breaking");
+		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
 		break;
 	}
 }
@@ -52,7 +54,7 @@ void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
+		if (y < CGame::GetInstance()->GetCamera()->GetTop() || y > CGame::GetInstance()->GetCamera()->GetBottom() || x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
 			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
 

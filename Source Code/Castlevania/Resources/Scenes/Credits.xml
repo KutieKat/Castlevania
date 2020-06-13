@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <sounds>
+    <sound id="background_music" path="Resources\\Musics\\EndGame.wav" isBackground="true" />
+    <sound id="knocked_down" path="Resources\\Sounds\\KnockedDown.wav" loop="true" />
+  </sounds>
+  
+  <textures>
+    <texture id="background" path="Resources\\Others\\CreditsBackground.png" r="0" g="0" b="0" />
+    <texture id="mountain" path="Resources\\Others\\Mountain.png" r="255" g="0" b="255" />
+    <texture id="credit_text" path="Resources\\Others\\CreditText.png" r="255" g="0" b="255" />
+    <texture id="castle" path="Resources\\Others\\Castle.png" r="255" g="0" b="255" />
+    <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
+  </textures>
+  
+  <sprites>
+    <!-- Background -->
+    <sprite id="background" textureId="background" left="0" top="0" right="528" bottom="528" />
+    
+    <!-- Mountain -->
+    <sprite id="mountain" textureId="mountain" left="0" top="0" right="528" bottom="528" />
+    
+    <!-- CreditText -->
+    <sprite id="credit_text_1_pink" textureId="credit_text" left="0" top="0" right="260" bottom="146" />
+    <sprite id="credit_text_1_purple" textureId="credit_text" left="264" top="0" right="524" bottom="146" />
+    <sprite id="credit_text_1_blue" textureId="credit_text" left="527" top="0" right="787" bottom="146" />
+    <sprite id="credit_text_1_black" textureId="credit_text" left="791" top="0" right="1051" bottom="146" />
+
+    <sprite id="credit_text_2_pink" textureId="credit_text" left="0" top="149" right="260" bottom="295" />
+    <sprite id="credit_text_2_purple" textureId="credit_text" left="264" top="149" right="524" bottom="295" />
+    <sprite id="credit_text_2_blue" textureId="credit_text" left="527" top="149" right="787" bottom="295" />
+    <sprite id="credit_text_2_black" textureId="credit_text" left="791" top="149" right="1051" bottom="295" />
+
+    <sprite id="credit_text_3_pink" textureId="credit_text" left="0" top="298" right="260" bottom="444" />
+    <sprite id="credit_text_3_purple" textureId="credit_text" left="264" top="298" right="524" bottom="444" />
+    <sprite id="credit_text_3_blue" textureId="credit_text" left="527" top="298" right="787" bottom="444" />
+    <sprite id="credit_text_3_black" textureId="credit_text" left="791" top="298" right="1051" bottom="444" />
+
+    <sprite id="credit_text_4_pink" textureId="credit_text" left="0" top="447" right="260" bottom="593" />
+    <sprite id="credit_text_4_purple" textureId="credit_text" left="264" top="447" right="524" bottom="593" />
+    <sprite id="credit_text_4_blue" textureId="credit_text" left="527" top="447" right="787" bottom="593" />
+    <sprite id="credit_text_4_black" textureId="credit_text" left="791" top="447" right="1051" bottom="593" />
+
+    <sprite id="credit_text_5_pink" textureId="credit_text" left="0" top="596" right="260" bottom="742" />
+    <sprite id="credit_text_5_purple" textureId="credit_text" left="264" top="596" right="524" bottom="742" />
+    <sprite id="credit_text_5_blue" textureId="credit_text" left="527" top="596" right="787" bottom="742" />
+    <sprite id="credit_text_5_black" textureId="credit_text" left="791" top="596" right="1051" bottom="742" />
+
+    <sprite id="credit_text_6_pink" textureId="credit_text" left="0" top="745" right="260" bottom="891" />
+    <sprite id="credit_text_6_purple" textureId="credit_text" left="264" top="745" right="524" bottom="891" />
+    <sprite id="credit_text_6_blue" textureId="credit_text" left="527" top="745" right="787" bottom="891" />
+    <sprite id="credit_text_6_black" textureId="credit_text" left="791" top="745" right="1051" bottom="891" />
+
+    <sprite id="credit_text_7_pink" textureId="credit_text" left="0" top="894" right="260" bottom="1040" />
+    <sprite id="credit_text_7_purple" textureId="credit_text" left="264" top="894" right="524" bottom="1040" />
+    <sprite id="credit_text_7_blue" textureId="credit_text" left="527" top="894" right="787" bottom="1040" />
+    <sprite id="credit_text_7_black" textureId="credit_text" left="791" top="894" right="1051" bottom="1040" />
+
+    <sprite id="credit_text_8_pink" textureId="credit_text" left="0" top="1043" right="260" bottom="1189" />
+    <sprite id="credit_text_8_purple" textureId="credit_text" left="264" top="1043" right="524" bottom="1189" />
+    <sprite id="credit_text_8_blue" textureId="credit_text" left="527" top="1043" right="787" bottom="1189" />
+    <sprite id="credit_text_8_black" textureId="credit_text" left="791" top="1043" right="1051" bottom="1189" />
+
+    <sprite id="credit_text_9_pink" textureId="credit_text" left="0" top="1192" right="260" bottom="1338" />
+    <sprite id="credit_text_9_purple" textureId="credit_text" left="264" top="1192" right="524" bottom="1338" />
+    <sprite id="credit_text_9_blue" textureId="credit_text" left="527" top="1192" right="787" bottom="1338" />
+    <sprite id="credit_text_9_black" textureId="credit_text" left="791" top="1192" right="1051" bottom="1338" />
+
+    <sprite id="credit_text_10_pink" textureId="credit_text" left="0" top="1341" right="260" bottom="1487" />
+    <sprite id="credit_text_10_purple" textureId="credit_text" left="264" top="1341" right="524" bottom="1487" />
+    <sprite id="credit_text_10_blue" textureId="credit_text" left="527" top="1341" right="787" bottom="1487" />
+    <sprite id="credit_text_10_black" textureId="credit_text" left="791" top="1341" right="1051" bottom="1487" />
+    
+    <sprite id="credit_text_blank" textureId="credit_text" left="0" top="1491" right="260" bottom="1637" />
+
+    <!-- Castle -->
+    <sprite id="castle" textureId="castle" left="0" top="0" right="115" bottom="150" />
+  </sprites>
+  
+  <animations>
+    <animation id="background">
+      <frame spriteId="background" duration="100" />
+    </animation>
+    
+    <animation id="mountain">
+      <frame spriteId="mountain" duration="100" />
+    </animation>
+
+    <animation id="credit_text">
+      <frame spriteId="credit_text_1_pink" duration="200" />
+      <frame spriteId="credit_text_1_purple" duration="200" />
+      <frame spriteId="credit_text_1_blue" duration="200" />
+      <frame spriteId="credit_text_1_black" duration="3000" />
+      <frame spriteId="credit_text_1_blue" duration="200" />
+      <frame spriteId="credit_text_1_purple" duration="200" />
+      <frame spriteId="credit_text_1_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_2_pink" duration="200" />
+      <frame spriteId="credit_text_2_purple" duration="200" />
+      <frame spriteId="credit_text_2_blue" duration="200" />
+      <frame spriteId="credit_text_2_black" duration="3000" />
+      <frame spriteId="credit_text_2_blue" duration="200" />
+      <frame spriteId="credit_text_2_purple" duration="200" />
+      <frame spriteId="credit_text_2_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_3_pink" duration="200" />
+      <frame spriteId="credit_text_3_purple" duration="200" />
+      <frame spriteId="credit_text_3_blue" duration="200" />
+      <frame spriteId="credit_text_3_black" duration="3000" />
+      <frame spriteId="credit_text_3_blue" duration="200" />
+      <frame spriteId="credit_text_3_purple" duration="200" />
+      <frame spriteId="credit_text_3_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_4_pink" duration="200" />
+      <frame spriteId="credit_text_4_purple" duration="200" />
+      <frame spriteId="credit_text_4_blue" duration="200" />
+      <frame spriteId="credit_text_4_black" duration="3000" />
+      <frame spriteId="credit_text_4_blue" duration="200" />
+      <frame spriteId="credit_text_4_purple" duration="200" />
+      <frame spriteId="credit_text_4_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_5_pink" duration="200" />
+      <frame spriteId="credit_text_5_purple" duration="200" />
+      <frame spriteId="credit_text_5_blue" duration="200" />
+      <frame spriteId="credit_text_5_black" duration="3000" />
+      <frame spriteId="credit_text_5_blue" duration="200" />
+      <frame spriteId="credit_text_5_purple" duration="200" />
+      <frame spriteId="credit_text_5_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_6_pink" duration="200" />
+      <frame spriteId="credit_text_6_purple" duration="200" />
+      <frame spriteId="credit_text_6_blue" duration="200" />
+      <frame spriteId="credit_text_6_black" duration="3000" />
+      <frame spriteId="credit_text_6_blue" duration="200" />
+      <frame spriteId="credit_text_6_purple" duration="200" />
+      <frame spriteId="credit_text_6_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_7_pink" duration="200" />
+      <frame spriteId="credit_text_7_purple" duration="200" />
+      <frame spriteId="credit_text_7_blue" duration="200" />
+      <frame spriteId="credit_text_7_black" duration="3000" />
+      <frame spriteId="credit_text_7_blue" duration="200" />
+      <frame spriteId="credit_text_7_purple" duration="200" />
+      <frame spriteId="credit_text_7_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_8_pink" duration="200" />
+      <frame spriteId="credit_text_8_purple" duration="200" />
+      <frame spriteId="credit_text_8_blue" duration="200" />
+      <frame spriteId="credit_text_8_black" duration="3000" />
+      <frame spriteId="credit_text_8_blue" duration="200" />
+      <frame spriteId="credit_text_8_purple" duration="200" />
+      <frame spriteId="credit_text_8_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_9_pink" duration="200" />
+      <frame spriteId="credit_text_9_purple" duration="200" />
+      <frame spriteId="credit_text_9_blue" duration="200" />
+      <frame spriteId="credit_text_9_black" duration="3000" />
+      <frame spriteId="credit_text_9_blue" duration="200" />
+      <frame spriteId="credit_text_9_purple" duration="200" />
+      <frame spriteId="credit_text_9_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="1000" />
+
+      <frame spriteId="credit_text_10_pink" duration="200" />
+      <frame spriteId="credit_text_10_purple" duration="200" />
+      <frame spriteId="credit_text_10_blue" duration="200" />
+      <frame spriteId="credit_text_10_black" duration="3000" />
+    </animation>
+
+    <animation id="castle">
+      <frame spriteId="castle" duration="17000" />
+    </animation>
+  </animations>
+  
+  <animationSets>
+    <animationSet id="background">
+      <animationSetItem id="background" animationId="background" />
+    </animationSet>
+    
+    <animationSet id="mountain">
+      <animationSetItem id="mountain" animationId="mountain" />
+    </animationSet>
+
+    <animationSet id="credit_text">
+      <animationSetItem id="credit_text" animationId="credit_text" />
+    </animationSet>
+
+    <animationSet id="castle">
+      <animationSetItem id="castle" animationId="castle" />
+    </animationSet>
+  </animationSets>
+  
+  <objects>
+    <object id="background" type="background" animationSetId="background" x="0" y="0" />
+    <object id="mountain" type="mountain" animationSetId="mountain" x="0" y="234" />
+    <object id="credit_text" type="credit_text" animationSetId="credit_text" x="40" y="110" visible="false" />
+    <object id="castle" type="castle" animationSetId="castle" x="348" y="126" />
+  </objects>
+</resources>

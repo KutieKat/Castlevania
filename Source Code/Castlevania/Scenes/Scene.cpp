@@ -27,6 +27,7 @@ void CScene::SoftPause(DWORD duration)
 
 	if (duration != -1)
 	{
+		CGame::GetInstance()->GetSoundManager()->Play("stopwatch_ticking");
 		softPauseTime = GetTickCount() + CGame::GetInstance()->GetPauseDeltaTime() + duration;
 	}
 }
@@ -39,6 +40,7 @@ void CScene::HardPause(bool showingPauseBadge)
 
 void CScene::ResumeSoftPause()
 {
+	CGame::GetInstance()->GetSoundManager()->Stop("stopwatch_ticking");
 	softPaused = false;
 }
 

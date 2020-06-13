@@ -56,6 +56,8 @@ void WStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPause(DEFAULT_SOFT_PAUSE_TIME);
+				CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
 				removable = true;
 			}
 			else

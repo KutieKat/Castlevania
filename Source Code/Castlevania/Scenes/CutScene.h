@@ -32,6 +32,7 @@ protected:
 	CGame* game;
 	CBlackboard* blackboard;
 
+	void ParseSounds(TiXmlElement* element);
 	void ParseTextures(TiXmlElement* element);
 	void ParseSprites(TiXmlElement* element);
 	void ParseAnimations(TiXmlElement* element);

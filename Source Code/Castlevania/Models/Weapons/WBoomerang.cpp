@@ -22,8 +22,9 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	if ((directionX == Direction::Right && x < simon->x + SIMON_BBOX_WIDTH && y > simon->y) || (directionX == Direction::Left && x > simon->x && y > simon->y))
+	if (collisionCount == 1 && (directionX == Direction::Right && x < simon->x + SIMON_BBOX_WIDTH && y > simon->y) || (directionX == Direction::Left && x > simon->x && y > simon->y))
 	{
+		CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
 		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
 
 		removable = true;
@@ -31,6 +32,7 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (collisionCount == 2)
 	{
+		CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
 		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
 
 		removable = true;
@@ -56,6 +58,7 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
 		{
+			CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
 			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
 
 			removable = true;

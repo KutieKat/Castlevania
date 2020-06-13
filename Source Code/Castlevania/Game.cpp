@@ -75,8 +75,17 @@ void CGame::Init(HWND hWnd)
 	// Scene manager
 	sceneManager = CSceneManager::GetInstance();
 
+	// Sound manager
+	soundManager = CGameSoundManager::GetInstance();
+	soundManager->Init();
+
 	// Game ending
 	ended = false;
+
+	healingCounter = 0;
+	timeScoreCounter = 0;
+	heartsScoreCounter = 0;
+	switchSceneCounter = 0;
 
 	CDebug::Info("Initialize game successfully!", "Game.cpp");
 }
@@ -139,6 +148,62 @@ void CGame::SetPauseEndingTime(DWORD time)
 void CGame::End()
 {
 	ended = true;
+}
+
+void CGame::HandleEnding()
+{
+	if (ended)
+	{
+		sceneManager->GetCurrentScene()->HardPause(false);
+		timer->Pause();
+
+		if (playerData->GetHealthVolumes() != HEALTH_BAR_MAX_VOLUMES)
+		{
+			healingCounter += 1;
+
+			if (healingCounter % 10 == 0)
+			{
+				playerData->AddHealthVolumes(1);
+			}
+		}
+		else
+		{
+			timeScoreCounter += 1;
+
+			if (timer->GetRemainingTime() != 0)
+			{
+				if (timeScoreCounter % 3 == 0)
+				{
+					soundManager->Play("adding_time_score");
+					timer->Decrease();
+					playerData->AddScore(TIME_SCORE);
+				}
+			}
+			else
+			{
+				heartsScoreCounter += 1;
+
+				if (playerData->GetHearts() > 0)
+				{
+					if (heartsScoreCounter % 10 == 0)
+					{
+						soundManager->Play("adding_hearts_score");
+						playerData->DecreaseHearts(1);
+						playerData->AddScore(HEART_SCORE);
+					}
+				}
+				else
+				{
+					switchSceneCounter += 1;
+
+					if (switchSceneCounter % 500 == 0)
+					{
+						sceneManager->SwitchSceneByIndex(sceneManager->GetNextSceneIndex());
+					}
+				}
+			}
+		}
+	}
 }
 
 DWORD CGame::GetPauseDeltaTime()
@@ -280,6 +345,11 @@ LPD3DXSPRITE CGame::GetSpriteHandler()
 	return this->spriteHandler;
 }
 
+HWND CGame::GetHandler()
+{
+	return hWnd;
+}
+
 CTimer* CGame::GetTimer()
 {
 	return this->timer;
@@ -303,6 +373,11 @@ CBossData* CGame::GetBossData()
 CSceneManager* CGame::GetSceneManager()
 {
 	return sceneManager;
+}
+
+CGameSoundManager* CGame::GetSoundManager()
+{
+	return soundManager;
 }
 
 CGame* CGame::GetInstance()

@@ -1,4 +1,5 @@
 #include "MoneyBag.h"
+#include "../../Game.h"
 #include "../../Utilities/SafeDelete.h"
 
 CMoneyBag::CMoneyBag()
@@ -26,6 +27,7 @@ void CMoneyBag::SetState(int state)
 	switch (state)
 	{
 	case ITEM_STATE_APPEAR:
+		CGame::GetInstance()->GetSoundManager()->Play("showing_bonus");
 		vy = -MONEY_BAG_MOVE_UP_SPEED;
 		break;
 	}

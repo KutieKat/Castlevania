@@ -18,6 +18,7 @@
 #include "../../Misc/CameraLocker.h"
 #include "../../Items/BigHeart.h"
 #include "../../Items/Dagger.h"
+#include "../../Items/Axe.h"
 #include "../../Items/EasterEgg.h"
 #include "../../Items/MoneyBag.h"
 #include "../../Items/MorningStar.h"
@@ -43,6 +44,7 @@
 #include "../../Weapons/WStopwatch.h"
 #include "../../Weapons/Bone.h"
 #include "../../Weapons/Fireball.h"
+#include "../../../Scenes/PlayScene.h"
 #include "../../../Utilities/Debug.h"
 #include "../../../Utilities/SafeDelete.h"
 
@@ -64,20 +66,23 @@ CSimon::CSimon()
 	onBar = false;
 	deflecting = false;
 	switchSceneEnabled = false;
+	startingEndingCounter = false;
 
 	sittingCounter = 0;
-	healingCounter = 0;
-	timeScoreCounter = 0;
-	heartsScoreCounter = 0;
+	endingCounter = 0;
 	elevation = SIMON_DEFAULT_ELEVATION;
 	delayEndTime = -1;
 	switchSceneTime = -1;
-	waitingTime = -1;
 	invisibleTimeout = -1;
 	waitingTime = DEFAULT_WAITING_TIME;
 
 	whip = new CWhip(this);
-	subWeapon == nullptr;
+	whip->SetVisibility(Visibility::Hidden);
+
+	subWeapon = nullptr;
+
+	CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
+	CUnit* unit = new CUnit(grid, whip, x, y);
 
 	SetAnimationSet("simon");
 }
@@ -134,14 +139,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							touchingGround = true;
 							onStair = false;
 							onBar = false;
+
+							if (state == SIMON_STATE_STAND_AND_ATTACK)
+							{
+								vx = 0;
+							}
 						}
 
-						//if (state == SIMON_STATE_STAND_AND_ATTACK)
-						//{
-						//	vx = 0;
-						//}
-
-						//if (e->nx != 0) vx = 0; // New
+						//if (e->nx != 0) vx = 0;
 						if (e->ny != 0) vy = 0;
 					//}
 					//else
@@ -280,7 +285,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CCameraLocker*>(e->obj))
 			{
+				CGame::GetInstance()->GetSoundManager()->StopBackgroundSounds();
+				CGame::GetInstance()->GetSoundManager()->Play("boss_background_music");
 				CGame::GetInstance()->GetCamera()->Lock();
+
+				e->obj->removable = true;
 
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
@@ -300,6 +309,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	HandleSwitchScene();
 	HandleInvisibility();
 	HandleEndingGame();
+	HandleJumpingOutOfWorld();
 
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
@@ -495,6 +505,8 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_DEFLECT:
+		CGame::GetInstance()->GetSoundManager()->Play("deflecting");
+
 		if (directionX == Direction::Right)
 		{
 			vy = -SIMON_JUMP_SPEED;
@@ -522,20 +534,16 @@ void CSimon::SetState(int state)
 		break;
 
 	case SIMON_STATE_DIE:
-		if (CGame::GetInstance()->GetPlayerData()->GetLives() > 0)
-		{
-			CGame::GetInstance()->GetPlayerData()->DecreaseLives();
-			CGame::GetInstance()->GetSceneManager()->SwitchScene(CGame::GetInstance()->GetSceneManager()->GetCurrentSceneId());
-		}
-		else
-		{
-			vx = 0;
-			switchSceneEnabled = true;
+		vx = 0;
 
-			if (switchSceneTime == -1)
-			{
-				switchSceneTime = GetTickCount() + waitingTime;
-			}
+		CGame::GetInstance()->GetSoundManager()->StopBackgroundSounds();
+		CGame::GetInstance()->GetSoundManager()->Play("dying");
+
+		switchSceneEnabled = true;
+
+		if (switchSceneTime == -1)
+		{
+			switchSceneTime = GetTickCount() + waitingTime;
 		}
 
 		break;
@@ -662,7 +670,24 @@ void CSimon::ResetAnimations()
 	CGameObject::ResetAnimations();
 
 	lastFrameShown = false;
-	whip->ResetAnimations();
+
+	if (whip)
+	{
+		whip->ResetAnimations();
+	}
+}
+
+void CSimon::Pause()
+{
+	for (int i = 0; i < animationSet->size(); i++)
+	{
+		animationSet->at(i)->Pause();
+	}
+
+	if (whip)
+	{
+		whip->Pause();
+	}
 }
 
 void CSimon::HandleGravity()
@@ -705,6 +730,7 @@ void CSimon::HandleAttackWithWhip(vector<LPGAMEOBJECT>* coObjects)
 		{
 			lastFrameShown = true;
 
+			CGame::GetInstance()->GetSoundManager()->Play("using_whip");
 			whip->Update(dt, coObjects);
 		}
 	}
@@ -723,14 +749,17 @@ void CSimon::HandleAttackWithSubWeapon(vector<LPGAMEOBJECT>* coObjects)
 
 			if (type == "dagger")
 			{
+				CGame::GetInstance()->GetSoundManager()->Play("throwing_dagger");
 				weapon = new WDagger();
 			}
 			else if (type == "boomerang")
 			{
+				CGame::GetInstance()->GetSoundManager()->Play("throwing_boomerang");
 				weapon = new WBoomerang(this);
 			}
 			else if (type == "axe")
 			{
+				CGame::GetInstance()->GetSoundManager()->Play("throwing_axe");
 				weapon = new WAxe();
 			}
 			else if (type == "holy_water")
@@ -767,6 +796,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 	{
 		int countAtBottom = 0, countAtTop = 0, countAtBi = 0;
 		CGame* game = CGame::GetInstance();
+		CGameSoundManager* soundManager = game->GetSoundManager();
 
 		for (int i = 0; i < coObjects->size(); i++)
 		{
@@ -778,6 +808,8 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (dynamic_cast<CRosary*>(object))
 					{
+						soundManager->Play("collecting_rosary");
+
 						for (int j = 0; j < coObjects->size(); j++)
 						{
 							if (dynamic_cast<CEnemy*>(coObjects->at(j)))
@@ -955,81 +987,107 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 void CSimon::HandleCollisionWithItems(CGameObject* item)
 {
 	CPlayerData* playerData = CGame::GetInstance()->GetPlayerData();
+	CGameSoundManager* soundManager = CGame::GetInstance()->GetSoundManager();
 
 	if (dynamic_cast<CMorningStar*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
 		SetState(SIMON_STATE_DELAY);
-
 		playerData->SetWhipLevel(playerData->GetWhipLevel() + 1);
 	}
 	else if (dynamic_cast<CBigHeart*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddHearts(BIG_HEART_HEARTS);
 	}
 	else if (dynamic_cast<CSmallHeart*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddHearts(SMALL_HEART_HEARTS);
 	}
 	else if (dynamic_cast<CDagger*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("dagger");
+	}
+	else if (dynamic_cast<CAxe*>(item))
+	{
+		soundManager->Play("collecting_weapon_item");
+		playerData->SetSubWeaponType("axe");
 	}
 	else if (dynamic_cast<CMoneyBag*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddScore(MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CRedMoneyBag*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddScore(RED_MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CPurpleMoneyBag*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddScore(PURPLE_MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CWhiteMoneyBag*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddScore(WHITE_MONEY_BAG_SCORE);
 	}
 	else if (dynamic_cast<CCrown*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddScore(CROWN_SCORE);
 	}
 	else if (dynamic_cast<CBoomerang*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("boomerang");
 	}
 	else if (dynamic_cast<CDoubleShot*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
 		playerData->SetPower(DOUBLE_POWER);
 	}
 	else if (dynamic_cast<CTripleShot*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
 		playerData->SetPower(TRIPLE_POWER);
 	}
 	else if (dynamic_cast<CPorkChop*>(item))
 	{
+		soundManager->Play("collecting_item");
 		playerData->AddHealthVolumes(PORK_CHOP_HEALTHS);
 	}
 	else if (dynamic_cast<CHolyWater*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("holy_water");
 	}
 	else if (dynamic_cast<CStopwatch*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("stopwatch");
 	}
 	else if (dynamic_cast<CInvisibilityPotion*>(item))
 	{
+		soundManager->Play("collecting_weapon_item");
+
 		fullyInvisible = true;
 
 		if (invisibleTimeout == -1)
 		{
+			soundManager->Play("starting_invisibility");
 			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
 		}
 	}
 	else if (dynamic_cast<CMagicCrystal*>(item))
 	{
-		CGame::GetInstance()->End();
+		soundManager->StopBackgroundSounds();
+		soundManager->Play("clearing_all_stages");
+
+		startingEndingCounter = true;
 	}
 
 	item->Disappear();
@@ -1058,6 +1116,11 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 			}
 		}
 		else if (dynamic_cast<CRaven*>(item))
+		{
+			item->Disappear();
+			playerData->DecreaseHealthVolumes();
+		}
+		else if (dynamic_cast<CRedBat*>(item))
 		{
 			item->Disappear();
 			playerData->DecreaseHealthVolumes();
@@ -1144,19 +1207,24 @@ void CSimon::HandleSwitchScene()
 	{
 		switchSceneTime = -1;
 
-		if (game->Ended())
+		if (state != SIMON_STATE_DIE)
 		{
 			game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
 		}
 		else
 		{
-			if (state != SIMON_STATE_DIE)
+			if (game->GetPlayerData()->GetLives() > 0)
 			{
-				game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetNextSceneId());
+				game->GetPlayerData()->DecreaseLives();
+				game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetCurrentSceneId());
 			}
 			else
 			{
-				game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetFirstSceneId());
+				game->GetTimer()->Pause();
+				game->GetSoundManager()->StopBackgroundSounds();
+				game->GetSoundManager()->Play("game_over_background_music");
+
+				dynamic_cast<CPlayScene*>(game->GetSceneManager()->GetCurrentScene())->ShowGameOverBoard();
 			}
 		}
 	}
@@ -1166,6 +1234,11 @@ void CSimon::HandleInvisibility()
 {
 	if ((partiallyInvisible || fullyInvisible) && invisibleTimeout != -1 && GetTickCount() >= invisibleTimeout)
 	{
+		if (fullyInvisible)
+		{
+			CGame::GetInstance()->GetSoundManager()->Play("ending_invisibility");
+		}
+
 		partiallyInvisible = false;
 		fullyInvisible = false;
 		invisibleTimeout = -1;
@@ -1174,59 +1247,22 @@ void CSimon::HandleInvisibility()
 
 void CSimon::HandleEndingGame()
 {
-	CGame* game = CGame::GetInstance();
-	CPlayerData* playerData = game->GetPlayerData();
-	CTimer* timer = game->GetTimer();
-	CSceneManager* sceneManager = game->GetSceneManager();
-
-	if (game->Ended())
+	if (startingEndingCounter)
 	{
-		sceneManager->GetCurrentScene()->HardPause(false);
-		vx = vy = 0;
+		endingCounter += 1;
 
-		if (playerData->GetHealthVolumes() != HEALTH_BAR_MAX_VOLUMES)
+		if (endingCounter % 250 == 0)
 		{
-			healingCounter += 1;
-
-			if (healingCounter % 10 == 0)
-			{
-				playerData->AddHealthVolumes(1);
-			}
+			CGame::GetInstance()->End();
 		}
-		else
-		{
-			timeScoreCounter += 1;
+	}
+}
 
-			if (timer->GetRemainingTime() != 0)
-			{
-				if (timeScoreCounter % 3 == 0)
-				{
-					timer->Decrease();
-					playerData->AddScore(TIME_SCORE);
-				}
-			}
-			else
-			{
-				heartsScoreCounter += 1;
-
-				if (playerData->GetHearts() > 0)
-				{
-					if (heartsScoreCounter % 3 == 0)
-					{
-						playerData->DecreaseHearts(1);
-						playerData->AddScore(HEART_SCORE);
-					}
-				}
-				else
-				{
-					if (switchSceneTime == -1)
-					{
-						switchSceneEnabled = true;
-						switchSceneTime = GetTickCount() + 3000;
-					}
-				}
-			}
-		}
+void CSimon::HandleJumpingOutOfWorld()
+{
+	if (state != SIMON_STATE_DIE && y > SCREEN_HEIGHT)
+	{
+		SetState(SIMON_STATE_DIE);
 	}
 }
 

@@ -24,6 +24,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void Update(DWORD dt)
 {
+	CGame::GetInstance()->HandleEnding();
 	CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->Update(dt);
 }
 
@@ -130,8 +131,11 @@ int Run()
 		{
 			frameStart = now;
 
-			game->GetTimer()->Tick();
-
+			if (!game->GetSceneManager()->GetCurrentScene()->HardPaused())
+			{
+				game->GetTimer()->Tick();
+			}
+			
 			if (dynamic_cast<CPlayScene*>(game->GetSceneManager()->GetCurrentScene()))
 			{
 				CSimon* simon = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetSceneManager()->GetCurrentScene())->GetPlayer();

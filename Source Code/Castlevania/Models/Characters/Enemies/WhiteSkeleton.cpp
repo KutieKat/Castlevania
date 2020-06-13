@@ -1,3 +1,6 @@
+#include <cstdlib>
+#include <time.h>
+
 #include "WhiteSkeleton.h"
 #include "../../../Game.h"
 #include "../../Misc/Brick.h"
@@ -20,10 +23,11 @@ CWhiteSkeleton::CWhiteSkeleton(CSimon * simon)
 	this->jumpingCounter = 0;
 	this->attackingCounter = 0;
 	this->walkingCounter = 0;
-	this->nextAttackingTime = GetTickCount() + WHITE_SKELETON_ATTACKING_INTERVAL;
 
 	SetAnimationSet("white_skeleton");
 	SetState(WHITE_SKELETON_STATE_IDLE);
+
+	srand(time(NULL));
 }
 
 void CWhiteSkeleton::SetState(int state)
@@ -72,7 +76,7 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		attackingCounter += 1;
 		walkingCounter += 1;
 
-		if (attackingCounter % 100 == 0)
+		if (attackingCounter % RandomizeInterval() == 0)
 		{
 			Attack();
 		}
@@ -123,7 +127,7 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		attackingCounter += 1;
 
-		if (attackingCounter % 200 == 0)
+		if (attackingCounter % RandomizeInterval() == 0)
 		{
 			Attack();
 		}
@@ -294,18 +298,13 @@ void CWhiteSkeleton::OnPlayerEnterArea()
 
 void CWhiteSkeleton::Attack()
 {
-	if (GetTickCount() > CGame::GetInstance()->GetPauseDeltaTime() + nextAttackingTime)
-	{
-		WBone* bone = new WBone();
-		bone->SetPosition(x, y);
-		bone->SetDisplayTime(BONE_DISPLAY_TIME);
-		bone->SetDirectionX(bone->x > simon->x ? Direction::Left : Direction::Right);
+	WBone* bone = new WBone();
+	bone->SetPosition(x, y);
+	bone->SetDisplayTime(BONE_DISPLAY_TIME);
+	bone->SetDirectionX(bone->x > simon->x ? Direction::Left : Direction::Right);
 
-		CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
-		CUnit* unit = new CUnit(grid, bone, bone->x, bone->y);
-
-		nextAttackingTime = GetTickCount() + WHITE_SKELETON_ATTACKING_INTERVAL;
-	}
+	CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
+	CUnit* unit = new CUnit(grid, bone, bone->x, bone->y);
 }
 
 void CWhiteSkeleton::Disappear()
@@ -335,4 +334,9 @@ int CWhiteSkeleton::GetAnimationToRender()
 	}
 
 	return ani;
+}
+
+int CWhiteSkeleton::RandomizeInterval()
+{
+	return rand() % (100 + 1 - 50) + 50;
 }

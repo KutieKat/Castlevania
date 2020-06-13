@@ -1,5 +1,4 @@
 #include "SmallHeart.h"
-#include "../../Utilities/Debug.h"
 
 CSmallHeart::CSmallHeart()
 {

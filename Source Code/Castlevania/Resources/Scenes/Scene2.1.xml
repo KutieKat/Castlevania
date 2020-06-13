@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <sounds>
+    <sound id="background_music" path="Resources\\Musics\\Stage2.wav" retained="true" isBackground="true" />
+    <sound id="using_whip" path="Resources\\Sounds\\UsingWhip.wav" />
+    <sound id="collecting_item" path="Resources\\Sounds\\CollectingItem.wav" />
+    <sound id="collecting_weapon_item" path="Resources\\Sounds\\CollectingWeaponItem.wav" />
+    <sound id="taking_damage" path="Resources\\Sounds\\TakingDamage.wav" />
+    <sound id="throwing_dagger" path="Resources\\Sounds\\ThrowingDagger.wav" />
+    <sound id="showing_bonus" path="Resources\\Sounds\\ShowingBonus.wav" />
+    <sound id="pausing" path="Resources\\Sounds\\Pausing.wav" />
+    <sound id="broken_brick" path="Resources\\Sounds\\BrokenBrick.wav" />
+    <sound id="throwing_boomerang" path="Resources\\Sounds\\ThrowingBoomerang.wav" loop="true" />
+    <sound id="throwing_axe" path="Resources\\Sounds\\ThrowingAxe.wav" />
+    <sound id="holy_water_breaking" path="Resources\\Sounds\\HolyWaterBreaking.wav" />
+    <sound id="stopwatch_ticking" path="Resources\\Sounds\\StopwatchTicking.wav" />
+    <sound id="deflecting" path="Resources\\Sounds\\Deflecting.wav" />
+    <sound id="ticking" path="Resources\\Sounds\\Ticking.wav" />
+    <sound id="starting_invisibility" path="Resources\\Sounds\\StartingInvisibility.wav" />
+    <sound id="ending_invisibility" path="Resources\\Sounds\\EndingInvisibility.wav" />
+    <sound id="dying" path="Resources\\Sounds\\Dying.wav" />
+    <sound id="selecting" path="Resources\\Sounds\\Selecting.wav" />
+  </sounds>
+  
   <tileMap mapPath="Resources\\Maps\\Scene2.1.Map.xml" tilesetPath="Resources\\Maps\\Scene2.1.png" />
 
   <textures>

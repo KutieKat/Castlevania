@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+  <sounds>
+    <sound id="background_music" path="Resources\\Sounds\\Walking.wav" loop="true" isBackground="true" />
+  </sounds>
+  
   <textures>
     <texture id="background" path="Resources\\Others\\CutScene2.png" r="0" g="0" b="0" />
     <texture id="bat" path="Resources\\Others\\Bat.png" r="255" g="0" b="255" />

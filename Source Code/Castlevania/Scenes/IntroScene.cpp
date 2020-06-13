@@ -234,6 +234,7 @@ void CIntroSceneKeyHandler::OnKeyDown(int keyCode)
 
 	switch (keyCode)
 	{
+	case DIK_RETURN:
 	case DIK_W:
 		dynamic_cast<CIntroScene*>(game->GetSceneManager()->GetCurrentScene())->SetSwitchSceneTime(GetTickCount() + 3000);
 		break;

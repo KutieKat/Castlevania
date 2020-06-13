@@ -54,6 +54,9 @@
 #include "Misc/SmallCandle.h"
 #include "Misc/BreakableBrick.h"
 #include "Misc/CameraLocker.h"
+#include "Misc/Mountain.h"
+#include "Misc/CreditText.h"
+#include "Misc/Castle.h"
 using namespace std;
 
 class CObjectFactory
