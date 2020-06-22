@@ -5,7 +5,7 @@ My clone of Castlevania (NES) - Introduction to Game Programming Course (SE102)
 ## Introduction
 - **Castlevania**, known in Japan as *Akumajou Dracula* (translated as "Demon Castle Dracula"), is a game developed and published by Konami for the Famicom Disk System in Japan in September of 1986. In May 1987 it was ported to cartridge format and released in North America for the NES followed by a European release in 1988, and then once again in Japan in 1993. It is the first game in the Castlevania franchise, but the seventh chronological installment of the franchise in the current canon.
 - This project is my clone of **Castlevania** which serves as the final project for the course Introduction to Game Programming Course (SE102). It consists of some scenes that were picked from the original game by the lecturer.
-
+- This project has brought me a lot of inspiration for the field of game programming.
 ## Full Map
 ![Full Map](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/FullMap.png?raw=true)
 
@@ -40,11 +40,15 @@ My clone of Castlevania (NES) - Introduction to Game Programming Course (SE102)
 ### Scene 4
 ![Scene 4](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Scene4.png?raw=true)
 
+### Credits Scene
+![Credits Scene](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/CreditsScene.png?raw=true)
+
 ## Controls
 Control(s) | Action  |
 --- | --- |
 `↓` `←` `↑` `→` | Controls forward and backward movement, standing and crouching, angle of jump, direction of attack
 `↑` `↓` | Moves onto stair 
+`Enter` | Begins game, selects an option
 `W` | Begins game, pauses and resumes game
 `X` | Controls jumping
 `Z` | Controls whip and all weapons
@@ -67,6 +71,7 @@ Control(s) | Action  |
 `F9` | Switches to scene 3.1
 `F10` | Switches to scene 3.2
 `F11` | Switches to scene 4
+`F12` | Switches to credits scene
 `1` | Toggles whip level 2
 `2` | Toggles whip level 3
 `3` | Toggles double powered whip
@@ -87,6 +92,10 @@ Control(s) | Action  |
 - Microsoft Visual Studio Enterprise 2017
 - MapWin
 - Paint
+- Wavepad Sound Editor
+- [Youtube to MP3 Converter](https://ytmp3.cc/en13)
+- [Compress WAV Audio Files](https://www.youcompress.com/wav)
+- [MP3 to WAV Converter](https://www.media.io/convert/mp3-to-wav.html)
 
 ## Libraries
 - [DirectX 9.0 Software Development Kit](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
@@ -94,7 +103,10 @@ Control(s) | Action  |
 - [lxml - Processing XML and HTML with Python](https://lxml.de)
 
 ## References
+- Beginning Game Programming, Jonathan S. Harbour
 - [Castlevania](https://strategywiki.org/wiki/Castlevania)
 - [The Spriters Resource - NES - Castlevania](https://www.spriters-resource.com/nes/cv)
+- [The Sounds Resource - NES - Castlevania](https://www.sounds-resource.com/nes/vania/sound/357)
+- [Castlevania (NES) Music Soundtrack Playlist](https://www.youtube.com/watch?v=AIu4gRqhdlo&list=PL8475D168894529C1)
 - [gamedev-intro-tutorials](https://github.com/dungdna2000)
 - [Game Programming Patterns - Spartial Partition](https://gameprogrammingpatterns.com/spatial-partition.html)
