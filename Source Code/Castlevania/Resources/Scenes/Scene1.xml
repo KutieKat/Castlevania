@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <sounds>
-    <sound id="background_music" path="Resources\\Musics\\Stage1.wav" isBackground="true" />
+    <sound id="background_music" path="Resources\\Musics\\Stage1.wav" loop="true" isBackground="true" />
     <sound id="game_over_background_music" path="Resources\\Musics\\GameOver.wav" isBackground="true" />
     <sound id="using_whip" path="Resources\\Sounds\\UsingWhip.wav" />
     <sound id="collecting_item" path="Resources\\Sounds\\CollectingItem.wav" />
@@ -466,35 +466,35 @@
       <frame spriteId="whip_level_2_right_2" duration="100" />
       <frame spriteId="whip_level_2_right_3" duration="100" />
     </animation>
-    
+
     <animation id="whip_level_3_left">
-      <frame spriteId="whip_level_3_left_1" duration="25" />
-      <frame spriteId="whip_level_3_left_2" duration="25" />
-      <frame spriteId="whip_level_3_left_3" duration="25" />
-      <frame spriteId="whip_level_3_left_4" duration="25" />
-      <frame spriteId="whip_level_3_left_5" duration="25" />
-      <frame spriteId="whip_level_3_left_6" duration="25" />
-      <frame spriteId="whip_level_3_left_7" duration="25" />
-      <frame spriteId="whip_level_3_left_8" duration="25" />
-      <frame spriteId="whip_level_3_left_9" duration="25" />
-      <frame spriteId="whip_level_3_left_10" duration="25" />
-      <frame spriteId="whip_level_3_left_11" duration="25" />
-      <frame spriteId="whip_level_3_left_12" duration="25" />
+      <frame spriteId="whip_level_3_left_1" duration="100" />
+      <!--<frame spriteId="whip_level_3_left_2" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_3" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_4" duration="25" />-->
+      <frame spriteId="whip_level_3_left_5" duration="100" />
+      <!--<frame spriteId="whip_level_3_left_6" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_7" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_8" duration="25" />-->
+      <frame spriteId="whip_level_3_left_9" duration="100" />
+      <!--<frame spriteId="whip_level_3_left_10" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_11" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_12" duration="25" />-->
     </animation>
-    
+
     <animation id="whip_level_3_right">
-      <frame spriteId="whip_level_3_right_1" duration="25" />
-      <frame spriteId="whip_level_3_right_2" duration="25" />
-      <frame spriteId="whip_level_3_right_3" duration="25" />
-      <frame spriteId="whip_level_3_right_4" duration="25" />
-      <frame spriteId="whip_level_3_right_5" duration="25" />
-      <frame spriteId="whip_level_3_right_6" duration="25" />
-      <frame spriteId="whip_level_3_right_7" duration="25" />
-      <frame spriteId="whip_level_3_right_8" duration="25" />
-      <frame spriteId="whip_level_3_right_9" duration="25" />
-      <frame spriteId="whip_level_3_right_10" duration="25" />
-      <frame spriteId="whip_level_3_right_11" duration="25" />
-      <frame spriteId="whip_level_3_right_12" duration="25" />
+      <frame spriteId="whip_level_3_right_1" duration="100" />
+      <!--<frame spriteId="whip_level_3_right_2" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_3" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_4" duration="25" />-->
+      <frame spriteId="whip_level_3_right_5" duration="100" />
+      <!--<frame spriteId="whip_level_3_right_6" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_7" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_8" duration="25" />-->
+      <frame spriteId="whip_level_3_right_9" duration="100" />
+      <!--<frame spriteId="whip_level_3_right_10" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_11" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_12" duration="25" />-->
     </animation>
     
     <!-- Paused -->

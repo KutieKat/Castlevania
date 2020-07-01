@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <sounds>
-    <sound id="background_music" path="Resources\\Musics\\Stage1.wav" retained="true" isBackground="true" />
+    <sound id="background_music" path="Resources\\Musics\\Stage1.wav" loop="true" retained="true" isBackground="true" />
+    <sound id="game_over_background_music" path="Resources\\Musics\\GameOver.wav" isBackground="true" />
     <sound id="boss_background_music" path="Resources\\Musics\\PhantomBat.wav" isBackground="true" />
     <sound id="using_whip" path="Resources\\Sounds\\UsingWhip.wav" />
     <sound id="collecting_item" path="Resources\\Sounds\\CollectingItem.wav" />
@@ -517,33 +518,33 @@
     </animation>
     
     <animation id="whip_level_3_left">
-      <frame spriteId="whip_level_3_left_1" duration="25" />
-      <frame spriteId="whip_level_3_left_2" duration="25" />
-      <frame spriteId="whip_level_3_left_3" duration="25" />
-      <frame spriteId="whip_level_3_left_4" duration="25" />
-      <frame spriteId="whip_level_3_left_5" duration="25" />
-      <frame spriteId="whip_level_3_left_6" duration="25" />
-      <frame spriteId="whip_level_3_left_7" duration="25" />
-      <frame spriteId="whip_level_3_left_8" duration="25" />
-      <frame spriteId="whip_level_3_left_9" duration="25" />
-      <frame spriteId="whip_level_3_left_10" duration="25" />
-      <frame spriteId="whip_level_3_left_11" duration="25" />
-      <frame spriteId="whip_level_3_left_12" duration="25" />
+      <frame spriteId="whip_level_3_left_1" duration="100" />
+      <!--<frame spriteId="whip_level_3_left_2" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_3" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_4" duration="25" />-->
+      <frame spriteId="whip_level_3_left_5" duration="100" />
+      <!--<frame spriteId="whip_level_3_left_6" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_7" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_8" duration="25" />-->
+      <frame spriteId="whip_level_3_left_9" duration="100" />
+      <!--<frame spriteId="whip_level_3_left_10" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_11" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_left_12" duration="25" />-->
     </animation>
     
     <animation id="whip_level_3_right">
-      <frame spriteId="whip_level_3_right_1" duration="25" />
-      <frame spriteId="whip_level_3_right_2" duration="25" />
-      <frame spriteId="whip_level_3_right_3" duration="25" />
-      <frame spriteId="whip_level_3_right_4" duration="25" />
-      <frame spriteId="whip_level_3_right_5" duration="25" />
-      <frame spriteId="whip_level_3_right_6" duration="25" />
-      <frame spriteId="whip_level_3_right_7" duration="25" />
-      <frame spriteId="whip_level_3_right_8" duration="25" />
-      <frame spriteId="whip_level_3_right_9" duration="25" />
-      <frame spriteId="whip_level_3_right_10" duration="25" />
-      <frame spriteId="whip_level_3_right_11" duration="25" />
-      <frame spriteId="whip_level_3_right_12" duration="25" />
+      <frame spriteId="whip_level_3_right_1" duration="100" />
+      <!--<frame spriteId="whip_level_3_right_2" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_3" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_4" duration="25" />-->
+      <frame spriteId="whip_level_3_right_5" duration="100" />
+      <!--<frame spriteId="whip_level_3_right_6" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_7" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_8" duration="25" />-->
+      <frame spriteId="whip_level_3_right_9" duration="100" />
+      <!--<frame spriteId="whip_level_3_right_10" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_11" duration="25" />-->
+      <!--<frame spriteId="whip_level_3_right_12" duration="25" />-->
     </animation>
     
     <!-- Paused -->
@@ -875,22 +876,22 @@
     <object id="simon" type="simon" animationSetId="simon" x="65" y="100" />
     
     <object id="brick_1" type="brick" animationSetId="transparency" x="0" y="240" width="226" height="31" />
-    <object id="brick_2" type="brick" animationSetId="transparency" x="260" y="302" width="350" height="31" />
-    <object id="brick_3" type="brick" animationSetId="transparency" x="1440" y="306" width="100" height="31" />
+    <object id="brick_2" type="brick" animationSetId="transparency" x="260" y="305" width="350" height="31" />
+    <object id="brick_3" type="brick" animationSetId="transparency" x="1440" y="306" width="100" height="31" canJumpThrough="true" />
     <object id="brick_4" type="brick" animationSetId="transparency" x="1344" y="370" width="31" height="31" />
-    <object id="brick_5" type="brick" animationSetId="transparency" x="0" y="432" width="1536" height="31" />
+    <object id="brick_5" type="brick" animationSetId="transparency" x="0" y="433" width="1536" height="31" />
 
     <object id="double_shot_1" type="double_shot" animationSetId="double_shot" x="1375" y="370" visible="false" />
     <object id="breakable_brick_1" type="breakable_brick" animationSetId="breakable_brick" x="1375" y="370" endingEffect="breaking" hiddenItemId="double_shot_1" isGround="true" />
 
     <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="right" x="200" y="156" />
-    <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="left" x="276" y="289" />
+    <object id="bottom_stair_1" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="left" x="262" y="289" />
 
-    <object id="top_stair_2" type="top_stair" animationSetId="transparency" directionY="down" directionX="right" x="586" y="220" />
-    <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="left" x="720" y="419" />
+    <object id="top_stair_2" type="top_stair" animationSetId="transparency" directionY="down" directionX="right" x="586" y="218" />
+    <object id="bottom_stair_2" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="left" x="710" y="417" />
 
     <object id="top_stair_3" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="1440" y="220" />
-    <object id="bottom_stair_3" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="1376" y="357" />
+    <object id="bottom_stair_3" type="bottom_stair" animationSetId="transparency" directionY="up" directionX="right" x="1376" y="350" />
 
     <object id="enemy_spawner_area_1" type="enemy_spawner_area" animationSetId="transparency" x="200" y="180" enemyType="ghoul" spawningPosition="top_right" />
     <object id="enemy_spawner_area_2" type="enemy_spawner_area" animationSetId="transparency" x="200" y="200" enemyType="ghoul" spawningPosition="bottom_right" />

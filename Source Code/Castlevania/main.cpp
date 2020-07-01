@@ -51,7 +51,7 @@ void Render()
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
-HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
+HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, LPCWSTR windowClassName, LPCWSTR windowTitle, int screenWidth, int screenHeight)
 {
 	WNDCLASSEX wc;
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -66,7 +66,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = NULL;
-	wc.lpszClassName = WINDOW_CLASS_NAME;
+	wc.lpszClassName = windowClassName;
 	wc.hIconSm = NULL;
 
 	RegisterClassEx(&wc);
@@ -74,18 +74,18 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	RECT rc;
 	SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0);
 
-	float windowX = (rc.right / 2) - (SCREEN_WIDTH / 2);
-	float windowY = (rc.bottom / 2) - (SCREEN_HEIGHT / 2);
+	float windowX = (rc.right / 2) - (screenWidth / 2);
+	float windowY = (rc.bottom / 2) - (screenHeight / 2);
 
 	HWND hWnd =
 		CreateWindow(
-			WINDOW_CLASS_NAME,
-			MAIN_WINDOW_TITLE,
+			windowClassName,
+			windowTitle,
 			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
 			windowX,
 			windowY,
-			ScreenWidth,
-			ScreenHeight,
+			screenWidth,
+			screenHeight,
 			NULL,
 			NULL,
 			hInstance,
@@ -144,6 +144,13 @@ int Run()
 				{
 					game->GetInputManager()->ProcessKeyboard();
 				}
+				else
+				{
+					if (((CPlayScene*)game->GetSceneManager()->GetCurrentScene())->ShowingGameOverBoard())
+					{
+						game->GetInputManager()->ProcessKeyboard();
+					}
+				}
 			}
 			else
 			{
@@ -162,10 +169,11 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, L"Castlevania", L"Castlevania", SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
+	game->GetSettingManager()->LoadFromFile("Settings.xml");
 	game->GetCamera()->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->GetSceneManager()->Load("Resources\\Scenes\\Scenes.xml");
 

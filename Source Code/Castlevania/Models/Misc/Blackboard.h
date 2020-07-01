@@ -13,8 +13,6 @@ public:
 	CBlackboard();
 
 	void SetAnimationSet(string animationSetId);
-	void SetPosition(float x, float y);
-	void GetPosition(float& x, float &y);
 
 	void Update();
 	void Render();

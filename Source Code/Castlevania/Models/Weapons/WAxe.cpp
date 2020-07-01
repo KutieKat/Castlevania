@@ -56,23 +56,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CEnemy*>(e->obj))
-			{
-				auto enemy = dynamic_cast<CEnemy*>(e->obj);
-
-				enemy->TakeDamage(AXE_DAMAGES);
-
-				if (dynamic_cast<CPhantomBat*>(e->obj))
-				{
-					hasBoundingBox = false;
-				}
-
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
-
-				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
-			}
-			else if (dynamic_cast<CBigCandle*>(e->obj))
+			if (dynamic_cast<CBigCandle*>(e->obj))
 			{
 				auto candle = dynamic_cast<CBigCandle*>(e->obj);
 
@@ -98,6 +82,26 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
+			}
+		}
+	}
+
+	for (int i = 0; i < coObjects->size(); i++)
+	{
+		if (CGame::GetInstance()->HaveCollision(this, coObjects->at(i)))
+		{
+			if (dynamic_cast<CEnemy*>(coObjects->at(i)))
+			{
+				auto enemy = dynamic_cast<CEnemy*>(coObjects->at(i));
+
+				enemy->TakeDamage(AXE_DAMAGES);
+
+				if (dynamic_cast<CPhantomBat*>(coObjects->at(i)))
+				{
+					hasBoundingBox = false;
+				}
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 		}
 	}

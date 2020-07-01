@@ -79,6 +79,9 @@ void CGame::Init(HWND hWnd)
 	soundManager = CGameSoundManager::GetInstance();
 	soundManager->Init();
 
+	// Setting manager
+	settingManager = CSettingManager::GetInstance();
+
 	// Game ending
 	ended = false;
 
@@ -128,6 +131,16 @@ bool CGame::HaveCollision(CGameObject* object1, CGameObject* object2)
 	float bottom = t1 - b2;
 
 	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
+}
+
+bool CGame::BoundingBoxDisplayed()
+{
+	return settingManager->GetBoolValue("BOUNDING_BOX_DISPLAYED");
+}
+
+bool CGame::CheatKeysActivated()
+{
+	return settingManager->GetBoolValue("CHEAT_KEYS_ACTIVATED");
 }
 
 bool CGame::Ended()
@@ -199,6 +212,7 @@ void CGame::HandleEnding()
 					if (switchSceneCounter % 500 == 0)
 					{
 						sceneManager->SwitchSceneByIndex(sceneManager->GetNextSceneIndex());
+						ended = false;
 					}
 				}
 			}
@@ -380,6 +394,11 @@ CGameSoundManager* CGame::GetSoundManager()
 	return soundManager;
 }
 
+CSettingManager* CGame::GetSettingManager()
+{
+	return settingManager;
+}
+
 CGame* CGame::GetInstance()
 {
 	if (instance == nullptr)
@@ -394,6 +413,7 @@ void CGame::Reset()
 {
 	ended = false;
 	playerData->Reset();
+	bossData->Reset();
 	sceneManager->Reset();
 	timer->SetTime(DEFAULT_GAME_TIME);
 }

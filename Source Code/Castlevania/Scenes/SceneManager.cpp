@@ -53,20 +53,21 @@ bool CSceneManager::Load(string filePath)
 		{
 			sceneItem = new CPlayScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
 		}
-
-		if (type == "intro_scene")
+		else if (type == "intro_scene")
 		{
 			sceneItem = new CIntroScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
 		}
-
-		if (type == "cut_scene")
+		else if (type == "cut_scene")
 		{
 			sceneItem = new CCutScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
 		}
-
-		if (type == "credits_scene")
+		else if (type == "credits_scene")
 		{
 			sceneItem = new CCreditsScene(id, filePath, stage, previousSceneId, nextSceneId, requiredSceneId);
+		}
+		else
+		{
+			scene = scene->NextSiblingElement();
 		}
 
 		sceneItem->needReloading = needReloading;
@@ -103,9 +104,9 @@ void CSceneManager::SwitchScene(string sceneId, bool forced)
 	game->SetKeyHandler(scene->GetKeyEventHandler());
 	game->GetCamera()->Reset();
 
-	if (CGame::GetInstance()->GetTimer()->GetRemainingTime() == -1)
+	if (game->GetTimer()->GetRemainingTime() == -1)
 	{
-		CGame::GetInstance()->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+		game->GetTimer()->SetTime(DEFAULT_GAME_TIME);
 	}
 
 	if (dynamic_cast<CIntroScene*>(scene))
@@ -140,9 +141,11 @@ void CSceneManager::SwitchScene(string sceneId, bool forced)
 
 void CSceneManager::SwitchSceneByIndex(int index)
 {
-	if (CGame::GetInstance()->GetTimer()->GetRemainingTime() == -1)
+	CGame* game = CGame::GetInstance();
+
+	if (game->GetTimer()->GetRemainingTime() == -1)
 	{
-		CGame::GetInstance()->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+		game->GetTimer()->SetTime(DEFAULT_GAME_TIME);
 	}
 
 	ClearLoadedScenes();
@@ -188,6 +191,34 @@ string CSceneManager::GetSceneIdByIndex(int index)
 	int newIndex = index > scenes.size() ? 0 : index;
 
 	return scenes[sceneIds[newIndex]]->GetId();
+}
+
+int CSceneManager::GetIndexBySceneId(string sceneId)
+{
+	for (int i = 0; i < sceneIds.size(); i++)
+	{
+		if (sceneIds[i] == sceneId)
+		{
+			return i;
+		}
+	}
+
+	return 0;
+}
+
+int CSceneManager::GetCurrentSceneIndex()
+{
+	return GetIndexBySceneId(GetCurrentSceneId());
+}
+
+int CSceneManager::GetNextSceneIndex()
+{
+	return GetIndexBySceneId(GetNextSceneId());
+}
+
+int CSceneManager::GetPreviousSceneIndex()
+{
+	return GetIndexBySceneId(GetPreviousSceneId());
 }
 
 void CSceneManager::AddLoadedScenes(string sceneId)

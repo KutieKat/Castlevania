@@ -146,8 +146,23 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							}
 						}
 
+						if (brick->canJumpThrough)
+						{
+							if (e->ny > 0)
+							{
+								if (e->ny != 0) y += dy;
+							}
+							else
+							{
+								if (e->ny != 0) vy = 0;
+							}
+						}
+						else
+						{
+							if (e->ny != 0) vy = 0;
+						}
+
 						//if (e->nx != 0) vx = 0;
-						if (e->ny != 0) vy = 0;
 					//}
 					//else
 					//{
@@ -210,7 +225,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				y -= min_ty * dy + ny * 0.4f;
 
 				if (e->nx != 0) x += dx;
-				if (e->ny < 0) y += dy;
+
+				if (dynamic_cast<CRaven*>(e->obj) || dynamic_cast<CPhantomBat*>(e->obj))
+				{
+					if (e->ny < 0) y += dy;
+				}
+				else
+				{
+					if (e->ny != 0) y += dy;
+				}
 			}
 			else if (dynamic_cast<CMovingBar*>(e->obj))
 			{
@@ -294,6 +317,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0) y += dy;
 			}
+			else if (dynamic_cast<WBone*>(e->obj) || dynamic_cast<WFireball*>(e->obj))
+			{
+				y -= min_ty * dy + ny * 0.4f;
+
+				if (e->nx != 0) x += dx;
+				if (e->ny < 0) y += dy;
+			}
 			else
 			{
 				if (e->nx != 0) x += dx;
@@ -360,19 +390,19 @@ void CSimon::SetState(int state)
 	switch (state)
 	{
 	case SIMON_STATE_WALK:
-		vx = directionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
+		vx = directionX == Direction::Right ? SIMON_JUMP_SPEED_X : -SIMON_JUMP_SPEED_X;
 		break;
 
 	case SIMON_STATE_JUMP:
 		if (touchingGround)
 		{
-			if (jumpable)
-			{
+			//if (jumpable)
+			//{
 				jumpable = false;
 				touchingGround = false;
 
-				vy = -SIMON_JUMP_SPEED;
-			}
+				vy = -SIMON_JUMP_SPEED_Y;
+			//}
 		}
 
 		break;
@@ -509,13 +539,13 @@ void CSimon::SetState(int state)
 
 		if (directionX == Direction::Right)
 		{
-			vy = -SIMON_JUMP_SPEED;
-			vx = -SIMON_WALK_SPEED;
+			vy = -SIMON_DEFLECT_SPEED_Y;
+			vx = -SIMON_DEFLECT_SPEED_X;
 		}
 		else
 		{
-			vy = -SIMON_JUMP_SPEED;
-			vx = SIMON_WALK_SPEED;
+			vy = -SIMON_DEFLECT_SPEED_Y;
+			vx = SIMON_DEFLECT_SPEED_X;
 		}
 
 		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
@@ -841,12 +871,61 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (dynamic_cast<CTopStair*>(object))
 				{
-					countAtTop++;
-
 					auto stair = dynamic_cast<CTopStair*>(object);
+
+					float stairLeft, stairTop, stairRight, stairBottom, stairCenterX;
+					stair->GetBoundingBox(stairLeft, stairTop, stairRight, stairBottom);
+
+					float simonLeft, simonTop, simonRight, simonBottom, simonCenterX;
+					GetBoundingBox(simonLeft, simonTop, simonRight, simonBottom);
+
+					stairCenterX = stairLeft + (stairRight - stairLeft) / 2;
+					simonCenterX = simonLeft + (simonRight - simonLeft) / 2;
+
+					bool validX = false;
+					bool validY = false;
+					bool canTurnBack = false;
+
+					validY = simonTop > stairTop ? true : false;
+
+					if (directionX == stair->directionX)
+					{
+						if (directionX == Direction::Right)
+						{
+							validX = simonCenterX >= stairRight && simonCenterX <= stairRight + 10 ? true : false;
+						}
+						else
+						{
+							validX = simonCenterX <= stairLeft && simonCenterX > stairLeft - 10 ? true : false;
+						}
+					}
+					else
+					{
+						validX = false;
+					}
+
+					if (stair->directionX == Direction::Right)
+					{
+						canTurnBack = simonCenterX >= stairRight && simonCenterX <= stairRight + 10 ? true : false;
+					}
+					else
+					{
+						canTurnBack = simonCenterX <= stairLeft && simonCenterX > stairLeft - 10 ? true : false;
+					}
+
+					if (validX && validY)
+					{
+						countAtTop++;
+					}
 
 					if (!onStair)
 					{
+						if (down && canTurnBack)
+						{
+							directionX = stair->directionX;
+							onStair = true;
+						}
+
 						directionY = stair->directionY;
 						stairDirectionX = stair->directionX;
 						stairDirectionY = stair->directionY;
@@ -865,12 +944,61 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (dynamic_cast<CBottomStair*>(object))
 				{
-					countAtBottom++;
-
 					auto stair = dynamic_cast<CBottomStair*>(object);
+
+					float stairLeft, stairTop, stairRight, stairBottom, stairCenterX;
+					stair->GetBoundingBox(stairLeft, stairTop, stairRight, stairBottom);
+
+					float simonLeft, simonTop, simonRight, simonBottom, simonCenterX;
+					GetBoundingBox(simonLeft, simonTop, simonRight, simonBottom);
+
+					stairCenterX = stairLeft + (stairRight - stairLeft) / 2;
+					simonCenterX = simonLeft + (simonRight - simonLeft) / 2;
+
+					bool validX = false;
+					bool validY = false;
+					bool canTurnBack = false;
+
+					validY = simonTop < stairTop ? true : false;
+
+					if (directionX == stair->directionX)
+					{
+						if (directionX == Direction::Right)
+						{
+							validX = simonCenterX <= stairLeft && simonCenterX > stairLeft - 10 ? true : false;
+						}
+						else
+						{
+							validX = simonCenterX >= stairRight && simonCenterX <= stairRight + 10 ? true : false;
+						}
+					}
+					else
+					{
+						validX = false;
+					}
+
+					if (stair->directionX == Direction::Right)
+					{
+						canTurnBack = simonCenterX <= stairLeft && simonCenterX > stairLeft - 10 ? true : false;
+					}
+					else
+					{
+						canTurnBack = simonCenterX >= stairRight && simonCenterX <= stairRight + 10 ? true : false;
+					}
+
+					if (validX && validY)
+					{
+						countAtBottom++;
+					}
 
 					if (!onStair)
 					{
+						if (up && canTurnBack)
+						{
+							directionX = stair->directionX;
+							onStair = true;
+						}
+
 						directionY = stair->directionY;
 						stairDirectionX = stair->directionX;
 						stairDirectionY = stair->directionY;
@@ -889,9 +1017,22 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (dynamic_cast<CBiStair*>(object))
 				{
-					countAtBi++;
-
 					auto stair = dynamic_cast<CBiStair*>(object);
+
+					float stairLeft, stairTop, stairRight, stairBottom, stairCenterX;
+					stair->GetBoundingBox(stairLeft, stairTop, stairRight, stairBottom);
+
+					float simonLeft, simonTop, simonRight, simonBottom, simonCenterX;
+					GetBoundingBox(simonLeft, simonTop, simonRight, simonBottom);
+
+					stairCenterX = stairLeft + (stairRight - stairLeft) / 2;
+					simonCenterX = simonLeft + (simonRight - simonLeft) / 2;
+
+					bool validX = false;
+					bool validY = false;
+					bool canTurnBack = false;
+
+					validY = simonTop < stairTop ? true : false;
 
 					upsideDirectionX = stair->upsideDirectionX;
 					upsideDirectionY = stair->upsideDirectionY;
@@ -902,6 +1043,29 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (up)
 						{
+							if (stair->upsideDirectionX == Direction::Right)
+							{
+								validX = canTurnBack = simonCenterX >= stairRight + 10 && simonCenterX <= stairRight + 20 ? true : false;
+							}
+							else
+							{
+								validX = canTurnBack = simonCenterX <= stairLeft - 10 && simonCenterX > stairLeft - 20 ? true : false;
+							}
+
+							if (validX && validY)
+							{
+								countAtBi++;
+							}
+							else
+							{
+								return;
+							}
+
+							if (canTurnBack)
+							{
+								directionX = stair->directionX;
+							}
+
 							directionY = stair->upsideDirectionY;
 							stairDirectionX = stair->upsideDirectionX;
 							stairDirectionY = stair->upsideDirectionY;
@@ -915,6 +1079,29 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 						
 						if (down)
 						{
+							if (stair->downsideDirectionX == Direction::Right)
+							{
+								validX = canTurnBack = simonCenterX >= stairRight + 10 && simonCenterX <= stairRight + 20 ? true : false;
+							}
+							else
+							{
+								validX = canTurnBack = simonCenterX <= stairLeft - 10 && simonCenterX > stairLeft - 20 ? true : false;
+							}
+
+							if (validX && validY)
+							{
+								countAtBi++;
+							}
+							else
+							{
+								return;
+							}
+
+							if (canTurnBack)
+							{
+								directionX = stair->directionX;
+							}
+
 							directionY = stair->downsideDirectionY;
 							stairDirectionX = stair->downsideDirectionX;
 							stairDirectionY = stair->downsideDirectionY;
@@ -930,8 +1117,10 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 					{
 						bool reversedDirectionX = (downsideDirectionX == Direction::Right && directionX == Direction::Left) || (upsideDirectionX == Direction::Right && directionX == Direction::Left);
 						bool reversedDirectionY = (downsideDirectionY == Direction::Down && directionY == Direction::Up) || (upsideDirectionY == Direction::Up && directionY == Direction::Down);
-						
-						if (reversedDirectionX && reversedDirectionY && y + SIMON_BBOX_HEIGHT <= stair->y + 12)
+						bool reachedTop = directionY == Direction::Up && y + SIMON_BBOX_HEIGHT <= stair->y + BI_STAIR_BBOX_HEIGHT;
+						bool reachedBottom = directionY == Direction::Down && y + SIMON_BBOX_HEIGHT >= stair->y + BI_STAIR_BBOX_HEIGHT;
+
+						if (reversedDirectionX && reversedDirectionY && (reachedTop || reachedBottom))
 						{
 							onStair = false;
 							SetState(SIMON_STATE_IDLE);
@@ -943,6 +1132,18 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 					auto area = dynamic_cast<CEnemySpawnerArea*>(object);
 
 					area->SpawnEnemy();
+				}
+				else if (dynamic_cast<WBoomerang*>(object))
+				{
+					auto boomerang = dynamic_cast<WBoomerang*>(object);
+
+					if (boomerang->GetCollisionCount() >= 1)
+					{
+						CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
+						CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
+
+						object->removable = true;
+					}
 				}
 				else if (dynamic_cast<WFireball*>(object) || dynamic_cast<WBone*>(object))
 				{
@@ -1099,12 +1300,8 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 
 	if (!partiallyInvisible && !fullyInvisible)
 	{
-		partiallyInvisible = true;
-
-		if (invisibleTimeout == -1)
-		{
-			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
-		}
+		bool deflectable = false;
+		bool invisible = false;
 
 		if (dynamic_cast<CWhiteSkeleton*>(item))
 		{
@@ -1112,27 +1309,64 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 
 			if (whiteSkeleton->GetState() != WHITE_SKELETON_STATE_DIE)
 			{
+				invisible = true;
+
 				playerData->DecreaseHealthVolumes();
 			}
 		}
-		else if (dynamic_cast<CRaven*>(item))
-		{
-			item->Disappear();
-			playerData->DecreaseHealthVolumes();
-		}
-		else if (dynamic_cast<CRedBat*>(item))
-		{
-			item->Disappear();
-			playerData->DecreaseHealthVolumes();
-		}
 		else
 		{
-			playerData->DecreaseHealthVolumes();
+			invisible = true;
+
+			if (dynamic_cast<CRaven*>(item))
+			{
+				item->Disappear();
+				playerData->DecreaseHealthVolumes();
+			}
+			else if (dynamic_cast<CRedBat*>(item))
+			{
+				item->HideHiddenItem();
+				item->Disappear();
+
+				playerData->DecreaseHealthVolumes();
+			}
+			else
+			{
+				playerData->DecreaseHealthVolumes();
+			}
 		}
 
 		if (!onStair)
 		{
+			if (dynamic_cast<CWhiteSkeleton*>(item))
+			{
+				auto whiteSkeleton = dynamic_cast<CWhiteSkeleton*>(item);
+
+				if (whiteSkeleton->GetState() != WHITE_SKELETON_STATE_DIE)
+				{
+					deflectable = true;
+				}
+			}
+			else
+			{
+				deflectable = true;
+			}
+		}
+
+		if (invisible)
+		{
+			partiallyInvisible = true;
+
+			if (invisibleTimeout == -1)
+			{
+				invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+			}
+		}
+
+		if (deflectable)
+		{
 			deflecting = true;
+			jumpable = false;
 			SetState(SIMON_STATE_DEFLECT);
 		}
 	}
@@ -1216,7 +1450,13 @@ void CSimon::HandleSwitchScene()
 			if (game->GetPlayerData()->GetLives() > 0)
 			{
 				game->GetPlayerData()->DecreaseLives();
-				game->GetSceneManager()->SwitchScene(game->GetSceneManager()->GetCurrentSceneId());
+				game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+
+				game->GetPlayerData()->ResetHealthVolumes();
+				game->GetPlayerData()->ResetPower();
+				game->GetPlayerData()->ResetWeapons();
+
+				game->GetBossData()->Reset();
 			}
 			else
 			{
@@ -1225,6 +1465,7 @@ void CSimon::HandleSwitchScene()
 				game->GetSoundManager()->Play("game_over_background_music");
 
 				dynamic_cast<CPlayScene*>(game->GetSceneManager()->GetCurrentScene())->ShowGameOverBoard();
+				game->GetCamera()->SetPosition(0, 0);
 			}
 		}
 	}

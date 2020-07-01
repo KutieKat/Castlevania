@@ -1,5 +1,6 @@
 #include "WhiteMoneyBag.h"
 #include "../Misc/BottomStair.h"
+#include "../Misc/NextScene.h"
 #include "../Weapons/Bone.h"
 #include "../Weapons/Fireball.h"
 #include "../Weapons/HolyWaterBottle.h"
@@ -8,6 +9,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../Items/EasterEgg.h"
 
 CWhiteMoneyBag::CWhiteMoneyBag()
 {
@@ -74,6 +76,14 @@ void CWhiteMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				y -= min_ty * dy + ny * 0.4f;
 
+				if (e->ny < 0) y += dy;
+			}
+			else if (dynamic_cast<CEasterEgg*>(e->obj))
+			{
+				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CNextScene*>(e->obj))
+			{
 				if (e->ny != 0) y += dy;
 			}
 			else

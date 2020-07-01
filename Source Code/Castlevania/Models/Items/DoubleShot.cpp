@@ -73,7 +73,7 @@ void CDoubleShot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				y -= min_ty * dy + ny * 0.4f;
 
-				if (e->ny != 0) y += dy;
+				if (e->ny < 0) y += dy;
 			}
 			else
 			{

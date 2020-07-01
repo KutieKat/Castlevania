@@ -3,6 +3,7 @@
 CBrick::CBrick()
 {
 	//isGround = false;
+	canJumpThrough = false;
 	SetAnimationSet("transparency");
 }
 

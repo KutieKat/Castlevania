@@ -194,13 +194,6 @@ void CCreditsScene::Update(DWORD dt)
 	CGame* game = CGame::GetInstance();
 	CSceneManager* sceneManager = game->GetSceneManager();
 
-	if (switchSceneTime != -1 && GetTickCount() > switchSceneTime)
-	{
-		switchSceneTime = -1;
-
-		sceneManager->SwitchScene(sceneManager->GetFirstSceneId());
-	}
-
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (dynamic_cast<CCastle*>(objects[i]))
@@ -208,14 +201,17 @@ void CCreditsScene::Update(DWORD dt)
 			if (objects[i]->animationSet->at(0)->Over())
 			{
 				game->GetSoundManager()->Stop("knocked_down");
-				game->GetSoundManager()->PlayBackgroundSounds(); // Why not Play only???
+				game->GetSoundManager()->PlayBackgroundSounds();
 
 				for (int j = 0; j < objects.size(); j++)
 				{
 					if (dynamic_cast<CCreditText*>(objects[j]))
 					{
-
-						objects[j]->SetVisibility(Visibility::Visible);
+						if (objects[j]->GetVisibility() == Visibility::Hidden)
+						{
+							objects[j]->animationSet->at(0)->SetStartTime(GetTickCount());
+							objects[j]->SetVisibility(Visibility::Visible);
+						}
 					}
 				}
 			}
@@ -224,10 +220,8 @@ void CCreditsScene::Update(DWORD dt)
 		{
 			if (objects[i]->animationSet->at(0)->Over())
 			{
-				if (switchSceneTime == -1)
-				{
-					switchSceneTime = GetTickCount() + 3000;
-				}
+				sceneManager->SwitchScene(sceneManager->GetFirstSceneId());
+				break;
 			}
 		}
 	}

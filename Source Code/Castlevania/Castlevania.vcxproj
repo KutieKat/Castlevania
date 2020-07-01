@@ -118,6 +118,7 @@
     <ClCompile Include="Scenes\PlayScene.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneManager.cpp" />
+    <ClCompile Include="Settings\SettingManager.cpp" />
     <ClCompile Include="Sounds\GameSound.cpp" />
     <ClCompile Include="Sounds\GameSoundManager.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="Scenes\PlayScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneManager.h" />
+    <ClInclude Include="Settings\SettingManager.h" />
     <ClInclude Include="Sounds\GameSound.h" />
     <ClInclude Include="Sounds\GameSoundManager.h" />
     <ClInclude Include="Sprites\Sprite.h" />

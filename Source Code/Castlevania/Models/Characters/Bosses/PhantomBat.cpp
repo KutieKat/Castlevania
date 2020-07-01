@@ -1,5 +1,6 @@
 #include "PhantomBat.h"
 #include "../../../Game.h"
+#include "../../Weapons/WAxe.h"
 
 CPhantomBat::CPhantomBat(CSimon* simon)
 {
@@ -43,6 +44,11 @@ void CPhantomBat::SetState(int state)
 	case PHANTOM_BAT_STATE_DELAY:
 		delayTimeout = GetTickCount() + ENEMY_DELAY_TIME;
 		break;
+
+	case PHANTOM_BAT_STATE_DIE:
+		x = lastPosX;
+		y = lastPosY;
+		break;
 	}
 }
 
@@ -54,59 +60,62 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (softPaused) return;
 
-	angle = atan2(targetY - y, targetX - x);
-
-	if (state == PHANTOM_BAT_STATE_DELAY && delayTimeout != -1 && GetTickCount() > delayTimeout)
+	if (state != PHANTOM_BAT_STATE_DIE)
 	{
-		if (GetTickCount() > delayTimeout + ENEMY_DELAY_PLUS_TIME)
+		angle = atan2(targetY - y, targetX - x);
+
+		if (state == PHANTOM_BAT_STATE_DELAY && delayTimeout != -1 && GetTickCount() > delayTimeout)
 		{
-			delayTimeout = -1;
+			if (GetTickCount() > delayTimeout + ENEMY_DELAY_PLUS_TIME)
+			{
+				delayTimeout = -1;
+			}
+
+			Attack();
 		}
 
-		Attack();
-	}
-
-	if (state == PHANTOM_BAT_STATE_FLY)
-	{
-		if (ReachedTarget())
+		if (state == PHANTOM_BAT_STATE_FLY)
 		{
-			flyingCounter += 1;
-
-			if (flyingCounter % 30 == 0)
+			if (ReachedTarget())
 			{
-				Attack();
-				flyingCounter = 0;
+				flyingCounter += 1;
+
+				if (flyingCounter % 30 == 0)
+				{
+					Attack();
+					flyingCounter = 0;
+				}
+			}
+			else
+			{
+				directionX = x <= targetX ? Direction::Right : Direction::Left;
+
+				vx = PHANTOM_BAT_ATTACK_SPEED_X;
+				vy = PHANTOM_BAT_ATTACK_SPEED_Y;
+
+				x += vx * cos(angle) * dt;
+				y += vy * sin(angle) * dt;
 			}
 		}
-		else
+
+		if (state == PHANTOM_BAT_STATE_ATTACK)
 		{
-			directionX = x <= targetX ? Direction::Right : Direction::Left;
+			if (ReachedTarget())
+			{
+				directionX = directionX == Direction::Left ? Direction::Right : Direction::Left;
 
-			vx = PHANTOM_BAT_ATTACK_SPEED_X;
-			vy = PHANTOM_BAT_ATTACK_SPEED_Y;
+				SetState(PHANTOM_BAT_STATE_FLY);
+			}
+			else
+			{
+				directionX = x <= targetX ? Direction::Right : Direction::Left;
 
-			x += vx * cos(angle) * dt;
-			y += vy * sin(angle) * dt;
-		}
-	}
+				vx = PHANTOM_BAT_ATTACK_SPEED_X;
+				vy = PHANTOM_BAT_ATTACK_SPEED_Y;
 
-	if (state == PHANTOM_BAT_STATE_ATTACK)
-	{
-		if (ReachedTarget())
-		{
-			directionX = directionX == Direction::Left ? Direction::Right : Direction::Left;
-
-			SetState(PHANTOM_BAT_STATE_FLY);
-		}
-		else
-		{
-			directionX = x <= targetX ? Direction::Right : Direction::Left;
-
-			vx = PHANTOM_BAT_ATTACK_SPEED_X;
-			vy = PHANTOM_BAT_ATTACK_SPEED_Y;
-
-			x += vx * cos(angle) * dt;
-			y += vy * sin(angle) * dt;
+				x += vx * cos(angle) * dt;
+				y += vy * sin(angle) * dt;
+			}
 		}
 	}
 }
@@ -152,15 +161,21 @@ void CPhantomBat::TakeDamage(int damages)
 {
 	CEnemy::TakeDamage(damages);
 
-	if (CGame::GetInstance()->GetBossData()->GetHealthVolumes() <= 0)
+	CGame::GetInstance()->GetBossData()->DecreaseHealthVolumes(damages);
+
+	if (attacks <= 0)
 	{
+		lastPosX = x;
+		lastPosY = y;
+
+		SetState(PHANTOM_BAT_STATE_DIE);
+
 		Disappear();
 		CGame::GetInstance()->GetPlayerData()->AddScore(PHANTOM_BAT_SCORE);
 	}
 	else
 	{
 		ShowEffect();
-		CGame::GetInstance()->GetBossData()->DecreaseHealthVolumes(damages);
 		SetState(PHANTOM_BAT_STATE_DELAY);
 	}
 }

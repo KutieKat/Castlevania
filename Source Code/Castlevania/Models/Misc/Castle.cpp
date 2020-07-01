@@ -6,8 +6,8 @@ CCastle::CCastle()
 	animationSet->at(0)->SetStartTime(GetTickCount());
 
 	movingCounter = 0;
-	vx = 0.02f;
-	vy = 0.008f;
+	vx = CASTLE_MOVE_SPEED_X;
+	vy = CASTLE_MOVE_SPEED_Y;
 }
 
 void CCastle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

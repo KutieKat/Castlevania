@@ -25,6 +25,8 @@ protected:
 	float angle;
 	float targetX;
 	float targetY;
+	float lastPosX;
+	float lastPosY;
 
 	bool ReachedTarget();
 	void GenerateTarget();

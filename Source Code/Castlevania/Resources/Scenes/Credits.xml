@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <sounds>
-    <sound id="background_music" path="Resources\\Musics\\EndGame.wav" isBackground="true" />
+    <sound id="background_music" path="Resources\\Musics\\EndGame.wav" loop="false" isBackground="true" />
     <sound id="knocked_down" path="Resources\\Sounds\\KnockedDown.wav" loop="true" />
   </sounds>
   
@@ -172,6 +172,10 @@
       <frame spriteId="credit_text_10_purple" duration="200" />
       <frame spriteId="credit_text_10_blue" duration="200" />
       <frame spriteId="credit_text_10_black" duration="3000" />
+      <frame spriteId="credit_text_10_blue" duration="200" />
+      <frame spriteId="credit_text_10_purple" duration="200" />
+      <frame spriteId="credit_text_10_pink" duration="200" />
+      <frame spriteId="credit_text_blank" duration="2000" />
     </animation>
 
     <animation id="castle">

@@ -1,5 +1,4 @@
 #include "WBoomerang.h"
-#include "../../Utilities/Debug.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/BigCandle.h"
 #include "../Misc/SmallCandle.h"
@@ -21,14 +20,6 @@ WBoomerang::WBoomerang(CSimon* simon)
 void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
-	if (collisionCount == 1 && (directionX == Direction::Right && x < simon->x + SIMON_BBOX_WIDTH && y > simon->y) || (directionX == Direction::Left && x > simon->x && y > simon->y))
-	{
-		CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
-		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
-
-		removable = true;
-	}
 
 	if (collisionCount == 2)
 	{
@@ -55,14 +46,6 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vx = -vx;
 			collisionCount++;
 		}
-
-		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
-		{
-			CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
-			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
-
-			removable = true;
-		}
 	}
 	else
 	{
@@ -86,6 +69,8 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				enemy->TakeDamage(BOOMERANG_DAMAGES);
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
@@ -94,6 +79,8 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CSmallCandle*>(e->obj))
 			{
@@ -102,6 +89,8 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else
 			{
@@ -127,4 +116,9 @@ void WBoomerang::GetBoundingBox(float & l, float & t, float & r, float & b)
 void WBoomerang::Render()
 {
 	animationSet->at(BOOMERANG_ANI_MOVE)->Render(x, y);
+}
+
+int WBoomerang::GetCollisionCount()
+{
+	return collisionCount;
 }

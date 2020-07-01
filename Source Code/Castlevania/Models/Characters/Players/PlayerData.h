@@ -9,6 +9,7 @@ public:
 	static CPlayerData* GetInstance();
 
 	void Init();
+	void ResetPower();
 	void ResetWeapons();
 	void Reset();
 

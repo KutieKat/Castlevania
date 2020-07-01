@@ -69,7 +69,10 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vy += WHITE_SKELETON_GRAVITY * dt;
 
-	directionX = x >= simon->x ? Direction::Left : Direction::Right;
+	if (state != WHITE_SKELETON_STATE_DIE)
+	{
+		directionX = x >= simon->x ? Direction::Left : Direction::Right;
+	}
 
 	if (state == WHITE_SKELETON_STATE_WALK_AROUND)
 	{
@@ -141,7 +144,20 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (jumpingCounter % 100 == 0)
 			{
-				SetState(WHITE_SKELETON_STATE_JUMP_AROUND);
+				if (directionX == Direction::Right)
+				{
+					if (x <= rightBound)
+					{
+						SetState(WHITE_SKELETON_STATE_JUMP_AROUND);
+					}
+				}
+				else
+				{
+					if (x >= leftBound)
+					{
+						SetState(WHITE_SKELETON_STATE_JUMP_AROUND);
+					}
+				}
 			}
 		}
 		else
@@ -224,6 +240,13 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBreakableBrick*>(e->obj))
 			{
 				if (e->nx != 0) vx = -vx;
+			}
+			else if (dynamic_cast<CEnemy*>(e->obj))
+			{
+				y -= min_ty * dy + ny * 0.4f;
+
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
 			}
 			else if (dynamic_cast<WAxe*>(e->obj) || dynamic_cast<CHolyWaterBottle*>(e->obj) || dynamic_cast<WStopwatch*>(e->obj))
 			{

@@ -13,6 +13,7 @@
 #include "Models/Characters/Bosses/BossData.h"
 #include "Scenes/SceneManager.h"
 #include "Sounds/GameSoundManager.h"
+#include "Settings/SettingManager.h"
 
 class CGame
 {
@@ -32,6 +33,7 @@ class CGame
 	CBossData* bossData;
 	CSceneManager* sceneManager;
 	CGameSoundManager* soundManager;
+	CSettingManager* settingManager;
 
 	DWORD pauseStartingTime = -1;
 	DWORD pauseEndingTime = -1;
@@ -49,6 +51,8 @@ public:
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
 
 	bool HaveCollision(CGameObject* object1, CGameObject* object2);
+	bool BoundingBoxDisplayed();
+	bool CheatKeysActivated();
 	bool Ended();
 
 	void SetPauseStartingTime(DWORD time);
@@ -87,6 +91,7 @@ public:
 	CBossData* GetBossData();
 	CSceneManager* GetSceneManager();
 	CGameSoundManager* GetSoundManager();
+	CSettingManager* GetSettingManager();
 
 	static CGame* GetInstance();
 

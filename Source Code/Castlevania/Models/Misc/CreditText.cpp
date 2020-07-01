@@ -3,7 +3,6 @@
 CCreditText::CCreditText()
 {
 	SetAnimationSet("credit_text");
-	animationSet->at(0)->SetStartTime(GetTickCount());
 }
 
 void CCreditText::Render()

@@ -23,33 +23,10 @@ public:
 	string GetFirstSceneId();
 	string GetSceneIdByIndex(int index);
 
-	int GetIndexBySceneId(string sceneId)
-	{
-		for (int i = 0; i < sceneIds.size(); i++)
-		{
-			if (sceneIds[i] == sceneId)
-			{
-				return i;
-			}
-		}
-
-		return 0;
-	}
-
-	int GetCurrentSceneIndex()
-	{
-		return GetIndexBySceneId(GetCurrentSceneId());
-	}
-
-	int GetNextSceneIndex()
-	{
-		return GetIndexBySceneId(GetNextSceneId());
-	}
-
-	int GetPreviousSceneIndex()
-	{
-		return GetIndexBySceneId(GetPreviousSceneId());
-	}
+	int GetIndexBySceneId(string sceneId);
+	int GetCurrentSceneIndex();
+	int GetNextSceneIndex();
+	int GetPreviousSceneIndex();
 
 	void AddLoadedScenes(string sceneId);
 	void ClearLoadedScenes();

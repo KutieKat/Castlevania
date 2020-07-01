@@ -1,22 +1,35 @@
 #include "BigDoubleShot.h"
-#include "../../Utilities/Debug.h"
+#include "../../Game.h"
 
-CBigDoubleShot::CBigDoubleShot()
+CBigDoubleShot::CBigDoubleShot(bool blinking)
 {
 	SetAnimationSet("big_double_shot");
-	animationSet->at(0)->SetStartTime(GetTickCount());
+	animationSet->at(BIG_DOUBLE_SHOT_ANI_BLINKING)->SetStartTime(GetTickCount());
+
+	this->blinking = blinking;
 }
 
 void CBigDoubleShot::Render()
 {
-	if (animationSet->at(0)->Over())
+	int ani;
+
+	if (blinking)
 	{
-		animationSet->at(1)->Render(x, y);
+		if (animationSet->at(BIG_DOUBLE_SHOT_ANI_BLINKING)->Over())
+		{
+			ani = BIG_DOUBLE_SHOT_ANI_STATIC;
+		}
+		else
+		{
+			ani = BIG_DOUBLE_SHOT_ANI_BLINKING;
+		}
 	}
 	else
 	{
-		animationSet->at(0)->Render(x, y);
+		ani = BIG_DOUBLE_SHOT_ANI_STATIC;
 	}
+
+	animationSet->at(ani)->Render(x, y);
 }
 
 void CBigDoubleShot::GetBoundingBox(float& left, float& top, float& right, float& bottom)

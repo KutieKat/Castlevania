@@ -20,6 +20,7 @@ CGameObject::CGameObject()
 	directionX = Direction::Right;
 	directionY = Direction::None;
 
+	showingHiddenItem = true;
 	showingEffect = false;
 	showingEndingEffect = false;
 	isEffect = false;
@@ -129,7 +130,7 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		
 		if (showingEndingEffect)
 		{
-			if (hiddenItem)
+			if (hiddenItem && showingHiddenItem)
 			{
 				hiddenItem->SetVisibility(Visibility::Visible);
 				hiddenItem->SetPosition(x, y);
@@ -206,6 +207,11 @@ void CGameObject::ShowEffect()
 void CGameObject::ShowHiddenItem()
 {
 	hiddenItem->SetVisibility(Visibility::Visible);
+}
+
+void CGameObject::HideHiddenItem()
+{
+	showingHiddenItem = false;
 }
 
 /*

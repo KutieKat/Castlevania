@@ -17,6 +17,11 @@ void CPlayerData::Init()
 	Reset();
 }
 
+void CPlayerData::ResetPower()
+{
+	power = NORMAL_POWER;
+}
+
 void CPlayerData::ResetWeapons()
 {
 	whipLevel = WHIP_LEVEL_1;

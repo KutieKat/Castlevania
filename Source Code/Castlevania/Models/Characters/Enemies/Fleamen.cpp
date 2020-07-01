@@ -125,6 +125,13 @@ void CFleamen::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->nx != 0) vx = -vx;
 			}
+			else if (dynamic_cast<CEnemy*>(e->obj))
+			{
+				y -= min_ty * dy + ny * 0.4f;
+
+				if (e->nx != 0) x += dx;
+				if (e->ny != 0) y += dy;
+			}
 			else
 			{
 				if (e->nx != 0) x += dx;

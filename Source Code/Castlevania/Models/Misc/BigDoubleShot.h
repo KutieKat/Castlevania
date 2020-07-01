@@ -5,8 +5,11 @@
 class CBigDoubleShot : public CGameObject
 {
 public:
-	CBigDoubleShot();
+	CBigDoubleShot(bool blinking = false);
 
 	virtual void Render();
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
+
+protected:
+	bool blinking;
 };

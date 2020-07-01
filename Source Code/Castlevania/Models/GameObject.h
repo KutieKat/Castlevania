@@ -44,6 +44,7 @@ public:
 	CGameObject* hiddenItem;
 	CGameObject* endingEffect;
 
+	bool showingHiddenItem;
 	bool showingEffect;
 	bool showingEndingEffect;
 	bool isEffect;
@@ -115,6 +116,7 @@ public:
 	virtual void Disappear();
 	virtual void ShowEffect();
 	virtual void ShowHiddenItem();
+	virtual void HideHiddenItem();
 
 	~CGameObject();
 };

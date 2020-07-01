@@ -14,6 +14,7 @@ public:
 	void SetHeight(float height);
 
 	//bool isGround;
+	bool canJumpThrough;
 
 protected:
 	float width;

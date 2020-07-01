@@ -1,6 +1,4 @@
 #include "EasterEgg.h"
-#include "../../Utilities/SafeDelete.h"
-#include "../../Utilities/Debug.h"
 
 CEasterEgg::CEasterEgg()
 {

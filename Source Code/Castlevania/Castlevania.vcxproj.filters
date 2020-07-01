@@ -133,6 +133,12 @@
     <Filter Include="Source Files\Sounds">
       <UniqueIdentifier>{3f18d2d0-c629-43fd-b935-2f2ed439e43a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Settings">
+      <UniqueIdentifier>{90de01ad-341d-44bd-ad39-d797281d5a2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Settings">
+      <UniqueIdentifier>{7ec3de0a-c36f-445f-b0bd-54a647d2fb30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprites\SpriteManager.cpp">
@@ -467,6 +473,9 @@
     </ClCompile>
     <ClCompile Include="Models\Misc\Cursor.cpp">
       <Filter>Source Files\Models\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings\SettingManager.cpp">
+      <Filter>Source Files\Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -805,6 +814,9 @@
     </ClInclude>
     <ClInclude Include="Models\Misc\Cursor.h">
       <Filter>Header Files\Models\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings\SettingManager.h">
+      <Filter>Header Files\Settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

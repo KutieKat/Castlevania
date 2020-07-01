@@ -79,6 +79,11 @@ string CScene::GetNextSceneId()
 	return nextSceneId;
 }
 
+string CScene::GetRequiredSceneId()
+{
+	return requiredSceneId;
+}
+
 string CScene::GetStage()
 {
 	return stage;

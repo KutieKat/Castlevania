@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <!-- Game -->
+    <setting id="BOUNDING_BOX_DISPLAYED" type="int" value="false" />
+    <setting id="CHEAT_KEYS_ACTIVATED" type="bool" value="true" />
+</settings>
