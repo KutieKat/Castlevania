@@ -16,6 +16,11 @@ CEnemySpawnerArea::CEnemySpawnerArea(CSimon* simon)
 
 void CEnemySpawnerArea::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

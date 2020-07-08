@@ -115,6 +115,11 @@ void WBoomerang::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 void WBoomerang::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(BOOMERANG_ANI_MOVE)->Render(x, y);
 }
 

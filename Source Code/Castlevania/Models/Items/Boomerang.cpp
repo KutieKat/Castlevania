@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CBoomerang::CBoomerang()
 {
@@ -93,5 +94,10 @@ void CBoomerang::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 void CBoomerang::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(BOOMERANG_ANI_STATIC)->Render(x, y);
 }

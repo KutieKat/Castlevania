@@ -1,4 +1,5 @@
 #include "FourHundred.h"
+#include "../../Game.h"
 
 CFourHundred::CFourHundred()
 {
@@ -13,5 +14,10 @@ void CFourHundred::GetBoundingBox(float & left, float & top, float & right, floa
 
 void CFourHundred::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

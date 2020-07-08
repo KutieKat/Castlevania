@@ -1,4 +1,5 @@
 #include "Mountain.h"
+#include "../../Game.h"
 
 CMountain::CMountain()
 {
@@ -9,6 +10,11 @@ CMountain::CMountain()
 
 void CMountain::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

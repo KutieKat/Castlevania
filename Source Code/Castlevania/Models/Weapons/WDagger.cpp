@@ -106,5 +106,10 @@ void WDagger::Render()
 {
 	int ani = directionX == Direction::Right ? DAGGER_ANI_RIGHT : DAGGER_ANI_LEFT;
 
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(ani)->Render(x, y);
 }

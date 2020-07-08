@@ -1,4 +1,5 @@
 #include "EasterEgg.h"
+#include "../../Game.h"
 
 CEasterEgg::CEasterEgg()
 {
@@ -35,5 +36,10 @@ bool CEasterEgg::MustSit()
 
 void CEasterEgg::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

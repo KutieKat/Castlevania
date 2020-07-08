@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CDagger::CDagger()
 {
@@ -93,5 +94,10 @@ void CDagger::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 void CDagger::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

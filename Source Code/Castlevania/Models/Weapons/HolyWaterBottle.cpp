@@ -132,6 +132,11 @@ void CHolyWaterBottle::Render()
 		ani = HOLY_WATER_BOTTLE_ANI_FLAME;
 		break;
 	}
+
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
 	
 	animationSet->at(ani)->Render(x, y);
 }

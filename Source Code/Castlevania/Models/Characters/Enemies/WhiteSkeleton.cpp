@@ -270,6 +270,11 @@ void CWhiteSkeleton::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(GetAnimationToRender())->Render(x, y);
 	}
 }

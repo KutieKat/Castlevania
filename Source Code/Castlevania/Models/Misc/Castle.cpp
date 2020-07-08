@@ -1,4 +1,5 @@
 #include "Castle.h"
+#include "../../Game.h"
 
 CCastle::CCastle()
 {
@@ -30,6 +31,11 @@ void CCastle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CCastle::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

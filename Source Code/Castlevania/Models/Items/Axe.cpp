@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CAxe::CAxe()
 {
@@ -93,5 +94,10 @@ void CAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void CAxe::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(AXE_ANI_STATIC)->Render(x, y);
 }

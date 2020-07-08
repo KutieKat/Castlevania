@@ -60,6 +60,11 @@ void CRedBat::Render()
 	
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(ani)->Render(x, y);
 	}
 }

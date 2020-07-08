@@ -10,6 +10,7 @@
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Items/EasterEgg.h"
+#include "../../Game.h"
 
 CPurpleMoneyBag::CPurpleMoneyBag()
 {
@@ -21,6 +22,11 @@ void CPurpleMoneyBag::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }

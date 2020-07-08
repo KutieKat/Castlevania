@@ -9,6 +9,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CMorningStar::CMorningStar()
 {
@@ -94,5 +95,10 @@ void CMorningStar::GetBoundingBox(float& left, float& top, float& right, float& 
 
 void CMorningStar::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

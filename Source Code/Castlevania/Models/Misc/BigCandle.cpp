@@ -1,4 +1,5 @@
 #include "BigCandle.h"
+#include "../../Game.h"
 
 CBigCandle::CBigCandle()
 {
@@ -9,6 +10,11 @@ void CBigCandle::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }

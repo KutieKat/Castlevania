@@ -1,4 +1,5 @@
 #include "NextScene.h"
+#include "../../Game.h"
 
 CNextScene::CNextScene()
 {
@@ -16,5 +17,10 @@ void CNextScene::GetBoundingBox(float & left, float & top, float & right, float 
 
 void CNextScene::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

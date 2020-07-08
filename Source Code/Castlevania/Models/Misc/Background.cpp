@@ -1,4 +1,5 @@
 #include "Background.h"
+#include "../../Game.h"
 
 CBackground::CBackground()
 {
@@ -7,6 +8,11 @@ CBackground::CBackground()
 
 void CBackground::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

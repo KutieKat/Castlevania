@@ -1,4 +1,5 @@
 #include "CreditText.h"
+#include "../../Game.h"
 
 CCreditText::CCreditText()
 {
@@ -7,6 +8,11 @@ CCreditText::CCreditText()
 
 void CCreditText::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

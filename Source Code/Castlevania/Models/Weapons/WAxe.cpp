@@ -125,5 +125,10 @@ void WAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void WAxe::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(AXE_ANI_MOVE)->Render(x, y);
 }

@@ -1,5 +1,6 @@
 #include "MovingBar.h"
 #include "Brick.h"
+#include "../../Game.h"
 
 CMovingBar::CMovingBar()
 {
@@ -49,6 +50,11 @@ void CMovingBar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMovingBar::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

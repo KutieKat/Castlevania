@@ -267,9 +267,6 @@
     <ClCompile Include="Models\Misc\Helicopter.cpp">
       <Filter>Source Files\Models\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="Models\Misc\Ground.cpp">
-      <Filter>Source Files\Models\Misc</Filter>
-    </ClCompile>
     <ClCompile Include="Models\ObjectFactory.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
@@ -606,9 +603,6 @@
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Models\Misc\Helicopter.h">
-      <Filter>Header Files\Models\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Misc\Ground.h">
       <Filter>Header Files\Models\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Models\ObjectFactory.h">

@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CDoubleShot::CDoubleShot()
 {
@@ -17,6 +18,11 @@ CDoubleShot::CDoubleShot()
 
 void CDoubleShot::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CRosary::CRosary()
 {
@@ -19,6 +20,11 @@ void CRosary::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }

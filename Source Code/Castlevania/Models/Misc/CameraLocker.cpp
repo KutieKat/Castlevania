@@ -1,4 +1,5 @@
 #include "CameraLocker.h"
+#include "../../Game.h"
 
 CCameraLocker::CCameraLocker()
 {
@@ -7,6 +8,11 @@ CCameraLocker::CCameraLocker()
 
 void CCameraLocker::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

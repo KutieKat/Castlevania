@@ -1,4 +1,5 @@
 #include "SmallHeart.h"
+#include "../../Game.h"
 
 CSmallHeart::CSmallHeart()
 {
@@ -17,6 +18,11 @@ void CSmallHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CSmallHeart::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

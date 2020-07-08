@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CInvisibilityPotion::CInvisibilityPotion()
 {
@@ -93,5 +94,10 @@ void CInvisibilityPotion::GetBoundingBox(float& left, float& top, float& right, 
 
 void CInvisibilityPotion::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

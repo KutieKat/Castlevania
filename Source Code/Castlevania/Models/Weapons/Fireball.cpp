@@ -37,6 +37,11 @@ void WFireball::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 void WFireball::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

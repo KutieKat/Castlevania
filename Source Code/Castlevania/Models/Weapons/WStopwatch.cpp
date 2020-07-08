@@ -84,5 +84,10 @@ void WStopwatch::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 void WStopwatch::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

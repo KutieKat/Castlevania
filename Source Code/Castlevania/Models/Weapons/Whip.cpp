@@ -15,6 +15,11 @@ CWhip::CWhip(CSimon* simon)
 
 void CWhip::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(GetAnimationToRender())->Render(x, y);
 }
 

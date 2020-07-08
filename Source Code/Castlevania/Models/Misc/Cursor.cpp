@@ -1,4 +1,5 @@
 #include "Cursor.h"
+#include "../../Game.h"
 
 CCursor::CCursor()
 {
@@ -7,6 +8,11 @@ CCursor::CCursor()
 
 void CCursor::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

@@ -9,6 +9,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CMagicCrystal::CMagicCrystal()
 {
@@ -98,5 +99,10 @@ void CMagicCrystal::GetBoundingBox(float& left, float& top, float& right, float&
 
 void CMagicCrystal::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
