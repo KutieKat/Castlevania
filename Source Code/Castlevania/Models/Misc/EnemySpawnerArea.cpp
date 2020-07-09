@@ -7,8 +7,10 @@
 
 CEnemySpawnerArea::CEnemySpawnerArea(CSimon* simon)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	this->nextSpawningTime = -1;
-	this->spawningInterval = ENEMY_SPAWNER_SPAWNING_INTERVAL;
+	this->spawningInterval = settingManager->GetIntValue("ENEMY_SPAWNER_SPAWNING_INTERVAL");
 	this->simon = simon;
 
 	SetAnimationSet("transparency");
@@ -21,10 +23,12 @@ void CEnemySpawnerArea::Render()
 
 void CEnemySpawnerArea::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + ENEMY_SPAWNER_AREA_BBOX_WIDTH;
-	bottom = top + ENEMY_SPAWNER_AREA_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("ENEMY_SPAWNER_AREA_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("ENEMY_SPAWNER_AREA_BBOX_HEIGHT");
 }
 
 void CEnemySpawnerArea::SetEnemyType(string type)
@@ -34,7 +38,7 @@ void CEnemySpawnerArea::SetEnemyType(string type)
 
 void CEnemySpawnerArea::SetInterval(DWORD interval)
 {
-	if (interval != -1 && interval != ENEMY_SPAWNER_SPAWNING_INTERVAL)
+	if (interval != -1 && interval != CGame::GetInstance()->GetSettingManager()->GetIntValue("ENEMY_SPAWNER_SPAWNING_INTERVAL"))
 	{
 		spawningInterval = interval;
 	}

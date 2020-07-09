@@ -3,7 +3,9 @@
 
 CMovingBar::CMovingBar()
 {
-	vx = MOVING_BAR_MOVE_SPEED;
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
+	vx = settingManager->GetFloatValue("MOVING_BAR_MOVE_SPEED");
 
 	SetAnimationSet("moving_bar");
 }
@@ -54,8 +56,10 @@ void CMovingBar::Render()
 
 void CMovingBar::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + MOVING_BAR_BBOX_WIDTH;
-	bottom = top + MOVING_BAR_BBOX_HEIGHT;
+	right = left + settingManager->GetFloatValue("MOVING_BAR_BBOX_WIDTH");
+	bottom = top + settingManager->GetFloatValue("MOVING_BAR_BBOX_HEIGHT");
 }

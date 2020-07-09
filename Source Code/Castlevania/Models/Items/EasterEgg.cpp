@@ -12,17 +12,20 @@ CEasterEgg::CEasterEgg()
 void CEasterEgg::ShowHiddenItem()
 {
 	CGameObject::ShowHiddenItem();
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	hiddenItem->SetState(ITEM_STATE_APPEAR);
-	hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+	hiddenItem->SetState(settingManager->GetIntValue("ITEM_STATE_APPEAR"));
+	hiddenItem->SetDisplayTime(settingManager->GetIntValue("ITEM_DISPLAY_TIME"));
 }
 
 void CEasterEgg::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + EASTER_EGG_BBOX_WIDTH;
-	bottom = top + EASTER_EGG_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("EASTER_EGG_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("EASTER_EGG_BBOX_HEIGHT");
 }
 
 void CEasterEgg::SetMustSit(bool mustSit)

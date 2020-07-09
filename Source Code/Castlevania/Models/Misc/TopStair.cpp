@@ -12,8 +12,10 @@ void CTopStair::Render()
 
 void CTopStair::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + TOP_STAIR_BBOX_WIDTH;
-	bottom = top + TOP_STAIR_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("TOP_STAIR_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("TOP_STAIR_BBOX_HEIGHT");
 }

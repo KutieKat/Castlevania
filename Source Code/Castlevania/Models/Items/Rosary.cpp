@@ -26,8 +26,9 @@ void CRosary::Render()
 void CRosary::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -93,9 +94,11 @@ void CRosary::GetBoundingBox(float& left, float& top, float& right, float& botto
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 		left = x;
 		top = y;
-		right = left + ROSARY_BBOX_WIDTH;
-		bottom = top + ROSARY_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("ROSARY_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("ROSARY_BBOX_HEIGHT");
 	}
 }

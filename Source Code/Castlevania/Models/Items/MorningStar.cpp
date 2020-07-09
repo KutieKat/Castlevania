@@ -19,8 +19,9 @@ CMorningStar::CMorningStar()
 void CMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -86,10 +87,12 @@ void CMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMorningStar::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + MORNING_STAR_BBOX_WIDTH;
-	bottom = top + MORNING_STAR_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("MORNING_STAR_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("MORNING_STAR_BBOX_HEIGHT");
 }
 
 void CMorningStar::Render()

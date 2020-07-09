@@ -1,4 +1,5 @@
 #include "BossData.h"
+#include "../../../Game.h"
 
 CBossData* CBossData::instance = nullptr;
 
@@ -19,7 +20,7 @@ void CBossData::Init()
 
 void CBossData::Reset()
 {
-	healthVolumes = HEALTH_BAR_MAX_VOLUMES;
+	healthVolumes = CGame::GetInstance()->GetSettingManager()->GetIntValue("BOSS_DEFAULT_HEALTHS");
 }
 
 void CBossData::DecreaseHealthVolumes(int damages)

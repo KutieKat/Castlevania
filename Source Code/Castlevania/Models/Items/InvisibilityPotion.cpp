@@ -18,8 +18,9 @@ CInvisibilityPotion::CInvisibilityPotion()
 void CInvisibilityPotion::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -85,10 +86,12 @@ void CInvisibilityPotion::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CInvisibilityPotion::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + INVISIBILITY_POTION_BBOX_WIDTH;
-	bottom = top + INVISIBILITY_POTION_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("INVISIBILITY_POTION_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("INVISIBILITY_POTION_BBOX_HEIGHT");
 }
 
 void CInvisibilityPotion::Render()

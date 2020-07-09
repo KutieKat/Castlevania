@@ -2,9 +2,11 @@
 
 COneHundred::COneHundred()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	isEffect = true;
 	SetAnimationSet("one_hundred");
-	elevation = EFFECT_DEFAULT_ELEVATION;
+	elevation = settingManager->GetIntValue("EFFECT_DEFAULT_ELEVATION");
 }
 
 void COneHundred::GetBoundingBox(float & left, float & top, float & right, float & bottom)

@@ -3,19 +3,22 @@
 
 CRedBat::CRedBat(CSimon* simon)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	this->simon = simon;
 	this->mustInArea = true;
-	this->areaRadiusX = RED_BAT_AREA_RADIUS_X;
-	this->areaRadiusY = RED_BAT_AREA_RADIUS_Y;
+	this->areaRadiusX = settingManager->GetIntValue("RED_BAT_AREA_RADIUS_X");
+	this->areaRadiusY = settingManager->GetIntValue("RED_BAT_AREA_RADIUS_Y");
 	this->flyingCounter = 0;
 
 	SetAnimationSet("red_bat");
-	SetState(RED_BAT_STATE_STATIC);
+	SetState(settingManager->GetIntValue("RED_BAT_INITIAL_STATE"));
 }
 
 void CRedBat::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
 	switch (state)
 	{
@@ -24,7 +27,7 @@ void CRedBat::SetState(int state)
 		break;
 
 	case RED_BAT_STATE_MOVE:
-		vx = directionX == Direction::Right ? RED_BAT_MOVE_SPEED_X : -RED_BAT_MOVE_SPEED_X;
+		vx = directionX == Direction::Right ? settingManager->GetFloatValue("RED_BAT_MOVE_SPEED_X") : -settingManager->GetFloatValue("RED_BAT_MOVE_SPEED_X");
 		break;
 	}
 }
@@ -32,6 +35,8 @@ void CRedBat::SetState(int state)
 void CRedBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
 	if (softPaused) return;
@@ -39,7 +44,7 @@ void CRedBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == RED_BAT_STATE_MOVE)
 	{
 		x += (directionX == Direction::Right ? vx : -vx) * dt;
-		y += (y < simon->y + 10 ? RED_BAT_MOVE_SPEED_Y : 0) * dt;
+		y += (y < simon->y + 10 ? settingManager->GetFloatValue("RED_BAT_MOVE_SPEED_Y") : 0) * dt;
 	}
 }
 
@@ -68,10 +73,12 @@ void CRedBat::GetBoundingBox(float & left, float & top, float & right, float & b
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 		left = x;
 		top = y;
-		right = left + RED_BAT_BBOX_WIDTH;
-		bottom = top + RED_BAT_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("RED_BAT_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("RED_BAT_BBOX_HEIGHT");
 	}
 }
 
@@ -82,7 +89,7 @@ void CRedBat::TakeDamage(int damages)
 	if (attacks <= 0)
 	{
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(RED_BAT_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(CGame::GetInstance()->GetSettingManager()->GetIntValue("RED_BAT_SCORE"));
 	}
 	else
 	{

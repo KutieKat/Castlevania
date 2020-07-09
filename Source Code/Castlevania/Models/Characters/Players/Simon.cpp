@@ -50,6 +50,8 @@
 
 CSimon::CSimon()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	jumpable = false;
 	partiallyInvisible = false;
 	fullyInvisible = false;
@@ -70,11 +72,11 @@ CSimon::CSimon()
 
 	sittingCounter = 0;
 	endingCounter = 0;
-	elevation = SIMON_DEFAULT_ELEVATION;
+	elevation = settingManager->GetIntValue("SIMON_DEFAULT_ELEVATION");
 	delayEndTime = -1;
 	switchSceneTime = -1;
 	invisibleTimeout = -1;
-	waitingTime = DEFAULT_WAITING_TIME;
+	waitingTime = settingManager->GetIntValue("DEFAULT_WAITING_TIME");
 
 	whip = new CWhip(this);
 	whip->SetVisibility(Visibility::Hidden);
@@ -356,11 +358,12 @@ void CSimon::Render()
 void CSimon::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
 	switch (state)
 	{
 	case SIMON_STATE_WALK:
-		vx = directionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
+		vx = directionX == Direction::Right ? settingManager->GetFloatValue("SIMON_JUMP_SPEED_X") : -settingManager->GetFloatValue("SIMON_JUMP_SPEED_X");
 		break;
 
 	case SIMON_STATE_JUMP:
@@ -371,8 +374,8 @@ void CSimon::SetState(int state)
 				jumpable = false;
 				touchingGround = false;
 
-				vy = -SIMON_JUMP_SPEED;
-			}
+				vy = -settingManager->GetFloatValue("SIMON_JUMP_SPEED_Y");
+			//}
 		}
 
 		break;
@@ -434,7 +437,7 @@ void CSimon::SetState(int state)
 
 		if (delayEndTime == -1)
 		{
-			delayEndTime = GetTickCount() + SIMON_DELAY_TIME;
+			delayEndTime = GetTickCount() + settingManager->GetIntValue("SIMON_DELAY_TIME");
 		}
 
 		break;
@@ -460,12 +463,12 @@ void CSimon::SetState(int state)
 		if (movingDirection == "rightward")
 		{
 			directionX = Direction::Right;
-			vx = SIMON_SLOW_WALK_SPEED;
+			vx = settingManager->GetFloatValue("SIMON_SLOW_WALK_SPEED");
 		}
 		else if (movingDirection == "leftward")
 		{
 			directionX = Direction::Left;
-			vx = -SIMON_SLOW_WALK_SPEED;
+			vx = -settingManager->GetFloatValue("SIMON_SLOW_WALK_SPEED");
 		}
 
 		break;
@@ -479,28 +482,28 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_WALK_DOWNSTAIR:
 		if (stairDirectionX == directionX)
 		{
-			vx = stairDirectionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
+			vx = stairDirectionX == Direction::Right ? settingManager->GetFloatValue("SIMON_WALK_SPEED") : -settingManager->GetFloatValue("SIMON_WALK_SPEED");
 		}
 		else
 		{
-			vx = stairDirectionX == Direction::Right ? -SIMON_WALK_SPEED : SIMON_WALK_SPEED;
+			vx = stairDirectionX == Direction::Right ? -settingManager->GetFloatValue("SIMON_WALK_SPEED") : settingManager->GetFloatValue("SIMON_WALK_SPEED");
 		}
 
-		vy = SIMON_WALK_SPEED;
+		vy = settingManager->GetFloatValue("SIMON_WALK_SPEED");
 		directionY = Direction::Down;
 		break;
 
 	case SIMON_STATE_WALK_UPSTAIR:
 		if (stairDirectionX == directionX)
 		{
-			vx = stairDirectionX == Direction::Right ? SIMON_WALK_SPEED : -SIMON_WALK_SPEED;
+			vx = stairDirectionX == Direction::Right ? settingManager->GetFloatValue("SIMON_WALK_SPEED") : -settingManager->GetFloatValue("SIMON_WALK_SPEED");
 		}
 		else
 		{
-			vx = stairDirectionX == Direction::Right ? -SIMON_WALK_SPEED : SIMON_WALK_SPEED;
+			vx = stairDirectionX == Direction::Right ? -settingManager->GetFloatValue("SIMON_WALK_SPEED") : settingManager->GetFloatValue("SIMON_WALK_SPEED");
 		}
 
-		vy = -SIMON_WALK_SPEED;
+		vy = -settingManager->GetFloatValue("SIMON_WALK_SPEED");
 		directionY = Direction::Up;
 		break;
 
@@ -509,13 +512,13 @@ void CSimon::SetState(int state)
 
 		if (directionX == Direction::Right)
 		{
-			vy = -SIMON_JUMP_SPEED;
-			vx = -SIMON_WALK_SPEED;
+			vy = -settingManager->GetFloatValue("SIMON_DEFLECT_SPEED_Y");
+			vx = -settingManager->GetFloatValue("SIMON_DEFLECT_SPEED_X");
 		}
 		else
 		{
-			vy = -SIMON_JUMP_SPEED;
-			vx = SIMON_WALK_SPEED;
+			vy = -settingManager->GetFloatValue("SIMON_DEFLECT_SPEED_Y");
+			vx = settingManager->GetFloatValue("SIMON_DEFLECT_SPEED_X");
 		}
 
 		animationSet->at(GetAnimationToRender())->SetStartTime(GetTickCount());
@@ -552,10 +555,12 @@ void CSimon::SetState(int state)
 
 void CSimon::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x + 15;
 	top = y;
-	right = left + SIMON_BBOX_WIDTH;
-	bottom = top + SIMON_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("SIMON_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("SIMON_BBOX_HEIGHT");
 }
 
 int CSimon::GetAnimationToRender()
@@ -694,7 +699,7 @@ void CSimon::HandleGravity()
 {
 	if (!onStair && state != SIMON_STATE_WALK_UPSTAIR && state != SIMON_STATE_CUT_SCENE_AUTO_WALK && state != SIMON_STATE_WATCH)
 	{
-		vy += SIMON_GRAVITY * dt;
+		vy += CGame::GetInstance()->GetSettingManager()->GetFloatValue("SIMON_GRAVITY") * dt;
 	}
 }
 
@@ -797,6 +802,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 		int countAtBottom = 0, countAtTop = 0, countAtBi = 0;
 		CGame* game = CGame::GetInstance();
 		CGameSoundManager* soundManager = game->GetSoundManager();
+		CSettingManager* settingManager = game->GetSettingManager();
 
 		for (int i = 0; i < coObjects->size(); i++)
 		{
@@ -930,8 +936,10 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 					{
 						bool reversedDirectionX = (downsideDirectionX == Direction::Right && directionX == Direction::Left) || (upsideDirectionX == Direction::Right && directionX == Direction::Left);
 						bool reversedDirectionY = (downsideDirectionY == Direction::Down && directionY == Direction::Up) || (upsideDirectionY == Direction::Up && directionY == Direction::Down);
-						
-						if (reversedDirectionX && reversedDirectionY && y + SIMON_BBOX_HEIGHT <= stair->y + 12)
+						bool reachedTop = directionY == Direction::Up && y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT") <= stair->y + settingManager->GetIntValue("BI_STAIR_BBOX_HEIGHT");
+						bool reachedBottom = directionY == Direction::Down && y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT") >= stair->y + settingManager->GetIntValue("BI_STAIR_BBOX_HEIGHT");
+
+						if (reversedDirectionX && reversedDirectionY && (reachedTop || reachedBottom))
 						{
 							onStair = false;
 							SetState(SIMON_STATE_IDLE);
@@ -952,7 +960,7 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 
 						if (invisibleTimeout == -1)
 						{
-							invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+							invisibleTimeout = GetTickCount() + settingManager->GetIntValue("SIMON_INVISIBILITY_TIME");
 						}
 
 						if (!onStair)
@@ -988,6 +996,7 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 {
 	CPlayerData* playerData = CGame::GetInstance()->GetPlayerData();
 	CGameSoundManager* soundManager = CGame::GetInstance()->GetSoundManager();
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
 	if (dynamic_cast<CMorningStar*>(item))
 	{
@@ -998,12 +1007,12 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	else if (dynamic_cast<CBigHeart*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddHearts(BIG_HEART_HEARTS);
+		playerData->AddHearts(settingManager->GetIntValue("BIG_HEART_HEARTS"));
 	}
 	else if (dynamic_cast<CSmallHeart*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddHearts(SMALL_HEART_HEARTS);
+		playerData->AddHearts(settingManager->GetIntValue("SMALL_HEART_HEARTS"));
 	}
 	else if (dynamic_cast<CDagger*>(item))
 	{
@@ -1018,27 +1027,27 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	else if (dynamic_cast<CMoneyBag*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddScore(MONEY_BAG_SCORE);
+		playerData->AddScore(settingManager->GetIntValue("MONEY_BAG_SCORE"));
 	}
 	else if (dynamic_cast<CRedMoneyBag*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddScore(RED_MONEY_BAG_SCORE);
+		playerData->AddScore(settingManager->GetIntValue("RED_MONEY_BAG_SCORE"));
 	}
 	else if (dynamic_cast<CPurpleMoneyBag*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddScore(PURPLE_MONEY_BAG_SCORE);
+		playerData->AddScore(settingManager->GetIntValue("PURPLE_MONEY_BAG_SCORE"));
 	}
 	else if (dynamic_cast<CWhiteMoneyBag*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddScore(WHITE_MONEY_BAG_SCORE);
+		playerData->AddScore(settingManager->GetIntValue("WHITE_MONEY_BAG_SCORE"));
 	}
 	else if (dynamic_cast<CCrown*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddScore(CROWN_SCORE);
+		playerData->AddScore(settingManager->GetIntValue("CROWN_SCORE"));
 	}
 	else if (dynamic_cast<CBoomerang*>(item))
 	{
@@ -1058,7 +1067,7 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	else if (dynamic_cast<CPorkChop*>(item))
 	{
 		soundManager->Play("collecting_item");
-		playerData->AddHealthVolumes(PORK_CHOP_HEALTHS);
+		playerData->AddHealthVolumes(settingManager->GetIntValue("PORK_CHOP_HEALTHS"));
 	}
 	else if (dynamic_cast<CHolyWater*>(item))
 	{
@@ -1079,7 +1088,7 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 		if (invisibleTimeout == -1)
 		{
 			soundManager->Play("starting_invisibility");
-			invisibleTimeout = GetTickCount() + SIMON_INVISIBILITY_TIME;
+			invisibleTimeout = GetTickCount() + settingManager->GetIntValue("SIMON_INVISIBILITY_TIME");
 		}
 	}
 	else if (dynamic_cast<CMagicCrystal*>(item))
@@ -1127,7 +1136,12 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 		}
 		else
 		{
-			playerData->DecreaseHealthVolumes();
+			partiallyInvisible = true;
+
+			if (invisibleTimeout == -1)
+			{
+				invisibleTimeout = GetTickCount() + CGame::GetInstance()->GetSettingManager()->GetIntValue("SIMON_INVISIBILITY_TIME");
+			}
 		}
 
 		if (!onStair)
@@ -1141,12 +1155,13 @@ void CSimon::HandleCollisionWithEnemies(CGameObject* item)
 void CSimon::HandleSwitchScene()
 {
 	CGame* game = CGame::GetInstance();
+	CSettingManager* settingManager = game->GetSettingManager();
 
 	if (state == SIMON_STATE_CUT_SCENE_AUTO_WALK)
 	{
 		if (switchScenePosition == "right")
 		{
-			if (x >= SCREEN_WIDTH)
+			if (x >= settingManager->GetIntValue("SCREEN_WIDTH"))
 			{
 				if (standingToWatch)
 				{
@@ -1165,7 +1180,7 @@ void CSimon::HandleSwitchScene()
 		}
 		else if (switchScenePosition == "center")
 		{
-			if (x <= (SCREEN_WIDTH / 2) - 50)
+			if (x <= (settingManager->GetIntValue("SCREEN_WIDTH") / 2) - 50)
 			{
 				if (standingToWatch)
 				{
@@ -1260,7 +1275,7 @@ void CSimon::HandleEndingGame()
 
 void CSimon::HandleJumpingOutOfWorld()
 {
-	if (state != SIMON_STATE_DIE && y > SCREEN_HEIGHT)
+	if (state != SIMON_STATE_DIE && y > CGame::GetInstance()->GetSettingManager()->GetIntValue("SCREEN_HEIGHT"))
 	{
 		SetState(SIMON_STATE_DIE);
 	}

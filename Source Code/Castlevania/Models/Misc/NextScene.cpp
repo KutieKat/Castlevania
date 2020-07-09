@@ -8,10 +8,12 @@ CNextScene::CNextScene()
 
 void CNextScene::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + NEXT_SCENE_BBOX_WIDTH;
-	bottom = top + NEXT_SCENE_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("NEXT_SCENE_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("NEXT_SCENE_BBOX_HEIGHT");
 }
 
 void CNextScene::Render()

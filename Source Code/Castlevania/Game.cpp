@@ -1,9 +1,14 @@
+//#include <windows.h>
+//#include <d3d9.h>
+//#include <d3dx9.h>
+
 #include "Game.h"
 #include "Utilities/Debug.h"
 #include "Libraries/TinyXML/tinyxml.h"
 #include "Scenes/PlayScene.h"
 #include "Scenes/IntroScene.h"
 #include "Scenes/CutScene.h"
+//#include "resource.h"
 
 CGame* CGame::instance = nullptr;
 
@@ -13,6 +18,153 @@ CGame* CGame::instance = nullptr;
 	- hInst: Application instance handle
 	- hWnd: Application window handle
 */
+//void CGame::_Init(HINSTANCE hInstance, int nCmdShow)
+//{
+//	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
+//
+//	//this->hWnd = hWnd;
+//	this->hWnd = CreateGameWindow(hInstance, nCmdShow);
+//
+//	D3DPRESENT_PARAMETERS d3dpp;
+//
+//	ZeroMemory(&d3dpp, sizeof(d3dpp));
+//
+//	d3dpp.Windowed = TRUE;
+//	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+//	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
+//	d3dpp.BackBufferCount = 1;
+//
+//	RECT r;
+//	GetClientRect(hWnd, &r);	// retrieve Window width & height 
+//
+//	d3dpp.BackBufferHeight = r.bottom + 1;
+//	d3dpp.BackBufferWidth = r.right + 1;
+//
+//	d3d->CreateDevice(
+//		D3DADAPTER_DEFAULT,
+//		D3DDEVTYPE_HAL,
+//		hWnd,
+//		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+//		&d3dpp,
+//		&d3ddv);
+//
+//	if (d3ddv == NULL)
+//	{
+//		CDebug::Error("CreateDevice failed!", "Game.cpp");
+//		return;
+//	}
+//
+//	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
+//
+//	// Initialize sprite helper from Direct3DX helper library
+//	D3DXCreateSprite(d3ddv, &spriteHandler);
+//
+//	// Setting manager
+//	settingManager = CSettingManager::GetInstance();
+//	settingManager->LoadFromFile("Settings.xml");
+//
+//	// Initialize input manager
+//	inputManager = CInputManager::GetInstance();
+//	inputManager->Init(hWnd);
+//
+//	// Timer
+//	timer = new CTimer();
+//
+//	// Camera
+//	camera = CCamera::GetInstance();
+//	camera->Init();
+//	camera->SetSize(settingManager->GetIntValue("SCREEN_WIDTH"), settingManager->GetIntValue("SCREEN_HEIGHT"));
+//
+//	// Player data
+//	playerData = CPlayerData::GetInstance();
+//	playerData->Init();
+//
+//	// Boss data
+//	bossData = CBossData::GetInstance();
+//	bossData->Init();
+//
+//	// Scene manager
+//	sceneManager = CSceneManager::GetInstance();
+//	sceneManager->Load("Resources\\Scenes\\Scenes.xml");
+//
+//	// Sound manager
+//	soundManager = CGameSoundManager::GetInstance();
+//	soundManager->Init();
+//
+//	// Game ending
+//	ended = false;
+//
+//	healingCounter = 0;
+//	timeScoreCounter = 0;
+//	heartsScoreCounter = 0;
+//	switchSceneCounter = 0;
+//
+//	CDebug::Info("Initialize game successfully!", "Game.cpp");
+//}
+
+//int CGame::_Run()
+//{
+//	MSG msg;
+//	int done = 0;
+//	DWORD frameStart = GetTickCount();
+//	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+//
+//	while (!done)
+//	{
+//		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+//		{
+//			if (msg.message == WM_QUIT) done = 1;
+//
+//			TranslateMessage(&msg);
+//			DispatchMessage(&msg);
+//		}
+//
+//		DWORD now = GetTickCount();
+//
+//		// dt: the time between (beginning of last frame) and now
+//		// this frame: the frame we are about to render
+//		DWORD dt = now - frameStart;
+//
+//		if (dt >= tickPerFrame)
+//		{
+//			frameStart = now;
+//
+//			if (!sceneManager->GetCurrentScene()->HardPaused())
+//			{
+//				timer->Tick();
+//			}
+//
+//			if (dynamic_cast<CPlayScene*>(sceneManager->GetCurrentScene()))
+//			{
+//				CSimon* simon = dynamic_cast<CPlayScene*>(sceneManager->GetCurrentScene())->GetPlayer();
+//
+//				if (simon->GetState() != SIMON_STATE_DELAY && simon->GetState() != SIMON_STATE_DIE)
+//				{
+//					inputManager->ProcessKeyboard();
+//				}
+//				else
+//				{
+//					if (((CPlayScene*)sceneManager->GetCurrentScene())->ShowingGameOverBoard())
+//					{
+//						inputManager->ProcessKeyboard();
+//					}
+//				}
+//			}
+//			else
+//			{
+//				inputManager->ProcessKeyboard();
+//			}
+//
+//			Update(dt);
+//			Render();
+//		}
+//		else
+//			Sleep(tickPerFrame - dt);
+//	}
+//
+//	return 1;
+//}
+
 void CGame::Init(HWND hWnd)
 {
 	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
@@ -176,7 +328,7 @@ void CGame::HandleEnding()
 				{
 					soundManager->Play("adding_time_score");
 					timer->Decrease();
-					playerData->AddScore(TIME_SCORE);
+					playerData->AddScore(settingManager->GetIntValue("TIME_SCORE"));
 				}
 			}
 			else
@@ -189,7 +341,7 @@ void CGame::HandleEnding()
 					{
 						soundManager->Play("adding_hearts_score");
 						playerData->DecreaseHearts(1);
-						playerData->AddScore(HEART_SCORE);
+						playerData->AddScore(settingManager->GetIntValue("HEART_SCORE"));
 					}
 				}
 				else
@@ -330,6 +482,75 @@ void CGame::SweptAABB(
 	}
 }
 
+//HWND CGame::CreateGameWindow(HINSTANCE hInstance, int nCmdShow)
+//{
+//	WNDCLASSEX wc;
+//	wc.cbSize = sizeof(WNDCLASSEX);
+//
+//	wc.style = CS_HREDRAW | CS_VREDRAW;
+//	wc.hInstance = hInstance;
+//
+//	wc.lpfnWndProc = (WNDPROC)WinProc;
+//	wc.cbClsExtra = 0;
+//	wc.cbWndExtra = 0;
+//	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
+//	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+//	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+//	wc.lpszMenuName = NULL;
+//	wc.lpszClassName = L"Castlevania";
+//	wc.hIconSm = NULL;
+//
+//	RegisterClassEx(&wc);
+//
+//	RECT rc;
+//	SystemParametersInfo(SPI_GETWORKAREA, 0, &rc, 0);
+//
+//	int screenWidth = settingManager->GetIntValue("SCREEN_WIDTH");
+//	int screenHeight = settingManager->GetIntValue("SCREEN_HEIGHT");
+//
+//	float windowX = (rc.right / 2) - (screenWidth / 2);
+//	float windowY = (rc.bottom / 2) - (screenHeight / 2);
+//
+//	HWND hWnd =
+//		CreateWindow(
+//			L"Castlevania",
+//			L"Castlevania",
+//			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
+//			windowX,
+//			windowY,
+//			screenWidth,
+//			screenHeight,
+//			NULL,
+//			NULL,
+//			hInstance,
+//			NULL);
+//
+//	if (!hWnd)
+//	{
+//		OutputDebugString(L"[ERROR] CreateWindow failed");
+//		DWORD ErrCode = GetLastError();
+//		return FALSE;
+//	}
+//
+//	ShowWindow(hWnd, nCmdShow);
+//	UpdateWindow(hWnd);
+//
+//	return hWnd;
+//}
+
+//LRESULT CGame::WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+//{
+//	switch (message) {
+//	case WM_DESTROY:
+//		PostQuitMessage(0);
+//		break;
+//	default:
+//		return DefWindowProc(hWnd, message, wParam, lParam);
+//	}
+//
+//	return 0;
+//}
+
 LPDIRECT3DDEVICE9 CGame::GetDirect3DDevice()
 {
 	return this->d3ddv;
@@ -390,10 +611,39 @@ CGame* CGame::GetInstance()
 	return instance;
 }
 
+//void CGame::Render()
+//{
+//	LPDIRECT3DDEVICE9 d3ddv = GetDirect3DDevice();
+//	LPDIRECT3DSURFACE9 bb = GetBackBuffer();
+//	LPD3DXSPRITE spriteHandler = GetSpriteHandler();
+//
+//	if (d3ddv->BeginScene())
+//	{
+//		// Clear back buffer with a color
+//		d3ddv->ColorFill(bb, NULL, CColor::FromRgb(0, 0, 0));
+//
+//		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+//
+//		sceneManager->GetCurrentScene()->Render();
+//
+//		spriteHandler->End();
+//		d3ddv->EndScene();
+//	}
+//
+//	// Display back buffer content to the screen
+//	d3ddv->Present(NULL, NULL, NULL, NULL);
+//}
+
+//void CGame::Update(DWORD dt)
+//{
+//	HandleEnding();
+//	sceneManager->GetCurrentScene()->Update(dt);
+//}
+
 void CGame::Reset()
 {
 	ended = false;
 	playerData->Reset();
 	sceneManager->Reset();
-	timer->SetTime(DEFAULT_GAME_TIME);
+	timer->SetTime(settingManager->GetIntValue("DEFAULT_GAME_TIME"));
 }

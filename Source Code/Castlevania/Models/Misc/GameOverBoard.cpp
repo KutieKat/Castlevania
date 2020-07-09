@@ -73,8 +73,17 @@ void CGameOverBoard::Select()
 	switch (index)
 	{
 	case CONTINUE_OPTION:
-		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
-		game->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+		if (game->GetSceneManager()->GetCurrentScene()->GetRequiredSceneId() != "")
+		{
+			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex() - 1);
+		}
+		else
+		{
+			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+		}
+
+		//game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+		game->GetTimer()->SetTime(CGame::GetInstance()->GetSettingManager()->GetIntValue("DEFAULT_GAME_TIME"));
 		game->GetPlayerData()->Reset();
 		break;
 

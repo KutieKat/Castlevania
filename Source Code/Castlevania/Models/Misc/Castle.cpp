@@ -2,12 +2,14 @@
 
 CCastle::CCastle()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	SetAnimationSet("castle");
 	animationSet->at(0)->SetStartTime(GetTickCount());
 
 	movingCounter = 0;
-	vx = 0.02f;
-	vy = 0.008f;
+	vx = settingManager->GetFloatValue("CASTLE_MOVE_SPEED_X");
+	vy = settingManager->GetFloatValue("CASTLE_MOVE_SPEED_Y");
 }
 
 void CCastle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -19,7 +21,7 @@ void CCastle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -vx;
 	}
 
-	if (y > SCREEN_HEIGHT)
+	if (y > CGame::GetInstance()->GetSettingManager()->GetIntValue("SCREEN_HEIGHT"))
 	{
 		removable = true;
 	}

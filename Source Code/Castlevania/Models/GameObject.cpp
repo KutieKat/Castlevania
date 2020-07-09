@@ -15,7 +15,7 @@ CGameObject::CGameObject()
 	x = y = 0;
 	vx = vy = 0;
 	disappearingTime = -1;
-	elevation = DEFAULT_ELEVATION;
+	elevation = CGame::GetInstance()->GetSettingManager()->GetIntValue("DEFAULT_ELEVATION");
 
 	directionX = Direction::Right;
 	directionY = Direction::None;
@@ -140,7 +140,7 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 				else
 				{
-					hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+					hiddenItem->SetDisplayTime(CGame::GetInstance()->GetSettingManager()->GetIntValue("ITEM_DISPLAY_TIME"));
 				}
 			}
 
@@ -177,7 +177,7 @@ void CGameObject::Disappear()
 
 		endingEffect->SetVisibility(Visibility::Visible);
 		endingEffect->SetPosition(ol + ((or - ol) - (er - el)) / 2 - 10, ot + ((ob - ot) - (eb - et)) / 2 - 10);
-		endingEffect->SetDisplayTime(ENDING_EFFECT_DISPLAY_TIME);
+		endingEffect->SetDisplayTime(CGame::GetInstance()->GetSettingManager()->GetIntValue("ENDING_EFFECT_DISPLAY_TIME"));
 	}
 	else
 	{
@@ -199,7 +199,7 @@ void CGameObject::ShowEffect()
 
 		endingEffect->SetVisibility(Visibility::Visible);
 		endingEffect->SetPosition(ol + ((or -ol) - (er - el)) / 2 - 10, ot + ((ob - ot) - (eb - et)) / 2 - 10);
-		endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
+		endingEffect->SetDisplayTime(CGame::GetInstance()->GetSettingManager()->GetIntValue("EFFECT_DISPLAY_TIME"));
 	}
 }
 

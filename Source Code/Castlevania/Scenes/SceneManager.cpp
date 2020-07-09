@@ -105,7 +105,7 @@ void CSceneManager::SwitchScene(string sceneId, bool forced)
 
 	if (CGame::GetInstance()->GetTimer()->GetRemainingTime() == -1)
 	{
-		CGame::GetInstance()->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+		game->GetTimer()->SetTime(game->GetSettingManager()->GetIntValue("DEFAULT_GAME_TIME"));
 	}
 
 	if (dynamic_cast<CIntroScene*>(scene))
@@ -142,7 +142,7 @@ void CSceneManager::SwitchSceneByIndex(int index)
 {
 	if (CGame::GetInstance()->GetTimer()->GetRemainingTime() == -1)
 	{
-		CGame::GetInstance()->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+		game->GetTimer()->SetTime(game->GetSettingManager()->GetIntValue("DEFAULT_GAME_TIME"));
 	}
 
 	ClearLoadedScenes();

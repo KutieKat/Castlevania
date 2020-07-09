@@ -5,12 +5,13 @@
 
 CHolyWaterBottle::CHolyWaterBottle()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 	SetAnimationSet("holy_water_bottle");
 
-	elevation = WEAPON_DEFAULT_ELEVATION;
-	vy = -HOLY_WATER_BOTTLE_MOVE_SPEED;
+	elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
+	vy = -settingManager->GetFloatValue("HOLY_WATER_BOTTLE_MOVE_SPEED");
 
-	SetState(HOLY_WATER_BOTTLE_STATE_MOVE);
+	SetState(settingManager->GetIntValue("HOLY_WATER_INITIAL_STATE"));
 }
 
 void CHolyWaterBottle::SetState(int state)
@@ -24,7 +25,7 @@ void CHolyWaterBottle::SetState(int state)
 
 	case HOLY_WATER_BOTTLE_STATE_BURN:
 		vx = vy = 0;
-		SetDisplayTime(HOLY_WATER_BOTTLE_BURNING_TIME);
+		SetDisplayTime(CGame::GetInstance()->GetSettingManager()->GetIntValue("HOLY_WATER_BOTTLE_BURNING_TIME"));
 
 		CGame::GetInstance()->GetSoundManager()->Play("holy_water_breaking");
 		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
@@ -35,11 +36,12 @@ void CHolyWaterBottle::SetState(int state)
 void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
 	if (state != HOLY_WATER_BOTTLE_STATE_BURN)
 	{
-		vx = directionX == Direction::Right ? HOLY_WATER_BOTTLE_MOVE_SPEED : -HOLY_WATER_BOTTLE_MOVE_SPEED;
-		vy += HOLY_WATER_BOTTLE_GRAVITY * dt;
+		vx = directionX == Direction::Right ? settingManager->GetFloatValue("HOLY_WATER_BOTTLE_MOVE_SPEED") : -settingManager->GetFloatValue("HOLY_WATER_BOTTLE_MOVE_SPEED");
+		vy += settingManager->GetFloatValue("HOLY_WATER_BOTTLE_GRAVITY") * dt;
 	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -89,7 +91,7 @@ void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (state == HOLY_WATER_BOTTLE_STATE_BURN)
 				{
-					enemy->TakeDamage();
+					enemy->TakeDamage(settingManager->GetIntValue("HOLY_WATER_BOTTLE_DAMAGES"));
 				}
 				else
 				{
@@ -112,10 +114,12 @@ void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CHolyWaterBottle::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + HOLY_WATER_BOTTLE_BBOX_WIDTH;
-	bottom = top + HOLY_WATER_BOTTLE_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("HOLY_WATER_BOTTLE_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("HOLY_WATER_BOTTLE_BBOX_HEIGHT");
 }
 
 void CHolyWaterBottle::Render()

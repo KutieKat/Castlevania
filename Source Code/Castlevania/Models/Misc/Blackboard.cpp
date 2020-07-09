@@ -102,9 +102,10 @@ void CBlackboard::InitHealthBars()
 {
 	CPlayerData* playerData = game->GetPlayerData();
 	CBossData* bossData = game->GetBossData();
+	CSettingManager* settingManager = game->GetSettingManager();
 
-	simonHealthBar = new CHealthBar(HealthType::Player, HEALTH_BAR_MAX_VOLUMES, playerData->GetHealthVolumes());
-	enemyHealthBar = new CHealthBar(HealthType::Enemy, HEALTH_BAR_MAX_VOLUMES, bossData->GetHealthVolumes());
+	simonHealthBar = new CHealthBar(HealthType::Player, settingManager->GetIntValue("SIMON_DEFAULT_HEALTHS"), playerData->GetHealthVolumes());
+	enemyHealthBar = new CHealthBar(HealthType::Enemy, settingManager->GetIntValue("BOSS_DEFAULT_HEALTHS"), bossData->GetHealthVolumes());
 }
 
 void CBlackboard::InitSubWeapon()

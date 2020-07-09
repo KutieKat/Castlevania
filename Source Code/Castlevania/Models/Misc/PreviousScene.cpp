@@ -8,10 +8,12 @@ CPreviousScene::CPreviousScene()
 
 void CPreviousScene::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + PREVIOUS_SCENE_BBOX_WIDTH;
-	bottom = top + PREVIOUS_SCENE_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("PREVIOUS_SCENE_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("PREVIOUS_SCENE_BBOX_HEIGHT");
 }
 
 void CPreviousScene::Render()

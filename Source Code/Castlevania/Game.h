@@ -44,6 +44,9 @@ class CGame
 	bool ended;
 
 public:
+	//void _Init(HINSTANCE hInstance, int nCmdShow);
+	//int _Run();
+
 	void Init(HWND hWnd);
 	void SetKeyHandler(IKeyEventHandler* keyHandler);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
@@ -75,6 +78,9 @@ public:
 		float &nx,
 		float &ny);
 
+	//HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow);
+	//static LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
 	LPDIRECT3DDEVICE9 GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 GetBackBuffer();
 	LPD3DXSPRITE GetSpriteHandler();
@@ -89,6 +95,9 @@ public:
 	CGameSoundManager* GetSoundManager();
 
 	static CGame* GetInstance();
+
+	//void Render();
+	//void Update(DWORD dt);
 
 	void Reset();
 

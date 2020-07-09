@@ -19,8 +19,9 @@ CBigHeart::CBigHeart()
 void CBigHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -90,10 +91,12 @@ void CBigHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBigHeart::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + BIG_HEART_BBOX_WIDTH;
-	bottom = top + BIG_HEART_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("BIG_HEART_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("BIG_HEART_BBOX_HEIGHT");
 }
 
 void CBigHeart::Render()

@@ -18,8 +18,9 @@ CDagger::CDagger()
 void CDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -85,10 +86,12 @@ void CDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CDagger::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + DAGGER_BBOX_WIDTH;
-	bottom = top + DAGGER_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("DAGGER_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("DAGGER_BBOX_HEIGHT");
 }
 
 void CDagger::Render()

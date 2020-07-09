@@ -23,8 +23,9 @@ void CDoubleShot::Render()
 void CDoubleShot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -90,8 +91,10 @@ void CDoubleShot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CDoubleShot::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + DOUBLE_SHOT_BBOX_WIDTH;
-	bottom = top + DOUBLE_SHOT_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("DOUBLE_SHOT_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("DOUBLE_SHOT_BBOX_HEIGHT");
 }

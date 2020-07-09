@@ -26,8 +26,9 @@ void CStopwatch::Render()
 void CStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -93,9 +94,11 @@ void CStopwatch::GetBoundingBox(float& left, float& top, float& right, float& bo
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 		left = x;
 		top = y;
-		right = left + STOPWATCH_BBOX_WIDTH;
-		bottom = top + STOPWATCH_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("STOPWATCH_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("STOPWATCH_BBOX_HEIGHT");
 	}
 }

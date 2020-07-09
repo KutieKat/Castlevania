@@ -8,20 +8,23 @@
 
 CFleamen::CFleamen(CSimon* simon)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	this->simon = simon;
 	this->mustInArea = true;
-	this->areaRadiusX = FLEAMEN_AREA_RADIUS_X;
-	this->areaRadiusY = FLEAMEN_AREA_RADIUS_Y;
+	this->areaRadiusX = settingManager->GetIntValue("FLEAMEN_AREA_RADIUS_X");
+	this->areaRadiusY = settingManager->GetIntValue("FLEAMEN_AREA_RADIUS_Y");
 	this->jumpingCounter = 0;
-	this->nextAttackingTime = GetTickCount() + FLEAMEN_ATTACKING_INTERVAL;
+	this->nextAttackingTime = GetTickCount() + settingManager->GetIntValue("FLEAMEN_ATTACKING_INTERVAL");
 
 	SetAnimationSet("fleamen");
-	SetState(FLEAMEN_STATE_IDLE);
+	SetState(settingManager->GetIntValue("FLEAMEN_INITIAL_STATE"));
 }
 
 void CFleamen::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
 	switch (state)
 	{
@@ -30,8 +33,8 @@ void CFleamen::SetState(int state)
 		break;
 
 	case FLEAMEN_STATE_JUMP_AROUND:
-		vx = simon->x < x ? -FLEAMEN_JUMP_SPEED_X : FLEAMEN_JUMP_SPEED_X;	
-		vy = -FLEAMEN_JUMP_SPEED_Y;
+		vx = simon->x < x ? -settingManager->GetFloatValue("FLEAMEN_JUMP_SPEED_X") : settingManager->GetFloatValue("FLEAMEN_JUMP_SPEED_X");	
+		vy = -settingManager->GetFloatValue("FLEAMEN_JUMP_SPEED_Y");
 		break;
 	}
 }
@@ -39,11 +42,13 @@ void CFleamen::SetState(int state)
 void CFleamen::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
 	if (softPaused) return;
 
-	vy += FLEAMEN_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("FLEAMEN_GRAVITY") * dt;
 
 	directionX = x > simon->x ? Direction::Left : Direction::Right;
 
@@ -56,7 +61,7 @@ void CFleamen::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			SetState(FLEAMEN_STATE_JUMP_AROUND);
 		}
 
-		if (y < SCREEN_HEIGHT / 2)
+		if (y < settingManager->GetIntValue("SCREEN_HEIGHT") / 2)
 		{
 			Attack();
 		}
@@ -164,10 +169,12 @@ void CFleamen::GetBoundingBox(float & left, float & top, float & right, float & 
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 		left = x;
 		top = y;
-		right = left + FLEAMEN_BBOX_WIDTH;
-		bottom = top + FLEAMEN_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("FLEAMEN_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("FLEAMEN_BBOX_HEIGHT");
 	}
 }
 
@@ -178,7 +185,7 @@ void CFleamen::TakeDamage(int damages)
 	if (attacks <= 0)
 	{
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(FLEAMEN_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(CGame::GetInstance()->GetSettingManager()->GetIntValue("FLEAMEN_SCORE"));
 	}
 	else
 	{
@@ -210,6 +217,6 @@ void CFleamen::Attack()
 		CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
 		CUnit* unit = new CUnit(grid, fireball, fireball->x, fireball->y);
 
-		nextAttackingTime = GetTickCount() + FLEAMEN_ATTACKING_INTERVAL;
+		nextAttackingTime = GetTickCount() + CGame::GetInstance()->GetSettingManager()->GetIntValue("FLEAMEN_ATTACKING_INTERVAL");
 	}
 }

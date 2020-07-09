@@ -7,20 +7,22 @@
 
 WAxe::WAxe()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 	SetAnimationSet("axe");
 
-	elevation = WEAPON_DEFAULT_ELEVATION;
-	vy = -AXE_MOVE_SPEED_Y;
+	elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
+	vy = -settingManager->GetFloatValue("AXE_MOVE_SPEED_Y");
 	hasBoundingBox = true;
 }
 
 void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vx = directionX == Direction::Right ? AXE_MOVE_SPEED_X : -AXE_MOVE_SPEED_X;
+	vx = directionX == Direction::Right ? settingManager->GetFloatValue("AXE_MOVE_SPEED_X") : -settingManager->GetFloatValue("AXE_MOVE_SPEED_X");
 
-	vy += AXE_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("AXE_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -102,6 +104,26 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
+	for (int i = 0; i < coObjects->size(); i++)
+	{
+		if (CGame::GetInstance()->HaveCollision(this, coObjects->at(i)))
+		{
+			if (dynamic_cast<CEnemy*>(coObjects->at(i)))
+			{
+				auto enemy = dynamic_cast<CEnemy*>(coObjects->at(i));
+
+				enemy->TakeDamage(CGame::GetInstance()->GetSettingManager()->GetIntValue("AXE_DAMAGES"));
+
+				if (dynamic_cast<CPhantomBat*>(coObjects->at(i)))
+				{
+					hasBoundingBox = false;
+				}
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
+			}
+		}
+	}
+
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		delete coEvents[i];
@@ -112,10 +134,12 @@ void WAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (hasBoundingBox)
 	{
+		CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 		left = x;
 		top = y;
-		right = left + AXE_BBOX_WIDTH;
-		bottom = top + AXE_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("AXE_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("AXE_BBOX_HEIGHT");
 	}
 }
 

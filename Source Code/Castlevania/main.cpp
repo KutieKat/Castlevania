@@ -173,5 +173,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Run();
 
+	//CGame* game = CGame::GetInstance();
+	//game->_Init(hInstance, nCmdShow);
+	//game->_Run();
+
 	return 0;
 }

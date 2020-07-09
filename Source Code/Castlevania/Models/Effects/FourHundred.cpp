@@ -2,9 +2,11 @@
 
 CFourHundred::CFourHundred()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	isEffect = true;
 	SetAnimationSet("four_hundred");
-	elevation = EFFECT_DEFAULT_ELEVATION;
+	elevation = settingManager->GetIntValue("EFFECT_DEFAULT_ELEVATION");
 }
 
 void CFourHundred::GetBoundingBox(float & left, float & top, float & right, float & bottom)

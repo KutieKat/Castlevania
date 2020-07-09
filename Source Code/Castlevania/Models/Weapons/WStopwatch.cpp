@@ -5,19 +5,21 @@
 
 WStopwatch::WStopwatch()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 	SetAnimationSet("stopwatch");
 
-	elevation = WEAPON_DEFAULT_ELEVATION;
-	vy = -STOPWATCH_MOVE_SPEED;
+	elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
+	vy = -settingManager->GetFloatValue("STOPWATCH_MOVE_SPEED");
 }
 
 void WStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vx = directionX == Direction::Right ? STOPWATCH_MOVE_SPEED : -STOPWATCH_MOVE_SPEED;
+	vx = directionX == Direction::Right ? settingManager->GetFloatValue("STOPWATCH_MOVE_SPEED") : -settingManager->GetFloatValue("STOPWATCH_MOVE_SPEED");
 
-	vy += STOPWATCH_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("STOPWATCH_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -55,7 +57,7 @@ void WStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
-				CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPause(DEFAULT_SOFT_PAUSE_TIME);
+				CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPause(settingManager->GetFloatValue("DEFAULT_SOFT_PAUSE_TIME"));
 				CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
 
 				removable = true;
@@ -76,10 +78,12 @@ void WStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void WStopwatch::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + STOPWATCH_BBOX_WIDTH;
-	bottom = top + STOPWATCH_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("STOPWATCH_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("STOPWATCH_BBOX_HEIGHT");
 }
 
 void WStopwatch::Render()

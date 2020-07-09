@@ -18,8 +18,9 @@ CAxe::CAxe()
 void CAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -85,10 +86,12 @@ void CAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	left = x;
 	top = y;
-	right = left + AXE_BBOX_WIDTH;
-	bottom = top + AXE_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("AXE_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("AXE_BBOX_HEIGHT");
 }
 
 void CAxe::Render()

@@ -4,10 +4,12 @@
 
 CEnemy::CEnemy()
 {
+	CSettingManager* settingManager = CGame::GetInstance()->GetSettingManager();
+
 	mustInArea = false;
-	attacks = ENEMY_DEFAULT_ATTACKS;
+	attacks = settingManager->GetIntValue("ENEMY_DEFAULT_ATTACKS");
 	delayTimeout = -1;
-	elevation = ENEMY_DEFAULT_ELEVATION;
+	elevation = settingManager->GetIntValue("ENEMY_DEFAULT_ELEVATION");
 }
 
 void CEnemy::TakeDamage(int damages)
