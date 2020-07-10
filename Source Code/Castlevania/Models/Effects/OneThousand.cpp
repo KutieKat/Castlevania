@@ -5,7 +5,7 @@ COneThousand::COneThousand()
 {
 	isEffect = true;
 	SetAnimationSet("one_thousand");
-	elevation = EFFECT_DEFAULT_ELEVATION;
+	elevation = CSettingManager::GetInstance()->GetIntValue("EFFECT_DEFAULT_ELEVATION");
 }
 
 void COneThousand::GetBoundingBox(float & left, float & top, float & right, float & bottom)

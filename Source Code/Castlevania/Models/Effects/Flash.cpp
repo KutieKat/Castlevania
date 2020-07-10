@@ -5,7 +5,7 @@ CFlash::CFlash()
 {
 	isEffect = true;
 	SetAnimationSet("flash");
-	elevation = EFFECT_DEFAULT_ELEVATION;
+	elevation = CSettingManager::GetInstance()->GetIntValue("EFFECT_DEFAULT_ELEVATION");
 }
 
 void CFlash::GetBoundingBox(float & left, float & top, float & right, float & bottom)

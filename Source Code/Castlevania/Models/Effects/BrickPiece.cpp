@@ -5,7 +5,7 @@ CBrickPiece::CBrickPiece()
 {
 	isEffect = true;
 	SetAnimationSet("brick_piece");
-	elevation = EFFECT_DEFAULT_ELEVATION;
+	elevation = CSettingManager::GetInstance()->GetIntValue("EFFECT_DEFAULT_ELEVATION");
 }
 
 void CBrickPiece::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

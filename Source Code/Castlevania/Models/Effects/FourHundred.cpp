@@ -5,7 +5,7 @@ CFourHundred::CFourHundred()
 {
 	isEffect = true;
 	SetAnimationSet("four_hundred");
-	elevation = EFFECT_DEFAULT_ELEVATION;
+	elevation = CSettingManager::GetInstance()->GetIntValue("EFFECT_DEFAULT_ELEVATION");
 }
 
 void CFourHundred::GetBoundingBox(float & left, float & top, float & right, float & bottom)
