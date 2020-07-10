@@ -55,14 +55,14 @@
     <setting id="SIMON_DEFAULT_SUB_WEAPON_TYPE" type="string" value="" />
 
     <!-- Enemy -->
-    <setting id="ENEMY_DEFAULT_DAMAGES" type="int" value="1" />
+    <setting id="ENEMY_DEFAULT_DAMAGES" type="int" value="2" />
     <setting id="ENEMY_DEFAULT_ATTACKS" type="int" value="1" />
     <setting id="ENEMY_DELAY_TIME" type="int" value="500" />
     <setting id="ENEMY_DELAY_PLUS_TIME" type="int" value="1000" />
 
     <!-- Boss -->
     <setting id="BOSS_DEFAULT_HEALTHS" type="int" value="16" />
-    <!-- <setting id="BOSS_DEFAULT_DAMAGES" type="int" value="1" /> -->
+    <setting id="BOSS_DEFAULT_DAMAGES" type="int" value="2" />
 
     <!-- PhantomBat -->
     <setting id="PHANTOM_BAT_BBOX_WIDTH" type="int" value="95" />
@@ -87,6 +87,7 @@
     <setting id="GHOST_MOVE_SPEED_Y" type="float" value="0.05f" />
     <setting id="GHOST_SCORE" type="int" value="300" />
     <setting id="GHOST_ATTACKS" type="int" value="2" />
+    <setting id="GHOST_DAMAGES" type="int" value="2" />
 
     <!-- Ghoul -->
     <setting id="GHOUL_GRAVITY" type="float" value="0.0025f" />
@@ -94,6 +95,7 @@
     <setting id="GHOUL_BBOX_HEIGHT" type="int" value="63" />
     <setting id="GHOUL_MOVE_SPEED" type="float" value="0.1f" />
     <setting id="GHOUL_SCORE" type="int" value="100" />
+    <setting id="GHOUL_DAMAGES" type="int" value="2" />
 
     <!-- WhiteSkeleton -->
     <setting id="WHITE_SKELETON_GRAVITY" type="float" value="0.0025f" />
@@ -107,8 +109,8 @@
     <setting id="WHITE_SKELETON_JUMP_SPEED_X" type="float" value="0.3f" />
     <setting id="WHITE_SKELETON_JUMP_SPEED_Y" type="float" value="0.6f" />
     <setting id="WHITE_SKELETON_SCORE" type="int" value="300" />
-    <!-- <setting id="WHITE_SKELETON_ATTACKING_INTERVAL" type="int" value="3000" /> -->
     <setting id="WHITE_SKELETON_TO_SIMON_DISTANCE_X" type="int" value="120" />
+    <setting id="WHITE_SKELETON_DAMAGES" type="int" value="2" />
 
     <!-- Fleamen -->
     <setting id="FLEAMEN_GRAVITY" type="float" value="0.0025f" />
@@ -121,6 +123,7 @@
     <setting id="FLEAMEN_AREA_RADIUS_Y" type="int" value="150" />
     <setting id="FLEAMEN_SCORE" type="int" value="500" />
     <setting id="FLEAMEN_ATTACKING_INTERVAL" type="int" value="3000" />
+    <setting id="FLEAMEN_DAMAGES" type="int" value="1" />
 
     <!-- Raven -->
     <setting id="RAVEN_BBOX_WIDTH" type="int" value="27" />
@@ -135,6 +138,7 @@
     <setting id="RAVEN_AREA_RADIUS_X" type="int" value="200" />
     <setting id="RAVEN_AREA_RADIUS_Y" type="int" value="200" />
     <setting id="RAVEN_SCORE" type="int" value="300" />
+    <setting id="RAVEN_DAMAGES" type="int" value="2" />
 
     <!-- RedBat -->
     <setting id="RED_BAT_AREA_RADIUS_X" type="int" value="200" />
@@ -145,6 +149,7 @@
     <setting id="RED_BAT_BBOX_WIDTH" type="int" value="31" />
     <setting id="RED_BAT_BBOX_HEIGHT" type="int" value="31" />
     <setting id="RED_BAT_SCORE" type="int" value="300" />
+    <setting id="RED_BAT_DAMAGES" type="int" value="2" />
 
     <!-- SpearKnight -->
     <setting id="SPEAR_KNIGHT_WALK_SPEED" type="float" value="0.05f" />
@@ -154,6 +159,7 @@
     <setting id="SPEAR_KNIGHT_BBOX_HEIGHT" type="int" value="63" />
     <setting id="SPEAR_KNIGHT_SCORE" type="int" value="400" />
     <setting id="SPEAR_KNIGHT_ATTACKS" type="int" value="3" />
+    <setting id="SPEAR_KNIGHT_DAMAGES" type="int" value="2" />
 
     <!-- Effect -->
     <setting id="EFFECT_DISPLAY_TIME" type="int" value="500" />

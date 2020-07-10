@@ -58,7 +58,7 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto enemy = dynamic_cast<CEnemy*>(e->obj);
 
-				enemy->TakeDamage();
+				enemy->TakeDamage(settingManager->GetIntValue("DAGGER_DAMAGES"));
 
 				if (e->nx != 0) x += dx;
 

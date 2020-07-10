@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scenes startSceneId="play_scene_1">
+<scenes startSceneId="intro_scene">
   <scene id="intro_scene" type="intro_scene" path="Resources\\Scenes\\Intro.xml" stage="00" previousSceneId="" nextSceneId="cut_scene_1" requiredSceneId="" />
   
   <scene id="cut_scene_1" type="cut_scene" path="Resources\\Scenes\\CutScene1.xml" stage="01" previousSceneId="intro_scene" nextSceneId="play_scene_1" requiredSceneId="" />

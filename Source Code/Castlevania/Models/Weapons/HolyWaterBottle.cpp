@@ -93,7 +93,7 @@ void CHolyWaterBottle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 				if (state == HOLY_WATER_BOTTLE_STATE_BURN)
 				{
-					enemy->TakeDamage();
+					enemy->TakeDamage(settingManager->GetIntValue("HOLY_WATER_BOTTLE_DAMAGES"));
 				}
 				else
 				{

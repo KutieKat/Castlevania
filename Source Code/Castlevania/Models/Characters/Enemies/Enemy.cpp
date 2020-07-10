@@ -4,10 +4,12 @@
 
 CEnemy::CEnemy()
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	mustInArea = false;
-	attacks = ENEMY_DEFAULT_ATTACKS;
+	attacks = settingManager->GetIntValue("ENEMY_DEFAULT_ATTACKS");
 	delayTimeout = -1;
-	elevation = ENEMY_DEFAULT_ELEVATION;
+	elevation = settingManager->GetIntValue("ENEMY_DEFAULT_ELEVATION");
 }
 
 void CEnemy::TakeDamage(int damages)
@@ -39,6 +41,11 @@ int CEnemy::GetAreaRadiusX()
 int CEnemy::GetAreaRadiusY()
 {
 	return areaRadiusY;
+}
+
+int CEnemy::GetDamages()
+{
+	return CSettingManager::GetInstance()->GetIntValue("ENEMY_DEFAULT_DAMAGES");
 }
 
 bool CEnemy::IsPlayerNearby(float x, float y, float playerX, float playerY, float radiusX, float radiusY)

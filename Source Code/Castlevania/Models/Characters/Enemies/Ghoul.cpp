@@ -13,6 +13,7 @@ CGhoul::CGhoul(CSimon* simon)
 void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
@@ -33,9 +34,9 @@ void CGhoul::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-    dx = (directionX == Direction::Right ? GHOUL_MOVE_SPEED : -GHOUL_MOVE_SPEED) * dt;
+    dx = (directionX == Direction::Right ? settingManager->GetFloatValue("GHOUL_MOVE_SPEED") : -settingManager->GetFloatValue("GHOUL_MOVE_SPEED")) * dt;
 
-    vy += SPEAR_KNIGHT_GRAVITY * dt;
+    vy += settingManager->GetFloatValue("SPEAR_KNIGHT_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -113,10 +114,12 @@ void CGhoul::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		l = x;
 		t = y;
-		r = l + GHOUL_BBOX_WIDTH;
-		b = t + GHOUL_BBOX_HEIGHT;
+		r = l + settingManager->GetIntValue("GHOUL_BBOX_WIDTH");
+		b = t + settingManager->GetIntValue("GHOUL_BBOX_HEIGHT");
 	}
 }
 
@@ -127,10 +130,15 @@ void CGhoul::TakeDamage(int damages)
 	if (attacks <= 0)
 	{
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(GHOUL_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(CSettingManager::GetInstance()->GetIntValue("GHOUL_SCORE"));
 	}
 	else
 	{
 		ShowEffect();
 	}
+}
+
+int CGhoul::GetDamages()
+{
+	return CSettingManager::GetInstance()->GetIntValue("GHOUL_DAMAGES");
 }

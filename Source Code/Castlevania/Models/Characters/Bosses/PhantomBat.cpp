@@ -209,6 +209,11 @@ void CPhantomBat::OnPlayerEnterArea()
 	}
 }
 
+int CPhantomBat::GetDamages()
+{
+	return CSettingManager::GetInstance()->GetIntValue("BOSS_DEFAULT_DAMAGES");
+}
+
 bool CPhantomBat::ReachedTarget()
 {
 	float distance = sqrt(pow(x - targetX, 2) + pow(y - targetY, 2));

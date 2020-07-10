@@ -15,17 +15,19 @@
 
 CWhiteSkeleton::CWhiteSkeleton(CSimon * simon)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	this->simon = simon;
 	this->mustInArea = true;
 	this->touchingGround = false;
-	this->areaRadiusX = WHITE_SKELETON_AREA_RADIUS_X;
-	this->areaRadiusY = WHITE_SKELETON_AREA_RADIUS_Y;
+	this->areaRadiusX = settingManager->GetIntValue("WHITE_SKELETON_AREA_RADIUS_X");
+	this->areaRadiusY = settingManager->GetIntValue("WHITE_SKELETON_AREA_RADIUS_Y");
 	this->jumpingCounter = 0;
 	this->attackingCounter = 0;
 	this->walkingCounter = 0;
 
 	SetAnimationSet("white_skeleton");
-	SetState(WHITE_SKELETON_STATE_IDLE);
+	SetState(settingManager->GetIntValue("WHITE_SKELETON_INITIAL_STATE"));
 
 	srand(time(NULL));
 }
@@ -33,6 +35,7 @@ CWhiteSkeleton::CWhiteSkeleton(CSimon * simon)
 void CWhiteSkeleton::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (state)
 	{
@@ -49,8 +52,8 @@ void CWhiteSkeleton::SetState(int state)
 		attackingCounter = 0;
 		touchingGround = false;
 
-		vx = directionX == Direction::Right ? WHITE_SKELETON_JUMP_SPEED_X : -WHITE_SKELETON_JUMP_SPEED_X;
-		vy = -WHITE_SKELETON_JUMP_SPEED_Y;
+		vx = directionX == Direction::Right ? settingManager->GetFloatValue("WHITE_SKELETON_JUMP_SPEED_X") : -settingManager->GetFloatValue("WHITE_SKELETON_JUMP_SPEED_X");
+		vy = -settingManager->GetFloatValue("WHITE_SKELETON_JUMP_SPEED_Y");
 		break;
 
 	case WHITE_SKELETON_STATE_DIE:
@@ -63,11 +66,13 @@ void CWhiteSkeleton::SetState(int state)
 void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
 	if (softPaused) return;
 
-	vy += WHITE_SKELETON_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("WHITE_SKELETON_GRAVITY") * dt;
 
 	if (state != WHITE_SKELETON_STATE_DIE)
 	{
@@ -92,34 +97,34 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					directionX = Direction::Right;
 
-					if (x == simon->x - WHITE_SKELETON_TO_SIMON_DISTANCE_X)
+					if (x == simon->x - settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
 					{
 						vx = 0;
 					}
-					else if (x < simon->x - WHITE_SKELETON_TO_SIMON_DISTANCE_X)
+					else if (x < simon->x - settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
 					{
-						vx = x >= rightBound ? 0 : WHITE_SKELETON_WALK_SPEED_X;
+						vx = x >= rightBound ? 0 : settingManager->GetFloatValue("WHITE_SKELETON_WALK_SPEED_X");
 					}
 					else
 					{
-						vx = x <= leftBound ? 0 : -WHITE_SKELETON_WALK_SPEED_X;
+						vx = x <= leftBound ? 0 : -settingManager->GetFloatValue("WHITE_SKELETON_WALK_SPEED_X");
 					}
 				}
 				else
 				{
 					directionX = Direction::Left;
 
-					if (x == simon->x + SIMON_BBOX_WIDTH + WHITE_SKELETON_TO_SIMON_DISTANCE_X)
+					if (x == simon->x + settingManager->GetIntValue("SIMON_BBOX_WIDTH") + settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
 					{
 						vx = 0;
 					}
-					else if (x > simon->x + SIMON_BBOX_WIDTH + WHITE_SKELETON_TO_SIMON_DISTANCE_X)
+					else if (x > simon->x + settingManager->GetIntValue("SIMON_BBOX_WIDTH") + settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
 					{
-						vx = x <= leftBound ? 0 : -WHITE_SKELETON_WALK_SPEED_X;
+						vx = x <= leftBound ? 0 : -settingManager->GetFloatValue("WHITE_SKELETON_WALK_SPEED_X");
 					}
 					else
 					{
-						vx = x >= rightBound ? 0 : WHITE_SKELETON_WALK_SPEED_X;
+						vx = x >= rightBound ? 0 : settingManager->GetFloatValue("WHITE_SKELETON_WALK_SPEED_X");
 					}
 				}
 			}
@@ -138,7 +143,7 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state != WHITE_SKELETON_STATE_IDLE && state != WHITE_SKELETON_STATE_DIE)
 	{
-		if ((int)(y + WHITE_SKELETON_BBOX_HEIGHT) < (int)(simon->y + SIMON_BBOX_HEIGHT))
+		if ((int)(y + settingManager->GetIntValue("WHITE_SKELETON_BBOX_HEIGHT")) < (int)(simon->y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT")))
 		{
 			jumpingCounter += 1;
 
@@ -172,7 +177,7 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == WHITE_SKELETON_STATE_DIE && animationSet->at(GetAnimationToRender())->Over())
 	{
 		removable = true;
-		CGame::GetInstance()->GetPlayerData()->AddScore(WHITE_SKELETON_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(settingManager->GetIntValue("WHITE_SKELETON_SCORE"));
 	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -283,10 +288,12 @@ void CWhiteSkeleton::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		l = x;
 		t = y;
-		r = l + WHITE_SKELETON_BBOX_WIDTH;
-		b = t + WHITE_SKELETON_BBOX_HEIGHT;
+		r = l + settingManager->GetIntValue("WHITE_SKELETON_BBOX_WIDTH");
+		b = t + settingManager->GetIntValue("WHITE_SKELETON_BBOX_HEIGHT");
 	}
 }
 
@@ -310,10 +317,11 @@ void CWhiteSkeleton::TakeDamage(int damages)
 void CWhiteSkeleton::OnPlayerEnterArea()
 {
 	CEnemy::OnPlayerEnterArea();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	if (state == WHITE_SKELETON_STATE_IDLE)
 	{
-		if (y + WHITE_SKELETON_BBOX_HEIGHT < simon->y + SIMON_BBOX_HEIGHT)
+		if (y + settingManager->GetIntValue("WHITE_SKELETON_BBOX_HEIGHT") < simon->y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT"))
 		{
 			SetState(WHITE_SKELETON_STATE_JUMP_AROUND);
 		}
@@ -328,7 +336,7 @@ void CWhiteSkeleton::Attack()
 {
 	WBone* bone = new WBone();
 	bone->SetPosition(x, y);
-	bone->SetDisplayTime(BONE_DISPLAY_TIME);
+	bone->SetDisplayTime(CSettingManager::GetInstance()->GetIntValue("BONE_DISPLAY_TIME"));
 	bone->SetDirectionX(bone->x > simon->x ? Direction::Left : Direction::Right);
 
 	CGrid* grid = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGrid();
@@ -339,6 +347,11 @@ void CWhiteSkeleton::Disappear()
 {
 	ShowEffect();
 	SetState(WHITE_SKELETON_STATE_DIE);
+}
+
+int CWhiteSkeleton::GetDamages()
+{
+	return CSettingManager::GetInstance()->GetIntValue("WHITE_SKELETON_DAMAGES");
 }
 
 int CWhiteSkeleton::GetAnimationToRender()
