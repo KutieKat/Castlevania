@@ -6,19 +6,22 @@
 
 WBone::WBone()
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	SetAnimationSet("bone");
 
-	elevation = WEAPON_DEFAULT_ELEVATION;
-	vy = -BONE_MOVE_SPEED_Y;
+	elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
+	vy = -settingManager->GetFloatValue("BONE_MOVE_SPEED_Y");
 }
 
 void WBone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vx = directionX == Direction::Right ? BONE_MOVE_SPEED_X : -BONE_MOVE_SPEED_X;
+	vx = directionX == Direction::Right ? settingManager->GetFloatValue("BONE_MOVE_SPEED_X") : -settingManager->GetFloatValue("BONE_MOVE_SPEED_X");
 
-	vy += BONE_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("BONE_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -86,10 +89,12 @@ void WBone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void WBone::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
-	right = left + BONE_BBOX_WIDTH;
-	bottom = top + BONE_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("BONE_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("BONE_BBOX_HEIGHT");
 }
 
 void WBone::Render()

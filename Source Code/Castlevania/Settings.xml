@@ -292,6 +292,12 @@
     <setting id="BAT_FLY_RIGHT_CROSS_SPEED" type="float" value="0.017f" />
     <setting id="BAT_FLY_OVAL_SPEED" type="float" value="0.03f" />
 
+    <!-- Whip -->
+    <setting id="WHIP_LEVEL_1_BBOX_WIDTH" type="int" value="115" />
+    <setting id="WHIP_LEVEL_2_BBOX_WIDTH" type="int" value="115" />
+    <setting id="WHIP_LEVEL_3_BBOX_WIDTH" type="int" value="144" />
+    <setting id="WHIP_BBOX_HEIGHT" type="int" value="66" />
+
     <!-- Axe -->
     <setting id="AXE_GRAVITY" type="float" value="0.00045f" />
     <setting id="AXE_BBOX_WIDTH" type="int" value="29" />

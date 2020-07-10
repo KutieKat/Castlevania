@@ -6,20 +6,23 @@
 
 WBoomerang::WBoomerang(CSimon* simon)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	SetAnimationSet("boomerang");
 
 	this->simon = simon;
-	this->elevation = WEAPON_DEFAULT_ELEVATION;
+	this->elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
 	this->collisionCount = 0;
 	this->directionX = simon->directionX;
-	this->vx = simon->directionX == Direction::Right ? BOOMERANG_MOVE_SPEED : -BOOMERANG_MOVE_SPEED;
-	this->maxRight = simon->x + BOOMERANG_MOVABLE_AREA_WIDTH;
-	this->maxLeft = simon->x - BOOMERANG_MOVABLE_AREA_WIDTH;
+	this->vx = simon->directionX == Direction::Right ? settingManager->GetFloatValue("BOOMERANG_MOVE_SPEED") : -settingManager->GetFloatValue("BOOMERANG_MOVE_SPEED");
+	this->maxRight = simon->x + settingManager->GetIntValue("BOOMERANG_MOVABLE_AREA_WIDTH");
+	this->maxLeft = simon->x - settingManager->GetIntValue("BOOMERANG_MOVABLE_AREA_WIDTH");
 }
 
 void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	if (collisionCount == 2)
 	{
@@ -41,7 +44,7 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (x <= maxLeft || x <= CGame::GetInstance()->GetCamera()->GetLeft() + BOOMERANG_BBOX_WIDTH - 20 || x >= maxRight || x >= CGame::GetInstance()->GetCamera()->GetRight() - BOOMERANG_BBOX_WIDTH - 20)
+		if (x <= maxLeft || x <= CGame::GetInstance()->GetCamera()->GetLeft() + settingManager->GetIntValue("BOOMERANG_BBOX_WIDTH") - 20 || x >= maxRight || x >= CGame::GetInstance()->GetCamera()->GetRight() - settingManager->GetIntValue("BOOMERANG_BBOX_WIDTH") - 20)
 		{
 			vx = -vx;
 			collisionCount++;
@@ -66,7 +69,7 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto enemy = dynamic_cast<CEnemy*>(e->obj);
 
-				enemy->TakeDamage(BOOMERANG_DAMAGES);
+				enemy->TakeDamage(settingManager->GetIntValue("BOOMERANG_DAMAGES"));
 
 				if (e->nx != 0) x += dx;
 
@@ -107,10 +110,12 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void WBoomerang::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	l = x;
 	t = y;
-	r = l + BOOMERANG_BBOX_WIDTH;
-	b = t + BOOMERANG_BBOX_HEIGHT;
+	r = l + settingManager->GetIntValue("BOOMERANG_BBOX_WIDTH");
+	b = t + settingManager->GetIntValue("BOOMERANG_BBOX_HEIGHT");
 }
 
 void WBoomerang::Render()

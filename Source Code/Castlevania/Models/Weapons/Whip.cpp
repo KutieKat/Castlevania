@@ -62,22 +62,24 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	l = x;
 	t = y;
-	b = y + WHIP_BBOX_HEIGHT;
+	b = y + settingManager->GetIntValue("WHIP_BBOX_HEIGHT");
 
 	switch (CGame::GetInstance()->GetPlayerData()->GetWhipLevel())
 	{
 	case WHIP_LEVEL_1:
-		r = l + WHIP_LEVEL_1_BBOX_WIDTH;
+		r = l + settingManager->GetIntValue("WHIP_LEVEL_1_BBOX_WIDTH");
 		break;
 
 	case WHIP_LEVEL_2:
-		r = l + WHIP_LEVEL_2_BBOX_WIDTH;
+		r = l + settingManager->GetIntValue("WHIP_LEVEL_2_BBOX_WIDTH");
 		break;
 
 	case WHIP_LEVEL_3:
-		r = l + WHIP_LEVEL_3_BBOX_WIDTH;
+		r = l + settingManager->GetIntValue("WHIP_LEVEL_3_BBOX_WIDTH");
 		break;
 	}
 }

@@ -7,20 +7,23 @@
 
 WAxe::WAxe()
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	SetAnimationSet("axe");
 
-	elevation = WEAPON_DEFAULT_ELEVATION;
-	vy = -AXE_MOVE_SPEED_Y;
+	elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
+	vy = -settingManager->GetFloatValue("AXE_MOVE_SPEED_Y");
 	hasBoundingBox = true;
 }
 
 void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vx = directionX == Direction::Right ? AXE_MOVE_SPEED_X : -AXE_MOVE_SPEED_X;
+	vx = directionX == Direction::Right ? settingManager->GetFloatValue("AXE_MOVE_SPEED_X") : -settingManager->GetFloatValue("AXE_MOVE_SPEED_X");
 
-	vy += AXE_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("AXE_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -94,7 +97,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto enemy = dynamic_cast<CEnemy*>(coObjects->at(i));
 
-				enemy->TakeDamage(AXE_DAMAGES);
+				enemy->TakeDamage(settingManager->GetIntValue("AXE_DAMAGES"));
 
 				if (dynamic_cast<CPhantomBat*>(coObjects->at(i)))
 				{
@@ -116,10 +119,12 @@ void WAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (hasBoundingBox)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
-		right = left + AXE_BBOX_WIDTH;
-		bottom = top + AXE_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("AXE_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("AXE_BBOX_HEIGHT");
 	}
 }
 

@@ -6,16 +6,19 @@
 
 WDagger::WDagger()
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	SetAnimationSet("dagger");
 
-	elevation = WEAPON_DEFAULT_ELEVATION;
+	elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
 }
 
 void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vx = directionX == Direction::Right ? DAGGER_MOVE_SPEED : -DAGGER_MOVE_SPEED;
+	vx = directionX == Direction::Right ? settingManager->GetFloatValue("DAGGER_MOVE_SPEED") : -settingManager->GetFloatValue("DAGGER_MOVE_SPEED");
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -96,10 +99,12 @@ void WDagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void WDagger::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
-	right = left + DAGGER_BBOX_WIDTH;
-	bottom = top + DAGGER_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("DAGGER_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("DAGGER_BBOX_HEIGHT");
 }
 
 void WDagger::Render()
