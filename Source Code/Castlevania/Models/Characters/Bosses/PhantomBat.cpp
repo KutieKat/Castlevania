@@ -4,20 +4,23 @@
 
 CPhantomBat::CPhantomBat(CSimon* simon)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	this->mustInArea = true;
 	this->simon = simon;
-	this->areaRadiusX = PHANTOM_BAT_AREA_RADIUS_X;
-	this->areaRadiusY = PHANTOM_BAT_AREA_RADIUS_Y;
+	this->areaRadiusX = settingManager->GetIntValue("PHANTOM_BAT_AREA_RADIUS_X");
+	this->areaRadiusY = settingManager->GetIntValue("PHANTOM_BAT_AREA_RADIUS_Y");
 	this->flyingCounter = 0;
-	this->attacks = PHANTOM_BAT_ATTACKS;
+	this->attacks = settingManager->GetIntValue("PHANTOM_BAT_ATTACKS");
 
 	SetAnimationSet("phantom_bat");
-	SetState(PHANTOM_BAT_STATE_IDLE);
+	SetState(settingManager->GetIntValue("PHANTOM_BAT_INITIAL_STATE"));
 }
 
 void CPhantomBat::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (state)
 	{
@@ -31,7 +34,7 @@ void CPhantomBat::SetState(int state)
 	case PHANTOM_BAT_STATE_ATTACK:
 		if (x <= simon->x)
 		{
-			targetX = simon->x + SIMON_BBOX_WIDTH;
+			targetX = simon->x + settingManager->GetIntValue("SIMON_BBOX_WIDTH");
 		}
 		else
 		{
@@ -42,7 +45,7 @@ void CPhantomBat::SetState(int state)
 		break;
 
 	case PHANTOM_BAT_STATE_DELAY:
-		delayTimeout = GetTickCount() + ENEMY_DELAY_TIME;
+		delayTimeout = GetTickCount() + settingManager->GetIntValue("ENEMY_DELAY_TIME");
 		break;
 
 	case PHANTOM_BAT_STATE_DIE:
@@ -55,6 +58,7 @@ void CPhantomBat::SetState(int state)
 void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
@@ -66,7 +70,7 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (state == PHANTOM_BAT_STATE_DELAY && delayTimeout != -1 && GetTickCount() > delayTimeout)
 		{
-			if (GetTickCount() > delayTimeout + ENEMY_DELAY_PLUS_TIME)
+			if (GetTickCount() > delayTimeout + settingManager->GetIntValue("ENEMY_DELAY_PLUS_TIME"))
 			{
 				delayTimeout = -1;
 			}
@@ -90,8 +94,8 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				directionX = x <= targetX ? Direction::Right : Direction::Left;
 
-				vx = PHANTOM_BAT_ATTACK_SPEED_X;
-				vy = PHANTOM_BAT_ATTACK_SPEED_Y;
+				vx = settingManager->GetFloatValue("PHANTOM_BAT_ATTACK_SPEED_X");
+				vy = settingManager->GetFloatValue("PHANTOM_BAT_ATTACK_SPEED_Y");
 
 				x += vx * cos(angle) * dt;
 				y += vy * sin(angle) * dt;
@@ -110,8 +114,8 @@ void CPhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				directionX = x <= targetX ? Direction::Right : Direction::Left;
 
-				vx = PHANTOM_BAT_ATTACK_SPEED_X;
-				vy = PHANTOM_BAT_ATTACK_SPEED_Y;
+				vx = settingManager->GetFloatValue("PHANTOM_BAT_ATTACK_SPEED_X");
+				vy = settingManager->GetFloatValue("PHANTOM_BAT_ATTACK_SPEED_Y");
 
 				x += vx * cos(angle) * dt;
 				y += vy * sin(angle) * dt;
@@ -155,10 +159,12 @@ void CPhantomBat::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		l = x;
 		t = y;
-		r = l + PHANTOM_BAT_BBOX_WIDTH;
-		b = t + PHANTOM_BAT_BBOX_HEIGHT;
+		r = l + settingManager->GetIntValue("PHANTOM_BAT_BBOX_WIDTH");
+		b = t + settingManager->GetIntValue("PHANTOM_BAT_BBOX_HEIGHT");
 	}
 }
 
@@ -176,7 +182,7 @@ void CPhantomBat::TakeDamage(int damages)
 		SetState(PHANTOM_BAT_STATE_DIE);
 
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(PHANTOM_BAT_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(CSettingManager::GetInstance()->GetIntValue("PHANTOM_BAT_SCORE"));
 	}
 	else
 	{
@@ -220,6 +226,8 @@ void CPhantomBat::GenerateTarget()
 	float cameraLeft = CGame::GetInstance()->GetCamera()->GetLeft();
 	float cameraRight = CGame::GetInstance()->GetCamera()->GetRight();
 
+	int boundingBoxWidth = CSettingManager::GetInstance()->GetIntValue("PHANTOM_BAT_BBOX_WIDTH");
+
 	if (y >= simon->y - 50)
 	{
 		targetX = directionX == Direction::Right ? x - 160 : x + 160;
@@ -230,9 +238,9 @@ void CPhantomBat::GenerateTarget()
 			targetX = cameraLeft + 20;
 		}
 
-		if (targetX > cameraRight - PHANTOM_BAT_BBOX_WIDTH - 20)
+		if (targetX > cameraRight - boundingBoxWidth - 20)
 		{
-			targetX = cameraRight - PHANTOM_BAT_BBOX_WIDTH - 20;
+			targetX = cameraRight - boundingBoxWidth - 20;
 		}
 	}
 	else
@@ -245,9 +253,9 @@ void CPhantomBat::GenerateTarget()
 			targetX = cameraLeft + 20;
 		}
 
-		if (targetX > cameraRight - PHANTOM_BAT_BBOX_WIDTH - 20)
+		if (targetX > cameraRight - boundingBoxWidth - 20)
 		{
-			targetX = cameraRight - PHANTOM_BAT_BBOX_WIDTH - 20;
+			targetX = cameraRight - boundingBoxWidth - 20;
 		}
 	}
 }

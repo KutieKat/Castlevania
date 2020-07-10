@@ -11,7 +11,7 @@ public:
 	void Init();
 	void Reset();
 
-	void DecreaseHealthVolumes(int damages = BOSS_DEFAULT_DAMAGES);
+	void DecreaseHealthVolumes(int damages);
 	int GetHealthVolumes();
 
 protected:
