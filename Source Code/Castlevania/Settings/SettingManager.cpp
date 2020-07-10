@@ -48,6 +48,10 @@ bool CSettingManager::LoadFromFile(string filePath)
 
 			boolSettings[id] = value;
 		}
+		else if (type == "string")
+		{
+			stringSettings[id] = setting->Attribute("value");
+		}
 		else
 		{
 			setting = setting->NextSiblingElement();
@@ -70,6 +74,11 @@ float CSettingManager::GetFloatValue(string id)
 bool CSettingManager::GetBoolValue(string id)
 {
 	return boolSettings[id];
+}
+
+string CSettingManager::GetStringValue(string id)
+{
+	return stringSettings[id];
 }
 
 CSettingManager* CSettingManager::GetInstance()

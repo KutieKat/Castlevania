@@ -169,15 +169,29 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, L"Castlevania", L"Castlevania", SCREEN_WIDTH, SCREEN_HEIGHT);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+	settingManager->LoadFromFile("Settings.xml");
+
+	int screenWidth = settingManager->GetIntValue("SCREEN_WIDTH");
+	int screenHeight = settingManager->GetIntValue("SCREEN_HEIGHT");
+
+	string windowClassName = settingManager->GetStringValue("WINDOW_CLASS_NAME");
+	string windowTitle = settingManager->GetStringValue("WINDOW_TITLE");
+
+	wstring tmpWindowClassName = wstring(windowClassName.begin(), windowClassName.end());
+	wstring tmpWindowTitle = wstring(windowTitle.begin(), windowTitle.end());
+
+	LPCWSTR strWindowClassName = tmpWindowClassName.c_str();
+	LPCWSTR strWindowTitle = tmpWindowTitle.c_str();
+
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, strWindowClassName, strWindowTitle, screenWidth, screenHeight);
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
-	game->GetSettingManager()->LoadFromFile("Settings.xml");
-	game->GetCamera()->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	game->GetCamera()->SetSize(screenWidth, screenHeight);
 	game->GetSceneManager()->Load("Resources\\Scenes\\Scenes.xml");
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, screenWidth, screenHeight, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

@@ -10,6 +10,7 @@ public:
 	int GetIntValue(string id);
 	float GetFloatValue(string id);
 	bool GetBoolValue(string id);
+	string GetStringValue(string id);
 
 	static CSettingManager* GetInstance();
 
@@ -21,4 +22,5 @@ protected:
 	unordered_map<string, int> intSettings;
 	unordered_map<string, float> floatSettings;
 	unordered_map<string, bool> boolSettings;
+	unordered_map<string, string> stringSettings;
 };

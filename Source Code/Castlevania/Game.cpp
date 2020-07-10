@@ -6,7 +6,6 @@
 #include "Scenes/CutScene.h"
 
 CGame* CGame::instance = nullptr;
-
 /*
 	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
 	rendering 2D images
@@ -79,9 +78,6 @@ void CGame::Init(HWND hWnd)
 	soundManager = CGameSoundManager::GetInstance();
 	soundManager->Init();
 
-	// Setting manager
-	settingManager = CSettingManager::GetInstance();
-
 	// Game ending
 	ended = false;
 
@@ -135,12 +131,12 @@ bool CGame::HaveCollision(CGameObject* object1, CGameObject* object2)
 
 bool CGame::BoundingBoxDisplayed()
 {
-	return settingManager->GetBoolValue("BOUNDING_BOX_DISPLAYED");
+	return CSettingManager::GetInstance()->GetBoolValue("BOUNDING_BOX_DISPLAYED");
 }
 
 bool CGame::CheatKeysActivated()
 {
-	return settingManager->GetBoolValue("CHEAT_KEYS_ACTIVATED");
+	return CSettingManager::GetInstance()->GetBoolValue("CHEAT_KEYS_ACTIVATED");
 }
 
 bool CGame::Ended()
@@ -167,6 +163,7 @@ void CGame::HandleEnding()
 {
 	if (ended)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
 		sceneManager->GetCurrentScene()->HardPause(false);
 		timer->Pause();
 
@@ -189,7 +186,7 @@ void CGame::HandleEnding()
 				{
 					soundManager->Play("adding_time_score");
 					timer->Decrease();
-					playerData->AddScore(TIME_SCORE);
+					playerData->AddScore(settingManager->GetIntValue("TIME_SCORE"));
 				}
 			}
 			else
@@ -202,7 +199,7 @@ void CGame::HandleEnding()
 					{
 						soundManager->Play("adding_hearts_score");
 						playerData->DecreaseHearts(1);
-						playerData->AddScore(HEART_SCORE);
+						playerData->AddScore(settingManager->GetIntValue("HEART_SCORE"));
 					}
 				}
 				else
@@ -394,11 +391,6 @@ CGameSoundManager* CGame::GetSoundManager()
 	return soundManager;
 }
 
-CSettingManager* CGame::GetSettingManager()
-{
-	return settingManager;
-}
-
 CGame* CGame::GetInstance()
 {
 	if (instance == nullptr)
@@ -415,5 +407,5 @@ void CGame::Reset()
 	playerData->Reset();
 	bossData->Reset();
 	sceneManager->Reset();
-	timer->SetTime(DEFAULT_GAME_TIME);
+	timer->SetTime(CSettingManager::GetInstance()->GetIntValue("DEFAULT_GAME_TIME"));
 }

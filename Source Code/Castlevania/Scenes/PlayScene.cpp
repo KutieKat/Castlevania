@@ -517,6 +517,8 @@ bool CPlayScene::Reload()
 
 void CPlayScene::Update(DWORD dt)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	if (softPauseTime != -1 && GetTickCount() > softPauseTime)
 	{
 		ResumeSoftPause();
@@ -607,7 +609,7 @@ void CPlayScene::Update(DWORD dt)
 
 			float playerBoundingBoxWidth = right - left;
 
-			if (tileMap->GetWidth() < SCREEN_WIDTH)
+			if (tileMap->GetWidth() < settingManager->GetIntValue("SCREEN_WIDTH"))
 			{
 				cx = 0;
 
@@ -624,7 +626,7 @@ void CPlayScene::Update(DWORD dt)
 			}
 			else
 			{
-				if (currentPlayerX < SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
+				if (currentPlayerX < settingManager->GetIntValue("SCREEN_WIDTH") / 2 - playerBoundingBoxWidth)
 				{
 					cx = 0.0f;
 					leftEdge = 0.0f;
@@ -633,9 +635,9 @@ void CPlayScene::Update(DWORD dt)
 						player->SetPosition(leftEdge, currentPlayerY);
 					}
 				}
-				else if (currentPlayerX >= tileMap->GetWidth() - SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
+				else if (currentPlayerX >= tileMap->GetWidth() - settingManager->GetIntValue("SCREEN_WIDTH") / 2 - playerBoundingBoxWidth)
 				{
-					cx = tileMap->GetWidth() - SCREEN_WIDTH;
+					cx = tileMap->GetWidth() - settingManager->GetIntValue("SCREEN_WIDTH");
 
 					rightEdge = tileMap->GetWidth() - playerBoundingBoxWidth * 2;
 
@@ -645,7 +647,7 @@ void CPlayScene::Update(DWORD dt)
 				}
 				else
 				{
-					cx = currentPlayerX + playerBoundingBoxWidth - SCREEN_WIDTH / 2;
+					cx = currentPlayerX + playerBoundingBoxWidth - settingManager->GetIntValue("SCREEN_WIDTH") / 2;
 					rightEdge = CGame::GetInstance()->GetCamera()->GetRight() - playerBoundingBoxWidth * 2;
 					leftEdge = CGame::GetInstance()->GetCamera()->GetLeft();
 
@@ -668,7 +670,7 @@ void CPlayScene::Update(DWORD dt)
 		// PauseBadge
 		if (pauseBadge)
 		{
-			pauseBadge->SetPosition(game->GetCamera()->GetLeft() + (SCREEN_WIDTH / 2) - 120, game->GetCamera()->GetTop() + (SCREEN_HEIGHT / 2) - 60);
+			pauseBadge->SetPosition(game->GetCamera()->GetLeft() + (settingManager->GetIntValue("SCREEN_WIDTH") / 2) - 120, game->GetCamera()->GetTop() + (SCREEN_HEIGHT / 2) - 60);
 		}
 	}
 
@@ -949,6 +951,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 	CScene* scene = game->GetSceneManager()->GetCurrentScene();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 	CPlayerData* playerData = game->GetPlayerData();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	if (simon != nullptr && !scene->HardPaused() && !((CPlayScene*)scene)->ShowingGameOverBoard())
 	{
@@ -956,22 +959,22 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 		{
 		case DIK_F1:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("INTRO_SCENE"));
 			break;
 
 		case DIK_F2:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_1);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_1"));
 			break;
 
 		case DIK_F3:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_1);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_1"));
 			break;
 
 		case DIK_F4:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_2);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_2"));
 			break;
 
 		case DIK_F5:
@@ -982,37 +985,37 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 
 		case DIK_F6:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_1);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_2_1"));
 			break;
 
 		case DIK_F7:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_2);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_2_2"));
 			break;
 
 		case DIK_F8:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_3);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_3"));
 			break;
 
 		case DIK_F9:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_1);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_3_1"));
 			break;
 
 		case DIK_F10:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_2);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_3_2"));
 			break;
 
 		case DIK_F11:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_4);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_4"));
 			break;
 
 		case DIK_F12:
 			if (!game->CheatKeysActivated()) return;
-			game->GetSceneManager()->SwitchSceneByIndex(CREDITS_SCENE);
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CREDITS_SCENE"));
 			break;
 
 		case DIK_N:
@@ -1191,12 +1194,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 
 		case DIK_L:
 			if (!game->CheatKeysActivated()) return;
-			game->GetPlayerData()->AddLives(ADDED_LIVES);
+			game->GetPlayerData()->AddLives(settingManager->GetIntValue("ADDED_LIVES"));
 			break;
 
 		case DIK_R:
 			if (!game->CheatKeysActivated()) return;
-			game->GetPlayerData()->AddHearts(ADDED_HEARTS);
+			game->GetPlayerData()->AddHearts(settingManager->GetIntValue("ADDED_HEARTS"));
 			break;
 
 		case DIK_W:

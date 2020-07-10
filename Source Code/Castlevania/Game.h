@@ -33,7 +33,6 @@ class CGame
 	CBossData* bossData;
 	CSceneManager* sceneManager;
 	CGameSoundManager* soundManager;
-	CSettingManager* settingManager;
 
 	DWORD pauseStartingTime = -1;
 	DWORD pauseEndingTime = -1;
@@ -91,7 +90,6 @@ public:
 	CBossData* GetBossData();
 	CSceneManager* GetSceneManager();
 	CGameSoundManager* GetSoundManager();
-	CSettingManager* GetSettingManager();
 
 	static CGame* GetInstance();
 
