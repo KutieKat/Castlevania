@@ -20,8 +20,9 @@ CMagicCrystal::CMagicCrystal()
 void CMagicCrystal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -91,10 +92,12 @@ void CMagicCrystal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMagicCrystal::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
-	right = left + MAGIC_CRYSTAL_BBOX_WIDTH;
-	bottom = top + MAGIC_CRYSTAL_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("MAGIC_CRYSTAL_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("MAGIC_CRYSTAL_BBOX_HEIGHT");
 }
 
 void CMagicCrystal::Render()

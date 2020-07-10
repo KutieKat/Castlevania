@@ -3,7 +3,9 @@
 
 CSmallHeart::CSmallHeart()
 {
-	vy = SMALL_HEART_MOVE_SPEED;
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
+	vy = settingManager->GetFloatValue("SMALL_HEART_MOVE_SPEED");
 	isItem = true;
 	SetAnimationSet("small_heart");
 }
@@ -28,8 +30,10 @@ void CSmallHeart::Render()
 
 void CSmallHeart::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
-	right = left + SMALL_HEART_BBOX_WIDTH;
-	bottom = top + SMALL_HEART_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("SMALL_HEART_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("SMALL_HEART_BBOX_HEIGHT");
 }

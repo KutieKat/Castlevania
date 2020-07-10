@@ -34,8 +34,9 @@ void CRedMoneyBag::Render()
 void CRedMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -111,9 +112,11 @@ void CRedMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& 
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
-		right = left + RED_MONEY_BAG_BBOX_WIDTH;
-		bottom = top + RED_MONEY_BAG_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("RED_MONEY_BAG_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("RED_MONEY_BAG_BBOX_HEIGHT");
 	}
 }

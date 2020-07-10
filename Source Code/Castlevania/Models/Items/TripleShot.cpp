@@ -29,8 +29,9 @@ void CTripleShot::Render()
 void CTripleShot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -94,8 +95,10 @@ void CTripleShot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CTripleShot::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
-	right = left + TRIPLE_SHOT_BBOX_WIDTH;
-	bottom = top + TRIPLE_SHOT_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("TRIPLE_SHOT_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("TRIPLE_SHOT_BBOX_HEIGHT");
 }

@@ -22,12 +22,13 @@ void CCrown::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CCrown::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (state)
 	{
 	case ITEM_STATE_APPEAR:
 		CGame::GetInstance()->GetSoundManager()->Play("showing_bonus");
-		vy = -BONUS_MOVE_UP_SPEED;
+		vy = -settingManager->GetFloatValue("BONUS_MOVE_UP_SPEED");
 		break;
 	}
 }
@@ -49,9 +50,11 @@ void CCrown::GetBoundingBox(float& left, float& top, float& right, float& bottom
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
-		right = left + CROWN_BBOX_WIDTH;
-		bottom = top + CROWN_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("CROWN_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("CROWN_BBOX_HEIGHT");
 	}
 }

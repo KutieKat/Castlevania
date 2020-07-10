@@ -33,8 +33,9 @@ void CPorkChop::Render()
 void CPorkChop::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -102,9 +103,11 @@ void CPorkChop::GetBoundingBox(float& left, float& top, float& right, float& bot
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
-		right = left + PORK_CHOP_BBOX_WIDTH;
-		bottom = top + PORK_CHOP_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("PORK_CHOP_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("PORK_CHOP_BBOX_HEIGHT");
 	}
 }
