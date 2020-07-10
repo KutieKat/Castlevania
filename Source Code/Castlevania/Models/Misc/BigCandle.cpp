@@ -23,9 +23,11 @@ void CBigCandle::GetBoundingBox(float& left, float& top, float& right, float& bo
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
-		right = left + BIG_CANDLE_BBOX_WIDTH;
-		bottom = top + BIG_CANDLE_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("BIG_CANDLE_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("BIG_CANDLE_BBOX_HEIGHT");
 	}
 }

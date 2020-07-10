@@ -18,8 +18,10 @@ void CBottomStair::Render()
 
 void CBottomStair::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
-	right = left + BOTTOM_STAIR_BBOX_WIDTH;
-	bottom = top + BOTTOM_STAIR_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("BOTTOM_STAIR_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("BOTTOM_STAIR_BBOX_HEIGHT");
 }

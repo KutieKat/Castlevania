@@ -23,9 +23,11 @@ void CSmallCandle::GetBoundingBox(float& left, float& top, float& right, float& 
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y + 10;
-		right = left + SMALL_CANDLE_BBOX_WIDTH;
-		bottom = top + SMALL_CANDLE_BBOX_HEIGHT;
+		right = left + settingManager->GetIntValue("SMALL_CANDLE_BBOX_WIDTH");
+		bottom = top + settingManager->GetIntValue("SMALL_CANDLE_BBOX_HEIGHT");
 	}
 }

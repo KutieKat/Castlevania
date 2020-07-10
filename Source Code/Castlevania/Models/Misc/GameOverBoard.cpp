@@ -69,6 +69,7 @@ void CGameOverBoard::Select()
 {
 	CGame* game = CGame::GetInstance();
 	CSceneManager* sceneManager = game->GetSceneManager();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	dynamic_cast<CPlayScene*>(sceneManager->GetCurrentScene())->HideGameOverBoard();
 
@@ -85,12 +86,12 @@ void CGameOverBoard::Select()
 		}
 
 		//game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
-		game->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+		game->GetTimer()->SetTime(settingManager->GetIntValue("DEFAULT_GAME_TIME"));
 		game->GetPlayerData()->Reset();
 		break;
 
 	case END_OPTION:
-		game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("INTRO_SCENE"));
 		break;
 	}
 }

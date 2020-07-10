@@ -9,8 +9,9 @@ CHelicopter::CHelicopter()
 void CHelicopter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vx = vy = HELICOPTER_FLY_SPEED;
+	vx = vy = settingManager->GetFloatValue("HELICOPTER_FLY_SPEED");
 
 	x -= vx * dt;
 }

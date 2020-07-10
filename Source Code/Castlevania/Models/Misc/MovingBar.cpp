@@ -4,7 +4,9 @@
 
 CMovingBar::CMovingBar()
 {
-	vx = MOVING_BAR_MOVE_SPEED;
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
+	vx = settingManager->GetFloatValue("MOVING_BAR_MOVE_SPEED");
 
 	SetAnimationSet("moving_bar");
 }
@@ -60,8 +62,10 @@ void CMovingBar::Render()
 
 void CMovingBar::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
-	right = left + MOVING_BAR_BBOX_WIDTH;
-	bottom = top + MOVING_BAR_BBOX_HEIGHT;
+	right = left + settingManager->GetIntValue("MOVING_BAR_BBOX_WIDTH");
+	bottom = top + settingManager->GetIntValue("MOVING_BAR_BBOX_HEIGHT");
 }
