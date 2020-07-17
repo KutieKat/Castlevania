@@ -10,11 +10,6 @@ CMountain::CMountain()
 
 void CMountain::Render()
 {
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	animationSet->at(0)->Render(x, y);
 }
 

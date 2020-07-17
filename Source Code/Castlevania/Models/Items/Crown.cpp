@@ -54,7 +54,7 @@ void CCrown::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("CROWN_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("CROWN_BBOX_HEIGHT");
+		right = left + CROWN_BBOX_WIDTH;
+		bottom = top + CROWN_BBOX_HEIGHT;
 	}
 }

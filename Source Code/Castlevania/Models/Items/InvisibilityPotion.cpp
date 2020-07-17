@@ -91,8 +91,8 @@ void CInvisibilityPotion::GetBoundingBox(float& left, float& top, float& right, 
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("INVISIBILITY_POTION_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("INVISIBILITY_POTION_BBOX_HEIGHT");
+	right = left + INVISIBILITY_POTION_BBOX_WIDTH;
+	bottom = top + INVISIBILITY_POTION_BBOX_HEIGHT;
 }
 
 void CInvisibilityPotion::Render()

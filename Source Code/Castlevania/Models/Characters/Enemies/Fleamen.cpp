@@ -185,8 +185,8 @@ void CFleamen::GetBoundingBox(float & left, float & top, float & right, float & 
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("FLEAMEN_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("FLEAMEN_BBOX_HEIGHT");
+		right = left + FLEAMEN_BBOX_WIDTH;
+		bottom = top + FLEAMEN_BBOX_HEIGHT;
 	}
 }
 

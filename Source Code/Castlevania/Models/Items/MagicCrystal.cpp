@@ -96,8 +96,8 @@ void CMagicCrystal::GetBoundingBox(float& left, float& top, float& right, float&
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("MAGIC_CRYSTAL_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("MAGIC_CRYSTAL_BBOX_HEIGHT");
+	right = left + MAGIC_CRYSTAL_BBOX_WIDTH;
+	bottom = top + MAGIC_CRYSTAL_BBOX_HEIGHT;
 }
 
 void CMagicCrystal::Render()

@@ -106,7 +106,7 @@ void CHolyWater::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("HOLY_WATER_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("HOLY_WATER_BBOX_HEIGHT");
+		right = left + HOLY_WATER_BBOX_WIDTH;
+		bottom = top + HOLY_WATER_BBOX_HEIGHT;
 	}
 }

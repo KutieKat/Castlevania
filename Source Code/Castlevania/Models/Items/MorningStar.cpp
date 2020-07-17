@@ -92,8 +92,8 @@ void CMorningStar::GetBoundingBox(float& left, float& top, float& right, float& 
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("MORNING_STAR_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("MORNING_STAR_BBOX_HEIGHT");
+	right = left + MORNING_STAR_BBOX_WIDTH;
+	bottom = top + MORNING_STAR_BBOX_HEIGHT;
 }
 
 void CMorningStar::Render()

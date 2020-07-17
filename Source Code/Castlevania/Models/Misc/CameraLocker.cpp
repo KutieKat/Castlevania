@@ -22,6 +22,6 @@ void CCameraLocker::GetBoundingBox(float& left, float& top, float& right, float&
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("CAMERA_LOCKER_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("CAMERA_LOCKER_BBOX_HEIGHT");
+	right = left + CAMERA_LOCKER_BBOX_WIDTH;
+	bottom = top + CAMERA_LOCKER_BBOX_HEIGHT;
 }

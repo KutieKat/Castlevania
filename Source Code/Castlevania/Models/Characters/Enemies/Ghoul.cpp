@@ -118,8 +118,8 @@ void CGhoul::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 		l = x;
 		t = y;
-		r = l + settingManager->GetIntValue("GHOUL_BBOX_WIDTH");
-		b = t + settingManager->GetIntValue("GHOUL_BBOX_HEIGHT");
+		r = l + GHOUL_BBOX_WIDTH;
+		b = t + GHOUL_BBOX_HEIGHT;
 	}
 }
 

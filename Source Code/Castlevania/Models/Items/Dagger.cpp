@@ -91,8 +91,8 @@ void CDagger::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("DAGGER_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("DAGGER_BBOX_HEIGHT");
+	right = left + DAGGER_BBOX_WIDTH;
+	bottom = top + DAGGER_BBOX_HEIGHT;
 }
 
 void CDagger::Render()

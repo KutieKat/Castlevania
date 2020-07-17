@@ -34,7 +34,7 @@ void CPhantomBat::SetState(int state)
 	case PHANTOM_BAT_STATE_ATTACK:
 		if (x <= simon->x)
 		{
-			targetX = simon->x + settingManager->GetIntValue("SIMON_BBOX_WIDTH");
+			targetX = simon->x + SIMON_BBOX_WIDTH;
 		}
 		else
 		{
@@ -163,8 +163,8 @@ void CPhantomBat::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 		l = x;
 		t = y;
-		r = l + settingManager->GetIntValue("PHANTOM_BAT_BBOX_WIDTH");
-		b = t + settingManager->GetIntValue("PHANTOM_BAT_BBOX_HEIGHT");
+		r = l + PHANTOM_BAT_BBOX_WIDTH;
+		b = t + PHANTOM_BAT_BBOX_HEIGHT;
 	}
 }
 
@@ -231,7 +231,7 @@ void CPhantomBat::GenerateTarget()
 	float cameraLeft = CGame::GetInstance()->GetCamera()->GetLeft();
 	float cameraRight = CGame::GetInstance()->GetCamera()->GetRight();
 
-	int boundingBoxWidth = CSettingManager::GetInstance()->GetIntValue("PHANTOM_BAT_BBOX_WIDTH");
+	int boundingBoxWidth = PHANTOM_BAT_BBOX_WIDTH;
 
 	if (y >= simon->y - 50)
 	{

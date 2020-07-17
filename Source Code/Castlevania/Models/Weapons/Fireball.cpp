@@ -36,8 +36,8 @@ void WFireball::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("FIREBALL_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("FIREBALL_BBOX_HEIGHT");
+	right = left + FIREBALL_BBOX_WIDTH;
+	bottom = top + FIREBALL_BBOX_HEIGHT;
 }
 
 void WFireball::Render()

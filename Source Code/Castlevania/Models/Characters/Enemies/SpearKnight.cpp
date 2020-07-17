@@ -50,7 +50,7 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
-	if (hiddenItem && !softPaused) hiddenItem->SetPosition(x, y - settingManager->GetIntValue("SPEAR_KNIGHT_BBOX_HEIGHT") * 2);
+	if (hiddenItem && !softPaused) hiddenItem->SetPosition(x, y - SPEAR_KNIGHT_BBOX_HEIGHT * 2);
 	if (softPaused) return;
 
 	vy += settingManager->GetFloatValue("SPEAR_KNIGHT_GRAVITY") * dt;
@@ -163,8 +163,8 @@ void CSpearKnight::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 		l = x;
 		t = y;
-		r = l + settingManager->GetIntValue("SPEAR_KNIGHT_BBOX_WIDTH");
-		b = t + settingManager->GetIntValue("SPEAR_KNIGHT_BBOX_HEIGHT");
+		r = l + SPEAR_KNIGHT_BBOX_WIDTH;
+		b = t + SPEAR_KNIGHT_BBOX_HEIGHT;
 	}
 }
 

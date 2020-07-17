@@ -116,7 +116,7 @@ void CRedMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& 
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("RED_MONEY_BAG_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("RED_MONEY_BAG_BBOX_HEIGHT");
+		right = left + RED_MONEY_BAG_BBOX_WIDTH;
+		bottom = top + RED_MONEY_BAG_BBOX_HEIGHT;
 	}
 }

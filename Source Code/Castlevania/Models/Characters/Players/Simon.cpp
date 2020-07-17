@@ -589,8 +589,8 @@ void CSimon::GetBoundingBox(float & left, float & top, float & right, float & bo
 
 	left = x + 15;
 	top = y;
-	right = left + settingManager->GetIntValue("SIMON_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("SIMON_BBOX_HEIGHT");
+	right = left + SIMON_BBOX_WIDTH;
+	bottom = top + SIMON_BBOX_HEIGHT;
 }
 
 int CSimon::GetAnimationToRender()
@@ -1123,8 +1123,8 @@ void CSimon::HandleCollisionObjects(vector<LPGAMEOBJECT>* coObjects)
 					{
 						bool reversedDirectionX = (downsideDirectionX == Direction::Right && directionX == Direction::Left) || (upsideDirectionX == Direction::Right && directionX == Direction::Left);
 						bool reversedDirectionY = (downsideDirectionY == Direction::Down && directionY == Direction::Up) || (upsideDirectionY == Direction::Up && directionY == Direction::Down);
-						bool reachedTop = directionY == Direction::Up && y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT") <= stair->y + settingManager->GetIntValue("BI_STAIR_BBOX_HEIGHT");
-						bool reachedBottom = directionY == Direction::Down && y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT") >= stair->y + settingManager->GetIntValue("BI_STAIR_BBOX_HEIGHT");
+						bool reachedTop = directionY == Direction::Up && y + SIMON_BBOX_HEIGHT <= stair->y + BI_STAIR_BBOX_HEIGHT;
+						bool reachedBottom = directionY == Direction::Down && y + SIMON_BBOX_HEIGHT >= stair->y + BI_STAIR_BBOX_HEIGHT;
 
 						if (reversedDirectionX && reversedDirectionY && (reachedTop || reachedBottom))
 						{

@@ -96,8 +96,8 @@ void CBigHeart::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("BIG_HEART_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("BIG_HEART_BBOX_HEIGHT");
+	right = left + BIG_HEART_BBOX_WIDTH;
+	bottom = top + BIG_HEART_BBOX_HEIGHT;
 }
 
 void CBigHeart::Render()

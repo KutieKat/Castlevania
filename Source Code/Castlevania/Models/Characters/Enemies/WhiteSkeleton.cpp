@@ -114,11 +114,11 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					directionX = Direction::Left;
 
-					if (x == simon->x + settingManager->GetIntValue("SIMON_BBOX_WIDTH") + settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
+					if (x == simon->x + SIMON_BBOX_WIDTH + settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
 					{
 						vx = 0;
 					}
-					else if (x > simon->x + settingManager->GetIntValue("SIMON_BBOX_WIDTH") + settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
+					else if (x > simon->x + SIMON_BBOX_WIDTH + settingManager->GetIntValue("WHITE_SKELETON_TO_SIMON_DISTANCE_X"))
 					{
 						vx = x <= leftBound ? 0 : -settingManager->GetFloatValue("WHITE_SKELETON_WALK_SPEED_X");
 					}
@@ -143,7 +143,7 @@ void CWhiteSkeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state != WHITE_SKELETON_STATE_IDLE && state != WHITE_SKELETON_STATE_DIE)
 	{
-		if ((int)(y + settingManager->GetIntValue("WHITE_SKELETON_BBOX_HEIGHT")) < (int)(simon->y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT")))
+		if ((int)(y + WHITE_SKELETON_BBOX_HEIGHT) < (int)(simon->y + SIMON_BBOX_HEIGHT))
 		{
 			jumpingCounter += 1;
 
@@ -292,8 +292,8 @@ void CWhiteSkeleton::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 		l = x;
 		t = y;
-		r = l + settingManager->GetIntValue("WHITE_SKELETON_BBOX_WIDTH");
-		b = t + settingManager->GetIntValue("WHITE_SKELETON_BBOX_HEIGHT");
+		r = l + WHITE_SKELETON_BBOX_WIDTH;
+		b = t + WHITE_SKELETON_BBOX_HEIGHT;
 	}
 }
 
@@ -321,7 +321,7 @@ void CWhiteSkeleton::OnPlayerEnterArea()
 
 	if (state == WHITE_SKELETON_STATE_IDLE)
 	{
-		if (y + settingManager->GetIntValue("WHITE_SKELETON_BBOX_HEIGHT") < simon->y + settingManager->GetIntValue("SIMON_BBOX_HEIGHT"))
+		if (y + WHITE_SKELETON_BBOX_HEIGHT < simon->y + SIMON_BBOX_HEIGHT)
 		{
 			SetState(WHITE_SKELETON_STATE_JUMP_AROUND);
 		}

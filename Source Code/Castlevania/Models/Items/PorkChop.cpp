@@ -107,7 +107,7 @@ void CPorkChop::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("PORK_CHOP_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("PORK_CHOP_BBOX_HEIGHT");
+		right = left + PORK_CHOP_BBOX_WIDTH;
+		bottom = top + PORK_CHOP_BBOX_HEIGHT;
 	}
 }

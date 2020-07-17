@@ -42,8 +42,8 @@ void CMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("MONEY_BAG_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("MONEY_BAG_BBOX_HEIGHT");
+		right = left + MONEY_BAG_BBOX_WIDTH;
+		bottom = top + MONEY_BAG_BBOX_HEIGHT;
 	}
 }
 

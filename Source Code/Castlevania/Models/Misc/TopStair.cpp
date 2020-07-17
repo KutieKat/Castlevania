@@ -22,6 +22,6 @@ void CTopStair::GetBoundingBox(float& left, float& top, float& right, float& bot
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("TOP_STAIR_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("TOP_STAIR_BBOX_HEIGHT");
+	right = left + TOP_STAIR_BBOX_WIDTH;
+	bottom = top + TOP_STAIR_BBOX_HEIGHT;
 }

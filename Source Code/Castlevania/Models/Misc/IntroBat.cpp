@@ -9,11 +9,6 @@ CIntroBat::CIntroBat()
 
 void CIntroBat::Render()
 {
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	if (animationSet->at(0)->Over())
 	{
 		animationSet->at(1)->Render(x, y);

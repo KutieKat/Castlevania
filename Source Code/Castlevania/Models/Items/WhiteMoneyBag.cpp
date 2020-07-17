@@ -114,7 +114,7 @@ void CWhiteMoneyBag::GetBoundingBox(float& left, float& top, float& right, float
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("WHITE_MONEY_BAG_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("WHITE_MONEY_BAG_BBOX_HEIGHT");
+		right = left + WHITE_MONEY_BAG_BBOX_WIDTH;
+		bottom = top + WHITE_MONEY_BAG_BBOX_HEIGHT;
 	}
 }

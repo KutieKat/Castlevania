@@ -120,8 +120,8 @@ void CHolyWaterBottle::GetBoundingBox(float& left, float& top, float& right, flo
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("HOLY_WATER_BOTTLE_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("HOLY_WATER_BOTTLE_BBOX_HEIGHT");
+	right = left + HOLY_WATER_BOTTLE_BBOX_WIDTH;
+	bottom = top + HOLY_WATER_BOTTLE_BBOX_HEIGHT;
 }
 
 void CHolyWaterBottle::Render()

@@ -29,11 +29,6 @@ void CBigTripleShot::Render()
 		ani = BIG_TRIPLE_SHOT_ANI_STATIC;
 	}
 
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	animationSet->at(ani)->Render(x, y);
 }
 

@@ -29,11 +29,6 @@ void CBigDoubleShot::Render()
 		ani = BIG_DOUBLE_SHOT_ANI_STATIC;
 	}
 
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	animationSet->at(ani)->Render(x, y);
 }
 

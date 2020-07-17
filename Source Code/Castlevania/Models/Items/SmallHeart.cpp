@@ -34,6 +34,6 @@ void CSmallHeart::GetBoundingBox(float& left, float& top, float& right, float& b
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("SMALL_HEART_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("SMALL_HEART_BBOX_HEIGHT");
+	right = left + SMALL_HEART_BBOX_WIDTH;
+	bottom = top + SMALL_HEART_BBOX_HEIGHT;
 }

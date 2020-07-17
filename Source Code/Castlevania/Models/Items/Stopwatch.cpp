@@ -104,7 +104,7 @@ void CStopwatch::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("STOPWATCH_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("STOPWATCH_BBOX_HEIGHT");
+		right = left + STOPWATCH_BBOX_WIDTH;
+		bottom = top + STOPWATCH_BBOX_HEIGHT;
 	}
 }

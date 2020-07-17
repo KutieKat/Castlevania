@@ -34,7 +34,7 @@ void CRaven::SetState(int state)
 	case RAVEN_STATE_ATTACK:
 		if (x <= simon->x)
 		{
-			targetX = simon->x + settingManager->GetIntValue("SIMON_BBOX_WIDTH");
+			targetX = simon->x + SIMON_BBOX_WIDTH;
 		}
 		else
 		{
@@ -137,8 +137,8 @@ void CRaven::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 		l = x;
 		t = y;
-		r = l + settingManager->GetIntValue("RAVEN_BBOX_WIDTH");
-		b = t + settingManager->GetIntValue("RAVEN_BBOX_HEIGHT");
+		r = l + RAVEN_BBOX_WIDTH;
+		b = t + RAVEN_BBOX_HEIGHT;
 	}
 }
 
@@ -194,7 +194,7 @@ void CRaven::GenerateTarget()
 	float cameraLeft = CGame::GetInstance()->GetCamera()->GetLeft();
 	float cameraRight = CGame::GetInstance()->GetCamera()->GetRight();
 
-	int boundingBoxWidth = CSettingManager::GetInstance()->GetIntValue("RAVEN_BBOX_WIDTH");
+	int boundingBoxWidth = RAVEN_BBOX_WIDTH;
 
 	if (y >= simon->y - 50)
 	{

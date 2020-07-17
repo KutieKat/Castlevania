@@ -8,11 +8,6 @@ CMapPin::CMapPin()
 
 void CMapPin::Render()
 {
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	animationSet->at(0)->Render(x, y);
 }
 

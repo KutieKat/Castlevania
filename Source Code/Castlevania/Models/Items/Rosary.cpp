@@ -104,7 +104,7 @@ void CRosary::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("ROSARY_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("ROSARY_BBOX_HEIGHT");
+		right = left + ROSARY_BBOX_WIDTH;
+		bottom = top + ROSARY_BBOX_HEIGHT;
 	}
 }

@@ -28,7 +28,7 @@ void CBreakableBrick::GetBoundingBox(float& left, float& top, float& right, floa
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("BREAKABLE_BRICK_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("BREAKABLE_BRICK_BBOX_HEIGHT");
+		right = left + BREAKABLE_BRICK_BBOX_WIDTH;
+		bottom = top + BREAKABLE_BRICK_BBOX_HEIGHT;
 	}
 }

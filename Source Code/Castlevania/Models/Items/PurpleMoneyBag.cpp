@@ -116,7 +116,7 @@ void CPurpleMoneyBag::GetBoundingBox(float& left, float& top, float& right, floa
 
 		left = x;
 		top = y;
-		right = left + settingManager->GetIntValue("PURPLE_MONEY_BAG_BBOX_WIDTH");
-		bottom = top + settingManager->GetIntValue("PURPLE_MONEY_BAG_BBOX_HEIGHT");
+		right = left + PURPLE_MONEY_BAG_BBOX_WIDTH;
+		bottom = top + PURPLE_MONEY_BAG_BBOX_HEIGHT;
 	}
 }

@@ -91,8 +91,8 @@ void CBoomerang::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("BOOMERANG_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("BOOMERANG_BBOX_HEIGHT");
+	right = left + BOOMERANG_BBOX_WIDTH;
+	bottom = top + BOOMERANG_BBOX_HEIGHT;
 }
 
 void CBoomerang::Render()

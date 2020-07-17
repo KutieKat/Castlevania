@@ -13,8 +13,8 @@ void CNextScene::GetBoundingBox(float & left, float & top, float & right, float 
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("NEXT_SCENE_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("NEXT_SCENE_BBOX_HEIGHT");
+	right = left + NEXT_SCENE_BBOX_WIDTH;
+	bottom = top + NEXT_SCENE_BBOX_HEIGHT;
 }
 
 void CNextScene::Render()

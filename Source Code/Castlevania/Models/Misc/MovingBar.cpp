@@ -66,6 +66,6 @@ void CMovingBar::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("MOVING_BAR_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("MOVING_BAR_BBOX_HEIGHT");
+	right = left + MOVING_BAR_BBOX_WIDTH;
+	bottom = top + MOVING_BAR_BBOX_HEIGHT;
 }

@@ -66,20 +66,20 @@ void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 	l = x;
 	t = y;
-	b = y + settingManager->GetIntValue("WHIP_BBOX_HEIGHT");
+	b = y + WHIP_BBOX_HEIGHT;
 
 	switch (CGame::GetInstance()->GetPlayerData()->GetWhipLevel())
 	{
 	case WHIP_LEVEL_1:
-		r = l + settingManager->GetIntValue("WHIP_LEVEL_1_BBOX_WIDTH");
+		r = l + WHIP_LEVEL_1_BBOX_WIDTH;
 		break;
 
 	case WHIP_LEVEL_2:
-		r = l + settingManager->GetIntValue("WHIP_LEVEL_2_BBOX_WIDTH");
+		r = l + WHIP_LEVEL_2_BBOX_WIDTH;
 		break;
 
 	case WHIP_LEVEL_3:
-		r = l + settingManager->GetIntValue("WHIP_LEVEL_3_BBOX_WIDTH");
+		r = l + WHIP_LEVEL_3_BBOX_WIDTH;
 		break;
 	}
 }

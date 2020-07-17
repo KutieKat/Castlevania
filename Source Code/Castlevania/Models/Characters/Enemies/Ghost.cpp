@@ -120,8 +120,8 @@ void CGhost::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 		l = x;
 		t = y;
-		r = l + settingManager->GetIntValue("GHOST_BBOX_WIDTH");
-		b = t + settingManager->GetIntValue("GHOST_BBOX_HEIGHT");
+		r = l + GHOST_BBOX_WIDTH;
+		b = t + GHOST_BBOX_HEIGHT;
 	}
 }
 

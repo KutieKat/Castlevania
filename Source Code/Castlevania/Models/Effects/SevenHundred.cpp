@@ -14,10 +14,5 @@ void CSevenHundred::GetBoundingBox(float & left, float & top, float & right, flo
 
 void CSevenHundred::Render()
 {
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	animationSet->at(0)->Render(x, y);
 }

@@ -93,8 +93,8 @@ void WBone::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("BONE_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("BONE_BBOX_HEIGHT");
+	right = left + BONE_BBOX_WIDTH;
+	bottom = top + BONE_BBOX_HEIGHT;
 }
 
 void WBone::Render()

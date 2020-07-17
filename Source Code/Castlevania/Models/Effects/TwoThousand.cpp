@@ -14,10 +14,5 @@ void CTwoThousand::GetBoundingBox(float & left, float & top, float & right, floa
 
 void CTwoThousand::Render()
 {
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	animationSet->at(0)->Render(x, y);
 }

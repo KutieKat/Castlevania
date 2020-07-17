@@ -99,6 +99,6 @@ void CTripleShot::GetBoundingBox(float& left, float& top, float& right, float& b
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("TRIPLE_SHOT_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("TRIPLE_SHOT_BBOX_HEIGHT");
+	right = left + TRIPLE_SHOT_BBOX_WIDTH;
+	bottom = top + TRIPLE_SHOT_BBOX_HEIGHT;
 }

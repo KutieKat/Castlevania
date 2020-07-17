@@ -23,8 +23,8 @@ void CEasterEgg::GetBoundingBox(float& left, float& top, float& right, float& bo
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("EASTER_EGG_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("EASTER_EGG_BBOX_HEIGHT");
+	right = left + EASTER_EGG_BBOX_WIDTH;
+	bottom = top + EASTER_EGG_BBOX_HEIGHT;
 }
 
 void CEasterEgg::SetMustSit(bool mustSit)

@@ -32,8 +32,8 @@ void CEnemySpawnerArea::GetBoundingBox(float& left, float& top, float& right, fl
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("ENEMY_SPAWNER_AREA_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("ENEMY_SPAWNER_AREA_BBOX_HEIGHT");
+	right = left + ENEMY_SPAWNER_AREA_BBOX_WIDTH;
+	bottom = top + ENEMY_SPAWNER_AREA_BBOX_HEIGHT;
 }
 
 void CEnemySpawnerArea::SetEnemyType(string type)

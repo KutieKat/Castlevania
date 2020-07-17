@@ -101,6 +101,6 @@ void CDoubleShot::GetBoundingBox(float& left, float& top, float& right, float& b
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("DOUBLE_SHOT_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("DOUBLE_SHOT_BBOX_HEIGHT");
+	right = left + DOUBLE_SHOT_BBOX_WIDTH;
+	bottom = top + DOUBLE_SHOT_BBOX_HEIGHT;
 }

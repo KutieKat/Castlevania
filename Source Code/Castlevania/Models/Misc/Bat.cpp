@@ -42,11 +42,6 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBat::Render()
 {
-	if (CGame::GetInstance()->BoundingBoxDisplayed())
-	{
-		RenderBoundingBox();
-	}
-
 	animationSet->at(0)->Render(x, y);
 }
 

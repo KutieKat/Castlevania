@@ -91,8 +91,8 @@ void CAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 	left = x;
 	top = y;
-	right = left + settingManager->GetIntValue("AXE_BBOX_WIDTH");
-	bottom = top + settingManager->GetIntValue("AXE_BBOX_HEIGHT");
+	right = left + AXE_BBOX_WIDTH;
+	bottom = top + AXE_BBOX_HEIGHT;
 }
 
 void CAxe::Render()
