@@ -86,6 +86,153 @@ CScene* CSceneManager::GetCurrentScene()
 	return scenes[currentSceneId];
 }
 
+void CSceneManager::Init(string filePath, string sharedResourcesPath)
+{
+	LoadSharedResources(sharedResourcesPath);
+	Load(filePath);
+}
+
+void CSceneManager::ParseSounds(TiXmlElement* element)
+{
+	CGameSoundManager* soundManager = CGameSoundManager::GetInstance();
+	TiXmlElement* sound = nullptr;
+
+	for (sound = element->FirstChildElement(); sound != nullptr; sound = sound->NextSiblingElement())
+	{
+		string id = sound->Attribute("id");
+		string path = sound->Attribute("path");
+
+		bool loop = false;
+		sound->QueryBoolAttribute("loop", &loop);
+
+		bool retained = false;
+		sound->QueryBoolAttribute("retained", &retained);
+
+		bool isBackground = false;
+		sound->QueryBoolAttribute("isBackground", &isBackground);
+
+		if (path != "")
+		{
+			soundManager->Add(id, path, loop, retained, isBackground, true);
+		}
+	}
+}
+
+void CSceneManager::ParseTextures(TiXmlElement* element)
+{
+	TiXmlElement* texture = nullptr;
+
+	for (texture = element->FirstChildElement(); texture != nullptr; texture = texture->NextSiblingElement())
+	{
+		int r, g, b;
+
+		string id = texture->Attribute("id");
+
+		string path = texture->Attribute("path");
+		wstring texturePath(path.begin(), path.end());
+
+		texture->QueryIntAttribute("r", &r);
+		texture->QueryIntAttribute("g", &g);
+		texture->QueryIntAttribute("b", &b);
+
+		CTextureManager::GetInstance()->Add(id, texturePath.c_str(), CColor::FromRgb(r, g, b), true);
+	}
+}
+
+void CSceneManager::ParseSprites(TiXmlElement* element)
+{
+	TiXmlElement* sprite = nullptr;
+
+	for (sprite = element->FirstChildElement(); sprite != nullptr; sprite = sprite->NextSiblingElement())
+	{
+		int left, top, right, bottom;
+
+		string id = sprite->Attribute("id");
+
+		sprite->QueryIntAttribute("left", &left);
+		sprite->QueryIntAttribute("top", &top);
+		sprite->QueryIntAttribute("right", &right);
+		sprite->QueryIntAttribute("bottom", &bottom);
+
+		LPDIRECT3DTEXTURE9 texture = CTextureManager::GetInstance()->Get(sprite->Attribute("textureId"));
+
+		CSpriteManager::GetInstance()->Add(id, left, top, right, bottom, texture, true);
+	}
+}
+
+void CSceneManager::ParseAnimations(TiXmlElement* element)
+{
+	TiXmlElement* animation = nullptr;
+	TiXmlElement* frame = nullptr;
+	CAnimation* ani = nullptr;
+
+	for (animation = element->FirstChildElement(); animation != nullptr; animation = animation->NextSiblingElement())
+	{
+		string id = animation->Attribute("id");
+
+		ani = new CAnimation(100);
+
+		for (frame = animation->FirstChildElement(); frame != nullptr; frame = frame->NextSiblingElement())
+		{
+			int duration;
+
+			string spriteId = frame->Attribute("spriteId");
+			frame->QueryIntAttribute("duration", &duration);
+
+			ani->Add(spriteId, duration);
+		}
+
+		CAnimationManager::GetInstance()->Add(id, ani, true);
+	}
+}
+
+void CSceneManager::ParseAnimationSets(TiXmlElement* element)
+{
+	TiXmlElement* animationSet = nullptr;
+	TiXmlElement* animationSetItem = nullptr;
+
+	for (animationSet = element->FirstChildElement(); animationSet != nullptr; animationSet = animationSet->NextSiblingElement())
+	{
+		string id = animationSet->Attribute("id");
+		CAnimationSet* set = new CAnimationSet();
+
+		for (animationSetItem = animationSet->FirstChildElement(); animationSetItem != nullptr; animationSetItem = animationSetItem->NextSiblingElement())
+		{
+			string animationId = animationSetItem->Attribute("animationId");
+
+			set->emplace_back(CAnimationManager::GetInstance()->Get(animationId));
+		}
+
+		CAnimationSets::GetInstance()->Add(id, set, true);
+	}
+}
+
+bool CSceneManager::LoadSharedResources(string filePath)
+{
+	TiXmlDocument doc(filePath.c_str());
+
+	if (!doc.LoadFile())
+	{
+		CDebug::Error(doc.ErrorDesc());
+		return false;
+	}
+
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* sounds = root->FirstChildElement();
+	TiXmlElement* textures = sounds->NextSiblingElement();
+	TiXmlElement* sprites = textures->NextSiblingElement();
+	TiXmlElement* animations = sprites->NextSiblingElement();
+	TiXmlElement* animationSets = animations->NextSiblingElement();
+
+	ParseSounds(sounds);
+	ParseTextures(textures);
+	ParseSprites(sprites);
+	ParseAnimations(animations);
+	ParseAnimationSets(animationSets);
+
+	return true;
+}
+
 void CSceneManager::SwitchScene(string sceneId, bool forced)
 {
 	CGame* game = CGame::GetInstance();

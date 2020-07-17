@@ -189,7 +189,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game = CGame::GetInstance();
 	game->Init(hWnd);
 	game->GetCamera()->SetSize(screenWidth, screenHeight);
-	game->GetSceneManager()->Load("Resources\\Scenes\\Scenes.xml");
+	game->GetSceneManager()->Init("Resources\\Scenes\\Scenes.xml", "Resources\\Scenes\\SharedResources.xml");
 
 	SetWindowPos(hWnd, 0, 0, 0, screenWidth, screenHeight, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

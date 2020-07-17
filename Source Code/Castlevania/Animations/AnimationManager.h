@@ -8,7 +8,7 @@ class CAnimationManager
 {
 public:
 	bool LoadFromFile(string filePath);
-	void Add(string id, CAnimation* animation);
+	void Add(string id, CAnimation* animation, bool sharable = false);
 	void Clear();
 	CAnimation* Get(string id);
 
@@ -20,5 +20,6 @@ private:
 	static CAnimationManager* instance;
 
 	unordered_map<string, CAnimation*> animations;
+	unordered_map<string, CAnimation*> sharedAnimations;
 };
 

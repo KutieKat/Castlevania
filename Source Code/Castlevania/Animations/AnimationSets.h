@@ -9,7 +9,7 @@ class CAnimationSets
 public:
 	static CAnimationSets* GetInstance();
 
-	void Add(string id, CAnimationSet* animationSet);
+	void Add(string id, CAnimationSet* animationSet, bool sharable = false);
 	CAnimationSet* Get(string id);
 	void Clear();
 
@@ -19,5 +19,6 @@ protected:
 	static CAnimationSets* instance;
 
 	unordered_map<string, CAnimationSet*> animationSets;
+	unordered_map<string, CAnimationSet*> sharedAnimationSets;
 };
 

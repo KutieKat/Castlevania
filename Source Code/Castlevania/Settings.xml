@@ -40,6 +40,8 @@
     <setting id="SIMON_SLOW_WALK_SPEED" type="float" value="0.08f" />
     <setting id="SIMON_JUMP_SPEED_X" type="float" value="0.15f" />
     <setting id="SIMON_JUMP_SPEED_Y" type="float" value="0.6f" />
+    <setting id="SIMON_DEFLECT_SPEED_X" type="float" value="0.18f" />
+    <setting id="SIMON_DEFLECT_SPEED_Y" type="float" value="0.5f" />
     <setting id="SIMON_GRAVITY" type="float" value="0.0025f" />
     <setting id="SIMON_BBOX_WIDTH" type="int" value="35" />
     <setting id="SIMON_BBOX_HEIGHT" type="int" value="62" />
@@ -318,6 +320,10 @@
     <setting id="BONE_BBOX_HEIGHT" type="int" value="31" />
     <setting id="BONE_MOVE_SPEED_X" type="float" value="0.1f" />
     <setting id="BONE_MOVE_SPEED_Y" type="float" value="0.25f" />
+    <setting id="BONE_DISPLAY_TIME" type="int" value="2000" />
+
+    <!-- Bonus -->
+    <setting id="BONUS_MOVE_UP_SPEED" type="float" value="0.05f" />
 
     <!-- Boomerang -->
     <setting id="BOOMERANG_MOVE_SPEED" type="float" value="0.2f" />

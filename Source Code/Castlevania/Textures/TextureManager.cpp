@@ -54,7 +54,7 @@ bool CTextureManager::LoadFromFile(string filePath)
 	return true;
 }
 
-void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor)
+void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor, bool sharable)
 {
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
@@ -91,14 +91,38 @@ void CTextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor
 		return;
 	}
 
-	textures[id] = texture;
+	if (sharable)
+	{
+		sharedTextures[id] = texture;
+	}
+	else
+	{
+		textures[id] = texture;
+	}
 
 	CDebug::Info("Texture loaded successfully: ID=" + id + ", Path=" + path, "TextureManager.cpp");
 }
 
 LPDIRECT3DTEXTURE9 CTextureManager::Get(string id)
 {
-	return textures[id];
+	bool foundInTextures = textures[id] != nullptr;
+	bool foundInSharedTextures = sharedTextures[id] != nullptr;
+
+	if (foundInTextures || foundInSharedTextures)
+	{
+		if (foundInTextures)
+		{
+			return textures[id];
+		}
+		else
+		{
+			return sharedTextures[id];
+		}
+	}
+	else
+	{
+		CDebug::Error("Failed to find animation set id=" + id, "AnimationSets.cpp");
+	}
 }
 
 void CTextureManager::Clear()

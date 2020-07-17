@@ -12,8 +12,7 @@ public:
 	static CGameSoundManager* GetInstance();
 
 	void Init();
-	void Add(string id, string path, bool loop = false, bool retained = false, bool isBackground = false);
-	void Remove(string id);
+	void Add(string id, string path, bool loop = false, bool retained = false, bool isBackground = false, bool sharable = false);
 	void Play(string id, bool reset = true);
 	void Stop(string id);
 	void Clear(bool forced = false);
@@ -29,6 +28,7 @@ private:
 	static CGameSoundManager* instance;
 
 	unordered_map<string, CGameSound*> sounds;
+	unordered_map<string, CGameSound*> sharedSounds;
 
 	CSoundManager* soundManager;
 };

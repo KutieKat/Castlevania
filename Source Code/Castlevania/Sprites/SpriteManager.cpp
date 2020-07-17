@@ -39,15 +39,40 @@ bool CSpriteManager::LoadFromFile(string filePath)
 	return true;
 }
 
-void CSpriteManager::Add(string id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture)
+void CSpriteManager::Add(string id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 texture, bool sharable)
 {
 	CSprite* sprite = new CSprite(id, left, top, right, bottom, texture);
-	sprites[id] = sprite;
+
+	if (sharable)
+	{
+		sharedSprites[id] = sprite;
+	}
+	else
+	{
+		sprites[id] = sprite;
+	}
 }
 
 CSprite* CSpriteManager::Get(string id)
 {
-	return sprites[id];
+	bool foundInSprites = sprites[id] != nullptr;
+	bool foundInSharedSprites = sharedSprites[id] != nullptr;
+
+	if (foundInSprites || foundInSharedSprites)
+	{
+		if (foundInSprites)
+		{
+			return sprites[id];
+		}
+		else
+		{
+			return sharedSprites[id];
+		}
+	}
+	else
+	{
+		CDebug::Error("Failed to find sprite id=" + id, "SpriteManager.cpp");
+	}
 }
 
 CSprite* &CSpriteManager::operator[](string id)

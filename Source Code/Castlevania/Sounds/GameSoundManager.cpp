@@ -22,7 +22,7 @@ void CGameSoundManager::Init()
 	soundManager->SetPrimaryBufferFormat(2, 22050, 16);
 }
 
-void CGameSoundManager::Add(string id, string path, bool loop, bool retained, bool isBackground)
+void CGameSoundManager::Add(string id, string path, bool loop, bool retained, bool isBackground, bool sharable)
 {
 	CSound* sound;
 	HRESULT result = soundManager->Create(&sound, CA2T(path.c_str()));
@@ -35,46 +35,86 @@ void CGameSoundManager::Add(string id, string path, bool loop, bool retained, bo
 
 	CGameSound* gameSound = new CGameSound(sound, path, loop, retained, isBackground);
 
-	if (isBackground)
+	if (sharable)
 	{
-		if (Existed(id) == false)
-		{
-			sounds[id] = gameSound;
-		}
-		else
-		{
-			if (sounds[id]->GetPath() != path)
-			{
-				sounds[id]->Stop();
-				sounds[id] = gameSound;
-			}
-		}
+		sharedSounds[id] = gameSound;
 	}
 	else
 	{
-		sounds[id] = gameSound;
+		if (isBackground)
+		{
+			if (Existed(id) == false)
+			{
+				sounds[id] = gameSound;
+			}
+			else
+			{
+				if (sounds[id] != nullptr && sounds[id]->GetPath() != path)
+				{
+					sounds[id]->Stop();
+					sounds[id] = gameSound;
+				}
+			}
+		}
+		else
+		{
+			sounds[id] = gameSound;
+		}
 	}
-}
-
-void CGameSoundManager::Remove(string id)
-{
-	sounds[id]->Clear();
-	sounds.erase(id);
 }
 
 void CGameSoundManager::Play(string id, bool reset)
 {
-	if (reset)
-	{
-		sounds[id]->Reset();
-	}
+	bool foundInSounds = sounds[id] != nullptr;
+	bool foundInSharedSounds = sharedSounds[id] != nullptr;
 
-	sounds[id]->Play();
+	if (foundInSounds || foundInSharedSounds)
+	{
+		if (foundInSounds)
+		{
+			if (reset)
+			{
+				sounds[id]->Reset();
+			}
+
+			sounds[id]->Play();
+		}
+		else
+		{
+			if (reset)
+			{
+				sharedSounds[id]->Reset();
+			}
+
+			sharedSounds[id]->Play();
+		}
+	}
+	else
+	{
+		CDebug::Error("Failed to find sound id=" + id, "GameSoundManager.cpp");
+	}
 }
 
 void CGameSoundManager::Stop(string id)
 {
-	sounds[id]->Stop();
+	bool foundInSounds = sounds[id] != nullptr;
+	bool foundInSharedSounds = sharedSounds[id] != nullptr;
+
+	if (foundInSounds || foundInSharedSounds)
+	{
+		if (foundInSounds)
+		{
+			sounds[id]->Stop();
+		}
+		else
+		{
+			sharedSounds[id]->Stop();
+		}
+	}
+	else
+	{
+		CDebug::Error("Failed to find sound id=" + id, "GameSoundManager.cpp");
+	}
 }
 
 void CGameSoundManager::Clear(bool forced)
@@ -85,32 +125,39 @@ void CGameSoundManager::Clear(bool forced)
 
 		while (sound != sounds.end())
 		{
-			if (sound->second->Retained() == false)
+			if (sound->second != nullptr)
 			{
-				sound->second->Clear();
-				sound = sounds.erase(sound);
-			}
-			else
-			{
-				sound->second->Stop();
+				if (sound->second->Retained() == false)
+				{
+					sound->second->Stop();
+					sound->second->Clear();
+					sound = sounds.erase(sound);
+				}
+				else
+				{
+					sound->second->Stop();
+				}
 			}
 
 			if (sound != sounds.end())
 			{
 				sound++;
 			}
-
 		}
 	}
 	else
 	{
 		for (auto sound : sounds)
 		{
-			sound.second->Clear();
+			if (sound.second != nullptr)
+			{
+				sound.second->Clear();
+			}
 		}
 
 		sounds.clear();
 	}
+
 }
 
 void CGameSoundManager::PlayBackgroundSounds()
@@ -119,19 +166,29 @@ void CGameSoundManager::PlayBackgroundSounds()
 
 	for (sound = sounds.begin(); sound != sounds.end(); ++sound)
 	{
-		if (sound->second->IsBackground())
+		if (sound->second != nullptr && sound->second->IsBackground())
 		{
 			sound->second->Play();
 			break;
 		}
 	}
+
+	//CDebug::Info("Sounds rieng: " + to_string(sounds.size()) + ", Sounds chung: " + to_string(sharedSounds.size()));
 }
 
 void CGameSoundManager::StopBackgroundSounds()
 {
 	for (auto sound : sounds)
 	{
-		if (sound.second->IsBackground())
+		if (sound.second != nullptr && sound.second->IsBackground())
+		{
+			sound.second->Stop();
+		}
+	}
+
+	for (auto sound : sharedSounds)
+	{
+		if (sound.second != nullptr && sound.second->IsBackground())
 		{
 			sound.second->Stop();
 		}
@@ -140,17 +197,52 @@ void CGameSoundManager::StopBackgroundSounds()
 
 bool CGameSoundManager::Playing(string id)
 {
-	return sounds[id]->Playing();
+	bool foundInSounds = sounds[id] != nullptr;
+	bool foundInSharedSounds = sharedSounds[id] != nullptr;
+
+	if (foundInSounds || foundInSharedSounds)
+	{
+		if (foundInSounds)
+		{
+			return sounds[id]->Playing();
+		}
+		else
+		{
+			return sharedSounds[id]->Playing();
+		}
+	}
+	else
+	{
+		CDebug::Error("Failed to find sound id=" + id, "GameSoundManager.cpp");
+		return false;
+	}
 }
 
 CGameSound* CGameSoundManager::GetGameSound(string id)
 {
-	return sounds[id];
+	bool foundInSounds = sounds[id] != nullptr;
+	bool foundInSharedSounds = sharedSounds[id] != nullptr;
+
+	if (foundInSounds || foundInSharedSounds)
+	{
+		if (foundInSounds)
+		{
+			return sounds[id];
+		}
+		else
+		{
+			return sharedSounds[id];
+		}
+	}
+	else
+	{
+		CDebug::Error("Failed to find sound id=" + id, "GameSoundManager.cpp");
+	}
 }
 
 bool CGameSoundManager::Existed(string id)
 {
-	if (sounds.find(id) != sounds.end())
+	if (sounds.find(id) != sounds.end() || sharedSounds.find(id) != sharedSounds.end())
 	{
 		return true;
 	}
