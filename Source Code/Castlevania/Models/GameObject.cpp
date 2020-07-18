@@ -345,7 +345,9 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 200);
+	int alpha = CSettingManager::GetInstance()->GetIntValue("BOUNDING_BOX_ALPHA");
+
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, alpha);
 }
 
 void CGameObject::SetLeftBound(int left)

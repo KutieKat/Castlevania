@@ -1217,11 +1217,13 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	{
 		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("dagger");
+		playerData->SetPower(NORMAL_POWER);
 	}
 	else if (dynamic_cast<CAxe*>(item))
 	{
 		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("axe");
+		playerData->SetPower(NORMAL_POWER);
 	}
 	else if (dynamic_cast<CMoneyBag*>(item))
 	{
@@ -1252,6 +1254,7 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	{
 		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("boomerang");
+		playerData->SetPower(NORMAL_POWER);
 	}
 	else if (dynamic_cast<CDoubleShot*>(item))
 	{
@@ -1272,11 +1275,13 @@ void CSimon::HandleCollisionWithItems(CGameObject* item)
 	{
 		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("holy_water");
+		playerData->SetPower(NORMAL_POWER);
 	}
 	else if (dynamic_cast<CStopwatch*>(item))
 	{
 		soundManager->Play("collecting_weapon_item");
 		playerData->SetSubWeaponType("stopwatch");
+		playerData->SetPower(NORMAL_POWER);
 	}
 	else if (dynamic_cast<CInvisibilityPotion*>(item))
 	{

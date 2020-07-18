@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
     <!-- Game -->
-    <setting id="BOUNDING_BOX_DISPLAYED" type="int" value="false" />
+    <setting id="BOUNDING_BOX_DISPLAYED" type="bool" value="false" />
     <setting id="CHEAT_KEYS_ACTIVATED" type="bool" value="true" />
     <setting id="DEFAULT_SOFT_PAUSE_TIME" type="int" value="3000" />
     <setting id="DEFAULT_INTRO_SCENE_DELAY_TIME" type="int" value="3000" />
     <setting id="DEFAULT_GAME_TIME" type="int" value="300" />
+    <setting id="DEFAULT_WAITING_TIME" type="int" value="3000" />
+    <setting id="BOUNDING_BOX_ALPHA" type="int" value="200" />
     <setting id="SCREEN_WIDTH" type="int" value="528" />
     <setting id="SCREEN_HEIGHT" type="int" value="528" />
     <setting id="HEART_SCORE" type="int" value="100" />
