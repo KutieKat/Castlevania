@@ -1,5 +1,5 @@
 # Castlevania
-My clone of Castlevania (NES) - Introduction to Game Programming Course (SE102)
+:video_game: A remake of Castlevania (NES) - Introduction to Game Programming Course (SE102)
 ![Logo](https://github.com/KutieKat/Castlevania/blob/feature/scene-3/Images/Logo.png?raw=true)
 
 ## Introduction
