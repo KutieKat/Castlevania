@@ -1,10 +1,11 @@
 #include "TwoThousand.h"
+#include "../../Game.h"
 
 CTwoThousand::CTwoThousand()
 {
 	isEffect = true;
 	SetAnimationSet("two_thousand");
-	elevation = EFFECT_DEFAULT_ELEVATION;
+	elevation = CSettingManager::GetInstance()->GetIntValue("EFFECT_DEFAULT_ELEVATION");
 }
 
 void CTwoThousand::GetBoundingBox(float & left, float & top, float & right, float & bottom)

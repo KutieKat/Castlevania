@@ -89,7 +89,6 @@
     <ClCompile Include="Models\Misc\Cursor.cpp" />
     <ClCompile Include="Models\Misc\EnemySpawnerArea.cpp" />
     <ClCompile Include="Models\Misc\GameOverBoard.cpp" />
-    <ClCompile Include="Models\Misc\Ground.cpp" />
     <ClCompile Include="Models\Misc\HealthBar.cpp" />
     <ClCompile Include="Models\Misc\HealthVolume.cpp" />
     <ClCompile Include="Models\Misc\Helicopter.cpp" />
@@ -118,6 +117,7 @@
     <ClCompile Include="Scenes\PlayScene.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneManager.cpp" />
+    <ClCompile Include="Settings\SettingManager.cpp" />
     <ClCompile Include="Sounds\GameSound.cpp" />
     <ClCompile Include="Sounds\GameSoundManager.cpp" />
     <ClCompile Include="Sprites\Sprite.cpp" />
@@ -200,7 +200,6 @@
     <ClInclude Include="Models\Misc\Cursor.h" />
     <ClInclude Include="Models\Misc\EnemySpawnerArea.h" />
     <ClInclude Include="Models\Misc\GameOverBoard.h" />
-    <ClInclude Include="Models\Misc\Ground.h" />
     <ClInclude Include="Models\Misc\HealthBar.h" />
     <ClInclude Include="Models\Misc\HealthVolume.h" />
     <ClInclude Include="Models\Misc\Helicopter.h" />
@@ -230,6 +229,7 @@
     <ClInclude Include="Scenes\PlayScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneManager.h" />
+    <ClInclude Include="Settings\SettingManager.h" />
     <ClInclude Include="Sounds\GameSound.h" />
     <ClInclude Include="Sounds\GameSoundManager.h" />
     <ClInclude Include="Sprites\Sprite.h" />

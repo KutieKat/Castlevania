@@ -44,9 +44,16 @@ bool CAnimationManager::LoadFromFile(string filePath)
 	return true;
 }
 
-void CAnimationManager::Add(string id, CAnimation* animation)
+void CAnimationManager::Add(string id, CAnimation* animation, bool sharable)
 {
-	animations[id] = animation;
+	if (sharable)
+	{
+		sharedAnimations[id] = animation;
+	}
+	else
+	{
+		animations[id] = animation;
+	}
 }
 
 void CAnimationManager::Clear()
@@ -62,14 +69,24 @@ void CAnimationManager::Clear()
 
 CAnimation* CAnimationManager::Get(string id)
 {
-	CAnimation* ani = animations[id];
+	bool foundInAnimations = animations[id] != nullptr;
+	bool foundInSharedAnimations = sharedAnimations[id] != nullptr;
 
-	if (ani == nullptr)
+	if (foundInAnimations || foundInSharedAnimations)
+	{
+		if (foundInAnimations)
+		{
+			return animations[id];
+		}
+		else
+		{
+			return sharedAnimations[id];
+		}
+	}
+	else
 	{
 		CDebug::Error("Failed to find animation id=" + id, "AnimationManager.cpp");
 	}
-
-	return ani;
 }
 
 CAnimationManager* CAnimationManager::GetInstance()

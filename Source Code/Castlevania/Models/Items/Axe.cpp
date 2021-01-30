@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CAxe::CAxe()
 {
@@ -18,8 +19,9 @@ CAxe::CAxe()
 void CAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -68,7 +70,7 @@ void CAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				y -= min_ty * dy + ny * 0.4f;
 
-				if (e->ny != 0) y += dy;
+				if (e->ny < 0) y += dy;
 			}
 			else
 			{
@@ -85,6 +87,8 @@ void CAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
 	right = left + AXE_BBOX_WIDTH;
@@ -93,5 +97,10 @@ void CAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void CAxe::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(AXE_ANI_STATIC)->Render(x, y);
 }

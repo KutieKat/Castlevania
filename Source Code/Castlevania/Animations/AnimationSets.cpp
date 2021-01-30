@@ -4,21 +4,38 @@
 
 CAnimationSets* CAnimationSets::instance = nullptr;
 
-void CAnimationSets::Add(string id, CAnimationSet* animationSet)
+void CAnimationSets::Add(string id, CAnimationSet* animationSet, bool sharable)
 {
-	animationSets[id] = animationSet;
+	if (sharable)
+	{
+		sharedAnimationSets[id] = animationSet;
+	}
+	else
+	{
+		animationSets[id] = animationSet;
+	}
 }
 
 CAnimationSet* CAnimationSets::Get(string id)
 {
-	CAnimationSet* animationSet = animationSets[id];
+	bool foundInAnimationSets = animationSets[id] != nullptr;
+	bool foundInSharedAnimationSets = sharedAnimationSets[id] != nullptr;
 
-	if (animationSet == nullptr)
+	if (foundInAnimationSets || foundInSharedAnimationSets)
+	{
+		if (foundInAnimationSets)
+		{
+			return animationSets[id];
+		}
+		else
+		{
+			return sharedAnimationSets[id];
+		}
+	}
+	else
 	{
 		CDebug::Error("Failed to find animation set id=" + id, "AnimationSets.cpp");
 	}
-
-	return animationSet;
 }
 
 void CAnimationSets::Clear()

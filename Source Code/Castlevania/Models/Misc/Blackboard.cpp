@@ -8,8 +8,7 @@
 
 CBlackboard::CBlackboard()
 {
-	x = 0;
-	y = 0;
+	x = y = 0;
 	game = CGame::GetInstance();
 
 	InitSubWeapon();
@@ -23,18 +22,6 @@ CBlackboard::CBlackboard()
 void CBlackboard::SetAnimationSet(string animationSetId)
 {
 	animationSet = CAnimationSets::GetInstance()->Get(animationSetId);
-}
-
-void CBlackboard::SetPosition(float x, float y)
-{
-	this->x = x;
-	this->y = y;
-}
-
-void CBlackboard::GetPosition(float & x, float & y)
-{
-	x = this->x;
-	y = this->y;
 }
 
 void CBlackboard::Update()
@@ -102,9 +89,10 @@ void CBlackboard::InitHealthBars()
 {
 	CPlayerData* playerData = game->GetPlayerData();
 	CBossData* bossData = game->GetBossData();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	simonHealthBar = new CHealthBar(HealthType::Player, HEALTH_BAR_MAX_VOLUMES, playerData->GetHealthVolumes());
-	enemyHealthBar = new CHealthBar(HealthType::Enemy, HEALTH_BAR_MAX_VOLUMES, bossData->GetHealthVolumes());
+	simonHealthBar = new CHealthBar(HealthType::Player, settingManager->GetIntValue("SIMON_DEFAULT_HEALTHS"), playerData->GetHealthVolumes());
+	enemyHealthBar = new CHealthBar(HealthType::Enemy, settingManager->GetIntValue("BOSS_DEFAULT_HEALTHS"), bossData->GetHealthVolumes());
 }
 
 void CBlackboard::InitSubWeapon()
@@ -117,14 +105,16 @@ void CBlackboard::InitSubWeapon()
 
 void CBlackboard::InitWhipPower()
 {
+	currentWhipPower = game->GetPlayerData()->GetPower();
+
 	switch (game->GetPlayerData()->GetPower())
 	{
 	case DOUBLE_POWER:
-		whipPower = CObjectFactory::Construct("big_double_shot");
+		whipPower = new CBigDoubleShot();
 		break;
 
 	case TRIPLE_POWER:
-		whipPower = CObjectFactory::Construct("big_triple_shot");
+		whipPower = new CBigTripleShot();
 		break;
 	}
 }
@@ -162,35 +152,7 @@ void CBlackboard::RenderWhipPowerType()
 
 void CBlackboard::UpdatePosition()
 {
-	if (tileMap)
-	{
-		if (tileMap->GetWidth() < SCREEN_WIDTH)
-		{
-			x = 0;
-		}
-		else
-		{
-			if (simon->x < SCREEN_WIDTH / 2 - SIMON_BBOX_WIDTH)
-			{
-				x = 0;
-			}
-			else if (simon->x >= tileMap->GetWidth() - SCREEN_WIDTH / 2 - SIMON_BBOX_WIDTH)
-			{
-				x = tileMap->GetWidth() - SCREEN_WIDTH;
-			}
-			else
-			{
-				if (game->GetCamera()->Locked())
-				{
-					x = tileMap->GetWidth() - SCREEN_WIDTH;
-				}
-				else
-				{
-					x = simon->x + SIMON_BBOX_WIDTH - SCREEN_WIDTH / 2;
-				}
-			}
-		}
-	}
+	x = CGame::GetInstance()->GetCamera()->GetLeft();
 }
 
 void CBlackboard::UpdateLabels()
@@ -268,11 +230,11 @@ void CBlackboard::UpdateWhipPowerType()
 		switch (game->GetPlayerData()->GetPower())
 		{
 		case DOUBLE_POWER:
-			whipPower = CObjectFactory::Construct("big_double_shot");
+			whipPower = new CBigDoubleShot(true);
 			break;
 
 		case TRIPLE_POWER:
-			whipPower = CObjectFactory::Construct("big_triple_shot");
+			whipPower = new CBigTripleShot(true);
 			break;
 		}
 	}

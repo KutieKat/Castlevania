@@ -1,4 +1,5 @@
 #include "NextScene.h"
+#include "../../Game.h"
 
 CNextScene::CNextScene()
 {
@@ -8,6 +9,8 @@ CNextScene::CNextScene()
 
 void CNextScene::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
 	right = left + NEXT_SCENE_BBOX_WIDTH;
@@ -16,5 +19,10 @@ void CNextScene::GetBoundingBox(float & left, float & top, float & right, float 
 
 void CNextScene::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

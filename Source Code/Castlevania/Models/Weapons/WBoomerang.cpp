@@ -1,5 +1,4 @@
 #include "WBoomerang.h"
-#include "../../Utilities/Debug.h"
 #include "../Characters/Enemies/Enemy.h"
 #include "../Misc/BigCandle.h"
 #include "../Misc/SmallCandle.h"
@@ -7,28 +6,23 @@
 
 WBoomerang::WBoomerang(CSimon* simon)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	SetAnimationSet("boomerang");
 
 	this->simon = simon;
-	this->elevation = WEAPON_DEFAULT_ELEVATION;
+	this->elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
 	this->collisionCount = 0;
 	this->directionX = simon->directionX;
-	this->vx = simon->directionX == Direction::Right ? BOOMERANG_MOVE_SPEED : -BOOMERANG_MOVE_SPEED;
-	this->maxRight = simon->x + BOOMERANG_MOVABLE_AREA_WIDTH;
-	this->maxLeft = simon->x - BOOMERANG_MOVABLE_AREA_WIDTH;
+	this->vx = simon->directionX == Direction::Right ? settingManager->GetFloatValue("BOOMERANG_MOVE_SPEED") : -settingManager->GetFloatValue("BOOMERANG_MOVE_SPEED");
+	this->maxRight = simon->x + settingManager->GetIntValue("BOOMERANG_MOVABLE_AREA_WIDTH");
+	this->maxLeft = simon->x - settingManager->GetIntValue("BOOMERANG_MOVABLE_AREA_WIDTH");
 }
 
 void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
-	if (collisionCount == 1 && (directionX == Direction::Right && x < simon->x + SIMON_BBOX_WIDTH && y > simon->y) || (directionX == Direction::Left && x > simon->x && y > simon->y))
-	{
-		CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
-		CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
-
-		removable = true;
-	}
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	if (collisionCount == 2)
 	{
@@ -55,14 +49,6 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vx = -vx;
 			collisionCount++;
 		}
-
-		if (x > CGame::GetInstance()->GetCamera()->GetRight() || x < CGame::GetInstance()->GetCamera()->GetLeft())
-		{
-			CGame::GetInstance()->GetSoundManager()->Stop("throwing_boomerang");
-			CGame::GetInstance()->GetPlayerData()->DecreaseThrownSubWeapons();
-
-			removable = true;
-		}
 	}
 	else
 	{
@@ -83,9 +69,11 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				auto enemy = dynamic_cast<CEnemy*>(e->obj);
 
-				enemy->TakeDamage(BOOMERANG_DAMAGES);
+				enemy->TakeDamage(settingManager->GetIntValue("BOOMERANG_DAMAGES"));
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CBigCandle*>(e->obj))
 			{
@@ -94,6 +82,8 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else if (dynamic_cast<CSmallCandle*>(e->obj))
 			{
@@ -102,6 +92,8 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				candle->Disappear();
 
 				if (e->nx != 0) x += dx;
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
 			}
 			else
 			{
@@ -118,6 +110,8 @@ void WBoomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void WBoomerang::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	l = x;
 	t = y;
 	r = l + BOOMERANG_BBOX_WIDTH;
@@ -126,5 +120,15 @@ void WBoomerang::GetBoundingBox(float & l, float & t, float & r, float & b)
 
 void WBoomerang::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(BOOMERANG_ANI_MOVE)->Render(x, y);
+}
+
+int WBoomerang::GetCollisionCount()
+{
+	return collisionCount;
 }

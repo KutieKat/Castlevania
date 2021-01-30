@@ -283,42 +283,77 @@ void CCutSceneKeyHandler::OnKeyDown(int keyCode)
 {
 	CGame* game = CGame::GetInstance();
 	CSceneManager* sceneManager = game->GetSceneManager();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (keyCode)
 	{
 	case DIK_F1:
-		game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("INTRO_SCENE"));
 		break;
 
 	case DIK_F2:
-		game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_1);
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_1"));
 		break;
 
 	case DIK_F3:
-		game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_1);
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_1"));
 		break;
 
 	case DIK_F4:
-		game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_2);
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_2"));
 		break;
 
 	case DIK_F5:
+		if (!game->CheatKeysActivated()) return;
 		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
 		break;
 
 	case DIK_F6:
-		game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_1);
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_2_1"));
 		break;
 
 	case DIK_F7:
-		game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_2);
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_2_2"));
+		break;
+
+	case DIK_F8:
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_3"));
+		break;
+
+	case DIK_F9:
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_3_1"));
+		break;
+
+	case DIK_F10:
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_3_2"));
+		break;
+
+	case DIK_F11:
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_4"));
+		break;
+
+	case DIK_F12:
+		if (!game->CheatKeysActivated()) return;
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CREDITS_SCENE"));
 		break;
 
 	case DIK_N:
+		if (!game->CheatKeysActivated()) return;
 		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetNextSceneIndex());
 		break;
 
 	case DIK_P:
+		if (!game->CheatKeysActivated()) return;
 		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetPreviousSceneIndex());
 		break;
 	}

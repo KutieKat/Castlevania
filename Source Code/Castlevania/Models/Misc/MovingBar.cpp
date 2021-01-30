@@ -1,9 +1,12 @@
 #include "MovingBar.h"
 #include "Brick.h"
+#include "../../Game.h"
 
 CMovingBar::CMovingBar()
 {
-	vx = MOVING_BAR_MOVE_SPEED;
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
+	vx = settingManager->GetFloatValue("MOVING_BAR_MOVE_SPEED");
 
 	SetAnimationSet("moving_bar");
 }
@@ -49,11 +52,18 @@ void CMovingBar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMovingBar::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 
 void CMovingBar::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
 	right = left + MOVING_BAR_BBOX_WIDTH;

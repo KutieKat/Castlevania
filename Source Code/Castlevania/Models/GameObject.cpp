@@ -15,11 +15,12 @@ CGameObject::CGameObject()
 	x = y = 0;
 	vx = vy = 0;
 	disappearingTime = -1;
-	elevation = DEFAULT_ELEVATION;
+	elevation = CSettingManager::GetInstance()->GetIntValue("DEFAULT_ELEVATION");
 
 	directionX = Direction::Right;
 	directionY = Direction::None;
 
+	showingHiddenItem = true;
 	showingEffect = false;
 	showingEndingEffect = false;
 	isEffect = false;
@@ -129,7 +130,7 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		
 		if (showingEndingEffect)
 		{
-			if (hiddenItem)
+			if (hiddenItem && showingHiddenItem)
 			{
 				hiddenItem->SetVisibility(Visibility::Visible);
 				hiddenItem->SetPosition(x, y);
@@ -140,7 +141,7 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 				else
 				{
-					hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+					hiddenItem->SetDisplayTime(CSettingManager::GetInstance()->GetIntValue("ITEM_DISPLAY_TIME"));
 				}
 			}
 
@@ -177,7 +178,7 @@ void CGameObject::Disappear()
 
 		endingEffect->SetVisibility(Visibility::Visible);
 		endingEffect->SetPosition(ol + ((or - ol) - (er - el)) / 2 - 10, ot + ((ob - ot) - (eb - et)) / 2 - 10);
-		endingEffect->SetDisplayTime(ENDING_EFFECT_DISPLAY_TIME);
+		endingEffect->SetDisplayTime(CSettingManager::GetInstance()->GetIntValue("ENDING_EFFECT_DISPLAY_TIME"));
 	}
 	else
 	{
@@ -199,13 +200,18 @@ void CGameObject::ShowEffect()
 
 		endingEffect->SetVisibility(Visibility::Visible);
 		endingEffect->SetPosition(ol + ((or -ol) - (er - el)) / 2 - 10, ot + ((ob - ot) - (eb - et)) / 2 - 10);
-		endingEffect->SetDisplayTime(EFFECT_DISPLAY_TIME);
+		endingEffect->SetDisplayTime(CSettingManager::GetInstance()->GetIntValue("EFFECT_DISPLAY_TIME"));
 	}
 }
 
 void CGameObject::ShowHiddenItem()
 {
 	hiddenItem->SetVisibility(Visibility::Visible);
+}
+
+void CGameObject::HideHiddenItem()
+{
+	showingHiddenItem = false;
 }
 
 /*
@@ -339,7 +345,9 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 200);
+	int alpha = CSettingManager::GetInstance()->GetIntValue("BOUNDING_BOX_ALPHA");
+
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, alpha);
 }
 
 void CGameObject::SetLeftBound(int left)

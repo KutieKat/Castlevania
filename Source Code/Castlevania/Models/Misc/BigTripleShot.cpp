@@ -1,21 +1,35 @@
 #include "BigTripleShot.h"
+#include "../../Game.h"
 
-CBigTripleShot::CBigTripleShot()
+CBigTripleShot::CBigTripleShot(bool blinking)
 {
 	SetAnimationSet("big_triple_shot");
-	animationSet->at(0)->SetStartTime(GetTickCount());
+	animationSet->at(BIG_TRIPLE_SHOT_ANI_BLINKING)->SetStartTime(GetTickCount());
+
+	this->blinking = blinking;
 }
 
 void CBigTripleShot::Render()
 {
-	if (animationSet->at(0)->Over())
+	int ani;
+
+	if (blinking)
 	{
-		animationSet->at(1)->Render(x, y);
+		if (animationSet->at(BIG_TRIPLE_SHOT_ANI_BLINKING)->Over())
+		{
+			ani = BIG_TRIPLE_SHOT_ANI_STATIC;
+		}
+		else
+		{
+			ani = BIG_TRIPLE_SHOT_ANI_BLINKING;
+		}
 	}
 	else
 	{
-		animationSet->at(0)->Render(x, y);
+		ani = BIG_TRIPLE_SHOT_ANI_STATIC;
 	}
+
+	animationSet->at(ani)->Render(x, y);
 }
 
 void CBigTripleShot::GetBoundingBox(float& left, float& top, float& right, float& bottom)

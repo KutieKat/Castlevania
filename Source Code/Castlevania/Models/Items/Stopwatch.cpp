@@ -8,6 +8,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CStopwatch::CStopwatch()
 {
@@ -19,6 +20,11 @@ void CStopwatch::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }
@@ -26,8 +32,9 @@ void CStopwatch::Render()
 void CStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -74,7 +81,7 @@ void CStopwatch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				y -= min_ty * dy + ny * 0.4f;
 
-				if (e->ny != 0) y += dy;
+				if (e->ny < 0) y += dy;
 			}
 			else
 			{
@@ -93,6 +100,8 @@ void CStopwatch::GetBoundingBox(float& left, float& top, float& right, float& bo
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
 		right = left + STOPWATCH_BBOX_WIDTH;

@@ -16,14 +16,16 @@ CGameOverBoard::CGameOverBoard()
 
 void CGameOverBoard::Update()
 {
+	CCamera* camera = CGame::GetInstance()->GetCamera();
+
 	switch (index)
 	{
 	case CONTINUE_OPTION:
-		cursor->SetPosition(150, 268);
+		cursor->SetPosition(camera->GetLeft() + 150, 268);
 		break;
 
 	case END_OPTION:
-		cursor->SetPosition(150, 318);
+		cursor->SetPosition(camera->GetLeft() + 150, 318);
 		break;
 	}
 }
@@ -67,19 +69,29 @@ void CGameOverBoard::Select()
 {
 	CGame* game = CGame::GetInstance();
 	CSceneManager* sceneManager = game->GetSceneManager();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	dynamic_cast<CPlayScene*>(sceneManager->GetCurrentScene())->HideGameOverBoard();
 
 	switch (index)
 	{
 	case CONTINUE_OPTION:
-		game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
-		game->GetTimer()->SetTime(DEFAULT_GAME_TIME);
+		if (game->GetSceneManager()->GetCurrentScene()->GetRequiredSceneId() != "")
+		{
+			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex() - 1);
+		}
+		else
+		{
+			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+		}
+
+		//game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
+		game->GetTimer()->SetTime(settingManager->GetIntValue("DEFAULT_GAME_TIME"));
 		game->GetPlayerData()->Reset();
 		break;
 
 	case END_OPTION:
-		game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+		game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("INTRO_SCENE"));
 		break;
 	}
 }

@@ -236,7 +236,7 @@ void CIntroSceneKeyHandler::OnKeyDown(int keyCode)
 	{
 	case DIK_RETURN:
 	case DIK_W:
-		dynamic_cast<CIntroScene*>(game->GetSceneManager()->GetCurrentScene())->SetSwitchSceneTime(GetTickCount() + 3000);
+		dynamic_cast<CIntroScene*>(game->GetSceneManager()->GetCurrentScene())->SetSwitchSceneTime(GetTickCount() + CSettingManager::GetInstance()->GetIntValue("DEFAULT_INTRO_SCENE_DELAY_TIME"));
 		break;
 	}
 }

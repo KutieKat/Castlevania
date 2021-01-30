@@ -1,4 +1,5 @@
 #include "MapPin.h"
+#include "../../Game.h"
 
 CMapPin::CMapPin()
 {

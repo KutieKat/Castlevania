@@ -1,5 +1,5 @@
 #include "IntroBat.h"
-#include "../../Utilities/Debug.h"
+#include "../../Game.h"
 
 CIntroBat::CIntroBat()
 {

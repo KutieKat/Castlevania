@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <!-- Game -->
+    <setting id="BOUNDING_BOX_DISPLAYED" type="bool" value="false" />
+    <setting id="CHEAT_KEYS_ACTIVATED" type="bool" value="true" />
+    <setting id="DEFAULT_SOFT_PAUSE_TIME" type="int" value="3000" />
+    <setting id="DEFAULT_INTRO_SCENE_DELAY_TIME" type="int" value="3000" />
+    <setting id="DEFAULT_GAME_TIME" type="int" value="300" />
+    <setting id="DEFAULT_WAITING_TIME" type="int" value="3000" />
+    <setting id="BOUNDING_BOX_ALPHA" type="int" value="200" />
+    <setting id="SCREEN_WIDTH" type="int" value="528" />
+    <setting id="SCREEN_HEIGHT" type="int" value="528" />
+    <setting id="HEART_SCORE" type="int" value="100" />
+    <setting id="TIME_SCORE" type="int" value="10" />
+    <setting id="ADDED_LIVES" type="int" value="10" />
+    <setting id="ADDED_HEARTS" type="int" value="100" />
+    <setting id="WINDOW_CLASS_NAME" type="string" value="Castlevania" />
+    <setting id="WINDOW_TITLE" type="string" value="Castlevania" />
+
+    <!-- Scenes -->
+    <setting id="INTRO_SCENE" type="int" value="0" />
+    <setting id="CUT_SCENE_1" type="int" value="1" />
+    <setting id="PLAY_SCENE_1" type="int" value="2" />
+    <setting id="CUT_SCENE_2" type="int" value="3" />
+    <setting id="PLAY_SCENE_2_1" type="int" value="4" />
+    <setting id="PLAY_SCENE_2_2" type="int" value="5" />
+    <setting id="CUT_SCENE_3" type="int" value="6" />
+    <setting id="PLAY_SCENE_3_1" type="int" value="7" />
+    <setting id="PLAY_SCENE_3_2" type="int" value="8" />
+    <setting id="PLAY_SCENE_4" type="int" value="9" />
+    <setting id="CREDITS_SCENE" type="int" value="10" />
+
+    <!-- Elevation -->
+    <setting id="DEFAULT_ELEVATION" type="int" value="1" />
+    <setting id="ENEMY_DEFAULT_ELEVATION" type="int" value="2" />
+    <setting id="EFFECT_DEFAULT_ELEVATION" type="int" value="3" />
+    <setting id="WEAPON_DEFAULT_ELEVATION" type="int" value="4" />
+    <setting id="SIMON_DEFAULT_ELEVATION" type="int" value="10" />
+
+    <!-- Simon -->
+    <setting id="SIMON_WALK_SPEED" type="float" value="0.1f" />
+    <setting id="SIMON_SLOW_WALK_SPEED" type="float" value="0.08f" />
+    <setting id="SIMON_JUMP_SPEED_X" type="float" value="0.15f" />
+    <setting id="SIMON_JUMP_SPEED_Y" type="float" value="0.6f" />
+    <setting id="SIMON_DEFLECT_SPEED_X" type="float" value="0.18f" />
+    <setting id="SIMON_DEFLECT_SPEED_Y" type="float" value="0.5f" />
+    <setting id="SIMON_GRAVITY" type="float" value="0.0025f" />
+    <setting id="SIMON_BBOX_WIDTH" type="int" value="35" />
+    <setting id="SIMON_BBOX_HEIGHT" type="int" value="62" />
+    <setting id="SIMON_INVISIBILITY_TIME" type="int" value="3000" />
+    <setting id="SIMON_DELAY_TIME" type="int" value="900" />
+    <setting id="SIMON_DEFAULT_LIVES" type="int" value="3" />
+    <setting id="SIMON_DEFAULT_HEARTS" type="int" value="5" />
+    <setting id="SIMON_DEFAULT_SCORE" type="int" value="0" />
+    <setting id="SIMON_DEFAULT_HEALTHS" type="int" value="16" />
+    <setting id="SIMON_DEFAULT_WHIP_LEVEL" type="int" value="1" />
+    <setting id="SIMON_DEFAULT_POWER" type="int" value="1" />
+    <setting id="SIMON_DEFAULT_DAMAGES" type="int" value="2" />
+    <setting id="SIMON_DEFAULT_SUB_WEAPON_TYPE" type="string" value="" />
+
+    <!-- Enemy -->
+    <setting id="ENEMY_DEFAULT_DAMAGES" type="int" value="2" />
+    <setting id="ENEMY_DEFAULT_ATTACKS" type="int" value="1" />
+    <setting id="ENEMY_DELAY_TIME" type="int" value="500" />
+    <setting id="ENEMY_DELAY_PLUS_TIME" type="int" value="1000" />
+
+    <!-- Boss -->
+    <setting id="BOSS_DEFAULT_HEALTHS" type="int" value="16" />
+    <setting id="BOSS_DEFAULT_DAMAGES" type="int" value="2" />
+
+    <!-- PhantomBat -->
+    <setting id="PHANTOM_BAT_BBOX_WIDTH" type="int" value="95" />
+    <setting id="PHANTOM_BAT_BBOX_HEIGHT" type="int" value="45" />
+    <setting id="PHANTOM_BAT_INITIAL_STATE" type="int" value="1" />
+    <setting id="PHANTOM_BAT_FLY_SPEED_X" type="float" value="0.05f" />
+    <setting id="PHANTOM_BAT_FLY_SPEED_Y" type="float" value="0.05f" />
+    <setting id="PHANTOM_BAT_ATTACK_SPEED_X" type="float" value="0.15f" />
+    <setting id="PHANTOM_BAT_ATTACK_SPEED_Y" type="float" value="0.25f" />
+    <setting id="PHANTOM_BAT_TO_SIMON_DISTANCE_X" type="int" value="120" />
+    <setting id="PHANTOM_BAT_TO_SIMON_DISTANCE_Y" type="int" value="120" />
+    <setting id="PHANTOM_BAT_AREA_RADIUS_X" type="int" value="100" />
+    <setting id="PHANTOM_BAT_AREA_RADIUS_Y" type="int" value="260" />
+    <setting id="PHANTOM_BAT_SCORE" type="int" value="3000" />
+    <setting id="PHANTOM_BAT_ATTACKS" type="int" value="16" />
+
+    <!-- Ghost -->
+    <setting id="GHOST_BBOX_WIDTH" type="int" value="27" />
+    <setting id="GHOST_BBOX_HEIGHT" type="int" value="27" />
+    <setting id="GHOST_INITIAL_STATE" type="int" value="1" />
+    <setting id="GHOST_MOVE_SPEED_X" type="float" value="0.1f" />
+    <setting id="GHOST_MOVE_SPEED_Y" type="float" value="0.05f" />
+    <setting id="GHOST_SCORE" type="int" value="300" />
+    <setting id="GHOST_ATTACKS" type="int" value="2" />
+    <setting id="GHOST_DAMAGES" type="int" value="2" />
+
+    <!-- Ghoul -->
+    <setting id="GHOUL_GRAVITY" type="float" value="0.0025f" />
+    <setting id="GHOUL_BBOX_WIDTH" type="int" value="33" />
+    <setting id="GHOUL_BBOX_HEIGHT" type="int" value="63" />
+    <setting id="GHOUL_MOVE_SPEED" type="float" value="0.1f" />
+    <setting id="GHOUL_SCORE" type="int" value="100" />
+    <setting id="GHOUL_DAMAGES" type="int" value="2" />
+
+    <!-- WhiteSkeleton -->
+    <setting id="WHITE_SKELETON_GRAVITY" type="float" value="0.0025f" />
+    <setting id="WHITE_SKELETON_INITIAL_STATE" type="int" value="1" />
+    <setting id="WHITE_SKELETON_BBOX_WIDTH" type="int" value="33" />
+    <setting id="WHITE_SKELETON_BBOX_HEIGHT" type="int" value="63" />
+    <setting id="WHITE_SKELETON_INITIAL_STATE" type="int" value="1" />
+    <setting id="WHITE_SKELETON_AREA_RADIUS_X" type="int" value="150" />
+    <setting id="WHITE_SKELETON_AREA_RADIUS_Y" type="int" value="150" />
+    <setting id="WHITE_SKELETON_WALK_SPEED_X" type="float" value="0.05f" />
+    <setting id="WHITE_SKELETON_JUMP_SPEED_X" type="float" value="0.3f" />
+    <setting id="WHITE_SKELETON_JUMP_SPEED_Y" type="float" value="0.6f" />
+    <setting id="WHITE_SKELETON_SCORE" type="int" value="300" />
+    <setting id="WHITE_SKELETON_TO_SIMON_DISTANCE_X" type="int" value="120" />
+    <setting id="WHITE_SKELETON_DAMAGES" type="int" value="2" />
+
+    <!-- Fleamen -->
+    <setting id="FLEAMEN_GRAVITY" type="float" value="0.0025f" />
+    <setting id="FLEAMEN_INITIAL_STATE" type="int" value="1" />
+    <setting id="FLEAMEN_BBOX_WIDTH" type="int" value="31" />
+    <setting id="FLEAMEN_BBOX_HEIGHT" type="int" value="31" />
+    <setting id="FLEAMEN_JUMP_SPEED_X" type="float" value="0.2f" />
+    <setting id="FLEAMEN_JUMP_SPEED_Y" type="float" value="0.7f" />
+    <setting id="FLEAMEN_AREA_RADIUS_X" type="int" value="150" />
+    <setting id="FLEAMEN_AREA_RADIUS_Y" type="int" value="150" />
+    <setting id="FLEAMEN_SCORE" type="int" value="500" />
+    <setting id="FLEAMEN_ATTACKING_INTERVAL" type="int" value="3000" />
+    <setting id="FLEAMEN_DAMAGES" type="int" value="1" />
+
+    <!-- Raven -->
+    <setting id="RAVEN_BBOX_WIDTH" type="int" value="27" />
+    <setting id="RAVEN_BBOX_HEIGHT" type="int" value="27" />
+    <setting id="RAVEN_INITIAL_STATE" type="int" value="1" />
+    <setting id="RAVEN_FLY_SPEED_X" type="float" value="0.05f" />
+    <setting id="RAVEN_FLY_SPEED_Y" type="float" value="0.05f" />
+    <setting id="RAVEN_ATTACK_SPEED_X" type="float" value="0.25f" />
+    <setting id="RAVEN_ATTACK_SPEED_Y" type="float" value="0.25f" />
+    <setting id="RAVEN_TO_SIMON_DISTANCE_X" type="int" value="120" />
+    <setting id="RAVEN_TO_SIMON_DISTANCE_Y" type="int" value="60" />
+    <setting id="RAVEN_AREA_RADIUS_X" type="int" value="200" />
+    <setting id="RAVEN_AREA_RADIUS_Y" type="int" value="200" />
+    <setting id="RAVEN_SCORE" type="int" value="300" />
+    <setting id="RAVEN_DAMAGES" type="int" value="2" />
+
+    <!-- RedBat -->
+    <setting id="RED_BAT_AREA_RADIUS_X" type="int" value="200" />
+    <setting id="RED_BAT_AREA_RADIUS_Y" type="int" value="100" />
+    <setting id="RED_BAT_INITIAL_STATE" type="int" value="1" />
+    <setting id="RED_BAT_MOVE_SPEED_X" type="float" value="0.15f" />
+    <setting id="RED_BAT_MOVE_SPEED_Y" type="float" value="0.1f" />
+    <setting id="RED_BAT_BBOX_WIDTH" type="int" value="31" />
+    <setting id="RED_BAT_BBOX_HEIGHT" type="int" value="31" />
+    <setting id="RED_BAT_SCORE" type="int" value="300" />
+    <setting id="RED_BAT_DAMAGES" type="int" value="2" />
+
+    <!-- SpearKnight -->
+    <setting id="SPEAR_KNIGHT_WALK_SPEED" type="float" value="0.05f" />
+    <setting id="SPEAR_KNIGHT_GRAVITY" type="float" value="0.0025f" />
+    <setting id="SPEAR_KNIGHT_INITIAL_STATE" type="int" value="1" />
+    <setting id="SPEAR_KNIGHT_BBOX_WIDTH" type="int" value="31" />
+    <setting id="SPEAR_KNIGHT_BBOX_HEIGHT" type="int" value="63" />
+    <setting id="SPEAR_KNIGHT_SCORE" type="int" value="400" />
+    <setting id="SPEAR_KNIGHT_ATTACKS" type="int" value="3" />
+    <setting id="SPEAR_KNIGHT_DAMAGES" type="int" value="2" />
+
+    <!-- Effect -->
+    <setting id="EFFECT_DISPLAY_TIME" type="int" value="500" />
+    <setting id="ENDING_EFFECT_DISPLAY_TIME" type="int" value="300" />
+
+    <!-- Item -->
+    <setting id="ITEM_STATE_APPEAR" type="int" value="1" />
+    <setting id="ITEM_GRAVITY" type="float" value="0.002f" />
+    <setting id="ITEM_DISPLAY_TIME" type="int" value="4000" />
+
+    <!-- BigHeart -->
+    <setting id="BIG_HEART_BBOX_WIDTH" type="int" value="24" />
+    <setting id="BIG_HEART_BBOX_HEIGHT" type="int" value="20" />
+    <setting id="BIG_HEART_HEARTS" type="int" value="5" />
+
+    <!-- Crown -->
+    <setting id="CROWN_BBOX_WIDTH" type="int" value="29" />
+    <setting id="CROWN_BBOX_HEIGHT" type="int" value="31" />
+    <setting id="CROWN_SCORE" type="int" value="2000" />
+
+    <!-- DoubleShot -->
+    <setting id="DOUBLE_SHOT_BBOX_WIDTH" type="int" value="31" />
+    <setting id="DOUBLE_SHOT_BBOX_HEIGHT" type="int" value="31" />
+
+    <!-- TripleShot -->
+    <setting id="TRIPLE_SHOT_BBOX_WIDTH" type="int" value="31" />
+    <setting id="TRIPLE_SHOT_BBOX_HEIGHT" type="int" value="31" />
+
+    <!-- HolyWater -->
+    <setting id="HOLY_WATER_BBOX_WIDTH" type="int" value="31" />
+    <setting id="HOLY_WATER_BBOX_HEIGHT" type="int" value="31" />
+
+    <!-- InvisibilityPotion -->
+    <setting id="INVISIBILITY_POTION_BBOX_WIDTH" type="int" value="29" />
+    <setting id="INVISIBILITY_POTION_BBOX_HEIGHT" type="int" value="36" />
+
+    <!-- MorningStar -->
+    <setting id="MORNING_STAR_BBOX_WIDTH" type="int" value="32" />
+    <setting id="MORNING_STAR_BBOX_HEIGHT" type="int" value="32" />
+
+    <!-- PorkChop -->
+    <setting id="PORK_CHOP_BBOX_WIDTH" type="int" value="31" />
+    <setting id="PORK_CHOP_BBOX_HEIGHT" type="int" value="25" />
+    <setting id="PORK_CHOP_HEALTHS" type="int" value="6" />
+
+    <!-- PurpleMoneyBag -->
+    <setting id="PURPLE_MONEY_BAG_BBOX_WIDTH" type="int" value="29" />
+    <setting id="PURPLE_MONEY_BAG_BBOX_HEIGHT" type="int" value="29" />
+    <setting id="PURPLE_MONEY_BAG_SCORE" type="int" value="400" />
+
+    <!-- WhiteMoneyBag -->
+    <setting id="WHITE_MONEY_BAG_BBOX_WIDTH" type="int" value="29" />
+    <setting id="WHITE_MONEY_BAG_BBOX_HEIGHT" type="int" value="29" />
+    <setting id="WHITE_MONEY_BAG_SCORE" type="int" value="700" />
+
+    <!-- RedMoneyBag -->
+    <setting id="RED_MONEY_BAG_BBOX_WIDTH" type="int" value="29" />
+    <setting id="RED_MONEY_BAG_BBOX_HEIGHT" type="int" value="29" />
+    <setting id="RED_MONEY_BAG_SCORE" type="int" value="100" />
+
+    <!-- Rosary -->
+    <setting id="ROSARY_BBOX_WIDTH" type="int" value="31" />
+    <setting id="ROSARY_BBOX_HEIGHT" type="int" value="31" />
+
+    <!-- SmallHeart -->
+    <setting id="SMALL_HEART_MOVE_SPEED" type="float" value="0.02f" />
+    <setting id="SMALL_HEART_BBOX_WIDTH" type="int" value="15" />
+    <setting id="SMALL_HEART_BBOX_HEIGHT" type="int" value="15" />
+    <setting id="SMALL_HEART_HEARTS" type="int" value="2" />
+
+    <!-- MagicCrystal -->
+    <setting id="MAGIC_CRYSTAL_BBOX_WIDTH" type="int" value="27" />
+    <setting id="MAGIC_CRYSTAL_BBOX_HEIGHT" type="int" value="31" />
+
+    <!-- MoneyBag -->
+    <setting id="MONEY_BAG_MOVE_UP_SPEED" type="float" value="0.05f" />
+    <setting id="MONEY_BAG_BBOX_WIDTH" type="int" value="29" />
+    <setting id="MONEY_BAG_BBOX_HEIGHT" type="int" value="29" />
+    <setting id="MONEY_BAG_SCORE" type="int" value="1000" />
+
+    <!-- SmallCandle -->
+    <setting id="SMALL_CANDLE_BBOX_WIDTH" type="int" value="15" />
+    <setting id="SMALL_CANDLE_BBOX_HEIGHT" type="int" value="24" />
+
+    <!-- TopStair -->
+    <setting id="TOP_STAIR_BBOX_WIDTH" type="int" value="25" />
+    <setting id="TOP_STAIR_BBOX_HEIGHT" type="int" value="25" />
+
+    <!-- PreviousScene -->
+    <setting id="PREVIOUS_SCENE_BBOX_WIDTH" type="int" value="5" />
+    <setting id="PREVIOUS_SCENE_BBOX_HEIGHT" type="int" value="10" />
+
+    <!-- NextScene -->
+    <setting id="NEXT_SCENE_BBOX_WIDTH" type="int" value="5" />
+    <setting id="NEXT_SCENE_BBOX_HEIGHT" type="int" value="10" />
+
+    <!-- MovingBar -->
+    <setting id="MOVING_BAR_MOVE_SPEED" type="float" value="0.025f" />
+    <setting id="MOVING_BAR_BBOX_WIDTH" type="int" value="64" />
+    <setting id="MOVING_BAR_BBOX_HEIGHT" type="int" value="16" />
+
+    <!-- Helicopter -->
+    <setting id="HELICOPTER_FLY_SPEED" type="float" value="0.01f" />
+
+    <!-- EnemySpawnerArea -->
+    <setting id="ENEMY_SPAWNER_AREA_BBOX_WIDTH" type="int" value="100" />
+    <setting id="ENEMY_SPAWNER_AREA_BBOX_HEIGHT" type="int" value="32" />
+    <setting id="ENEMY_SPAWNER_SPAWNING_INTERVAL" type="int" value="4000" />
+
+    <!-- CameraLocker -->
+    <setting id="CAMERA_LOCKER_BBOX_WIDTH" type="int" value="32" />
+    <setting id="CAMERA_LOCKER_BBOX_HEIGHT" type="int" value="300" />
+
+    <!-- Castle -->
+    <setting id="CASTLE_MOVE_SPEED_X" type="float" value="0.02f" />
+    <setting id="CASTLE_MOVE_SPEED_Y" type="float" value="0.008f" />
+
+    <!-- BreakableBrick -->
+    <setting id="BREAKABLE_BRICK_BBOX_WIDTH" type="int" value="31" />
+    <setting id="BREAKABLE_BRICK_BBOX_HEIGHT" type="int" value="31" />
+
+    <!-- BigCandle -->
+    <setting id="BIG_CANDLE_BBOX_WIDTH" type="int" value="31" />
+    <setting id="BIG_CANDLE_BBOX_HEIGHT" type="int" value="63" />
+    <setting id="BIG_CANDLE_GRAVITY" type="float" value="0.0025f" />
+
+    <!-- BiStair -->
+    <setting id="BI_STAIR_BBOX_WIDTH" type="int" value="25" />
+    <setting id="BI_STAIR_BBOX_HEIGHT" type="int" value="12" />
+
+    <!-- BottomStair -->
+    <setting id="BOTTOM_STAIR_BBOX_WIDTH" type="int" value="25" />
+    <setting id="BOTTOM_STAIR_BBOX_HEIGHT" type="int" value="12" />
+
+    <!-- Bat -->
+    <setting id="BAT_FLY_RIGHT_CROSS_SPEED" type="float" value="0.017f" />
+    <setting id="BAT_FLY_OVAL_SPEED" type="float" value="0.03f" />
+
+    <!-- Whip -->
+    <setting id="WHIP_LEVEL_1_BBOX_WIDTH" type="int" value="115" />
+    <setting id="WHIP_LEVEL_2_BBOX_WIDTH" type="int" value="115" />
+    <setting id="WHIP_LEVEL_3_BBOX_WIDTH" type="int" value="144" />
+    <setting id="WHIP_BBOX_HEIGHT" type="int" value="66" />
+
+    <!-- Axe -->
+    <setting id="AXE_GRAVITY" type="float" value="0.00045f" />
+    <setting id="AXE_BBOX_WIDTH" type="int" value="29" />
+    <setting id="AXE_BBOX_HEIGHT" type="int" value="27" />
+    <setting id="AXE_MOVE_SPEED_X" type="float" value="0.15f" />
+    <setting id="AXE_MOVE_SPEED_Y" type="float" value="0.32f" />
+    <setting id="AXE_DAMAGES" type="int" value="2" />
+
+    <!-- Bone -->
+    <setting id="BONE_GRAVITY" type="float" value="0.0004f" />
+    <setting id="BONE_BBOX_WIDTH" type="int" value="29" />
+    <setting id="BONE_BBOX_HEIGHT" type="int" value="31" />
+    <setting id="BONE_MOVE_SPEED_X" type="float" value="0.1f" />
+    <setting id="BONE_MOVE_SPEED_Y" type="float" value="0.25f" />
+    <setting id="BONE_DISPLAY_TIME" type="int" value="2000" />
+
+    <!-- Bonus -->
+    <setting id="BONUS_MOVE_UP_SPEED" type="float" value="0.05f" />
+
+    <!-- Boomerang -->
+    <setting id="BOOMERANG_MOVE_SPEED" type="float" value="0.2f" />
+    <setting id="BOOMERANG_BBOX_WIDTH" type="int" value="27" />
+    <setting id="BOOMERANG_BBOX_HEIGHT" type="int" value="27" />
+    <setting id="BOOMERANG_MOVABLE_AREA_WIDTH" type="int" value="260" />
+    <setting id="BOOMERANG_DAMAGES" type="int" value="2" />
+
+    <!-- Dagger -->
+    <setting id="DAGGER_BBOX_WIDTH" type="int" value="32" />
+    <setting id="DAGGER_BBOX_HEIGHT" type="int" value="18" />
+    <setting id="DAGGER_MOVE_SPEED" type="float" value="0.5f" />
+    <setting id="DAGGER_DAMAGES" type="int" value="1" />
+
+    <!-- Fireball -->
+    <setting id="FIREBALL_BBOX_WIDTH" type="int" value="9" />
+    <setting id="FIREBALL_BBOX_HEIGHT" type="int" value="11" />
+    <setting id="FIREBALL_MOVE_SPEED_X" type="float" value="0.1f" />
+    <setting id="FIREBALL_MOVE_SPEED_Y" type="float" value="0.1f" />
+
+    <!-- HolyWaterBottle -->
+    <setting id="HOLY_WATER_BOTTLE_GRAVITY" type="float" value="0.0004f" />
+    <setting id="HOLY_WATER_BOTTLE_BURNING_TIME" type="int" value="5000" />
+    <setting id="HOLY_WATER_BOTTLE_INITIAL_STATE" type="int" value="1" />
+    <setting id="HOLY_WATER_BOTTLE_BBOX_WIDTH" type="int" value="15" />
+    <setting id="HOLY_WATER_BOTTLE_BBOX_HEIGHT" type="int" value="15" />
+    <setting id="HOLY_WATER_BOTTLE_MOVE_SPEED" type="float" value="0.2f" />
+    <setting id="HOLY_WATER_BOTTLE_DAMAGES" type="int" value="1" />
+
+    <!-- Stopwatch -->
+    <setting id="STOPWATCH_GRAVITY" type="float" value="0.0008f" />
+    <setting id="STOPWATCH_BBOX_WIDTH" type="int" value="29" />
+    <setting id="STOPWATCH_BBOX_HEIGHT" type="int" value="31" />
+    <setting id="STOPWATCH_MOVE_SPEED" type="float" value="0.2f" />
+</settings>

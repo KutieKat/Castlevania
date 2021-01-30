@@ -1,5 +1,5 @@
 #include "Bat.h"
-#include "../../Utilities/Debug.h"
+#include "../../Game.h"
 
 CBat::CBat()
 {
@@ -16,10 +16,11 @@ void CBat::SetState(int state)
 void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	if (state == BAT_STATE_FLY_RIGHT_CROSS)
 	{
-		vx = vy = BAT_FLY_RIGHT_CROSS_SPEED;
+		vx = vy = settingManager->GetFloatValue("BAT_FLY_RIGHT_CROSS_SPEED");
 
 		x += vx * dt;
 		y -= vy * dt;
@@ -35,7 +36,7 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += 0.3f * sin(4.0f * atan(1.0f) / 180.0f * alpha);
 		y += 0.1f * cos(4.0f * atan(1.0f) / 180.0f * alpha);
 
-		alpha -= BAT_FLY_OVAL_SPEED * dt;
+		alpha -= settingManager->GetFloatValue("BAT_FLY_OVAL_SPEED") * dt;
 	}
 }
 

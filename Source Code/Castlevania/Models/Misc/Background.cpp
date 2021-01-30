@@ -1,4 +1,5 @@
 #include "Background.h"
+#include "../../Game.h"
 
 CBackground::CBackground()
 {

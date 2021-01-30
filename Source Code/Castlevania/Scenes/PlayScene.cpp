@@ -238,6 +238,9 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 		}
 		else if (type == "brick")
 		{
+			bool canJumpThrough = false;
+			object->QueryBoolAttribute("canJumpThrough", &canJumpThrough);
+
 			int width, height;
 			object->QueryIntAttribute("width", &width);
 			object->QueryIntAttribute("height", &height);
@@ -247,6 +250,7 @@ void CPlayScene::ParseObjects(TiXmlElement* element, bool reloaded)
 			brick->SetPosition(x, y);
 			brick->SetWidth(width);
 			brick->SetHeight(height);
+			brick->canJumpThrough = canJumpThrough;
 
 			grounds.emplace_back(brick);
 		}
@@ -513,6 +517,8 @@ bool CPlayScene::Reload()
 
 void CPlayScene::Update(DWORD dt)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	if (softPauseTime != -1 && GetTickCount() > softPauseTime)
 	{
 		ResumeSoftPause();
@@ -603,7 +609,7 @@ void CPlayScene::Update(DWORD dt)
 
 			float playerBoundingBoxWidth = right - left;
 
-			if (tileMap->GetWidth() < SCREEN_WIDTH)
+			if (tileMap->GetWidth() < settingManager->GetIntValue("SCREEN_WIDTH"))
 			{
 				cx = 0;
 
@@ -620,7 +626,7 @@ void CPlayScene::Update(DWORD dt)
 			}
 			else
 			{
-				if (currentPlayerX < SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
+				if (currentPlayerX < settingManager->GetIntValue("SCREEN_WIDTH") / 2 - playerBoundingBoxWidth)
 				{
 					cx = 0.0f;
 					leftEdge = 0.0f;
@@ -629,9 +635,9 @@ void CPlayScene::Update(DWORD dt)
 						player->SetPosition(leftEdge, currentPlayerY);
 					}
 				}
-				else if (currentPlayerX >= tileMap->GetWidth() - SCREEN_WIDTH / 2 - playerBoundingBoxWidth)
+				else if (currentPlayerX >= tileMap->GetWidth() - settingManager->GetIntValue("SCREEN_WIDTH") / 2 - playerBoundingBoxWidth)
 				{
-					cx = tileMap->GetWidth() - SCREEN_WIDTH;
+					cx = tileMap->GetWidth() - settingManager->GetIntValue("SCREEN_WIDTH");
 
 					rightEdge = tileMap->GetWidth() - playerBoundingBoxWidth * 2;
 
@@ -641,7 +647,7 @@ void CPlayScene::Update(DWORD dt)
 				}
 				else
 				{
-					cx = currentPlayerX + playerBoundingBoxWidth - SCREEN_WIDTH / 2;
+					cx = currentPlayerX + playerBoundingBoxWidth - settingManager->GetIntValue("SCREEN_WIDTH") / 2;
 					rightEdge = CGame::GetInstance()->GetCamera()->GetRight() - playerBoundingBoxWidth * 2;
 					leftEdge = CGame::GetInstance()->GetCamera()->GetLeft();
 
@@ -664,7 +670,7 @@ void CPlayScene::Update(DWORD dt)
 		// PauseBadge
 		if (pauseBadge)
 		{
-			pauseBadge->SetPosition(game->GetCamera()->GetLeft() + (SCREEN_WIDTH / 2) - 120, game->GetCamera()->GetTop() + (SCREEN_HEIGHT / 2) - 60);
+			pauseBadge->SetPosition(game->GetCamera()->GetLeft() + (settingManager->GetIntValue("SCREEN_WIDTH") / 2) - 120, game->GetCamera()->GetTop() + (SCREEN_HEIGHT / 2) - 60);
 		}
 	}
 
@@ -908,7 +914,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		{
 			if (!game->Ended())
 			{
-				if (game->GetTimer()->GetRemainingTime() > 0 && playerData->GetHealthVolumes() > 0)
+				if (game->GetTimer()->GetRemainingTime() > 0 && playerData->GetHealthVolumes() > 0 && playerData->GetLives() >= 0)
 				{
 					if (simon->onStair)
 					{
@@ -945,76 +951,86 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 	CScene* scene = game->GetSceneManager()->GetCurrentScene();
 	CSimon* simon = ((CPlayScene*)scene)->GetPlayer();
 	CPlayerData* playerData = game->GetPlayerData();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	if (simon != nullptr && !scene->HardPaused() && !((CPlayScene*)scene)->ShowingGameOverBoard())
 	{
 		switch (keyCode)
 		{
-		case DIK_SPACE:
-			game->GetTimer()->Pause();
-			game->GetSoundManager()->StopBackgroundSounds();
-			game->GetSoundManager()->Play("game_over_background_music");
-			dynamic_cast<CPlayScene*>(game->GetSceneManager()->GetCurrentScene())->ShowGameOverBoard();
-			break;
-
 		case DIK_F1:
-			game->GetSceneManager()->SwitchSceneByIndex(INTRO_SCENE);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("INTRO_SCENE"));
 			break;
 
 		case DIK_F2:
-			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_1);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_1"));
 			break;
 
 		case DIK_F3:
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_1);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_1"));
 			break;
 
 		case DIK_F4:
-			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_2);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_2"));
 			break;
 
 		case DIK_F5:
+			if (!game->CheatKeysActivated()) return;
 			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetCurrentSceneIndex());
 			game->GetPlayerData()->Reset();
 			break;
 
 		case DIK_F6:
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_1);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_2_1"));
 			break;
 
 		case DIK_F7:
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_2_2);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_2_2"));
 			break;
 
 		case DIK_F8:
-			game->GetSceneManager()->SwitchSceneByIndex(CUT_SCENE_3);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CUT_SCENE_3"));
 			break;
 
 		case DIK_F9:
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_1);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_3_1"));
 			break;
 
 		case DIK_F10:
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_3_2);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_3_2"));
 			break;
 
 		case DIK_F11:
-			game->GetSceneManager()->SwitchSceneByIndex(PLAY_SCENE_4);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("PLAY_SCENE_4"));
 			break;
 
 		case DIK_F12:
-			game->GetSceneManager()->SwitchSceneByIndex(CREDITS_SCENE);
+			if (!game->CheatKeysActivated()) return;
+			game->GetSceneManager()->SwitchSceneByIndex(settingManager->GetIntValue("CREDITS_SCENE"));
 			break;
 
 		case DIK_N:
+			if (!game->CheatKeysActivated()) return;
 			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetNextSceneIndex());
 			break;
 
 		case DIK_P:
+			if (!game->CheatKeysActivated()) return;
 			game->GetSceneManager()->SwitchSceneByIndex(game->GetSceneManager()->GetPreviousSceneIndex());
 			break;
 
 		case DIK_1:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_2)
 			{
 				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
@@ -1027,6 +1043,8 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			break;
 
 		case DIK_2:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetWhipLevel() == WHIP_LEVEL_3)
 			{
 				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_1);
@@ -1035,9 +1053,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			{
 				game->GetPlayerData()->SetWhipLevel(WHIP_LEVEL_3);
 			}
+
 			break;
 
 		case DIK_3:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetPower() == DOUBLE_POWER)
 			{
 				game->GetPlayerData()->SetPower(NORMAL_POWER);
@@ -1047,9 +1068,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				game->GetSoundManager()->Play("collecting_weapon_item");
 				game->GetPlayerData()->SetPower(DOUBLE_POWER);
 			}
+
 			break;
 
 		case DIK_4:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetPower() == TRIPLE_POWER)
 			{
 				game->GetPlayerData()->SetPower(NORMAL_POWER);
@@ -1059,9 +1083,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				game->GetSoundManager()->Play("collecting_weapon_item");
 				game->GetPlayerData()->SetPower(TRIPLE_POWER);
 			}
+
 			break;
 
 		case DIK_5:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetSubWeaponType() == "dagger")
 			{
 				game->GetPlayerData()->SetSubWeaponType("");
@@ -1071,9 +1098,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				game->GetSoundManager()->Play("collecting_weapon_item");
 				game->GetPlayerData()->SetSubWeaponType("dagger");
 			}
+
 			break;
 
 		case DIK_6:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetSubWeaponType() == "boomerang")
 			{
 				game->GetPlayerData()->SetSubWeaponType("");
@@ -1083,9 +1113,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				game->GetSoundManager()->Play("collecting_weapon_item");
 				game->GetPlayerData()->SetSubWeaponType("boomerang");
 			}
+
 			break;
 
 		case DIK_7:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetSubWeaponType() == "axe")
 			{
 				game->GetPlayerData()->SetSubWeaponType("");
@@ -1095,9 +1128,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				game->GetSoundManager()->Play("collecting_weapon_item");
 				game->GetPlayerData()->SetSubWeaponType("axe");
 			}
+
 			break;
 
 		case DIK_8:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetSubWeaponType() == "holy_water")
 			{
 				game->GetPlayerData()->SetSubWeaponType("");
@@ -1107,9 +1143,12 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				game->GetSoundManager()->Play("collecting_weapon_item");
 				game->GetPlayerData()->SetSubWeaponType("holy_water");
 			}
+
 			break;
 
 		case DIK_9:
+			if (!game->CheatKeysActivated()) return;
+
 			if (game->GetPlayerData()->GetSubWeaponType() == "stopwatch")
 			{
 				game->GetPlayerData()->SetSubWeaponType("");
@@ -1119,21 +1158,27 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				game->GetSoundManager()->Play("collecting_weapon_item");
 				game->GetPlayerData()->SetSubWeaponType("stopwatch");
 			}
+
 			break;
 
 		case DIK_0:
+			if (!game->CheatKeysActivated()) return;
 			game->GetPlayerData()->ResetWeapons();
 			break;
 
 		case DIK_BACKSPACE:
+			if (!game->CheatKeysActivated()) return;
 			game->GetPlayerData()->Reset();
 			break;
 
 		case DIK_H:
+			if (!game->CheatKeysActivated()) return;
 			game->GetPlayerData()->ResetHealthVolumes();
 			break;
 
 		case DIK_I:
+			if (!game->CheatKeysActivated()) return;
+
 			if (!simon->fullyInvisible)
 			{
 				game->GetSoundManager()->Play("starting_invisibility");
@@ -1144,14 +1189,17 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			}
 
 			simon->fullyInvisible = !simon->fullyInvisible;
+			
 			break;
 
 		case DIK_L:
-			game->GetPlayerData()->AddLives(10);
+			if (!game->CheatKeysActivated()) return;
+			game->GetPlayerData()->AddLives(settingManager->GetIntValue("ADDED_LIVES"));
 			break;
 
 		case DIK_R:
-			game->GetPlayerData()->AddHearts(100);
+			if (!game->CheatKeysActivated()) return;
+			game->GetPlayerData()->AddHearts(settingManager->GetIntValue("ADDED_HEARTS"));
 			break;
 
 		case DIK_W:
@@ -1223,7 +1271,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 			break;
 
 		case DIK_X:
-			if (simon->onStair)
+			if (simon->onStair || simon->sitting)
 			{
 				return;
 			}
@@ -1233,12 +1281,10 @@ void CPlaySceneKeyHandler::OnKeyDown(int keyCode)
 				return;
 			}
 
-			if (simon->sitting)
+			if (simon->jumpable)
 			{
-				return;
+				simon->SetState(SIMON_STATE_JUMP);
 			}
-
-			simon->SetState(SIMON_STATE_JUMP);
 
 			break;
 

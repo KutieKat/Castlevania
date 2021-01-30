@@ -7,20 +7,23 @@
 
 WAxe::WAxe()
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	SetAnimationSet("axe");
 
-	elevation = WEAPON_DEFAULT_ELEVATION;
-	vy = -AXE_MOVE_SPEED_Y;
+	elevation = settingManager->GetIntValue("WEAPON_DEFAULT_ELEVATION");
+	vy = -settingManager->GetFloatValue("AXE_MOVE_SPEED_Y");
 	hasBoundingBox = true;
 }
 
 void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vx = directionX == Direction::Right ? AXE_MOVE_SPEED_X : -AXE_MOVE_SPEED_X;
+	vx = directionX == Direction::Right ? settingManager->GetFloatValue("AXE_MOVE_SPEED_X") : -settingManager->GetFloatValue("AXE_MOVE_SPEED_X");
 
-	vy += AXE_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("AXE_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -56,23 +59,7 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CEnemy*>(e->obj))
-			{
-				auto enemy = dynamic_cast<CEnemy*>(e->obj);
-
-				enemy->TakeDamage(AXE_DAMAGES);
-
-				if (dynamic_cast<CPhantomBat*>(e->obj))
-				{
-					hasBoundingBox = false;
-				}
-
-				if (e->nx != 0) x += dx;
-				if (e->ny != 0) y += dy;
-
-				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
-			}
-			else if (dynamic_cast<CBigCandle*>(e->obj))
+			if (dynamic_cast<CBigCandle*>(e->obj))
 			{
 				auto candle = dynamic_cast<CBigCandle*>(e->obj);
 
@@ -102,6 +89,26 @@ void WAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
+	for (int i = 0; i < coObjects->size(); i++)
+	{
+		if (CGame::GetInstance()->HaveCollision(this, coObjects->at(i)))
+		{
+			if (dynamic_cast<CEnemy*>(coObjects->at(i)))
+			{
+				auto enemy = dynamic_cast<CEnemy*>(coObjects->at(i));
+
+				enemy->TakeDamage(settingManager->GetIntValue("AXE_DAMAGES"));
+
+				if (dynamic_cast<CPhantomBat*>(coObjects->at(i)))
+				{
+					hasBoundingBox = false;
+				}
+
+				CGame::GetInstance()->GetSoundManager()->Play("taking_damage");
+			}
+		}
+	}
+
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		delete coEvents[i];
@@ -112,6 +119,8 @@ void WAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (hasBoundingBox)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
 		right = left + AXE_BBOX_WIDTH;
@@ -121,5 +130,10 @@ void WAxe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void WAxe::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(AXE_ANI_MOVE)->Render(x, y);
 }

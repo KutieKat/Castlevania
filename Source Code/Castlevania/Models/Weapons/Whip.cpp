@@ -15,6 +15,11 @@ CWhip::CWhip(CSimon* simon)
 
 void CWhip::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(GetAnimationToRender())->Render(x, y);
 }
 
@@ -57,6 +62,8 @@ void CWhip::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CWhip::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	l = x;
 	t = y;
 	b = y + WHIP_BBOX_HEIGHT;

@@ -1,4 +1,5 @@
 #include "PauseBadge.h"
+#include "../../Game.h"
 
 CPauseBadge::CPauseBadge()
 {

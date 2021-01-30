@@ -5,19 +5,22 @@
 
 CRaven::CRaven(CSimon* simon)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	this->mustInArea = true;
 	this->simon = simon;
-	this->areaRadiusX = RAVEN_AREA_RADIUS_X;
-	this->areaRadiusY = RAVEN_AREA_RADIUS_Y;
+	this->areaRadiusX = settingManager->GetIntValue("RAVEN_AREA_RADIUS_X");
+	this->areaRadiusY = settingManager->GetIntValue("RAVEN_AREA_RADIUS_Y");
 	this->flyingCounter = 0;
 
 	SetAnimationSet("raven");
-	SetState(RAVEN_STATE_IDLE);
+	SetState(settingManager->GetIntValue("RAVEN_INITIAL_STATE"));
 }
 
 void CRaven::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (state)
 	{
@@ -46,6 +49,7 @@ void CRaven::SetState(int state)
 void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
@@ -71,8 +75,8 @@ void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			directionX = x <= targetX ? Direction::Right : Direction::Left;
 
-			vx = RAVEN_ATTACK_SPEED_X;
-			vy = RAVEN_ATTACK_SPEED_Y;
+			vx = settingManager->GetFloatValue("RAVEN_ATTACK_SPEED_X");
+			vy = settingManager->GetFloatValue("RAVEN_ATTACK_SPEED_Y");
 
 			x += vx * cos(angle) * dt;
 			y += vy * sin(angle) * dt;
@@ -89,8 +93,8 @@ void CRaven::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			directionX = x <= targetX ? Direction::Right : Direction::Left;
 
-			vx = RAVEN_ATTACK_SPEED_X;
-			vy = RAVEN_ATTACK_SPEED_Y;
+			vx = settingManager->GetFloatValue("RAVEN_ATTACK_SPEED_X");
+			vy = settingManager->GetFloatValue("RAVEN_ATTACK_SPEED_Y");
 
 			x += vx * cos(angle) * dt;
 			y += vy * sin(angle) * dt;
@@ -116,6 +120,11 @@ void CRaven::Render()
 
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(ani)->Render(x, y);
 	}
 }
@@ -124,6 +133,8 @@ void CRaven::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		l = x;
 		t = y;
 		r = l + RAVEN_BBOX_WIDTH;
@@ -138,7 +149,7 @@ void CRaven::TakeDamage(int damages)
 	if (attacks <= 0)
 	{
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(RAVEN_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(CSettingManager::GetInstance()->GetIntValue("RAVEN_SCORE"));
 	}
 	else
 	{
@@ -161,6 +172,11 @@ void CRaven::OnPlayerEnterArea()
 	}
 }
 
+int CRaven::GetDamages()
+{
+	return CSettingManager::GetInstance()->GetIntValue("RAVEN_DAMAGES");
+}
+
 bool CRaven::ReachedTarget()
 {
 	float distance = sqrt(pow(x - targetX, 2) + pow(y - targetY, 2));
@@ -178,6 +194,8 @@ void CRaven::GenerateTarget()
 	float cameraLeft = CGame::GetInstance()->GetCamera()->GetLeft();
 	float cameraRight = CGame::GetInstance()->GetCamera()->GetRight();
 
+	int boundingBoxWidth = RAVEN_BBOX_WIDTH;
+
 	if (y >= simon->y - 50)
 	{
 		targetX = directionX == Direction::Right ? x + 160 : x - 160;
@@ -188,9 +206,9 @@ void CRaven::GenerateTarget()
 			targetX = cameraLeft + 20;
 		}
 
-		if (targetX > cameraRight - RAVEN_BBOX_WIDTH - 20)
+		if (targetX > cameraRight - boundingBoxWidth - 20)
 		{
-			targetX = cameraRight - RAVEN_BBOX_WIDTH - 20;
+			targetX = cameraRight - boundingBoxWidth - 20;
 		}
 	}
 	else
@@ -203,9 +221,9 @@ void CRaven::GenerateTarget()
 			targetX = cameraLeft + 20;
 		}
 
-		if (targetX > cameraRight - RAVEN_BBOX_WIDTH - 20)
+		if (targetX > cameraRight - boundingBoxWidth - 20)
 		{
-			targetX = cameraRight - RAVEN_BBOX_WIDTH - 20;
+			targetX = cameraRight - boundingBoxWidth - 20;
 		}
 	}
 }

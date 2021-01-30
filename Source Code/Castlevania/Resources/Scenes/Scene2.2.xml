@@ -1,186 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
   <sounds>
-    <sound id="background_music" path="Resources\\Musics\\Stage2.wav" retained="true" isBackground="true" />
-    <sound id="using_whip" path="Resources\\Sounds\\UsingWhip.wav" />
-    <sound id="collecting_item" path="Resources\\Sounds\\CollectingItem.wav" />
-    <sound id="collecting_weapon_item" path="Resources\\Sounds\\CollectingWeaponItem.wav" />
-    <sound id="taking_damage" path="Resources\\Sounds\\TakingDamage.wav" />
-    <sound id="throwing_dagger" path="Resources\\Sounds\\ThrowingDagger.wav" />
+    <sound id="background_music" path="Resources\\Musics\\Stage2.wav" loop="true" retained="true" isBackground="true" />
     <sound id="showing_bonus" path="Resources\\Sounds\\ShowingBonus.wav" />
-    <sound id="pausing" path="Resources\\Sounds\\Pausing.wav" />
-    <sound id="broken_brick" path="Resources\\Sounds\\BrokenBrick.wav" />
-    <sound id="throwing_boomerang" path="Resources\\Sounds\\ThrowingBoomerang.wav" loop="true" />
-    <sound id="throwing_axe" path="Resources\\Sounds\\ThrowingAxe.wav" />
-    <sound id="holy_water_breaking" path="Resources\\Sounds\\HolyWaterBreaking.wav" />
-    <sound id="stopwatch_ticking" path="Resources\\Sounds\\StopwatchTicking.wav" />
-    <sound id="deflecting" path="Resources\\Sounds\\Deflecting.wav" />
-    <sound id="ticking" path="Resources\\Sounds\\Ticking.wav" />
-    <sound id="starting_invisibility" path="Resources\\Sounds\\StartingInvisibility.wav" />
-    <sound id="ending_invisibility" path="Resources\\Sounds\\EndingInvisibility.wav" />
-    <sound id="dying" path="Resources\\Sounds\\Dying.wav" />
-    <sound id="selecting" path="Resources\\Sounds\\Selecting.wav" />
+    <sound id="broken_brick" path="Resources\\Sounds\\BrokenBrick.wav" /> 
   </sounds>
   
   <tileMap mapPath="Resources\\Maps\\Scene2.2.Map.xml" tilesetPath="Resources\\Maps\\Scene2.2.png" />
 
   <textures>
-    <texture id="simon" path="Resources\\Characters\\Players\\Simon.png" r="255" g="0" b="255" />
-    <texture id="whip" path="Resources\\Weapons\\Whip.png" r="255" g="0" b="255" />
     <texture id="seven_hundred" path="Resources\\Effects\\SevenHundred.png" r="255" g="0" b="255" />
-    <texture id="flash" path="Resources\\Effects\\Flash.png" r="255" g="0" b="255" />
-    <texture id="big_heart" path="Resources\\Items\\BigHeart.png" r="255" g="0" b="255" />
-    <texture id="dagger" path="Resources\\Items\\Dagger.png" r="255" g="0" b="255" />
     <texture id="money_bag" path="Resources\\Items\\MoneyBag.png" r="255" g="0" b="255" />
-    <texture id="blackboard" path="Resources\\Others\\Blackboard.png" r="0" g="0" b="0" />
-    <texture id="bounding_box" path="Resources\\Others\\BoundingBox.png" r="255" g="255" b="255" />
-    <texture id="transparency" path="Resources\\Others\\Transparency.png" r="255" g="0" b="255" />
-    <texture id="health_volume" path="Resources\\Others\\HealthVolume.png" r="255" g="0" b="255" />
     <texture id="moving_bar" path="Resources\\Ground\\MovingBar.png" r="255" g="0" b="255" />
     <texture id="small_heart" path="Resources\\Items\\SmallHeart.png" r="255" g="0" b="255" />
     <texture id="double_shot" path="Resources\\Items\\DoubleShot.png" r="255" g="0" b="255" />
-    <texture id="big_double_shot" path="Resources\\Others\\BigDoubleShot.png" r="255" g="0" b="255" />
-    <texture id="big_triple_shot" path="Resources\\Others\\BigTripleShot.png" r="255" g="0" b="255" />
-    <texture id="boomerang" path="Resources\\Items\\Boomerang.png" r="255" g="0" b="255" />
     <texture id="small_candle" path="Resources\\Ground\\SmallCandle.png" r="255" g="0" b="255" />
     <texture id="breakable_brick" path="Resources\\Ground\\Brick1.png" r="255" g="0" b="255" />
     <texture id="brick_piece" path="Resources\\Ground\\BrickPiece.png" r="255" g="0" b="255" />
     <texture id="red_bat" path="Resources\\Characters\\Enemies\\RedBat.png" r="255" g="0" b="255" />
     <texture id="spear_knight" path="Resources\\Characters\\Enemies\\SpearKnight.png" r="255" g="0" b="255" />
-    <texture id="paused" path="Resources\\Others\\Paused.png" r="255" g="0" b="255" />
-    <texture id="axe" path="Resources\\Items\\Axe.png" r="255" g="0" b="255" />
-    <texture id="holy_water" path="Resources\\Items\\HolyWater.png" r="255" g="0" b="255" />
-    <texture id="holy_water_bottle" path="Resources\\Items\\HolyWaterBottle.png" r="255" g="0" b="255" />
-    <texture id="stopwatch" path="Resources\\Items\\Stopwatch.png" r="255" g="0" b="255" />
   </textures>
 
   <sprites>
-    <!-- Simon -->
-    <sprite id="simon_idle_left" textureId="simon" left="0" top="0" right="60" bottom="66" />
-    <sprite id="simon_walk_left_1" textureId="simon" left="60" top="0" right="120" bottom="66" />
-    <sprite id="simon_walk_left_2" textureId="simon" left="120" top="0" right="180" bottom="66" />
-    <sprite id="simon_walk_left_3" textureId="simon" left="180" top="0" right="240" bottom="66" />
-    <sprite id="simon_sit_left" textureId="simon" left="300" top="198" right="360" bottom="264" />
-    <sprite id="simon_jump_left" textureId="simon" left="240" top="0" right="300" bottom="66" />
-    <sprite id="simon_sit_left_and_attack_1" textureId="simon" left="420" top="66" right="480" bottom="132" />
-    <sprite id="simon_sit_left_and_attack_2" textureId="simon" left="0" top="132" right="60" bottom="198" />
-    <sprite id="simon_sit_left_and_attack_3" textureId="simon" left="60" top="132" right="120" bottom="198" />
-    <sprite id="simon_stand_left_and_attack_1" textureId="simon" left="300" top="0" right="360" bottom="66" />
-    <sprite id="simon_stand_left_and_attack_2" textureId="simon" left="360" top="0" right="420" bottom="66" />
-    <sprite id="simon_stand_left_and_attack_3" textureId="simon" left="420" top="0" right="480" bottom="66" />
-    <sprite id="simon_delay_left_1" textureId="simon" left="0" top="198" right="60" bottom="264" />
-    <sprite id="simon_delay_left_2" textureId="simon" left="60" top="198" right="120" bottom="264" />
-    <sprite id="simon_delay_left_3" textureId="simon" left="120" top="198" right="180" bottom="264" />
-    <sprite id="simon_walk_upstair_left_1" textureId="simon" left="240" top="66" right="300" bottom="132" />
-    <sprite id="simon_walk_upstair_left_2" textureId="simon" left="300" top="66" right="360" bottom="132" />
-    <sprite id="simon_walk_downstair_left_1" textureId="simon" left="120" top="66" right="180" bottom="132" />
-    <sprite id="simon_walk_downstair_left_2" textureId="simon" left="180" top="66" right="240" bottom="132" />
-    <sprite id="simon_walk_upstair_left_and_attack_1" textureId="simon" left="300" top="132" right="360" bottom="198" />
-    <sprite id="simon_walk_upstair_left_and_attack_2" textureId="simon" left="360" top="132" right="420" bottom="198" />
-    <sprite id="simon_walk_upstair_left_and_attack_3" textureId="simon" left="420" top="132" right="480" bottom="198" />
-    <sprite id="simon_walk_downstair_left_and_attack_1" textureId="simon" left="120" top="132" right="180" bottom="198" />
-    <sprite id="simon_walk_downstair_left_and_attack_2" textureId="simon" left="180" top="132" right="240" bottom="198" />
-    <sprite id="simon_walk_downstair_left_and_attack_3" textureId="simon" left="240" top="132" right="300" bottom="198"  />
-    <sprite id="simon_deflect_left" textureId="simon" left="0" top="66" right="60" bottom="132" />
-    <sprite id="simon_die_left" textureId="simon" left="240" top="198" right="300" bottom="264" />
-    <sprite id="simon_idle_right" textureId="simon" left="420" top="265" right="480" bottom="331" />
-    <sprite id="simon_walk_right_1" textureId="simon" left="360" top="265" right="420" bottom="331" />
-    <sprite id="simon_walk_right_2" textureId="simon" left="300" top="265" right="360" bottom="331" />
-    <sprite id="simon_walk_right_3" textureId="simon" left="240" top="265" right="300" bottom="331" />
-    <sprite id="simon_sit_right" textureId="simon" left="120" top="463" right="180" bottom="529" />
-    <sprite id="simon_jump_right" textureId="simon" left="180" top="265" right="240" bottom="331" />
-    <sprite id="simon_sit_right_and_attack_1" textureId="simon" left="0" top="331" right="60" bottom="397" />
-    <sprite id="simon_sit_right_and_attack_2" textureId="simon" left="420" top="397" right="480" bottom="463" />
-    <sprite id="simon_sit_right_and_attack_3" textureId="simon" left="360" top="397" right="420" bottom="463" />
-    <sprite id="simon_stand_right_and_attack_1" textureId="simon" left="120" top="265" right="180" bottom="331" />
-    <sprite id="simon_stand_right_and_attack_2" textureId="simon" left="60" top="265" right="120" bottom="331" />
-    <sprite id="simon_stand_right_and_attack_3" textureId="simon" left="0" top="265" right="60" bottom="331" />
-    <sprite id="simon_delay_right_1" textureId="simon" left="420" top="463" right="480" bottom="529" />
-    <sprite id="simon_delay_right_2" textureId="simon" left="360" top="463" right="420" bottom="529" />
-    <sprite id="simon_delay_right_3" textureId="simon" left="300" top="463" right="360" bottom="529" />
-    <sprite id="simon_walk_upstair_right_1" textureId="simon" left="180" top="331" right="240" bottom="397" />
-    <sprite id="simon_walk_upstair_right_2" textureId="simon" left="120" top="331" right="180" bottom="397" />
-    <sprite id="simon_walk_downstair_right_1" textureId="simon" left="300" top="331" right="360" bottom="397" />
-    <sprite id="simon_walk_downstair_right_2" textureId="simon" left="240" top="331" right="300" bottom="397" />
-    <sprite id="simon_walk_upstair_right_and_attack_1" textureId="simon" left="120" top="397" right="180" bottom="463" />
-    <sprite id="simon_walk_upstair_right_and_attack_2" textureId="simon" left="60" top="397" right="120" bottom="463" />
-    <sprite id="simon_walk_upstair_right_and_attack_3" textureId="simon" left="0" top="397" right="60" bottom="463" />
-    <sprite id="simon_walk_downstair_right_and_attack_1" textureId="simon" left="300" top="397" right="360" bottom="463" />
-    <sprite id="simon_walk_downstair_right_and_attack_2" textureId="simon" left="240" top="397" right="300" bottom="463" />
-    <sprite id="simon_walk_downstair_right_and_attack_3" textureId="simon" left="180" top="397" right="240" bottom="463" />
-    <sprite id="simon_deflect_right" textureId="simon" left="420" top="331" right="480" bottom="397" />
-    <sprite id="simon_die_right" textureId="simon" left="180" top="463" right="240" bottom="529" />
-    <sprite id="simon_watch" textureId="simon" left="60" top="66" right="120" bottom="132" />
-
-    <!-- Flash -->
-    <sprite id="flash_1" textureId="flash" left="0" top="0" right="15" bottom="19" />
-    <sprite id="flash_2" textureId="flash" left="16" top="0" right="31" bottom="19" />
-
     <!-- SevenHundred -->
     <sprite id="seven_hundred_1" textureId="seven_hundred" left="0" top="0" right="31" bottom="17" />
     <sprite id="seven_hundred_2" textureId="seven_hundred" left="32" top="0" right="63" bottom="17" />
 
-    <!-- BigHeart -->
-    <sprite id="big_heart" textureId="big_heart" left="0" top="0" right="24" bottom="20" />
-
-    <!-- Dagger -->
-    <sprite id="dagger_right" textureId="dagger" left="0" top="0" right="32" bottom="18" />
-    <sprite id="dagger_left" textureId="dagger" left="0" top="19" right="32" bottom="36" />
-
-    <!-- MoneyBag -->
-    <sprite id="money_bag_1" textureId="money_bag" left="0" top="0" right="29" bottom="29" />
-    <sprite id="money_bag_2" textureId="money_bag" left="30" top="0" right="59" bottom="29" />
-    <sprite id="money_bag_3" textureId="money_bag" left="60" top="0" right="89" bottom="29" />
-
-    <!-- Blackboard -->
-    <sprite id="blackboard" textureId="blackboard" left="0" top="0" right="512" bottom="80" />
-
-    <!-- HealthVolume -->
-    <sprite id="health_volume_player" textureId="health_volume" left="0" top="0" right="10" bottom="17" />
-    <sprite id="health_volume_empty" textureId="health_volume" left="11" top="0" right="21" bottom="17" />
-    <sprite id="health_volume_enemy" textureId="health_volume" left="22" top="0" right="32" bottom="17" />
-
-    <!-- Transparency -->
-    <sprite id="transparency" textureId="transparency" left="0" top="0" right="32" bottom="32" />
-
-    <!-- Whip -->
-    <sprite id="whip_level_1_left_1" textureId="whip" left="50" top="0" right="165" bottom="66" />
-    <sprite id="whip_level_1_left_2" textureId="whip" left="290" top="0" right="405" bottom="66" />
-    <sprite id="whip_level_1_left_3" textureId="whip" left="530" top="0" right="645" bottom="66" />
-    <sprite id="whip_level_1_right_1" textureId="whip" left="555" top="397" right="670" bottom="463" />
-    <sprite id="whip_level_1_right_2" textureId="whip" left="315" top="397" right="430" bottom="463" />
-    <sprite id="whip_level_1_right_3" textureId="whip" left="75" top="397" right="190" bottom="463" />
-    <sprite id="whip_level_2_left_1" textureId="whip" left="50" top="66" right="165" bottom="132" />
-    <sprite id="whip_level_2_left_2" textureId="whip" left="290" top="66" right="405" bottom="132" />
-    <sprite id="whip_level_2_left_3" textureId="whip" left="530" top="66" right="645" bottom="132" />
-    <sprite id="whip_level_2_right_1" textureId="whip" left="555" top="463" right="670" bottom="529" />
-    <sprite id="whip_level_2_right_2" textureId="whip" left="315" top="463" right="430" bottom="529" />
-    <sprite id="whip_level_2_right_3" textureId="whip" left="75" top="463" right="190" bottom="529" />
-    <sprite id="whip_level_3_left_1" textureId="whip" left="21" top="132" right="240" bottom="198" />
-    <sprite id="whip_level_3_left_2" textureId="whip" left="261" top="132" right="480" bottom="198" />
-    <sprite id="whip_level_3_left_3" textureId="whip" left="501" top="132" right="720" bottom="198" />
-    <sprite id="whip_level_3_left_4" textureId="whip" left="21" top="198" right="240" bottom="264" />
-    <sprite id="whip_level_3_left_5" textureId="whip" left="261" top="198" right="480" bottom="264" />
-    <sprite id="whip_level_3_left_6" textureId="whip" left="501" top="198" right="720" bottom="264" />
-    <sprite id="whip_level_3_left_7" textureId="whip" left="21" top="264" right="240" bottom="330" />
-    <sprite id="whip_level_3_left_8" textureId="whip" left="261" top="264" right="480" bottom="330" />
-    <sprite id="whip_level_3_left_9" textureId="whip" left="501" top="264" right="720" bottom="330" />
-    <sprite id="whip_level_3_left_10" textureId="whip" left="21" top="330" right="240" bottom="396" />
-    <sprite id="whip_level_3_left_11" textureId="whip" left="261" top="330" right="480" bottom="396" />
-    <sprite id="whip_level_3_left_12" textureId="whip" left="501" top="330" right="720" bottom="396" />
-    <sprite id="whip_level_3_right_1" textureId="whip" left="555" top="529" right="670" bottom="595" />
-    <sprite id="whip_level_3_right_2" textureId="whip" left="315" top="529" right="430" bottom="595" />
-    <sprite id="whip_level_3_right_3" textureId="whip" left="75" top="529" right="190" bottom="595" />
-    <sprite id="whip_level_3_right_4" textureId="whip" left="555" top="595" right="670" bottom="661" />
-    <sprite id="whip_level_3_right_5" textureId="whip" left="315" top="595" right="430" bottom="661" />
-    <sprite id="whip_level_3_right_6" textureId="whip" left="75" top="595" right="190" bottom="661" />
-    <sprite id="whip_level_3_right_7" textureId="whip" left="555" top="661" right="670" bottom="727" />
-    <sprite id="whip_level_3_right_8" textureId="whip" left="315" top="661" right="430" bottom="727" />
-    <sprite id="whip_level_3_right_9" textureId="whip" left="75" top="661" right="215" bottom="727" />
-    <sprite id="whip_level_3_right_10" textureId="whip" left="555" top="727" right="695" bottom="793" />
-    <sprite id="whip_level_3_right_11" textureId="whip" left="315" top="727" right="455" bottom="793" />
-    <sprite id="whip_level_3_right_12" textureId="whip" left="75" top="727" right="215" bottom="793" />
-    
     <!-- MovingBar -->
     <sprite id="moving_bar" textureId="moving_bar" left="0" top="0" right="63" bottom="15" />
 
@@ -189,19 +34,6 @@
 
     <!-- DoubleShot -->
     <sprite id="double_shot" textureId="double_shot" left="0" top="0" right="31" bottom="31" />
-
-    <!-- BigDoubleShot -->
-    <sprite id="big_double_shot_1" textureId="big_double_shot" left="0" top="0" right="41" bottom="41" />
-    <sprite id="big_double_shot_2" textureId="big_double_shot" left="42" top="0" right="83" bottom="41" />
-
-    <!-- BigTripleShot -->
-    <sprite id="big_triple_shot_1" textureId="big_triple_shot" left="0" top="0" right="41" bottom="41" />
-    <sprite id="big_triple_shot_2" textureId="big_triple_shot" left="42" top="0" right="83" bottom="41" />
-
-    <!-- Boomerang -->
-    <sprite id="boomerang_1" textureId="boomerang" left="0" top="0" right="27" bottom="27" />
-    <sprite id="boomerang_2" textureId="boomerang" left="28" top="0" right="55" bottom="27" />
-    <sprite id="boomerang_3" textureId="boomerang" left="56" top="0" right="83" bottom="27" />
 
     <!-- SmallCandle -->
     <sprite id="small_candle_1" textureId="small_candle" left="0" top="0" right="15" bottom="31" />
@@ -237,297 +69,15 @@
     <sprite id="spear_knight_right_2" textureId="spear_knight" left="64" top="64" right="95" bottom="127" />
     <sprite id="spear_knight_right_3" textureId="spear_knight" left="32" top="64" right="63" bottom="127" />
     <sprite id="spear_knight_right_4" textureId="spear_knight" left="0" top="64" right="31" bottom="127" />
-
-    <!-- Paused -->
-    <sprite id="paused" textureId="paused" left="0" top="0" right="246" bottom="40" />
-
-    <!-- Axe -->
-    <sprite id="axe_1" textureId="axe" left="0" top="0" right="29" bottom="27" />
-    <sprite id="axe_2" textureId="axe" left="30" top="0" right="59" bottom="27" />
-    <sprite id="axe_3" textureId="axe" left="60" top="0" right="89" bottom="27" />
-    <sprite id="axe_4" textureId="axe" left="90" top="0" right="119" bottom="27" />
-    
-    <!-- HolyWater -->
-    <sprite id="holy_water" textureId="holy_water" left="0" top="0" right="31" bottom="31" />
-
-    <!-- HolyWaterBottle -->
-    <sprite id="holy_water_bottle_right" textureId="holy_water_bottle" left="0" top="0" right="31" bottom="25" />
-    <sprite id="holy_water_bottle_left" textureId="holy_water_bottle" left="32" top="0" right="63" bottom="25" />
-    <sprite id="holy_water_bottle_flame_1" textureId="holy_water_bottle" left="64" top="0" right="95" bottom="25" />
-    <sprite id="holy_water_bottle_flame_2" textureId="holy_water_bottle" left="96" top="0" right="127" bottom="25" />
-    <sprite id="holy_water_bottle_flame_3" textureId="holy_water_bottle" left="128" top="0" right="159" bottom="25" />
-    
-    <!-- Stopwatch -->
-    <sprite id="stopwatch" textureId="stopwatch" left="0" top="0" right="29" bottom="31" />
   </sprites>
 
   <animations>
-    <!-- Simon -->
-    <animation id="simon_idle_left">
-      <frame spriteId="simon_idle_left" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_left">
-      <frame spriteId="simon_idle_left" duration="70" />
-      <frame spriteId="simon_walk_left_1" duration="100" />
-      <frame spriteId="simon_walk_left_2" duration="100" />
-      <frame spriteId="simon_walk_left_3" duration="100" />
-    </animation>
-
-    <animation id="simon_sit_left">
-      <frame spriteId="simon_sit_left" duration="100" />
-    </animation>
-
-    <animation id="simon_jump_left">
-      <frame spriteId="simon_jump_left" duration="100" />
-    </animation>
-
-    <animation id="simon_sit_left_and_attack">
-      <frame spriteId="simon_sit_left_and_attack_1" duration="100" />
-      <frame spriteId="simon_sit_left_and_attack_2" duration="100" />
-      <frame spriteId="simon_sit_left_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_stand_left_and_attack">
-      <frame spriteId="simon_stand_left_and_attack_1" duration="100" />
-      <frame spriteId="simon_stand_left_and_attack_2" duration="100" />
-      <frame spriteId="simon_stand_left_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_delay_left">
-      <frame spriteId="simon_delay_left_1" duration="100" />
-      <frame spriteId="simon_delay_left_2" duration="100" />
-      <frame spriteId="simon_delay_left_3" duration="100" />
-    </animation>
-
-    <animation id="simon_idle_on_stair_up_left">
-      <frame spriteId="simon_walk_upstair_left_1" duration="100" />
-    </animation>
-
-    <animation id="simon_idle_on_stair_down_left">
-      <frame spriteId="simon_walk_downstair_left_1" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_upstair_left">
-      <frame spriteId="simon_walk_upstair_left_1" duration="100" />
-      <frame spriteId="simon_walk_upstair_left_2" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_downstair_left">
-      <frame spriteId="simon_walk_downstair_left_1" duration="100" />
-      <frame spriteId="simon_walk_downstair_left_2" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_upstair_left_and_attack">
-      <frame spriteId="simon_walk_upstair_left_and_attack_1" duration="100" />
-      <frame spriteId="simon_walk_upstair_left_and_attack_2" duration="100" />
-      <frame spriteId="simon_walk_upstair_left_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_downstair_left_and_attack">
-      <frame spriteId="simon_walk_downstair_left_and_attack_1" duration="100" />
-      <frame spriteId="simon_walk_downstair_left_and_attack_2" duration="100" />
-      <frame spriteId="simon_walk_downstair_left_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_deflect_left">
-      <frame spriteId="simon_deflect_left" duration="400" />
-    </animation>
-
-    <animation id="simon_die_left">
-      <frame spriteId="simon_die_left" duration="100" />
-    </animation>
-
-    <animation id="simon_idle_right">
-      <frame spriteId="simon_idle_right" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_right">
-      <frame spriteId="simon_idle_right" duration="70" />
-      <frame spriteId="simon_walk_right_1" duration="100" />
-      <frame spriteId="simon_walk_right_2" duration="100" />
-      <frame spriteId="simon_walk_right_3" duration="100" />
-    </animation>
-
-    <animation id="simon_sit_right">
-      <frame spriteId="simon_sit_right" duration="100" />
-    </animation>
-
-    <animation id="simon_jump_right">
-      <frame spriteId="simon_jump_right" duration="100" />
-    </animation>
-
-    <animation id="simon_sit_right_and_attack">
-      <frame spriteId="simon_sit_right_and_attack_1" duration="100" />
-      <frame spriteId="simon_sit_right_and_attack_2" duration="100" />
-      <frame spriteId="simon_sit_right_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_stand_right_and_attack">
-      <frame spriteId="simon_stand_right_and_attack_1" duration="100" />
-      <frame spriteId="simon_stand_right_and_attack_2" duration="100" />
-      <frame spriteId="simon_stand_right_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_delay_right">
-      <frame spriteId="simon_delay_right_1" duration="100" />
-      <frame spriteId="simon_delay_right_2" duration="100" />
-      <frame spriteId="simon_delay_right_3" duration="100" />
-    </animation>
-
-    <animation id="simon_idle_on_stair_up_right">
-      <frame spriteId="simon_walk_upstair_right_1" duration="100" />
-    </animation>
-
-    <animation id="simon_idle_on_stair_down_right">
-      <frame spriteId="simon_walk_downstair_right_1" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_upstair_right">
-      <frame spriteId="simon_walk_upstair_right_1" duration="100" />
-      <frame spriteId="simon_walk_upstair_right_2" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_downstair_right">
-      <frame spriteId="simon_walk_downstair_right_1" duration="100" />
-      <frame spriteId="simon_walk_downstair_right_2" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_upstair_right_and_attack">
-      <frame spriteId="simon_walk_upstair_right_and_attack_1" duration="100" />
-      <frame spriteId="simon_walk_upstair_right_and_attack_2" duration="100" />
-      <frame spriteId="simon_walk_upstair_right_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_walk_downstair_right_and_attack">
-      <frame spriteId="simon_walk_downstair_right_and_attack_1" duration="100" />
-      <frame spriteId="simon_walk_downstair_right_and_attack_2" duration="100" />
-      <frame spriteId="simon_walk_downstair_right_and_attack_3" duration="100" />
-    </animation>
-
-    <animation id="simon_deflect_right">
-      <frame spriteId="simon_deflect_right" duration="400" />
-    </animation>
-
-    <animation id="simon_die_right">
-      <frame spriteId="simon_die_right" duration="100" />
-    </animation>
-
-    <animation id="simon_watch">
-      <frame spriteId="simon_watch" duration="100" />
-    </animation>
-
-    <!-- Flash -->
-    <animation id="flash">
-      <frame spriteId="flash_1" duration="100" />
-      <frame spriteId="flash_2" duration="100" />
-    </animation>
-
     <!-- SevenHundred -->
     <animation id="seven_hundred">
       <frame spriteId="seven_hundred_1" duration="100" />
       <frame spriteId="seven_hundred_2" duration="100" />
     </animation>
 
-    <!-- BigHeart -->
-    <animation id="big_heart">
-      <frame spriteId="big_heart" duration="100" />
-    </animation>
-
-    <!-- Dagger -->
-    <animation id="dagger_right">
-      <frame spriteId="dagger_right" duration="100" />
-    </animation>
-
-    <animation id="dagger_left">
-      <frame spriteId="dagger_left" duration="100" />
-    </animation>
-
-    <!-- MoneyBag -->
-    <animation id="money_bag">
-      <frame spriteId="money_bag_1" duration="100" />
-      <frame spriteId="money_bag_2" duration="100" />
-      <frame spriteId="money_bag_3" duration="100" />
-    </animation>
-
-    <!-- Blackboard -->
-    <animation id="blackboard">
-      <frame spriteId="blackboard" duration="100" />
-    </animation>
-
-    <!-- HealthVolume -->
-    <animation id="health_volume_empty">
-      <frame spriteId="health_volume_empty" duration="100" />
-    </animation>
-
-    <animation id="health_volume_player">
-      <frame spriteId="health_volume_player" duration="100" />
-    </animation>
-
-    <animation id="health_volume_enemy">
-      <frame spriteId="health_volume_enemy" duration="100" />
-    </animation>
-
-    <!-- Transparency -->
-    <animation id="transparency">
-      <frame spriteId="transparency" duration="100" />
-    </animation>
-
-    <!-- Whip -->
-    <animation id="whip_level_1_left">
-      <frame spriteId="whip_level_1_left_1" duration="100" />
-      <frame spriteId="whip_level_1_left_2" duration="100" />
-      <frame spriteId="whip_level_1_left_3" duration="100" />
-    </animation>
-
-    <animation id="whip_level_1_right">
-      <frame spriteId="whip_level_1_right_1" duration="100" />
-      <frame spriteId="whip_level_1_right_2" duration="100" />
-      <frame spriteId="whip_level_1_right_3" duration="100" />
-    </animation>
-
-    <animation id="whip_level_2_left">
-      <frame spriteId="whip_level_2_left_1" duration="100" />
-      <frame spriteId="whip_level_2_left_2" duration="100" />
-      <frame spriteId="whip_level_2_left_3" duration="100" />
-    </animation>
-
-    <animation id="whip_level_2_right">
-      <frame spriteId="whip_level_2_right_1" duration="100" />
-      <frame spriteId="whip_level_2_right_2" duration="100" />
-      <frame spriteId="whip_level_2_right_3" duration="100" />
-    </animation>
-
-    <animation id="whip_level_3_left">
-      <frame spriteId="whip_level_3_left_1" duration="25" />
-      <frame spriteId="whip_level_3_left_2" duration="25" />
-      <frame spriteId="whip_level_3_left_3" duration="25" />
-      <frame spriteId="whip_level_3_left_4" duration="25" />
-      <frame spriteId="whip_level_3_left_5" duration="25" />
-      <frame spriteId="whip_level_3_left_6" duration="25" />
-      <frame spriteId="whip_level_3_left_7" duration="25" />
-      <frame spriteId="whip_level_3_left_8" duration="25" />
-      <frame spriteId="whip_level_3_left_9" duration="25" />
-      <frame spriteId="whip_level_3_left_10" duration="25" />
-      <frame spriteId="whip_level_3_left_11" duration="25" />
-      <frame spriteId="whip_level_3_left_12" duration="25" />
-    </animation>
-
-    <animation id="whip_level_3_right">
-      <frame spriteId="whip_level_3_right_1" duration="25" />
-      <frame spriteId="whip_level_3_right_2" duration="25" />
-      <frame spriteId="whip_level_3_right_3" duration="25" />
-      <frame spriteId="whip_level_3_right_4" duration="25" />
-      <frame spriteId="whip_level_3_right_5" duration="25" />
-      <frame spriteId="whip_level_3_right_6" duration="25" />
-      <frame spriteId="whip_level_3_right_7" duration="25" />
-      <frame spriteId="whip_level_3_right_8" duration="25" />
-      <frame spriteId="whip_level_3_right_9" duration="25" />
-      <frame spriteId="whip_level_3_right_10" duration="25" />
-      <frame spriteId="whip_level_3_right_11" duration="25" />
-      <frame spriteId="whip_level_3_right_12" duration="25" />
-    </animation>
-    
     <!-- MovingBar -->
     <animation id="moving_bar">
       <frame spriteId="moving_bar" duration="100" />
@@ -541,53 +91,6 @@
     <!-- DoubleShot -->
     <animation id="double_shot">
       <frame spriteId="double_shot" duration="100" />
-    </animation>
-
-    <!-- BigDoubleShot -->
-    <animation id="big_double_shot_blink">
-      <frame spriteId="big_double_shot_1" duration="100" />
-      <frame spriteId="big_double_shot_2" duration="100" />
-      <frame spriteId="big_double_shot_1" duration="100" />
-      <frame spriteId="big_double_shot_2" duration="100" />
-      <frame spriteId="big_double_shot_1" duration="100" />
-      <frame spriteId="big_double_shot_2" duration="100" />
-      <frame spriteId="big_double_shot_1" duration="100" />
-      <frame spriteId="big_double_shot_2" duration="100" />
-      <frame spriteId="big_double_shot_1" duration="100" />
-      <frame spriteId="big_double_shot_2" duration="100" />
-    </animation>
-
-    <animation id="big_double_shot_idle">
-      <frame spriteId="big_double_shot_1" duration="100" />
-    </animation>
-
-    <!-- BigTripleShot -->
-    <animation id="big_triple_shot_blink">
-      <frame spriteId="big_triple_shot_1" duration="100" />
-      <frame spriteId="big_triple_shot_2" duration="100" />
-      <frame spriteId="big_triple_shot_1" duration="100" />
-      <frame spriteId="big_triple_shot_2" duration="100" />
-      <frame spriteId="big_triple_shot_1" duration="100" />
-      <frame spriteId="big_triple_shot_2" duration="100" />
-      <frame spriteId="big_triple_shot_1" duration="100" />
-      <frame spriteId="big_triple_shot_2" duration="100" />
-      <frame spriteId="big_triple_shot_1" duration="100" />
-      <frame spriteId="big_triple_shot_2" duration="100" />
-    </animation>
-
-    <animation id="big_triple_shot_idle">
-      <frame spriteId="big_triple_shot_1" duration="100" />
-    </animation>
-
-    <!-- Boomerang -->
-    <animation id="boomerang_static">
-      <frame spriteId="boomerang_2" duration="100" />
-    </animation>
-
-    <animation id="boomerang_move">
-      <frame spriteId="boomerang_1" duration="100" />
-      <frame spriteId="boomerang_2" duration="100" />
-      <frame spriteId="boomerang_3" duration="100" />
     </animation>
 
     <!-- SmallCandle -->
@@ -653,127 +156,11 @@
     <animation id="spear_knight_delay_right">
       <frame spriteId="spear_knight_right_1" duration="100" />
     </animation>
-
-    <!-- Paused -->
-    <animation id="paused">
-      <frame spriteId="paused" duration="100" />
-    </animation>
-
-    <!-- Axe -->
-    <animation id="axe_static">
-      <frame spriteId="axe_2" duration="100" />
-    </animation>
-    
-    <animation id="axe_move">
-      <frame spriteId="axe_1" duration="100" />
-      <frame spriteId="axe_2" duration="100" />
-      <frame spriteId="axe_3" duration="100" />
-      <frame spriteId="axe_4" duration="100" />
-    </animation>
-    
-    <!-- HolyWater -->
-    <animation id="holy_water">
-      <frame spriteId="holy_water" duration="100" />
-    </animation>
-    
-    <!-- HolyWaterBottle -->
-    <animation id="holy_water_bottle_right">
-      <frame spriteId="holy_water_bottle_right" duration="100" />
-    </animation>
-
-    <animation id="holy_water_bottle_left">
-      <frame spriteId="holy_water_bottle_left" duration="100" />
-    </animation>
-
-    <animation id="holy_water_bottle_flame">
-      <frame spriteId="holy_water_bottle_flame_1" duration="100" />
-      <frame spriteId="holy_water_bottle_flame_2" duration="100" />
-      <frame spriteId="holy_water_bottle_flame_3" duration="100" />
-    </animation>
-    
-    <!-- Stopwatch -->
-    <animation id="stopwatch">
-      <frame spriteId="stopwatch" duration="100" />
-    </animation>
   </animations>
 
   <animationSets>
-    <animationSet id="simon">
-      <animationSetItem id="simon_idle_left" animationId="simon_idle_left" />
-      <animationSetItem id="simon_walk_left" animationId="simon_walk_left" />
-      <animationSetItem id="simon_sit_left" animationId="simon_sit_left" />
-      <animationSetItem id="simon_jump_left" animationId="simon_jump_left" />
-      <animationSetItem id="simon_sit_left_and_attack" animationId="simon_sit_left_and_attack" />
-      <animationSetItem id="simon_stand_left_and_attack" animationId="simon_stand_left_and_attack" />
-      <animationSetItem id="simon_delay_left" animationId="simon_delay_left" />
-      <animationSetItem id="simon_idle_on_stair_up_left" animationId="simon_idle_on_stair_up_left" />
-      <animationSetItem id="simon_idle_on_stair_down_left" animationId="simon_idle_on_stair_down_left" />
-      <animationSetItem id="simon_walk_upstair_left" animationId="simon_walk_upstair_left" />
-      <animationSetItem id="simon_walk_downstair_left" animationId="simon_walk_downstair_left" />
-      <animationSetItem id="simon_walk_upstair_left_and_attack" animationId="simon_walk_upstair_left_and_attack" />
-      <animationSetItem id="simon_walk_downstair_left_and_attack" animationId="simon_walk_downstair_left_and_attack" />
-      <animationSetItem id="simon_deflect_left" animationId="simon_deflect_left" />
-      <animationSetItem id="simon_die_left" animationId="simon_die_left" />
-      <animationSetItem id="simon_idle_right" animationId="simon_idle_right" />
-      <animationSetItem id="simon_walk_right" animationId="simon_walk_right" />
-      <animationSetItem id="simon_sit_right" animationId="simon_sit_right" />
-      <animationSetItem id="simon_jump_right" animationId="simon_jump_right" />
-      <animationSetItem id="simon_sit_right_and_attack" animationId="simon_sit_right_and_attack" />
-      <animationSetItem id="simon_stand_right_and_attack" animationId="simon_stand_right_and_attack" />
-      <animationSetItem id="simon_delay_right" animationId="simon_delay_right" />
-      <animationSetItem id="simon_idle_on_stair_up_right" animationId="simon_idle_on_stair_up_right" />
-      <animationSetItem id="simon_idle_on_stair_down_right" animationId="simon_idle_on_stair_down_right" />
-      <animationSetItem id="simon_walk_upstair_right" animationId="simon_walk_upstair_right" />
-      <animationSetItem id="simon_walk_downstair_right" animationId="simon_walk_downstair_right" />
-      <animationSetItem id="simon_walk_upstair_right_and_attack" animationId="simon_walk_upstair_right_and_attack" />
-      <animationSetItem id="simon_walk_downstair_right_and_attack" animationId="simon_walk_downstair_right_and_attack" />
-      <animationSetItem id="simon_deflect_right" animationId="simon_deflect_right" />
-      <animationSetItem id="simon_die_right" animationId="simon_die_right" />
-      <animationSetItem id="simon_watch" animationId="simon_watch" />
-    </animationSet>
-
-    <animationSet id="flash">
-      <animationSetItem id="flash" animationId="flash" />
-    </animationSet>
-
     <animationSet id="seven_hundred">
       <animationSetItem id="seven_hundred" animationId="seven_hundred" />
-    </animationSet>
-
-    <animationSet id="big_heart">
-      <animationSetItem id="big_heart" animationId="big_heart" />
-    </animationSet>
-
-    <animationSet id="dagger">
-      <animationSetItem id="dagger_right" animationId="dagger_right" />
-      <animationSetItem id="dagger_left" animationId="dagger_left" />
-    </animationSet>
-
-    <animationSet id="money_bag">
-      <animationSetItem id="money_bag" animationId="money_bag" />
-    </animationSet>
-
-    <animationSet id="blackboard">
-      <animationSetItem id="blackboard" animationId="blackboard" />
-    </animationSet>
-
-    <animationSet id="health_volume">
-      <animationSetItem id="health_volume_empty" animationId="health_volume_empty" />
-      <animationSetItem id="health_volume_player" animationId="health_volume_player" />
-      <animationSetItem id="health_volume_enemy" animationId="health_volume_enemy" />
-    </animationSet>
-
-    <animationSet id="transparency">
-      <animationSetItem id="transparency" animationId="transparency" />
-    </animationSet>
-
-    <animationSet id="whip">
-      <animationSetItem id="whip_level_1_left" animationId="whip_level_1_left" />
-      <animationSetItem id="whip_level_1_right" animationId="whip_level_1_right" />
-      <animationSetItem id="whip_level_2_left" animationId="whip_level_2_left" />
-      <animationSetItem id="whip_level_2_right" animationId="whip_level_2_right" />
-      <animationSetItem id="whip_level_3_left" animationId="whip_level_3_left" />
-      <animationSetItem id="whip_level_3_right" animationId="whip_level_3_right" />
     </animationSet>
 
     <animationSet id="moving_bar">
@@ -786,21 +173,6 @@
 
     <animationSet id="double_shot">
       <animationSetItem id="double_shot" animationId="double_shot" />
-    </animationSet>
-
-    <animationSet id="big_double_shot">
-      <animationSetItem id="big_double_shot_blink" animationId="big_double_shot_blink" />
-      <animationSetItem id="big_double_shot_idle" animationId="big_double_shot_idle" />
-    </animationSet>
-
-    <animationSet id="big_triple_shot">
-      <animationSetItem id="big_triple_shot_blink" animationId="big_triple_shot_blink" />
-      <animationSetItem id="big_triple_shot_idle" animationId="big_triple_shot_idle" />
-    </animationSet>
-
-    <animationSet id="boomerang">
-      <animationSetItem id="boomerang_static" animationId="boomerang_static" />
-      <animationSetItem id="boomerang_move" animationId="boomerang_move" />
     </animationSet>
 
     <animationSet id="small_candle">
@@ -831,29 +203,6 @@
       <animationSetItem id="spear_knight_delay_left" animationId="spear_knight_delay_left" />
       <animationSetItem id="spear_knight_walk_right" animationId="spear_knight_walk_right" />
       <animationSetItem id="spear_knight_delay_right" animationId="spear_knight_delay_right" />
-    </animationSet>
-
-    <animationSet id="paused">
-      <animationSetItem id="paused" animationId="paused" />
-    </animationSet>
-
-    <animationSet id="axe">
-      <animationSetItem id="axe_static" animationId="axe_static" />
-      <animationSetItem id="axe_move" animationId="axe_move" />
-    </animationSet>
-  
-    <animationSet id="holy_water">
-      <animationSetItem id="holy_water" animationId="holy_water" />
-    </animationSet>
-
-    <animationSet id="holy_water_bottle">
-      <animationSetItem id="holy_water_bottle_right" animationId="holy_water_bottle_right" />
-      <animationSetItem id="holy_water_bottle_left" animationId="holy_water_bottle_left" />
-      <animationSetItem id="holy_water_bottle_flame" animationId="holy_water_bottle_flame" />
-    </animationSet>
-
-    <animationSet id="stopwatch">
-      <animationSetItem id="stopwatch" animationId="stopwatch" />
     </animationSet>
   </animationSets>
 
@@ -898,7 +247,7 @@
     <object id="small_heart_6" type="small_heart" animationSetId="small_heart" x="154" y="116" visible="false" />
     <object id="small_candle_6" type="small_candle" animationSetId="small_candle" x="154" y="116" endingEffect="flash" hiddenItemId="small_heart_6" />
     
-    <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="896" y="220" />
+    <object id="top_stair_1" type="top_stair" animationSetId="transparency" directionY="down" directionX="left" x="930" y="220" />
     <object id="previous_scene_1" type="previous_scene" animationSetId="transparency" x="760" y="400" playerMustBeOnStair="true" sceneDirection="left" />
 
     <object id="big_heart_1" type="big_heart" animationSetId="big_heart" x="650" y="241" visible="false" />

@@ -8,11 +8,13 @@
 
 CGhost::CGhost(CSimon* simon)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	this->simon = simon;
-	this->attacks = GHOST_ATTACKS;
+	this->attacks = settingManager->GetIntValue("GHOST_ATTACKS");
 
 	SetAnimationSet("ghost");
-	SetState(GHOST_STATE_MOVE);
+	SetState(settingManager->GetIntValue("GHOST_INITIAL_STATE"));
 
 	srand(time(NULL));
 }
@@ -20,17 +22,18 @@ CGhost::CGhost(CSimon* simon)
 void CGhost::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (state)
 	{
 	case GHOST_STATE_MOVE:
-		vx = GHOST_MOVE_SPEED_X;
-		vy = GHOST_MOVE_SPEED_Y;
+		vx = settingManager->GetFloatValue("GHOST_MOVE_SPEED_X");
+		vy = settingManager->GetFloatValue("GHOST_MOVE_SPEED_Y");
 		break;
 
 	case GHOST_STATE_DELAY:
 		vx = vy = 0;
-		delayTimeout = GetTickCount() + ENEMY_DELAY_TIME;
+		delayTimeout = GetTickCount() + settingManager->GetIntValue("ENEMY_DELAY_TIME");
 		break;
 	}
 }
@@ -38,6 +41,7 @@ void CGhost::SetState(int state)
 void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	bool softPaused = CGame::GetInstance()->GetSceneManager()->GetCurrentScene()->SoftPaused();
 
@@ -45,7 +49,7 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == GHOST_STATE_DELAY && delayTimeout != -1 && GetTickCount() > delayTimeout)
 	{
-		if (GetTickCount() > delayTimeout + ENEMY_DELAY_PLUS_TIME)
+		if (GetTickCount() > delayTimeout + settingManager->GetIntValue("ENEMY_DELAY_PLUS_TIME"))
 		{
 			delayTimeout = -1;
 		}
@@ -80,9 +84,6 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		y -= ceil(vy * dt);
 	}
-
-	//x += ceil(vx * dt);
-	//y += ceil(vy * dt);
 }
 
 void CGhost::Render()
@@ -102,6 +103,11 @@ void CGhost::Render()
 
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(ani)->Render(x, y);
 	}
 }
@@ -110,6 +116,8 @@ void CGhost::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		l = x;
 		t = y;
 		r = l + GHOST_BBOX_WIDTH;
@@ -124,13 +132,18 @@ void CGhost::TakeDamage(int damages)
 	if (attacks <= 0)
 	{
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(GHOST_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(CSettingManager::GetInstance()->GetIntValue("GHOST_SCORE"));
 	}
 	else
 	{
 		ShowEffect();
 		SetState(GHOST_STATE_DELAY);
 	}
+}
+
+int CGhost::GetDamages()
+{
+	return CSettingManager::GetInstance()->GetIntValue("GHOST_DAMAGES");
 }
 
 int CGhost::RandomizeDistance()

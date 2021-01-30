@@ -1,8 +1,11 @@
 #include "SmallHeart.h"
+#include "../../Game.h"
 
 CSmallHeart::CSmallHeart()
 {
-	vy = SMALL_HEART_MOVE_SPEED;
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
+	vy = settingManager->GetFloatValue("SMALL_HEART_MOVE_SPEED");
 	isItem = true;
 	SetAnimationSet("small_heart");
 }
@@ -17,11 +20,18 @@ void CSmallHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CSmallHeart::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 
 void CSmallHeart::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
 	right = left + SMALL_HEART_BBOX_WIDTH;

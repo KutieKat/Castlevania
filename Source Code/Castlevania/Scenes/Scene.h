@@ -53,7 +53,7 @@ public:
 	string GetStage();
 	string GetPreviousSceneId();
 	string GetNextSceneId();
-	string GetRequiredSceneId() { return requiredSceneId; }
+	string GetRequiredSceneId();
 
 	CGrid* GetGrid();
 

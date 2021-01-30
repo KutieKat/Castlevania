@@ -1,5 +1,6 @@
 #include "RedMoneyBag.h"
 #include "../Misc/BottomStair.h"
+#include "../Misc/NextScene.h"
 #include "../Weapons/Bone.h"
 #include "../Weapons/Fireball.h"
 #include "../Weapons/HolyWaterBottle.h"
@@ -8,6 +9,8 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../Items/EasterEgg.h"
+#include "../../Game.h"
 
 CRedMoneyBag::CRedMoneyBag()
 {
@@ -19,6 +22,11 @@ void CRedMoneyBag::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }
@@ -26,8 +34,9 @@ void CRedMoneyBag::Render()
 void CRedMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -76,6 +85,14 @@ void CRedMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				y -= min_ty * dy + ny * 0.4f;
 
+				if (e->ny < 0) y += dy;
+			}
+			else if (dynamic_cast<CEasterEgg*>(e->obj))
+			{
+				if (e->ny != 0) y += dy;
+			}
+			else if (dynamic_cast<CNextScene*>(e->obj))
+			{
 				if (e->ny != 0) y += dy;
 			}
 			else
@@ -95,6 +112,8 @@ void CRedMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& 
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
 		right = left + RED_MONEY_BAG_BBOX_WIDTH;

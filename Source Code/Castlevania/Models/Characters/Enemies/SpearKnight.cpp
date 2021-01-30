@@ -6,25 +6,28 @@
 
 CSpearKnight::CSpearKnight()
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	SetAnimationSet("spear_knight");
 
-	attacks = SPEAR_KNIGHT_ATTACKS;
-	SetState(SPEAR_KNIGHT_STATE_WALK);
+	attacks = settingManager->GetIntValue("SPEAR_KNIGHT_ATTACKS");
+	SetState(settingManager->GetIntValue("SPEAR_KNIGHT_INITIAL_STATE"));
 }
 
 void CSpearKnight::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (state)
 	{
 	case SPEAR_KNIGHT_STATE_WALK:
-		vx = directionX == Direction::Right ? SPEAR_KNIGHT_WALK_SPEED : -SPEAR_KNIGHT_WALK_SPEED;
+		vx = directionX == Direction::Right ? settingManager->GetFloatValue("SPEAR_KNIGHT_WALK_SPEED") : -settingManager->GetFloatValue("SPEAR_KNIGHT_WALK_SPEED");
 		break;
 
 	case SPEAR_KNIGHT_STATE_DELAY:
 		vx = 0;
-		delayTimeout = GetTickCount() + ENEMY_DELAY_TIME;
+		delayTimeout = GetTickCount() + settingManager->GetIntValue("ENEMY_DELAY_TIME");
 		break;
 	}
 }
@@ -32,12 +35,13 @@ void CSpearKnight::SetState(int state)
 void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	if (state == SPEAR_KNIGHT_STATE_DELAY && delayTimeout != -1 && GetTickCount() > delayTimeout)
 	{
-		if (GetTickCount() > delayTimeout + ENEMY_DELAY_PLUS_TIME)
+		if (GetTickCount() > delayTimeout + settingManager->GetIntValue("ENEMY_DELAY_PLUS_TIME"))
 		{
-			attacks = SPEAR_KNIGHT_ATTACKS;
+			attacks = settingManager->GetIntValue("SPEAR_KNIGHT_ATTACKS");
 			delayTimeout = -1;
 		}
 
@@ -49,7 +53,7 @@ void CSpearKnight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (hiddenItem && !softPaused) hiddenItem->SetPosition(x, y - SPEAR_KNIGHT_BBOX_HEIGHT * 2);
 	if (softPaused) return;
 
-	vy += SPEAR_KNIGHT_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("SPEAR_KNIGHT_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -142,6 +146,11 @@ void CSpearKnight::Render()
 
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(ani)->Render(x, y);
 	}
 }
@@ -150,6 +159,8 @@ void CSpearKnight::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		l = x;
 		t = y;
 		r = l + SPEAR_KNIGHT_BBOX_WIDTH;
@@ -164,11 +175,16 @@ void CSpearKnight::TakeDamage(int damages)
 	if (attacks <= 0)
 	{
 		Disappear();
-		CGame::GetInstance()->GetPlayerData()->AddScore(SPEAR_KNIGHT_SCORE);
+		CGame::GetInstance()->GetPlayerData()->AddScore(CSettingManager::GetInstance()->GetIntValue("SPEAR_KNIGHT_SCORE"));
 	}
 	else
 	{
 		ShowEffect();
 		SetState(SPEAR_KNIGHT_STATE_DELAY);
 	}
+}
+
+int CSpearKnight::GetDamages()
+{
+	return CSettingManager::GetInstance()->GetIntValue("SPEAR_KNIGHT_DAMAGES");
 }

@@ -9,6 +9,7 @@ public:
 	static CPlayerData* GetInstance();
 
 	void Init();
+	void ResetPower();
 	void ResetWeapons();
 	void Reset();
 
@@ -24,7 +25,7 @@ public:
 	int GetLives();
 
 	void AddHealthVolumes(int damages);
-	void DecreaseHealthVolumes(int damages = SIMON_DEFAULT_DAMAGES);
+	void DecreaseHealthVolumes(int damages);
 	void ResetHealthVolumes();
 	int GetHealthVolumes();
 

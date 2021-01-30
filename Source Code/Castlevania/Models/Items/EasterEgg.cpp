@@ -1,6 +1,5 @@
 #include "EasterEgg.h"
-#include "../../Utilities/SafeDelete.h"
-#include "../../Utilities/Debug.h"
+#include "../../Game.h"
 
 CEasterEgg::CEasterEgg()
 {
@@ -12,13 +11,16 @@ CEasterEgg::CEasterEgg()
 void CEasterEgg::ShowHiddenItem()
 {
 	CGameObject::ShowHiddenItem();
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	hiddenItem->SetState(ITEM_STATE_APPEAR);
-	hiddenItem->SetDisplayTime(ITEM_DISPLAY_TIME);
+	hiddenItem->SetDisplayTime(settingManager->GetIntValue("ITEM_DISPLAY_TIME"));
 }
 
 void CEasterEgg::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
 	right = left + EASTER_EGG_BBOX_WIDTH;
@@ -37,5 +39,10 @@ bool CEasterEgg::MustSit()
 
 void CEasterEgg::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }

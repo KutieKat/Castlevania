@@ -6,7 +6,6 @@
 #include "Scenes/CutScene.h"
 
 CGame* CGame::instance = nullptr;
-
 /*
 	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
 	rendering 2D images
@@ -130,6 +129,16 @@ bool CGame::HaveCollision(CGameObject* object1, CGameObject* object2)
 	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
 }
 
+bool CGame::BoundingBoxDisplayed()
+{
+	return CSettingManager::GetInstance()->GetBoolValue("BOUNDING_BOX_DISPLAYED");
+}
+
+bool CGame::CheatKeysActivated()
+{
+	return CSettingManager::GetInstance()->GetBoolValue("CHEAT_KEYS_ACTIVATED");
+}
+
 bool CGame::Ended()
 {
 	return ended;
@@ -154,6 +163,7 @@ void CGame::HandleEnding()
 {
 	if (ended)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
 		sceneManager->GetCurrentScene()->HardPause(false);
 		timer->Pause();
 
@@ -176,7 +186,7 @@ void CGame::HandleEnding()
 				{
 					soundManager->Play("adding_time_score");
 					timer->Decrease();
-					playerData->AddScore(TIME_SCORE);
+					playerData->AddScore(settingManager->GetIntValue("TIME_SCORE"));
 				}
 			}
 			else
@@ -189,7 +199,7 @@ void CGame::HandleEnding()
 					{
 						soundManager->Play("adding_hearts_score");
 						playerData->DecreaseHearts(1);
-						playerData->AddScore(HEART_SCORE);
+						playerData->AddScore(settingManager->GetIntValue("HEART_SCORE"));
 					}
 				}
 				else
@@ -199,6 +209,7 @@ void CGame::HandleEnding()
 					if (switchSceneCounter % 500 == 0)
 					{
 						sceneManager->SwitchSceneByIndex(sceneManager->GetNextSceneIndex());
+						ended = false;
 					}
 				}
 			}
@@ -394,6 +405,7 @@ void CGame::Reset()
 {
 	ended = false;
 	playerData->Reset();
+	bossData->Reset();
 	sceneManager->Reset();
-	timer->SetTime(DEFAULT_GAME_TIME);
+	timer->SetTime(CSettingManager::GetInstance()->GetIntValue("DEFAULT_GAME_TIME"));
 }

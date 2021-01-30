@@ -1,9 +1,9 @@
 #include "CreditText.h"
+#include "../../Game.h"
 
 CCreditText::CCreditText()
 {
 	SetAnimationSet("credit_text");
-	animationSet->at(0)->SetStartTime(GetTickCount());
 }
 
 void CCreditText::Render()

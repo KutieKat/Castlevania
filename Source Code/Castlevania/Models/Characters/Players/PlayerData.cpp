@@ -1,4 +1,5 @@
 #include "PlayerData.h"
+#include "../../../Game.h"
 
 CPlayerData* CPlayerData::instance = nullptr;
 
@@ -17,21 +18,26 @@ void CPlayerData::Init()
 	Reset();
 }
 
+void CPlayerData::ResetPower()
+{
+	power = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_POWER");
+}
+
 void CPlayerData::ResetWeapons()
 {
-	whipLevel = WHIP_LEVEL_1;
-	subWeaponType = "";
+	whipLevel = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_WHIP_LEVEL");
+	subWeaponType = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_SUB_WEAPON_TYPE");
 }
 
 void CPlayerData::Reset()
 {
-	score = SIMON_DEFAULT_SCORE;
-	hearts = SIMON_DEFAULT_HEARTS;
-	lives = SIMON_DEFAULT_LIVES;
-	healthVolumes = HEALTH_BAR_MAX_VOLUMES;
-	whipLevel = WHIP_LEVEL_1;
-	power = NORMAL_POWER;
-	subWeaponType = "";
+	score = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_SCORE");
+	hearts = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_HEARTS");
+	lives = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_LIVES");
+	healthVolumes = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_HEALTHS");
+	whipLevel = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_WHIP_LEVEL");
+	power = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_POWER");
+	subWeaponType = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_SUB_WEAPON_TYPE");
 }
 
 void CPlayerData::AddScore(int score)
@@ -86,7 +92,7 @@ void CPlayerData::DecreaseHealthVolumes(int damages)
 
 void CPlayerData::ResetHealthVolumes()
 {
-	healthVolumes = HEALTH_BAR_MAX_VOLUMES;
+	healthVolumes = CSettingManager::GetInstance()->GetIntValue("SIMON_DEFAULT_HEALTHS");
 }
 
 int CPlayerData::GetHealthVolumes()

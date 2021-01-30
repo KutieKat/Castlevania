@@ -1,5 +1,5 @@
 #include "BreakableBrick.h"
-#include "../../Utilities/Debug.h"
+#include "../../Game.h"
 
 CBreakableBrick::CBreakableBrick()
 {
@@ -11,6 +11,11 @@ void CBreakableBrick::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }
@@ -19,6 +24,8 @@ void CBreakableBrick::GetBoundingBox(float& left, float& top, float& right, floa
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
 		right = left + BREAKABLE_BRICK_BBOX_WIDTH;

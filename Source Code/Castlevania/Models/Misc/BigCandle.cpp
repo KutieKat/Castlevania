@@ -1,4 +1,5 @@
 #include "BigCandle.h"
+#include "../../Game.h"
 
 CBigCandle::CBigCandle()
 {
@@ -9,6 +10,11 @@ void CBigCandle::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }
@@ -17,6 +23,8 @@ void CBigCandle::GetBoundingBox(float& left, float& top, float& right, float& bo
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
 		right = left + BIG_CANDLE_BBOX_WIDTH;

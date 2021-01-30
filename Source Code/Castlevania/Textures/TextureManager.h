@@ -9,7 +9,7 @@ class CTextureManager
 {
 public:
 	bool LoadFromFile(string filePath);
-	void Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor);
+	void Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor, bool sharable = false);
 	LPDIRECT3DTEXTURE9 Get(string id);
 	void Clear();
 
@@ -21,4 +21,5 @@ private:
 	static CTextureManager* instance;
 
 	unordered_map<string, LPDIRECT3DTEXTURE9> textures;
+	unordered_map<string, LPDIRECT3DTEXTURE9> sharedTextures;
 };

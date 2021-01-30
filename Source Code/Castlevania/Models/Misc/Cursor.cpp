@@ -1,4 +1,5 @@
 #include "Cursor.h"
+#include "../../Game.h"
 
 CCursor::CCursor()
 {

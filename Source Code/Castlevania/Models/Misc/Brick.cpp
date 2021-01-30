@@ -1,13 +1,20 @@
 #include "Brick.h"
+#include "../../Game.h"
 
 CBrick::CBrick()
 {
 	//isGround = false;
+	canJumpThrough = false;
 	SetAnimationSet("transparency");
 }
 
 void CBrick::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
 

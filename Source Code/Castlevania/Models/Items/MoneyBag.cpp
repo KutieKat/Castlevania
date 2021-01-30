@@ -23,12 +23,13 @@ void CMoneyBag::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CMoneyBag::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
 	switch (state)
 	{
 	case ITEM_STATE_APPEAR:
 		CGame::GetInstance()->GetSoundManager()->Play("showing_bonus");
-		vy = -MONEY_BAG_MOVE_UP_SPEED;
+		vy = -settingManager->GetFloatValue("BONUS_MOVE_UP_SPEED");
 		break;
 	}
 }
@@ -37,6 +38,8 @@ void CMoneyBag::GetBoundingBox(float& left, float& top, float& right, float& bot
 {
 	if (!showingEndingEffect)
 	{
+		CSettingManager* settingManager = CSettingManager::GetInstance();
+
 		left = x;
 		top = y;
 		right = left + MONEY_BAG_BBOX_WIDTH;
@@ -48,6 +51,11 @@ void CMoneyBag::Render()
 {
 	if (!showingEndingEffect)
 	{
+		if (CGame::GetInstance()->BoundingBoxDisplayed())
+		{
+			RenderBoundingBox();
+		}
+
 		animationSet->at(0)->Render(x, y);
 	}
 }

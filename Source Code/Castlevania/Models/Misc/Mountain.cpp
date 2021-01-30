@@ -1,4 +1,5 @@
 #include "Mountain.h"
+#include "../../Game.h"
 
 CMountain::CMountain()
 {

@@ -9,6 +9,7 @@
 #include "../Weapons/WDagger.h"
 #include "../Weapons/WStopwatch.h"
 #include "../Characters/Enemies/Enemy.h"
+#include "../../Game.h"
 
 CMagicCrystal::CMagicCrystal()
 {
@@ -19,8 +20,9 @@ CMagicCrystal::CMagicCrystal()
 void CMagicCrystal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+	CSettingManager* settingManager = CSettingManager::GetInstance();
 
-	vy += ITEM_GRAVITY * dt;
+	vy += settingManager->GetFloatValue("ITEM_GRAVITY") * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -73,7 +75,7 @@ void CMagicCrystal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				y -= min_ty * dy + ny * 0.4f;
 
-				if (e->ny != 0) y += dy;
+				if (e->ny < 0) y += dy;
 			}
 			else
 			{
@@ -90,6 +92,8 @@ void CMagicCrystal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMagicCrystal::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	CSettingManager* settingManager = CSettingManager::GetInstance();
+
 	left = x;
 	top = y;
 	right = left + MAGIC_CRYSTAL_BBOX_WIDTH;
@@ -98,5 +102,10 @@ void CMagicCrystal::GetBoundingBox(float& left, float& top, float& right, float&
 
 void CMagicCrystal::Render()
 {
+	if (CGame::GetInstance()->BoundingBoxDisplayed())
+	{
+		RenderBoundingBox();
+	}
+
 	animationSet->at(0)->Render(x, y);
 }
